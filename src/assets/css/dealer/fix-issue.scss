@@ -1,0 +1,122 @@
+.fix-issue-main {
+    margin: 40px 25%;
+    margin-bottom: 0;
+
+    .action-icons {
+        text-align: center;
+    }
+
+    .border-left {
+        border-left: 1px solir #5b6f7c;
+    }
+
+    .customer-item-details {
+        margin-top: 5%;
+        margin-bottom: 5%;
+        text-align: center;
+        color: #ebf2f8;
+        font-weight: bold;
+
+        .name {
+            font-size: 19px;
+        }
+
+        .address, .item {
+            font-size: 14px;
+        }
+    }
+
+    .input-section {
+
+        .customer-input {
+
+            .form-group {
+                width: 375px;
+                margin: auto;
+                margin-bottom: 1.5rem;
+            }
+
+            label {
+                font-family: Arial;
+                font-size: 12px;
+                font-weight: bold;
+                color: #97b0c6;
+            }
+
+            input {
+                font-family: Arial;
+                font-size: 14px;
+                text-align: center;
+                color: #3a5b77;
+            }
+        }
+
+        .customer-action {
+            text-align: center;
+
+            .btn {
+                width: 178px;
+                height: 37px;
+                border-radius: 4px;
+                background-color: #c8e0ed;
+                font-family: Lato;
+                font-size: 11px;
+                font-weight: 900;
+                letter-spacing: 0.28px;
+                text-align: center;
+                color: #3a5b77;
+                border: 1px solid #3a5b77;
+                margin: 10px;
+            }
+        }
+    }
+}
+
+.footer-section {
+    text-align: center;
+    height: 58px;
+    background-color: #009e87;    
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+
+    .footer-action {
+        height: 58px;
+        
+        .btn {
+            width: 178px;
+            height: 37px;
+            border-radius: 4px;
+            background-color: #c8e0ed;
+            font-family: Lato;
+            font-size: 11px;
+            font-weight: 900;
+            line-height: 1.09;
+            letter-spacing: 0.28px;
+            text-align: center;
+            color: #3a5b77;
+            border: 1px solid #c8e0ed;
+            margin: 11px;
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    .fix-issue-main {
+        margin: 40px 0%;
+    }
+}
+
+@media (max-width: 470px) {
+    .fix-issue-main {
+        margin: 40px 0%;
+
+        .input-section .customer-input .form-group {
+            width: 345px;
+        }
+
+        .input-section .customer-action .btn {
+            width: 163px;
+        }
+    }
+}

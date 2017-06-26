@@ -1,0 +1,29 @@
+.custom-radio {
+    position: relative;
+    cursor: pointer;
+    .radio {
+        width: 25px;
+        height: 25px;
+        border: solid 1px #fcf7b9;
+        background-color: #c8e0ed;
+        border-radius: 12.5px;
+        display: inline-block;
+    }
+    .radio-checked {
+        width: 15px;
+        height: 15px;
+        background-color: #009e87;
+        border-radius: 7.5px;
+        margin-left: 4px;
+        margin-top: 4px;
+    }
+    .radio-label {
+        display: inline-block;
+        position: relative;
+        top: -7px;
+        left: 10px;
+        line-height: 1.05;
+        letter-spacing: 1.1px;
+        color: #cddbe8;
+    }
+}

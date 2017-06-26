@@ -1,0 +1,438 @@
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome, Opera and Firefox */
+}
+
+@media (max-width: 570px) {
+    // body {
+    //     background-image: none !important;
+    // }
+
+    .auth-page {
+        width: 100% !important;
+        margin: unset !important;
+        height: 100% !important;
+        // position: relative !important;
+        border-radius: 0px !important;
+
+        .wrapper {
+            padding-left: 53px !important;
+            padding-right: 51px !important;
+        }
+
+        .page-title {
+            font-size: 20px !important;
+        }
+
+        .title {
+            font-size: 13px !important;
+        }
+
+        .custom-checkbox {
+            .checkbox {
+                display: inline-block;
+                width: 18px !important;
+                height: 18px !important;
+    
+                .fill {
+                    width: 12px;
+                    height: 12px;
+                    margin-left: 1.5px !important;
+                    margin-top: 1.5px !important;
+                }
+            }
+            span {
+                font-size: 15px !important;
+            }
+        }
+    }
+
+    .logo {
+        margin-top: 0px !important;
+        width: 100%;
+        height: auto;
+        padding: 80px 50px !important;
+        background-image: url('../images/background.png');
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        img {
+            content: url('../images/lightLogo.svg') !important;
+            width: 100% !important;
+            height: auto !important;
+        }
+    }
+
+    .login-page {
+        .actions {
+            font-size: 15px !important;
+        }
+    }
+
+    .twofa-page {
+        .tip {
+            font-size: 15px !important;
+            margin-top: 20px !important;
+        }
+
+        .sms-come {
+            margin-top: 34px !important;
+            margin-bottom: 32px !important;
+            font-size: 15px !important;
+        }
+
+        .mfa-footer {
+            font-size: 15px !important;
+            height: 70px !important;
+            position: fixed !important;
+            width: 100% !important;
+            bottom: 0 !important;
+        }
+    }
+}
+
+.auth-page {
+    background-color: white;
+    margin: auto;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 569px;
+    height: fit-content;
+    border-radius: 3px;
+    text-align: center;
+
+    .logo {
+        margin-top: 44px;
+        margin-bottom: 22px;
+        img {
+            width: 367px;
+            height: 141px;
+        }
+    }
+    .page-title {
+        font-size: 26px;
+        font-weight: 900;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: normal;
+        letter-spacing: 0.65px;
+        text-align: center;
+    }
+
+    .wrapper {
+        padding-left: 69px;
+        padding-right: 64px;
+    }
+
+    .inputs {
+        .title {
+            text-align: left;
+            font-size: 17px;
+            font-weight: 600;
+            font-stretch: normal;
+            font-style: normal;
+            line-height: normal;
+            letter-spacing: 0.43px;
+            padding-left: 2px;
+            margin-bottom: 10px;
+        }
+    
+        .input {
+            height: 56px;
+            border-radius: 7px;
+            border: solid 1px #97b0c6;
+            outline: none;
+        }
+    }
+
+    .button-action {
+        width: 100%;
+        height: 56px;
+        border-radius: 7px;
+        background-color: #009e87;
+        border: none;
+
+        font-size: 17px;
+        font-weight: 600;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        text-align: center;
+        color: #ffffff;
+    }
+
+    .custom-checkbox {
+        .checkbox {
+            display: inline-block;
+            width: 22px;
+            height: 21px;
+            border-radius: 4px;
+            border: solid 1px #97b0c6;
+            position: relative;
+            top: 3px;
+
+            .fill {
+                width: 16px;
+                height: 15px;
+                border-radius: 2px;
+                background-color: #009e87;
+                margin-left: 2px;
+                margin-top: 2.5px;
+            }
+        }
+        span {
+            font-size: 19px;
+            font-weight: 600;
+            text-decoration: underline;
+            margin-bottom: 0px;
+            margin-left: 7px;
+        }
+    }
+}
+
+.login-page {
+    .inputs {
+        margin-top: 19px;
+
+        .input-email {
+            margin-bottom: 25px;
+        }
+
+        .password {
+            text-align: right;
+            img {
+                width: 44px;
+                height: 22px;
+                cursor: pointer;
+                position: relative;
+                top: -42px;
+                left: -13px;
+            }
+        }
+
+        .error {
+            margin-top: -15px;
+            margin-bottom: 10px;
+            color: #dc3545;
+            font-size: 14px;
+        }
+    }
+
+    .actions {
+        margin-top: 27px !important;
+        margin-bottom: 59px !important;
+        font-size: 19px;
+
+        font-weight: 600;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        text-align: left;
+        text-decoration: underline;
+
+        .remember-me {
+            text-align: left;
+            padding-left: 5px;
+        }
+
+        .forgot-password {
+            text-align: right;
+            cursor: pointer;
+        }
+
+        .register {
+            text-align: right;
+            margin-top: 15px;
+            cursor: pointer;
+        }
+    }
+}
+
+.twofa-page {
+    .inputs {
+        margin-top: 31px;
+    }
+
+    .error {
+        margin-top: 10px;
+        color: #dc3545;
+        font-size: 14px;
+    }
+
+    .button-action {
+        margin-top: 23px;
+        margin-bottom: 33px;
+    }
+
+    .mfa-footer {
+        height: 89px;
+        background-color: #c8e0ed;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 19px;
+        font-weight: 600;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        text-align: center;
+
+        .way-of {
+            text-decoration: underline;
+            font-weight: 900;
+            padding-left: 5px;
+        }
+    }
+
+    .tip {
+        font-size: 19px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: normal;
+        letter-spacing: 0.48px;
+        text-align: center;
+
+        padding-left: 37px;
+        padding-right: 48px;
+
+        margin-top: 42px;
+    }
+
+    .sms-come {
+        margin-top: 34px;
+        margin-bottom: 32px;
+        font-size: 19px;
+        font-weight: 600;
+
+        .send-again {
+            margin-left: 7px;
+            font-weight: 900;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    }
+
+    .resend-sms {
+        margin-top: -20px;
+        margin-bottom: 32px;
+        color: #dc3545;
+    }
+
+    @media (max-width: 570px) {
+        .tip {
+            padding-left: 25px !important;
+            padding-right: 25px !important;
+        }
+    }
+}
+
+.register-page, .reset-page {
+    .form-group {
+        text-align: left;
+        font-size: 17px;
+        font-weight: 600;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: normal;
+        letter-spacing: 0.43px;
+        padding-left: 2px;
+        margin-bottom: 10px;       
+    }
+
+    .inputs {
+        margin-top: 19px;
+
+        .input-email {
+            margin-bottom: 25px;
+        }
+
+        .input-mobile {
+            margin-bottom: 25px;
+        }
+
+        .password {
+            text-align: right;
+            img {
+                width: 44px;
+                height: 22px;
+                cursor: pointer;
+                position: relative;
+                top: -42px;
+                left: -13px;
+            }
+        }
+
+        .error {
+            margin-top: -15px;
+            margin-bottom: 20px;
+            color: #dc3545;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: right;
+        }
+    }   
+
+    .button-action {
+        margin-bottom: 33px;
+    }
+}
+
+.forgot-page {
+    .form-group {
+        text-align: left;
+        font-size: 17px;
+        font-weight: 600;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: normal;
+        letter-spacing: 0.43px;
+        padding-left: 2px;
+        margin-bottom: 10px;       
+    }
+
+    .inputs {
+        margin-top: 19px;
+
+        .input-email {
+            margin-bottom: 25px;
+        }
+
+        .error {
+            margin-bottom: 20px;
+            color: #dc3545;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: right;
+        }
+    }   
+
+    .button-action {
+        margin-bottom: 0px;
+    }
+}
+
+.register-auth {
+    position: unset;
+    .logo {
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+    .auth-actions p {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+}

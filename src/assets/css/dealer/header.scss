@@ -1,0 +1,99 @@
+.dealer {
+
+    .header {
+        min-height: 72px;
+        background-color: #3a5b77;
+        color: white;
+        display: flex;
+        flex-direction: row;
+        flex-grow: 3;
+
+        .header-menu-content {
+            background: #273947;
+        }
+
+        img {
+            cursor: pointer;
+            margin: 0px 5px;
+        }
+
+        .header-left, .header-center, .header-right {
+            flex: 1;
+            align-self: center;
+        }
+
+        .header-left {
+            text-align: left;
+            padding-left: 20px;
+        }
+
+        .header-center {
+            text-align: center;
+
+            .name {
+                font-weight: 600;
+                letter-spacing: 0.4px;
+            }
+        }
+
+        .header-right {
+            text-align: right;
+            padding-right: 20px;       
+        }
+    }
+
+    .home-header {
+        display: block;
+    }
+}
+
+.dark-header {
+
+    .header {
+        background-color: #273947;
+    }
+}
+
+.fix-issue-section {
+    .header {
+        min-height: 72px;
+        background-color: #3a5b77;
+        color: white;
+        display: flex;
+        flex-direction: row;
+        flex-grow: 3;
+
+        .header-menu-content {
+            background: #273947;
+        }
+
+        img {
+            cursor: pointer;
+            margin: 0px 5px;
+        }
+
+        .header-left, .header-center, .header-right {
+            flex: 1;
+            align-self: center;
+        }
+
+        .header-left {
+            text-align: left;
+            padding-left: 20px;
+        }
+
+        .header-center {
+            text-align: center;
+
+            .name {
+                font-weight: 600;
+                letter-spacing: 0.4px;
+            }
+        }
+
+        .header-right {
+            text-align: right;
+            padding-right: 20px;       
+        }
+    }
+}

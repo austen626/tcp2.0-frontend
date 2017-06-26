@@ -1,0 +1,211 @@
+.preapproval-main {
+
+    .dealer-list-search {
+        background-color: #273947;
+        padding: 20px 35%;
+
+        .form-control {
+            font-size: 14px;
+            color: #97b0c6;
+            text-align: center;
+        }
+
+        input {
+            font-size: 14px;
+            text-align: center;
+        }
+    }
+
+    @media (max-width: 1080px) { 
+        .dealer-list-search {
+            padding: 20px 16%;
+        }
+    }
+
+    @media (max-width: 767px) { 
+        .dealer-list-search {
+            padding: 20px;        }
+    }
+
+    .dealer-list {
+        background-color: white;
+        color: black;
+
+        .dark {
+            background-color: rgba(238, 245, 249, 0.48);
+        }
+
+        .request-row {
+            border-bottom: 1px solid #d9ecfc;
+
+            .row {
+                padding: 10px 5px;
+                cursor: pointer;
+                min-height: 91px;
+                margin: 0 25%;
+
+                .data {
+                    margin-top: auto;
+                    margin-bottom: auto;
+                    
+                    .title {
+                        font-size: 19px;
+                        font-weight: bold;
+                        line-height: 1.21;
+                        color: #3a5b77;
+                    }
+                    
+                    .sub-title {
+                        font-size: 14px;
+                        font-weight: 600;
+                        line-height: 1.71;
+                        color: #3a5b77;
+                    }
+
+                    .date {
+                        font-size: 12px;
+                        font-weight: 600;
+                        line-height: 2;
+                        color: #3a5b77;
+                    }
+
+                    .btn {
+                        border: solid 2px #6792b6;
+                        background: transparent;
+                        font-size: 11px;
+                        font-weight: 800;
+                        text-align: center;
+                        color: #3a5b77;
+                        padding: 5px;
+                    } 
+                }
+
+                .incomplete-customer {
+                    display: inline-flex;
+
+                    .title {
+                        margin: auto;
+                        margin-left: 0;
+                        margin-right: 20%;
+                        width: 100px;
+                    }
+                }
+
+                .incomplete-customer-action {
+
+                    .btn {
+                        border: none;
+
+                        svg {
+                            fill: #c8e0ed;
+                        }
+                    }
+
+                    .active-mark {
+
+                        svg {
+                            fill: red;
+                        }
+                    }
+
+                    .active {
+
+                        svg {
+                            fill: #5997cb;
+                        }
+                    }
+                }
+
+                @media (max-width: 767px) { 
+                    .incomplete-customer {
+                        display: inline-block;
+                        padding-left: 10px;
+                    }
+                    .incomplete-customer-action { 
+                        text-align: right !important;
+                        padding-right: 10px;
+                    }
+                }
+            }
+
+            &:hover {
+                background: #bfd3dd;
+            }
+
+            @media (max-width: 1080px) { 
+                .row {
+                    margin: 0 15%;
+                }
+            }
+
+            @media (max-width: 767px) { 
+                .row {
+                    margin: 0 1%;
+                }
+            }
+        }
+    }
+}
+
+.incomplete-customer-action {
+
+    .btn {
+        border: none;
+
+        svg {
+            fill: #c8e0ed;
+        }
+    }
+
+    .active-mark {
+
+        svg {
+            fill: red;
+        }
+    }
+
+    .active {
+
+        svg {
+            fill: #5997cb;
+        }
+    }
+}
+
+.single-row {
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.dealer .sidebar {
+    position: absolute;
+    right: 0px;
+    top: 72px;
+    background-color: #3a5b77;
+    // background-color: #777777;
+    color: #cddbe8;
+    width: 300px;
+    height: calc(100% - 72px);
+    padding: 25px;
+
+    select {
+        width: 220px;
+        margin-bottom: 15px;
+    }
+
+    .value-range {
+        input {
+            width: 80px;
+            display: initial;
+        }
+        label {
+            margin: 0px 10px;
+        }
+    }
+}
+
+@media (max-width: 767px) { 
+    .dealer .sidebar {
+        left: 0px;
+    }
+}

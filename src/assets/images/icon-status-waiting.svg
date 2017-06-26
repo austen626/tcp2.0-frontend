@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="37" height="37" viewBox="0 0 37 37">
+    <g id="Group_786" data-name="Group 786" transform="translate(-.101 .145)">
+        <g id="Group_784" data-name="Group 784">
+            <g id="Ellipse_332" fill="#3a5b77" stroke="#707070" data-name="Ellipse 332" transform="translate(.101 -.145)">
+                <circle cx="18.5" cy="18.5" r="18.5" stroke="none"/>
+                <circle cx="18.5" cy="18.5" r="18" fill="none"/>
+            </g>
+            <path id="Icon_awesome-hourglass-half" fill="#fff" d="M13.043 0H.87A.87.87 0 0 0 0 .87v.58a.87.87 0 0 0 .87.87c0 3.3 1.848 6.077 4.378 6.957-2.53.878-4.378 3.659-4.378 6.955A.87.87 0 0 0 0 17.1v.58a.87.87 0 0 0 .87.87h12.173a.87.87 0 0 0 .87-.87v-.58a.87.87 0 0 0-.87-.87c0-3.3-1.848-6.077-4.378-6.957 2.53-.879 4.378-3.661 4.378-6.957a.87.87 0 0 0 .87-.87V.87a.87.87 0 0 0-.87-.87zm-2.72 13.913H3.59c.618-1.7 1.888-2.9 3.367-2.9s2.748 1.204 3.366 2.9zm0-9.275H3.59a6.8 6.8 0 0 1-.4-2.319h7.536a6.8 6.8 0 0 1-.4 2.319z" data-name="Icon awesome-hourglass-half" transform="translate(12.058 9.275)"/>
+        </g>
+    </g>
+</svg>

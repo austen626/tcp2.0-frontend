@@ -1,0 +1,127 @@
+@media (max-width: 570px) {
+    .sales .summary-page {
+        .documents {
+            width: auto !important;
+            margin-left: 0px !important;
+            .details {
+                width: calc(100% - 25px) !important;
+            }
+        }
+    }
+    .contact .wrapper {
+        margin-left: 0px !important;
+        padding-left: 10px;
+        padding-right: 10px;
+        width: auto !important;
+        min-width: 0px !important;
+    }
+}
+
+.sales .summary-page {
+    text-align: center;
+
+    .split {
+        height: 3px;
+        background-color: #3a5b77;
+    }
+
+    .contact {
+        background: #20313e;
+        padding: 35px 0px;
+
+        .wrapper {
+            min-width: 472px;
+            width: fit-content;
+            margin-left: calc(50% - 236px);
+            text-align: left;
+            font-size: 20px;
+            .key {
+                color: #e7f6fe;
+                font-weight: 800;
+            }
+            .value {
+                color: #97b0c6;
+                margin: 0px 15px 0px 8px;
+            }
+        }
+    }
+
+    .summary-contact-co {
+        color: #97b0c6;
+        margin-top: 30px;
+
+        .email {
+            margin-top: 10px;
+            .email-label {
+                color: #e7f6fe;
+                font-weight: bold;
+                margin-right: 10px;
+            }
+        }
+        .description {
+            margin-top: 20px;
+        }
+    }
+
+    .documents {
+        width: 470px;
+        margin-left: calc(50% - 235px);
+        padding: 25px 10px 100px 10px;
+        color: white;
+        text-align: left;
+        font-weight: 800;
+        letter-spacing: 1px;
+        .title {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        .app-item {
+            .number {
+                position: absolute;
+                margin-right: 10px;
+            }
+            .details {
+                width: 430px;
+                display: inline-block;
+                margin-left: 25px;
+                .item {
+                    position: relative;
+                    margin-bottom: 10px;
+                }
+                .subtitle {
+                    color: #97b0c6;
+                }
+                .delete-btn {
+                    position: absolute;
+                    right: 0;
+                    top: 5px;                    
+                    cursor: pointer;
+                }
+            }
+        }
+        .split {
+            margin: 17px 0px;
+        }
+        .total {
+            margin-left: 20px;
+        }
+
+        .info {
+            border-radius: 4px;
+            background-color: #3a5970;
+            color: #ffffff;
+            padding: 20px 10px;
+            text-align: center;
+        }
+        
+        .warning {
+            border-radius: 3px;
+            background-color: #9e406a;
+            color: #ffffff;
+            padding: 20px 10px;
+            text-align: center;
+            font-weight: normal;
+            margin-bottom: 10px;
+        }
+    }
+}

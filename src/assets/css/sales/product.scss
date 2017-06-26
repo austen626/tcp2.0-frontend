@@ -1,0 +1,208 @@
+@media (max-width: 570px) {
+    .sales .main {
+        .container {
+            width: auto !important;
+
+            .good-or-services {
+                width: 345px !important;
+                height: 270px !important;
+                background-size: 345px 270px !important;
+
+                textarea {
+                    margin-top: 70px !important;
+                    margin-left: 15px !important;
+                    width: calc(100% - 30px) !important;
+                    height: 175px !important;
+                    line-height: 1.8 !important;
+                }
+            }
+        }
+    }
+}
+
+.sales .main {
+    .container {
+        width: 500px;
+        padding-bottom: 150px;
+        margin-top: 30px;
+
+        .own-rent-radios {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0px;
+            
+            .custom-radio {
+                margin-right: 30px;
+            }
+        }
+
+        .form-label-required {
+            position: absolute;
+            right: 0;
+        }
+
+        .group-label {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 5px 0px;
+        }
+
+        .group-address {
+            margin-bottom: 0px;
+            label {
+                font-size: 22px;
+                font-weight: bold;
+            }
+        }
+
+        .co-used-label {
+            font-size: 16px;
+            font-style: italic;
+            line-height: 1.15;
+            color: #97b0c6;
+            margin-left: 5px;
+        }
+
+        .good-or-services {
+            background-image: url('../../images/good_or_services.jpg');
+            width: 470px;
+            height: 367px;
+            background-size: 470px 367px;
+            margin-bottom: 20px;
+
+            textarea {
+                opacity: 0.8;
+                margin-top: 95px;
+                margin-left: 20px;;
+                width: 430px;
+                height: 235px;
+                line-height: 2.4;
+                padding-left: 5px;
+            }
+        }
+        
+        .deposit-amounts {
+            margin-top: 10px;
+            color: #bdc7d0;
+            font-size: 22px;
+            font-weight: 600;
+        }
+    }
+
+    .total {
+        position: fixed;
+        bottom: 81px;
+        background-color: #007867;
+        width: 100%;
+        height: 66px;
+        text-align: center;
+        padding-top: 17px;
+        color: #c4fff6;
+    }
+
+    .form-group {
+        position: relative;
+    }
+
+    .form-label {
+        font-size: 14px;
+        color: #97b0c6;
+        margin-bottom: 0px;
+    }
+    .form-control {
+        border-radius: 3px;
+        border: none;
+        // background-color: #3d566a;
+        // color: #cddbe8;
+        font-size: 18px;
+    }
+    .form-control:focus {
+        outline: none !important;
+        border: solid 2px #009e87;
+        box-shadow: 0 0 10px #719ECE;
+    }
+    .form-check {
+        color: #97b0c6;
+    }
+
+    .fixed_input {
+        border-radius: 3px;
+        border: solid 2px #6792b6;
+        background-color: #6792b6;
+        color: #ffffff;
+        font-weight: bold;
+    }
+    
+    .input_symbol {
+        color: #cddbe8;
+        font-size: 18px;
+        position: absolute;
+        top: 7px;
+        left: 11px;
+    }
+
+    .input_symbol_percent {
+        color: #cddbe8;
+        font-size: 18px;
+        position: absolute;
+        top: 7px;
+        right: 11px;
+    }
+}
+
+.sales .product-page {
+    .form-control {
+        text-align: right;
+    }
+}
+
+.sales .home {
+    color: #97b0c6;
+
+    .form-label {
+        font-size: 14px;
+    }
+    .form-control {
+        border-radius: 3px;
+        border: none;
+        background-color: #3d566a;
+        color: #cddbe8;
+        font-size: 18px;
+    }
+    .form-control:focus {
+        outline: none !important;
+        border: solid 2px #009e87;
+        box-shadow: 0 0 10px #719ECE;
+    }
+
+    .button {
+        width: 100%;
+        height: 113px;
+        border-radius: 4px;
+        background-color: #009e87;
+        cursor: pointer; 
+        display: flex;
+        .icon {
+            width: 116px;
+            height: 113px;
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+            background-color: white;
+            img {
+                margin-left: 39px;
+                margin-top: 38px;
+            }
+        }
+        .label {
+            flex: 1;
+            align-self: center;
+            text-align: center;
+            font-size: 27px;
+            font-weight: 600;
+            color: white;
+        }
+    }
+    .button-reorder {
+        margin-top: 59px;
+    }
+}

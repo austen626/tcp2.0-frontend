@@ -1,0 +1,218 @@
+.dealer {
+
+    // .main {
+    //     .app-details {
+    //         .contact-details {
+    //             background-color: white;
+    //             color: #3a5b77;
+    //             padding: 0px 25px;
+    //             .main-app {
+    //                 padding: 20px;
+    //                 text-align: left;
+    //             }
+    //             .co-app {
+    //                 border-top: 1px solid #bce0fd;
+    //                 padding: 20px;
+    //                 text-align: left;
+    //             }
+    //         }
+    //         .slips {
+    //             padding: 20px;
+    //             text-align: left;
+    //             color: #c8e0ed;
+    //         }
+    //     }
+    // }
+
+    .application-main {
+
+        .app-details {
+            
+            .contact-details {
+                background-color: white;
+                color: #3a5b77;
+                padding: 22px 30%;
+
+                .main-app {
+
+                    .name {
+                        font-size: 19px;
+                        font-weight: bold;
+                        line-height: 1.21;
+                    }
+
+                    .contact {
+                        font-size: 14px;
+                        font-weight: 600;
+                        line-height: 1.71;
+                    }
+
+                    .border-left {
+                        padding-left: 5%;
+                    }
+
+                    @media (max-width: 767px) {
+                        .border-left {
+                            border: none !important;
+                            padding: 0;
+                            margin-top: 25px;
+                        }
+                    }
+                }
+
+                .co-app {
+                    margin-top: 32px;
+
+                    .details {
+                        font-size: 14px;
+                        font-weight: bold;
+                        line-height: 1.71;
+                    }
+
+                    .emp-name {
+                        font-size: 14px;
+                        font-weight: 600;
+                        line-height: 1.71;
+                        text-align: center;
+                    }
+
+                    .date {
+                        font-size: 14px;
+                        font-weight: 600;
+                        line-height: 1.71;
+                        text-align: center;
+                    }
+                }
+
+                @media (max-width: 767px) {
+                    .co-app {
+                        margin-top: 25px;
+                    }
+                }
+            }
+
+            @media (max-width: 1080px) {
+                .contact-details {
+                    padding: 22px 20%;
+                }
+            }
+
+            @media (max-width: 767px) {
+                .contact-details {
+                    padding: 15px;
+                }
+            }
+
+            .order-summary-header {
+                background-color: #c8e0ed;
+                height: 46px;
+                font-size: 15px;
+                font-weight: bold;
+                line-height: 46px;
+                text-align: center;
+            }
+
+            .order-summary-details {
+                min-height: 90px;
+                background-color: #273947;
+                font-size: 14px;
+                font-weight: bold;
+                line-height: 1.71;
+                text-align: center;
+                color: #c8e0ed;
+                padding: 20px;
+
+                ul {
+                    list-style: none;
+                    padding-left: 0;
+
+                    li {
+                        margin-bottom: 15px;
+                    }
+                }
+            }
+
+            .document-link {
+                text-align: center;
+                padding: 15px;
+                min-height: 90px;
+
+                a {
+                    font-size: 14px;
+                    font-weight: bold;
+                    line-height: 1.71;
+                    color: #c8e0ed;
+                    text-decoration: underline;
+                }
+            }
+
+            .delivery-date {
+                min-height: 58px;
+                background-color: #009e87;
+                // text-align: center;
+
+                .date-picker {
+                    width: 120px;
+                    margin-left: 15px;
+                }
+
+                span {
+                    font-size: 14px;
+                    font-weight: bold;
+                    line-height: 1.14;
+                    color: #ffffff;
+                }
+
+                label {
+                    display: inline-flex;
+                    font-size: 14px;
+                    font-weight: bold;
+                    line-height: 1.14;
+                    color: #ffffff;
+
+                    input {
+                        border-top-right-radius: 0;
+                        border-bottom-right-radius: 0;
+                        border-right: 0;
+                        width: 91px;
+                        border: solid 1px #bce0fd;
+                        background-color: #ffffff;
+                        color: #3a5b77;
+                    }
+
+                    img {
+                        background-color: #c8e0ed;
+                        padding: 6px 10px;
+                        border-top-right-radius: 4px;
+                        border-bottom-right-radius: 4px;
+                    }
+
+                    @media (max-width: 767px) {
+                        input {
+                            width: 70px !important;
+                        }
+                    }
+                }
+
+                .btn {
+                    font-size: 11px;
+                    font-weight: 900;
+                    line-height: 1.09;
+                    text-align: center;
+                    color: #3a5b77;
+                    border-radius: 4px;
+                    background-color: #c8e0ed;
+                    height: 40px;
+                    margin: 9px;
+                    margin-left: 35px;
+                }
+            }
+
+            @media (max-width: 767px) {
+                .order-summary-details {
+                    text-align: left;
+                }
+            }
+        }
+    }
+}

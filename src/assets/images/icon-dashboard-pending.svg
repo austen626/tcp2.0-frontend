@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="Component_80_1" width="39" height="39" data-name="Component 80 – 1" viewBox="0 0 39 39">
+    <g id="Component_79_1" data-name="Component 79 – 1">
+        <rect id="Rectangle_1521" width="39" height="39" fill="#3a5b77" data-name="Rectangle 1521" rx="5"/>
+        <path id="Icon_awesome-hourglass-half" fill="#fff" d="M13.7 0H.913A.913.913 0 0 0 0 .913v.609a.913.913 0 0 0 .913.913c0 3.462 1.942 6.383 4.6 7.307-2.657.923-4.6 3.845-4.6 7.307a.913.913 0 0 0-.913.914v.609a.913.913 0 0 0 .913.913H13.7a.913.913 0 0 0 .913-.913v-.609a.913.913 0 0 0-.913-.913c0-3.462-1.942-6.383-4.6-7.307 2.657-.923 4.6-3.845 4.6-7.307a.913.913 0 0 0 .913-.913v-.61A.913.913 0 0 0 13.7 0zm-2.857 14.614H3.771c.649-1.781 1.983-3.045 3.536-3.045s2.887 1.264 3.536 3.045zm0-9.743H3.771a7.14 7.14 0 0 1-.422-2.436h7.916a7.141 7.141 0 0 1-.421 2.436z" data-name="Icon awesome-hourglass-half" transform="translate(12 9.772)"/>
+    </g>
+</svg>
