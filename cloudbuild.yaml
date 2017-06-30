@@ -2,36 +2,36 @@ steps:
 # Build the container image
 # update the gcr.io/[project-id]/[build-image-name]
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/tcp-293717/dev-web', '.']
+  args: ['build', '-t', 'gcr.io/tcp-293717/tcp2-dev-web', '.']
 
 # Push the container image to Container Registry
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/tcp-293717/dev-web']
+  args: ['push', 'gcr.io/tcp-293717/tcp2-dev-web']
 
 - name: 'gcr.io/cloud-builders/gcloud'
   args:
   - 'run'
   - 'deploy'
-  - 'dev-web'
+  - 'tcp2-dev-web'
   - '--image'
-  - 'gcr.io/tcp-293717/dev-web'
+  - 'gcr.io/tcp-293717/tcp2-dev-web'
   - '--port'
   - '80'
   - '--region'
-  - 'us-east1'
+  - 'us-east4'
   - '--platform'
   - 'managed'
   - '--allow-unauthenticated'
   - '--service-account'
-  - 'sa-tcp-145-dev@tcp-293717.iam.gserviceaccount.com'
+  - 'sa-tcp2-145-dev@tcp-293717.iam.gserviceaccount.com'
   - '--max-instances'
   - '5'
   - '--timeout'
   - '60'
   - '--memory'
-  - '512Mi'
+  - '1Gi'
   
 # update image name. This is what is pushed in GCR
 
 images:
-- gcr.io/tcp-293717/dev-web
+- gcr.io/tcp-293717/tcp2-dev-web

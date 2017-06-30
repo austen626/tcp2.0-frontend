@@ -1,4 +1,4 @@
-FROM node:10-slim
+FROM node:11-slim
 
 RUN apt-get update \
     && apt-get -y install apache2 \
