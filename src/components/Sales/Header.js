@@ -75,7 +75,7 @@ class Header extends Component {
                     { this.renderAvatar() }
                     { this.state.menuOpen && (
                         <div className="header-menu-content">
-                            <div style={{ height: 9, backgroundColor: '#b2d8f7' }}></div>
+                            <div style={{ height: 3, backgroundColor: '#b2d8f7' }}></div>
                             <Row>
                                 <div className="profile-btn" onClick={this.onProfile}>
                                     <img alt="profile" src={IconProfile} />

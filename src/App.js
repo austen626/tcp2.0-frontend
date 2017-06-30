@@ -19,7 +19,7 @@ import ProductScreen from './screens/Sales/Product';
 import SummaryScreen from './screens/Sales/Summary';
 import PrequalifyScreen from './screens/Sales/Prequalify';
 
-import DealerHomeScreen from './screens/Dealer/Home';
+import DealerHome from './screens/Dealer/Home';
 import SalesListScreen from './screens/Dealer/Sales';
 import AppDetailsScreen from './screens/Dealer/AppDetails';
 import ApplicationDetailsScreen from './screens/Dealer/ApplicationDetails';
@@ -40,6 +40,24 @@ import AdminFundingRequestItem from './screens/Admin/FundingRequestItem';
 
 import StaffHomeScreen from './screens/Staff/Home';
 
+
+
+
+
+// TCP 2.0 screens
+import AdminDealerManagement from './screens/Admin/2.0/DealerManagement';
+import AdminAddDealer from './screens/Admin/2.0/AddDealer';
+
+
+import DealerStaffManagement from './screens/Dealer/2.0/StaffManagement';
+import DealerAddStaff from './screens/Dealer/2.0/AddStaff';
+
+
+
+
+
+
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "react-datepicker/dist/react-datepicker.css";
 import './assets/css/index.scss';
@@ -56,11 +74,11 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
       }
       else if(role && role.indexOf('dealer') !== -1 && rest.path === "/")
       {
-        return <DealerHomeScreen {...props} />;
+        return <DealerHome {...props} />;
       }
       else if(role && (role.indexOf('sales') !== -1 || role.indexOf('dealer') !== -1) && rest.path === "/")
       {
-        return <SalesHomeScreen {...props} />;
+        // return <SalesHomeScreen {...props} />;
       }
       else
       {
@@ -76,11 +94,11 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
           }
           else if(role && role.indexOf('dealer') !== -1)
           {
-            return <DealerHomeScreen {...props} />;
+            return <DealerHome {...props} />;
           }
           else if(role && (role.indexOf('sales') !== -1 || role.indexOf('dealer') !== -1))
           {
-            return <SalesHomeScreen {...props} />;
+            // return <SalesHomeScreen {...props} />;
           }
         }
       }
@@ -108,13 +126,7 @@ function App() {
     <Router history={history}>
       <Switch> 
 
-        <AuthRoute exact path="/login" component={LoginScreen} />
-        <AuthRoute exact path="/register" component={RegisterScreen} />
-        <AuthRoute path="/2fa" component={TwoFA} />
-        <AuthRoute exact path="/forgot" component={ForgotPassword} />
-        <AuthRoute exact path="/reset-password" component={ResetPassword} />
-
-        <PrivateRoute exact role="dealer" path="/" component={DealerHomeScreen} />
+        <PrivateRoute exact role="dealer" path="/" component={DealerHome} />
         <PrivateRoute exact role="dealer" path="/sales-list/:status" component={SalesListScreen} />
         <PrivateRoute exact role="dealer" path="/preapprovals" component={DealerPreApprovals} />
         <PrivateRoute exact role="dealer" path="/incomplete-page" component={DealerIncompletes} />
@@ -144,6 +156,32 @@ function App() {
         <PrivateRoute exact role="admin" path="/admin/preapproval/:id" component={AdminPreApprovalItem} key=":id" />
         <PrivateRoute exact role="admin" path="/admin/fundings" component={AdminFundingRequests} />
         <PrivateRoute exact role="admin" path="/admin/funding/:id" component={AdminFundingRequestItem} key=":id" />
+
+
+
+
+
+
+        {/* TCP 2.0 screens */}
+        <AuthRoute exact path="/login" component={LoginScreen} />
+        <AuthRoute exact path="/register" component={RegisterScreen} />
+        <AuthRoute path="/2fa" component={TwoFA} />
+        <AuthRoute exact path="/forgot" component={ForgotPassword} />
+        <AuthRoute exact path="/reset-password" component={ResetPassword} />
+
+
+        <PrivateRoute exact role="admin" path="/admin/dealers" component={AdminDealerManagement} />
+        <PrivateRoute exact role="admin" path="/admin/addDealer" component={AdminAddDealer} />
+
+
+        <PrivateRoute exact role="dealer" path="/dealer/staff" component={DealerStaffManagement} />
+        <PrivateRoute exact role="dealer" path="/dealer/addStaff" component={DealerAddStaff} />
+
+
+        
+
+
+
       </Switch>
     </Router>
   );

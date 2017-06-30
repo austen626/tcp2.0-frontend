@@ -4,12 +4,20 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { toast } from 'react-toastify'
 import { Provider } from 'react-redux';
-import store from './redux/store';
+import { PersistGate } from 'redux-persist/integration/react'
+import configStore from './redux/store';
 import 'react-toastify/dist/ReactToastify.css'
-toast.configure()
+import { configure } from '@testing-library/react';
+
+toast.configure();
+
+const { store, persistor} = configStore();
+
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <PersistGate loading={null} persistor={persistor}>
+      <App />
+    </PersistGate>
   </Provider>,
   document.getElementById('root')
 );

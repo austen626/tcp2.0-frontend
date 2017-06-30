@@ -5,6 +5,7 @@ import customer from './customer';
 import sales from './sales';
 import customers from './customers';
 import admin from './admin';
+import dealer from './dealer';
 import userReducer from './userReducer';
 
 const appReducer = combineReducers({
@@ -13,6 +14,7 @@ const appReducer = combineReducers({
     sales,
     customers,
     admin,
+    dealer,
     user: userReducer,
     form: formReducer,
 });

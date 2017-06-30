@@ -23,8 +23,10 @@
     "react-toastify": "^6.0.9",
     "redux": "^4.0.5",
     "redux-form": "^8.3.6",
+    "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
-    "styled-components": "^5.1.0"
+    "styled-components": "^5.1.0",
+    "sweetalert2": "^10.16.3"
   },
   "scripts": {
     "start": "react-scripts start",

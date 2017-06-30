@@ -20,22 +20,22 @@ export default function (ComposedComponent) {
 
     handleConnectionChange = () => {
       const condition = navigator.onLine ? 'online' : 'offline';
-      if (condition === 'online') {
-        const webPing = setInterval(
-          () => {
-            fetch(baseUrl, {
-              mode: 'no-cors',
-              })
-            .then(() => {
-              this.setState({ isDisconnected: false }, () => {
-                return clearInterval(webPing)
-              });
-            }).catch(() => this.setState({ isDisconnected: true }) )
-          }, 2000);
-        return;
-      }
+      // if (condition === 'online') {
+      //   const webPing = setInterval(
+      //     () => {
+      //       fetch(baseUrl, {
+      //         mode: 'no-cors',
+      //         })
+      //       .then(() => {
+      //         this.setState({ isDisconnected: false }, () => {
+      //           return clearInterval(webPing)
+      //         });
+      //       }).catch(() => this.setState({ isDisconnected: true }) )
+      //     }, 2000);
+      //   return;
+      // }
 
-      return this.setState({ isDisconnected: true });
+      // return this.setState({ isDisconnected: true });
     }
 
     render() {

@@ -1,7 +1,8 @@
 body {
-    background-image: url('../images/background.png');
+    // background-image: url('../images/background.png');
     color: #3a5b77 !important;
     font-family: Lato !important;
+    background: #273947;
 }
 
 .row {
@@ -210,6 +211,7 @@ input[type=number] {
 }
 
 .network-issue-container {
+
     .internet-error {
         z-index: 1;
         position: absolute;
@@ -306,4 +308,32 @@ input[type=number] {
     padding: 8px 6px !important;
     background-color: #c8e0ed !important;
     color: #3a5b77 !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.swal2-popup {
+    zoom: 75%;
 }

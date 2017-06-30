@@ -65,3 +65,24 @@ export const IconPreapprovalDeclined = require('./images/icon-preapproval-declin
 export const IconTrash = require('./images/icons8-trash.svg');
 
 export const UnderConstruction = require('./images/underconst.svg')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+export const IconAdd = require('./images/add.svg');
+export const IconDeleteNew = require('./images/delete.svg');
+export const IconDownArrow = require('./images/downArrow.svg');

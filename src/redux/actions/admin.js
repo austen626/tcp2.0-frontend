@@ -22,6 +22,34 @@ export const CHANGE_SELECTED_FUNDING_REQUEST_FAILED = "CHANGE_SELECTED_FUNDING_R
 export const CHANGE_SELECTED_PREAPPROVAL_REQUEST= 'CHANGE_SELECTED_PREAPPROVAL_REQUEST';
 export const CHANGE_SELECTED_PREAPPROVAL_FAILED = 'CHANGE_SELECTED_PREAPPROVAL_FAILED';
 
+
+
+
+
+
+// TCP 2.0
+
+export const GET_DEALERS_REQUESTS = "GET_DEALERS_REQUESTS";
+export const GET_DEALERS_REQUESTS_SUCCESS = "GET_DEALERS_REQUESTS_SUCCESS";
+export const GET_DEALERS_REQUESTS_FAILED = "GET_DEALERS_REQUESTS_FAILED";
+export const SET_DEALER_REQUEST = "SET_DEALER_REQUEST";
+export const ADD_DEALER_REQUEST = 'ADD_DEALER_REQUEST';
+export const ADD_DEALER_REQUEST_SUCCESS = "ADD_DEALER_REQUEST_SUCCESS";
+export const ADD_DEALER_REQUEST_FAILED = "ADD_DEALER_REQUEST_FAILED";
+export const UPDATE_DEALER_REQUEST= 'UPDATE_DEALER_REQUEST';
+export const UPDATE_DEALER_REQUEST_SUCCESS = "UPDATE_DEALER_REQUEST_SUCCESS";
+export const UPDATE_DEALER_REQUEST_FAILED = "UPDATE_DEALER_REQUEST_FAILED";
+export const DELETE_DEALER_REQUEST= 'DELETE_DEALER_REQUEST';
+export const DELETE_DEALER_REQUEST_SUCCESS = "DELETE_DEALER_REQUEST_SUCCESS";
+export const DELETE_DEALER_REQUEST_FAILED = "DELETE_DEALER_REQUEST_FAILED";
+
+
+
+
+
+
+
+
 export function getPreapprovals() {
     return async function(dispatch) {
         dispatch({
@@ -174,5 +202,134 @@ export function changeSelectedFundingRequestStatus(id, status) {
             })
         }
        
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// TCP 2.0
+
+
+export function getDealers() {
+    return async function(dispatch) {
+        dispatch({
+            type: GET_DEALERS_REQUESTS
+        });
+        try {
+            const response = await API.get(`/accounts/list-dealer`);
+            dispatch({
+                type: GET_DEALERS_REQUESTS_SUCCESS,
+                payload: response.data
+            })
+        } catch (error) {
+            dispatch({
+                type: GET_DEALERS_REQUESTS_FAILED
+            })
+        }
+    }
+}
+
+
+export function setDealer(item) {
+    return async function(dispatch) {
+        dispatch({
+            type: SET_DEALER_REQUEST,
+            payload: item
+        });
+    }
+}
+
+
+export function updateDealer(history, data) {
+    return async function(dispatch) {
+        dispatch({
+            type: UPDATE_DEALER_REQUEST,
+        })
+        try {
+            await API.post(`/accounts/update-dealer`, { ...data });
+            dispatch({
+                type: UPDATE_DEALER_REQUEST_SUCCESS,
+                payload: ''
+            })
+            pushNotification(notificationMsg.REQUEST_SUCCESS, 'success', 'TOP_RIGHT', 3000);
+            history && history.push('/admin/dealers');
+        } catch (error) {
+            pushNotification('Some Thing Went Wrong', 'error', 'TOP_RIGHT', 3000);
+            dispatch({
+                type: UPDATE_DEALER_REQUEST_FAILED,
+            })
+        }
+       
+    }
+}
+
+
+export function addDealer(history, data) {
+    return async function(dispatch) {
+        dispatch({
+            type: ADD_DEALER_REQUEST,
+        })
+        try {
+            await API.post(`/accounts/add-dealer`, { ...data });
+            dispatch({
+                type: ADD_DEALER_REQUEST_SUCCESS,
+            })
+            pushNotification(notificationMsg.REQUEST_SUCCESS, 'success', 'TOP_RIGHT', 3000);
+            history && history.push('/admin/dealers');
+        } catch (error) {
+            pushNotification('Some Thing Went Wrong', 'error', 'TOP_RIGHT', 3000);
+            dispatch({
+                type: ADD_DEALER_REQUEST_FAILED,
+            })
+        }       
+    }
+}
+
+
+export function deleteDealer(id) {
+    return async function(dispatch) {
+        dispatch({
+            type: DELETE_DEALER_REQUEST,
+        })
+        try {
+            await API.put(`/accounts/user-delete/${id}`);
+            dispatch({
+                type: DELETE_DEALER_REQUEST_SUCCESS,
+                payload: id
+            })
+            pushNotification(notificationMsg.REQUEST_SUCCESS, 'success', 'TOP_RIGHT', 3000);
+        } catch (error) {
+            pushNotification('Some Thing Went Wrong', 'error', 'TOP_RIGHT', 3000);
+            dispatch({
+                type: DELETE_DEALER_REQUEST_FAILED,
+            })
+        }       
     }
 }

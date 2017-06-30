@@ -1,15 +1,16 @@
 .sales {
     .header {
+    border-bottom: 3px solid #B2D8F7;
         .header-main {
-            height: 72px;
+            height: 44px;
             background-color: #3a5b77;
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
             .main-logo {
-                width: 37px;
-                height: 51px;
-                position: absolute;
-                left: calc(50% - 19px);
-                top: 10px;
+                width: 18px;
+                height: auto;
             }
 
             .icon-home {
@@ -23,10 +24,10 @@
 
         .header-avatar {
             position: absolute;
-            right: 24px;
-            top: 15px;
-            width: 40px;
-            height: 40px;
+            right: 10px;
+            top: 9px;
+            width: 28px;
+            height: 28px;
             border-radius: 20px;
             cursor: pointer;
             background-color: white;
@@ -73,15 +74,15 @@
 .dealer {
     .header {
         .header-main {
-            height: 72px;
+            height: 44px;
             background-color: #3a5b77;
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
             .main-logo {
-                width: 37px;
-                height: 51px;
-                position: absolute;
-                left: calc(50% - 19px);
-                top: 10px;
+                width: 18px;
+                height: auto;
             }
 
             .icon-home {
@@ -95,10 +96,10 @@
 
         .header-avatar {
             position: absolute;
-            right: 24px;
-            top: 15px;
-            width: 40px;
-            height: 40px;
+            right: 10px;
+            top: 9px;
+            width: 28px;
+            height: 28px;
             border-radius: 20px;
             cursor: pointer;
             background-color: white;
@@ -145,12 +146,12 @@
 @media (max-width: 570px) {
     .sales {
         .header {
-            .main-logo {
-                width: 30px !important;
-                height: 42px !important;
-                left: calc(50% - 15px) !important;
-                top: 14px !important;
-            }
+            // .main-logo {
+            //     width: 30px !important;
+            //     height: 42px !important;
+            //     left: calc(50% - 15px) !important;
+            //     top: 14px !important;
+            // }
         }
 
         .header2 button {
@@ -159,12 +160,12 @@
     }
     .dealer {
         .header {
-            .main-logo {
-                width: 30px !important;
-                height: 42px !important;
-                left: calc(50% - 15px) !important;
-                top: 14px !important;
-            }
+            // .main-logo {
+            //     width: 30px !important;
+            //     height: 42px !important;
+            //     left: calc(50% - 15px) !important;
+            //     top: 14px !important;
+            // }
         }
 
         .header2 button {

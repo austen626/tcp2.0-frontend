@@ -23,8 +23,8 @@
 
 @media (min-width: 570px) {
     .dealer .main {
-        width: 500px !important;
-        margin-left: calc(50% - 250px);
+        // width: 380px !important;
+        // margin: auto;
 
         .search-modal {
             width: 500px;
@@ -46,8 +46,8 @@
 }
 
 .dealer .main {
-    text-align: center;
-    padding-top: 20px;
+    // text-align: center;
+    // padding-top: 20px;
     color: white;
 
     .dashboard {

@@ -18,6 +18,28 @@ import {
 
     CHANGE_SELECTED_PREAPPROVAL_REQUEST,
     CHANGE_SELECTED_PREAPPROVAL_FAILED,
+
+
+
+
+
+
+
+
+    GET_DEALERS_REQUESTS,
+    GET_DEALERS_REQUESTS_SUCCESS,
+    GET_DEALERS_REQUESTS_FAILED,
+    SET_DEALER_REQUEST,
+    ADD_DEALER_REQUEST,
+    ADD_DEALER_REQUEST_SUCCESS,
+    ADD_DEALER_REQUEST_FAILED,
+    UPDATE_DEALER_REQUEST,
+    UPDATE_DEALER_REQUEST_SUCCESS,
+    UPDATE_DEALER_REQUEST_FAILED,
+    DELETE_DEALER_REQUEST,
+    DELETE_DEALER_REQUEST_SUCCESS,
+    DELETE_DEALER_REQUEST_FAILED,
+
 } from '../actions/admin';
 
 const INIT_STATE = {
@@ -34,6 +56,20 @@ const INIT_STATE = {
     selectedFunding: {},
     submitPreapprovalLoading: false,
     setFundingLoading: false,
+
+
+
+
+    dealers: {
+        loading: false,
+        data: []
+    },
+    selectedDealer: {},
+    actionLoading: false,
+
+
+
+
 };
 
 export default function(state = INIT_STATE, action){
@@ -147,6 +183,96 @@ export default function(state = INIT_STATE, action){
                 ...state,
                 setFundingLoading: false
             }
+
+
+
+
+
+        
+        case GET_DEALERS_REQUESTS:
+            return {
+                ...state,
+                dealers: {
+                    loading: true,
+                    data: []
+                }
+            }
+        case GET_DEALERS_REQUESTS_SUCCESS:
+            return {
+                ...state,
+                dealers: {
+                    loading: false,
+                    data: action.payload.data
+                }
+            }
+        case GET_DEALERS_REQUESTS_FAILED:
+            return {
+                ...state,
+                dealers: {
+                    loading: false,
+                    data: []
+                }
+            }
+        case SET_DEALER_REQUEST:
+            return {
+                ...state,
+                selectedDealer: action.payload
+            }
+        case UPDATE_DEALER_REQUEST:
+            return {
+                ...state,
+                actionLoading: true
+            }
+        case UPDATE_DEALER_REQUEST_SUCCESS:
+            return {
+                ...state,
+                selectedDealer: {},
+                actionLoading: false
+            }
+        case UPDATE_DEALER_REQUEST_FAILED:
+            return {
+                ...state,
+                actionLoading: false
+            }
+        case ADD_DEALER_REQUEST:
+            return {
+                ...state,
+                actionLoading: true
+            }
+        case ADD_DEALER_REQUEST_SUCCESS:
+            return {
+                ...state,
+                actionLoading: false
+            }
+        case ADD_DEALER_REQUEST_FAILED:
+            return {
+                ...state,
+                actionLoading: false
+            }
+        case DELETE_DEALER_REQUEST:
+            return {
+                ...state,
+                actionLoading: true
+            }
+        case DELETE_DEALER_REQUEST_SUCCESS:
+
+            const index = state.dealers.data.findIndex(d => d.id == action.payload)
+            state.dealers.data.splice(index, 1);
+
+            return {
+                ...state,
+                actionLoading: false,
+            }
+        case DELETE_DEALER_REQUEST_FAILED:
+            return {
+                ...state,
+                actionLoading: false
+            }
+
+
+
+
+
         default:
             return state;
     }

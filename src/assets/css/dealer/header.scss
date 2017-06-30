@@ -1,12 +1,13 @@
 .dealer {
 
     .header {
-        min-height: 72px;
+        height: 48px;
         background-color: #3a5b77;
         color: white;
         display: flex;
         flex-direction: row;
-        flex-grow: 3;
+        flex-grow: 3;   
+        border-bottom: 3px solid #B2D8F7;
 
         .header-menu-content {
             background: #273947;
@@ -14,7 +15,6 @@
 
         img {
             cursor: pointer;
-            margin: 0px 5px;
         }
 
         .header-left, .header-center, .header-right {
@@ -24,7 +24,7 @@
 
         .header-left {
             text-align: left;
-            padding-left: 20px;
+            padding-left: 12px;
         }
 
         .header-center {
@@ -38,7 +38,7 @@
 
         .header-right {
             text-align: right;
-            padding-right: 20px;       
+            padding-right: 12px;       
         }
     }
 
@@ -51,17 +51,19 @@
 
     .header {
         background-color: #273947;
+        border-bottom: 3px solid #B2D8F7;
     }
 }
 
 .fix-issue-section {
     .header {
-        min-height: 72px;
+        min-height: 48px;
         background-color: #3a5b77;
         color: white;
         display: flex;
         flex-direction: row;
         flex-grow: 3;
+        border-bottom: 3px solid #B2D8F7;
 
         .header-menu-content {
             background: #273947;
@@ -69,7 +71,6 @@
 
         img {
             cursor: pointer;
-            margin: 0px 5px;
         }
 
         .header-left, .header-center, .header-right {
@@ -79,7 +80,7 @@
 
         .header-left {
             text-align: left;
-            padding-left: 20px;
+            padding-left: 12px;
         }
 
         .header-center {
@@ -93,7 +94,7 @@
 
         .header-right {
             text-align: right;
-            padding-right: 20px;       
+            padding-right: 12px;       
         }
     }
 }
