@@ -378,7 +378,7 @@ function AddDealer(props) {
                             <Dropdown
                                 name={dealer.state ? "state" : "dealer_address_state"}
                                 type="dropdown"
-                                // defaultValue={dealer.state ? dealer.state : ''}
+                                defaultValue={dealer.state ? dealer.state : ''}
                                 label="State"
                                 defaultText="State"
                                 required={true}
