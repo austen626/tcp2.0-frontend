@@ -54,7 +54,7 @@ export function updateStaff(history, data) {
             type: UPDATE_STAFFS_REQUEST,
         })
         try {
-            await API.post(`/accounts/update-staff`, { ...data });
+            await API.post(`/accounts/update-user`, { ...data });
             dispatch({
                 type: UPDATE_STAFFS_REQUEST_SUCCESS,
                 payload: ''

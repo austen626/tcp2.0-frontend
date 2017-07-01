@@ -142,7 +142,7 @@ function AddStaff(props) {
                                     className="radio-width"
                                     defaultValue="sales"
                                     handleChange={() => hideError()}
-                                    checked={staff.role && staff.role[0] == 'sales'}
+                                    checked={staff.role && staff.role[0] == 'sales' ? true : null}
                                 />
                                 <label for="sales" class="form-label " id="sales-label">Salesperson</label>  
                             </Form.Group>
@@ -154,7 +154,7 @@ function AddStaff(props) {
                                     className="radio-width"
                                     defaultValue="dealer"
                                     handleChange={() => hideError()}
-                                    checked={staff.role && staff.role[0] == 'dealer'}
+                                    checked={staff.role && staff.role[0] == 'dealer' ? true : null}
                                 />
                                 <label for="dealer" class="form-label " id="staff-label">Dealer</label>
                             </Form.Group>
