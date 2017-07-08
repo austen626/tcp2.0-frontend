@@ -224,6 +224,7 @@ function AddDealer(props) {
     } = props;
 
     const [validationResult, setValidationResult] = useState(null);
+    const [dealerName, setDealerName] = useState(dealer.id ? dealer.company_name : null);
 
     const handleArrowBack = () => {
         history.push('/admin/dealers')
@@ -264,7 +265,7 @@ function AddDealer(props) {
                 </HeaderLeft>
                 <HeaderCenter>
                     <div className="header-main">
-                        <img className="main-logo" src={TCPLogo} alt="" />
+                        {dealerName}
                     </div>
                 </HeaderCenter>
                 <HeaderRight></HeaderRight>
@@ -292,6 +293,7 @@ function AddDealer(props) {
                                     'empty': "Please enter Dealer Name"
                                 }}
                                 validationResult={validationResult}
+                                handleChange={(e)=>setDealerName(e.target.value)}
                             />
                         </Form.Group>
                         <div className="box">
@@ -302,11 +304,11 @@ function AddDealer(props) {
                                     regex="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
                                     defaultValue={dealer.email}
                                     label="Main Dealer User Email"
-                                    defaultText="Main Dealer User Email"
+                                    defaultText="Dealer User Email"
                                     required={true}
                                     error={{
                                         'invalid': "Please enter valid Email address",
-                                        'empty': "Please enter Main Dealer User Email"
+                                        'empty': "Please enter Dealer User Email"
                                     }}
                                     validationResult={validationResult}
                                 />
@@ -410,7 +412,7 @@ function AddDealer(props) {
                 </div>
                 <div className="footer-container">
                     <button className="secondary" onClick={() => handleArrowBack()}>Cancel</button>
-                    <button className="secondary" type="submit">{dealer.id ? 'Update' : 'Add'}</button>
+                    <button className="secondary" type="submit">{dealer.id ? 'Save' : 'Add'}</button>
                 </div>
             </form>
 

@@ -164,7 +164,7 @@ function AddStaff(props) {
                 </div>
                 <div className="footer-container">
                     <button className="secondary" onClick={() => handleArrowBack()}>Cancel</button>
-                    <button className="secondary" type="submit">{staff.id ? 'Update' : 'Add'}</button>
+                    <button className="secondary" type="submit">{staff.id ? 'Save' : 'Invite'}</button>
                 </div>
             </form>
 

@@ -94,23 +94,24 @@ class TwoFAScreen extends Component {
                         <div className="tip">
                             A text message with your code has been sent to a number ending {endCode}
                         </div>
-
-                        <div className="inputs">
-                            <div className="title">Code</div>
-                            <Form.Control
-                                className="input input-code"
-                                value={this.state.code}
-                                onChange={e => this.setState({ code: e.target.value }) }
-                            />
-                        </div>
-
-                        { this.state.error && (
-                            <div className="error">
-                                {this.state.error}
+                        <form action="javascript:void(0)" method="post" onSubmit={this.onVerify} >
+                            <div className="inputs">
+                                <div className="title">Code</div>
+                                <Form.Control
+                                    className="input input-code"
+                                    value={this.state.code}
+                                    onChange={e => this.setState({ code: e.target.value }) }
+                                />
                             </div>
-                        )}
-                        
-                        <Button onClick={this.onVerify} className="button-action">VERIFY</Button>
+
+                            { this.state.error && (
+                                <div className="error">
+                                    {this.state.error}
+                                </div>
+                            )}
+                            
+                            <Button type="submit" onClick={this.onVerify} className="button-action">VERIFY</Button>
+                        </form>
 
                         <AuthCheckbox
                             label="Don't ask again on this device"

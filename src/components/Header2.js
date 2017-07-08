@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { Button,  Row, Col } from 'react-bootstrap';
 
 import { product_options } from '../assets/options';
-import { IconArrowLeft } from  '../../assets/images';
+import { IconArrowLeft } from  '../assets/images';
+
 const iconContactAcitve = require('../assets/images/icon-contact-active.svg');
 const iconContactInAcitve = require('../assets/images/icon-contact-inactive.svg');
 const iconSummaryActive = require('../assets/images/icon-summary-active.svg');
