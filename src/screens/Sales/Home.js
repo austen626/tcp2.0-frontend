@@ -1,89 +1,143 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
-
 import Header from '../../components/Sales/Header';
-import { getMe } from '../../redux/actions/auth';
-import { getUserDetails } from '../../redux/actions/userAction';
-import { clearCustomer, changeCustomer } from '../../redux/actions/customer';
+import { Form } from 'react-bootstrap';
+import Input from '../../components/commons/input';
+import Loader from 'shared/Loader';
+import { IconHome, IconRight } from '../../assets/images';
 
-import { IconHome, IconCustomerNew, IconCustomerReorder, IconCustomerHistory } from '../../assets/images';
+function HomeScreen(props) {
 
-class HomeScreen extends Component {
+    const {
+        history,
+        avatar,
+        actionLoading,
+    } = props;
 
-    componentDidMount = () => {
-        this.props.getMe();
-        this.props.getUserDetails()
+    const [validationResult, setValidationResult] = useState(null);
+
+    const handleHomeClick = () => {
+        history.replace('/');
     }
 
-    onNewCustomer = () => {
-        this.props.clearCustomer();
-        this.props.changeCustomer({ order_type: 1 });
-        this.props.history.push('/contact');
+    const handleNextClick = () => {
+        history.replace('/applyApplication');
     }
 
-    onReorderCustomer = () => {
-        this.props.clearCustomer();
-        this.props.changeCustomer({ order_type: 2 });
-        this.props.history.push('/reorder');
-    }
+    return (
+        <div className="sales">
 
-    onPrequalify = () => {
-        this.props.history.push('/prequalify');
-    }
+            { actionLoading && <Loader />}
 
-    handleHomeClick = () => {
-        this.props.history.replace('/');
-    }
+            <Header isHome={true} history={history} avatar={avatar}>
+                {localStorage.getItem('role') && localStorage.getItem('role').indexOf('dealer') !== -1 &&
+                    <img src={IconHome} alt="home" className="icon-home" onClick={()=>handleHomeClick()} />
+                }
+            </Header>
 
-    render() {
-        return (
-            <div className="sales">
-                <Header isHome={true} history={this.props.history} avatar={this.props.avatar}>
-                    {localStorage.getItem('role') && localStorage.getItem('role').indexOf('dealer') !== -1 &&
-                        <img src={IconHome} alt="home" className="icon-home" onClick={this.handleHomeClick} />
-                    }
-                </Header>
-                <div className="home">
-                    <div className="button" onClick={this.onNewCustomer}>
-                        <div className="icon">
-                            <img className="icon-new-customer" src={IconCustomerNew} alt="new" />
+            <div className='main-box'>
+                <p className="title">ENTER CUSTOMER INFORMATION</p>
+                <p className="sub-title">Short instruction donec in semper arcu. Sed quis ante cursus, porta lectus sit amet, mollis lacus.</p>
+            </div>
+            
+
+            <form noValidate>
+                <div className="container">
+                    <div className="styled-form">
+                        <div className="box color-box">
+                            <Form.Group className="mb-18">
+                                <Input
+                                    name="email"
+                                    type="email"
+                                    regex="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
+                                    label="Applicant Email"
+                                    defaultText="Applicant Email"
+                                    required={true}
+                                    error={{
+                                        'invalid': "Please enter valid Email address",
+                                        'empty': "Please enter Applicant Email"
+                                    }}
+                                    validationResult={validationResult}
+                                />
+                            </Form.Group>
+                            <Form.Group className="mb-18">
+                                <Input
+                                    name="phone"
+                                    type="text"
+                                    label="Phone"
+                                    defaultText="999-999-9999"
+                                    regex="[0-9]{10}"
+                                    required={true}
+                                    error={{
+                                        'invalid': "Please enter 10 digit number",
+                                        'empty': "Please enter Phone number"
+                                    }}
+                                    validationResult={validationResult}
+                                />
+                            </Form.Group>
                         </div>
-                        <div className="label">NEW CUSTOMER</div>
-                    </div>
-                    <div className="button button-reorder" onClick={this.onReorderCustomer}>
-                        <div className="icon">
-                            <img className="icon-reorder-customer" src={IconCustomerReorder} alt="reorder" />
-                        </div>
-                        <div className="label">REORDER CUSTOMER</div>
-                    </div>
-                    {/* <div className="button button-reorder" onClick={this.onPrequalify}>
-                        <div className="icon">
-                            <img className="icon-prequalify" src={IconCustomerPre} alt="pre" />
-                        </div>
-                        <div className="label">PREQUALIFY</div>
-                    </div> */}
-                    <div className="button button-reorder">
-                        <div className="icon">
-                            <img className="icon-prequalify" src={IconCustomerHistory} alt="history" />
-                        </div>
-                        <div className="label">HISTORY</div>
+                        <Form.Group className="mb-18">
+                            <Input
+                                name="first_name"
+                                type="text"
+                                label="Applicant First Name"
+                                defaultText="Applicant First Name"
+                                required={true}
+                                error={{
+                                    'empty': "Please enter first name"
+                                }}
+                                validationResult={validationResult}
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-18">
+                            <Input
+                                name="last_name"
+                                type="text"
+                                label="Applicant Last Name"
+                                defaultText="Applicant Last Name"
+                                required={true}
+                                error={{
+                                    'empty': "Please enter last name"
+                                }}
+                                validationResult={validationResult}
+                            />
+                        </Form.Group>
                     </div>
                 </div>
-            </div>
-        )
-    }
+                <div className="match-found-container">
+                    <div className="title">Match Found <img src={IconRight} style={{marginLeft: 10}} /></div>
+                    <div className="details">
+                        <p className="name-details">John Smith & Carol Smith</p>
+                        <div className="row other-details">
+                            <div className="col">
+                                <span>7198 Hilltop Ave.</span>
+                                <br></br>
+                                <span>user_name@user-email.com</span>
+                            </div>
+                            <div className="col">
+                                <span>Nashua, NH 03060.</span>
+                                <br></br>
+                                <span>5690172845</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="footer-container">
+                    <button className="secondary" type="button" onClick={() => handleNextClick()}>Next</button>
+                </div>
+            </form>
+        </div>
+    )
 }
 
 const mapStateToProps = state => ({
     avatar: state.auth.avatar
 });
 
+const mapDispatchToProps = dispatch => ({
+});
+
 export default connect(
     mapStateToProps,
-    {
-        getMe,
-        changeCustomer,
-        clearCustomer,
-        getUserDetails,
-    }
+    mapDispatchToProps
 )(HomeScreen);

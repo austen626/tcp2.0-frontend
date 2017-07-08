@@ -53,8 +53,11 @@ import DealerStaffManagement from './screens/Dealer/2.0/StaffManagement';
 import DealerAddStaff from './screens/Dealer/2.0/AddStaff';
 
 
-
-
+import SalesApplyApplicationScreen from './screens/Sales/2.0/applyApplication';
+import SalesFillApplicationBasicDetailsScreen from './screens/Sales/2.0/fillApplicationBasicDetails';
+import SalesFillApplicationHomeDetailsScreen from './screens/Sales/2.0/fillApplicationHomeDetails';
+import SalesFillApplicationEmployementDetailsScreen from './screens/Sales/2.0/fillApplicationEmployementDetails';
+import SalesApplicationSummaryScreen from './screens/Sales/2.0/summary';
 
 
 
@@ -78,7 +81,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
       }
       else if(role && (role.indexOf('sales') !== -1 || role.indexOf('dealer') !== -1) && rest.path === "/")
       {
-        // return <SalesHomeScreen {...props} />;
+        return <SalesHomeScreen {...props} />;
       }
       else
       {
@@ -98,7 +101,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
           }
           else if(role && (role.indexOf('sales') !== -1 || role.indexOf('dealer') !== -1))
           {
-            // return <SalesHomeScreen {...props} />;
+            return <SalesHomeScreen {...props} />;
           }
         }
       }
@@ -176,6 +179,14 @@ function App() {
 
         <PrivateRoute exact role="dealer" path="/dealer/staff" component={DealerStaffManagement} />
         <PrivateRoute exact role="dealer" path="/dealer/addStaff" component={DealerAddStaff} />
+
+
+        <PrivateRoute exact role="sales" path="/" component={SalesHomeScreen} />
+        <PrivateRoute exact role="sales" path="/applyApplication" component={SalesApplyApplicationScreen} />
+        <PrivateRoute exact role="sales" path="/applyApplicationBasicDetails" component={SalesFillApplicationBasicDetailsScreen} />
+        <PrivateRoute exact role="sales" path="/applyApplicationHomeDetails" component={SalesFillApplicationHomeDetailsScreen} />
+        <PrivateRoute exact role="sales" path="/applyApplicationEmployement" component={SalesFillApplicationEmployementDetailsScreen} />
+        <PrivateRoute exact role="sales" path="/applyApplicationSummary" component={SalesApplicationSummaryScreen} />
 
 
         

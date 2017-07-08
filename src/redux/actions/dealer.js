@@ -62,7 +62,7 @@ export function updateStaff(history, data) {
             pushNotification(notificationMsg.REQUEST_SUCCESS, 'success', 'TOP_RIGHT', 3000);
             history && history.push('/dealer/staff');
         } catch (error) {
-            pushNotification('Some Thing Went Wrong', 'error', 'TOP_RIGHT', 3000);
+            pushNotification(error.response.data.error, 'error', 'TOP_RIGHT', 3000);
             dispatch({
                 type: UPDATE_STAFFS_REQUEST_FAILED,
             })
@@ -85,7 +85,7 @@ export function addStaff(history, data) {
             pushNotification(notificationMsg.REQUEST_SUCCESS, 'success', 'TOP_RIGHT', 3000);
             history && history.push('/dealer/staff');
         } catch (error) {
-            pushNotification('Some Thing Went Wrong', 'error', 'TOP_RIGHT', 3000);
+            pushNotification(error.response.data.error, 'error', 'TOP_RIGHT', 3000);
             dispatch({
                 type: ADD_STAFFS_REQUEST_FAILED,
             })
@@ -107,7 +107,7 @@ export function deleteStaff(id) {
             })
             pushNotification(notificationMsg.REQUEST_SUCCESS, 'success', 'TOP_RIGHT', 3000);
         } catch (error) {
-            pushNotification('Some Thing Went Wrong', 'error', 'TOP_RIGHT', 3000);
+            pushNotification(error.response.data.error, 'error', 'TOP_RIGHT', 3000);
             dispatch({
                 type: DELETE_STAFFS_REQUEST_FAILED,
             })

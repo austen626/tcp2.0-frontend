@@ -76,40 +76,42 @@ class LoginScreen extends Component {
                     isLoading && <Loader />
                 }
                 <div className="wrapper login-page">
-                    <div className="inputs">
-                        <div className="title title-email">Email</div>
-                        <Form.Control
-                            className="input input-email"
-                            value={this.state.email}
-                            onChange={e => this.setState({ email: e.target.value }) }
-                            isInvalid={this.state.invalidEmail}
-                        />
-                        <div className="title title-password">
-                            Password
-                        </div>
-                        <div className="password">
+                    <form action="javascript:void(0)" method="post" onSubmit={this.onLogin} >
+                        <div className="inputs">
+                            <div className="title title-email">Email</div>
                             <Form.Control
-                                className="input input-password"
-                                type={this.state.passwordEye ? "password" : "text"}
-                                value={this.state.password}
-                                onChange={e => this.setState({ password: e.target.value }) }
-                                isInvalid={this.state.invalidPassword}
+                                className="input input-email"
+                                value={this.state.email}
+                                onChange={e => this.setState({ email: e.target.value }) }
+                                isInvalid={this.state.invalidEmail}
                             />
-                            <img
-                                src={this.state.passwordEye ? require('../../assets/images/eye_show.svg') : require('../../assets/images/eye_hide.svg')}
-                                alt="logo"
-                                onClick={this.onEye}
-                            />
-                        </div>
-                        { this.state.error && (
-                            <div className="error">
-                                {this.state.error}
+                            <div className="title title-password">
+                                Password
                             </div>
-                        )}
-                    </div>
-                    <div>
-                        <Button onClick={this.onLogin} className="button-action">LOGIN</Button>
-                    </div>
+                            <div className="password">
+                                <Form.Control
+                                    className="input input-password"
+                                    type={this.state.passwordEye ? "password" : "text"}
+                                    value={this.state.password}
+                                    onChange={e => this.setState({ password: e.target.value }) }
+                                    isInvalid={this.state.invalidPassword}
+                                />
+                                <img
+                                    src={this.state.passwordEye ? require('../../assets/images/eye_show.svg') : require('../../assets/images/eye_hide.svg')}
+                                    alt="logo"
+                                    onClick={this.onEye}
+                                />
+                            </div>
+                            { this.state.error && (
+                                <div className="error">
+                                    {this.state.error}
+                                </div>
+                            )}
+                        </div>
+                        <div>
+                            <Button type="submit" onClick={this.onLogin} className="button-action">LOGIN</Button>
+                        </div>
+                    </form>
 
                     <Row className="actions">
                         <Col xs={6} className="remember-me">
