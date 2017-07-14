@@ -143,7 +143,7 @@ export function inviteStaffRequest(action) {
             pushNotification(message.INVITE_SUBMISSION_SUCCESS, 'success', 'TOP_RIGHT', 3000);
             
         } catch (error) {
-            error && error.response && pushNotification(error.response.data.message, 'error', 'TOP_RIGHT', 3000);
+            error && error.response && pushNotification(error.message, 'error', 'TOP_RIGHT', 3000);
             dispatch({
                 type: INVITE_STAFF_FAILED
             })

@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Form } from 'react-bootstrap';
-import Header, { HeaderLeft, HeaderCenter, HeaderRight } from '../../../components/Dealer/Header';
-import { TCPLogo, IconArrowLeft, IconContactAcitve } from '../../../assets/images';
-import Input from '../../../components/commons/input';
-import Checkbox from '../../../components/commons/checkbox';
+import Header, { HeaderLeft, HeaderCenter, HeaderRight } from '../../components/Dealer/Header';
+import { TCPLogo, IconArrowLeft, IconContactAcitve } from '../../assets/images';
+import Input from '../../components/commons/input';
+import Checkbox from '../../components/commons/checkbox';
 import Loader from 'shared/Loader';
 
-import { getFromData } from '../../../components/commons/utility';
-import { updateCustomer } from '../../../redux/actions/sales';
+import { getFromData } from '../../components/commons/utility';
+import { updateCustomer } from '../../redux/actions/sales';
 
 function AddDealer(props) {
 
@@ -41,7 +41,7 @@ function AddDealer(props) {
     }
 
     const handleArrowBack = () => {
-        history.replace('/applyApplicationHomeDetails');   
+        history.replace('/home');   
     }
 
     const handleSubmit = evt => {
@@ -93,7 +93,7 @@ function AddDealer(props) {
                     }
                 }
 
-                updateCustomer(history, '/applyApplicationSummary', temp_customer)
+                updateCustomer(history, '/thankyou', temp_customer)
             }
         }
     }
@@ -216,7 +216,6 @@ function AddDealer(props) {
                                         type="number"
                                         defaultValue={customer.main_app.monthly_income}
                                         label="Monthly Income"
-                                        isAmount={true}
                                         defaultText="0"
                                         required={true}
                                         error={{
@@ -285,7 +284,6 @@ function AddDealer(props) {
                                         defaultValue={customer.main_app.additional_income}
                                         label="Monthly Income"
                                         defaultText="0"
-                                        isAmount={true}
                                         required={ownOtherSourceStatus === "no" ? false : true}
                                         disabled={ownOtherSourceStatus === "no" ? true : false}
                                         error={{
@@ -408,7 +406,6 @@ function AddDealer(props) {
                                             defaultValue={customer.co_app.monthly_income}
                                             label="Monthly Income"
                                             defaultText="0"
-                                            isAmount={true}
                                             maxLength={6}
                                             required={true}
                                             error={{
@@ -477,7 +474,6 @@ function AddDealer(props) {
                                             defaultValue={customer.co_app.additional_income}
                                             label="Monthly Income"
                                             defaultText="0"
-                                            isAmount={true}
                                             required={coOtherSourceStatus === "no" ? false : true}
                                             disabled={coOtherSourceStatus === "no" ? true : false}
                                             error={{

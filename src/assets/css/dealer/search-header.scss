@@ -29,6 +29,8 @@
 }
 
 .list {
+    height: calc(100vh - 110px);
+    overflow: auto;
 
     .single-row {
         // padding: 15px;

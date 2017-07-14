@@ -49,8 +49,8 @@ export function changePasswordRequest(action) {
                 pushNotification(message.PASSWORD_CHANGE_SUCCESS, 'success', 'TOP_RIGHT', 3000);
             }
         } catch(error) {
-                if(error && error.response && error.response.data.error) {
-                    const errValue = error.response.data.error;
+                if(error && error.response && error.message) {
+                    const errValue = error.message;
                     pushNotification(errValue, 'error', 'TOP_RIGHT', 3000);    
                 } else {
                     pushNotification(error.response.data, 'error', 'TOP_RIGHT', 3000)

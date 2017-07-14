@@ -8,7 +8,6 @@ const api = axios.create({
 api.interceptors.request.use(
     async function(config) {
         const token = localStorage.getItem('token');
-        // const token = 'c4ca66faf943f4b20ddcf3bb483350cf401761e6';
         if (token) {
             config.headers['Authorization'] = `Token ${token}`;
         }
@@ -18,15 +17,15 @@ api.interceptors.request.use(
 );
 
 api.interceptors.response.use((response) => {
-    if (response.data && response.data.error) {
+    if (response && response.message) {
         return Promise.reject(response);
     }
     return response;
 }, (error) => {
-    if (!error.response) {
+    if (!error) {
         return Promise.reject(error);
     }
-    if (error.response.status === 440 || error.response.status === 401) {
+    if (error.status === 440 || error.status === 401) {
         pushNotification('Your session has expired please login again.', 'error', 'TOP_RIGHT', 3000);
     }
     return Promise.reject(error);

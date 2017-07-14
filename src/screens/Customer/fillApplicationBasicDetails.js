@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Form } from 'react-bootstrap';
-import Header, { HeaderLeft, HeaderCenter, HeaderRight } from '../../../components/Dealer/Header';
-import { TCPLogo, IconArrowLeft, IconContactAcitve } from '../../../assets/images';
-import Input from '../../../components/commons/input';
-import Dropdown from '../../../components/commons/dropdown';
-import Checkbox from '../../../components/commons/checkbox';
+import Header, { HeaderLeft, HeaderCenter, HeaderRight } from '../../components/Dealer/Header';
+import { TCPLogo, IconArrowLeft, IconContactAcitve } from '../../assets/images';
+import Input from '../../components/commons/input';
+import Dropdown from '../../components/commons/dropdown';
+import Checkbox from '../../components/commons/checkbox';
 import Loader from 'shared/Loader';
 
-import { getFromData } from '../../../components/commons/utility';
-import { updateCustomer } from '../../../redux/actions/sales';
+import { getFromData } from '../../components/commons/utility';
+import { updateCustomer } from '../../redux/actions/sales';
 
 function AddDealer(props) {
 
@@ -227,10 +227,6 @@ function AddDealer(props) {
     const [validationResult, setValidationResult] = useState(null);
     const [haveCoApplicant, setHaveCoApplicant] = useState(customer.co_enabled ? customer.co_enabled : false);
 
-    const handleArrowBack = () => {
-        history.replace('/applyApplication');        
-    }
-
     const showHideCoInputField = (check) => {
         setHaveCoApplicant(check)
     }
@@ -241,6 +237,8 @@ function AddDealer(props) {
         const formData = getFromData(evt);
 
         setValidationResult(formData.validationResult);
+
+        console.log(formData.validationResult)
 
         if (!formData.validationResult) {
 
@@ -303,7 +301,7 @@ function AddDealer(props) {
                 }
             }
 
-            updateCustomer(history, '/applyApplicationHomeDetails', temp_customer)
+            updateCustomer(history, '/home', temp_customer)
         }
     }
 
@@ -313,9 +311,7 @@ function AddDealer(props) {
             { actionLoading && <Loader />}
 
             <Header>
-                <HeaderLeft>
-                    <img src={IconArrowLeft} onClick={() => handleArrowBack()} alt="" />
-                </HeaderLeft>
+                <HeaderLeft></HeaderLeft>
                 <HeaderCenter>
                     <div className="header-main">
                         <img className="main-logo" src={TCPLogo} alt="" />
@@ -409,7 +405,7 @@ function AddDealer(props) {
                                 name="date_of_birth"
                                 type="hidden"
                                 defaultValue={customer.main_app.dobY && customer.main_app.dobM && customer.main_app.dobD ? `${customer.main_app.dobY}-${customer.main_app.dobM}-${customer.main_app.dobD}` : null}
-                                    label="Date of Birth"
+                                label="Date of Birth"
                                 className="medium-input"
                                 defaultText="MM / DD / YYYY"
                                 required={true}

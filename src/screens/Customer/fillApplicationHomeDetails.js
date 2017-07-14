@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Form } from 'react-bootstrap';
-import Header, { HeaderLeft, HeaderCenter, HeaderRight } from '../../../components/Dealer/Header';
-import { TCPLogo, IconArrowLeft, IconContactAcitve } from '../../../assets/images';
-import Input from '../../../components/commons/input';
-import Checkbox from '../../../components/commons/checkbox';
+import Header, { HeaderLeft, HeaderCenter, HeaderRight } from '../../components/Dealer/Header';
+import { TCPLogo, IconArrowLeft, IconContactAcitve } from '../../assets/images';
+import Input from '../../components/commons/input';
+import Checkbox from '../../components/commons/checkbox';
 import Loader from 'shared/Loader';
 
-import { getFromData } from '../../../components/commons/utility';
-import { updateCustomer } from '../../../redux/actions/sales';
+import { getFromData } from '../../components/commons/utility';
+import { updateCustomer } from '../../redux/actions/sales';
 
 function AddDealer(props) {
 
@@ -32,7 +32,7 @@ function AddDealer(props) {
     }
 
     const handleArrowBack = () => {
-        history.replace('/applyApplicationBasicDetails');    
+        history.replace('/basic');    
     }
 
     const handleSubmit = evt => {
@@ -72,7 +72,7 @@ function AddDealer(props) {
                     }
                 }
 
-                updateCustomer(history, '/applyApplicationEmployement', temp_customer)
+                updateCustomer(history, '/employement', temp_customer)
             }
         }
         else
@@ -179,7 +179,6 @@ function AddDealer(props) {
                                 type="number"
                                 defaultValue={customer.main_app.monthly_rent_mortgage_payment ? customer.main_app.monthly_rent_mortgage_payment : ''}
                                 label="Monthly Mortgage Payment:"
-                                isAmount={true}
                                 defaultText="0"
                                 required={true}
                                 className="single-line-input width-112"
@@ -262,7 +261,6 @@ function AddDealer(props) {
                                     defaultValue={customer.co_app.monthly_rent_mortgage_payment ? customer.co_app.monthly_rent_mortgage_payment : ''}
                                     label="Monthly Mortgage Payment:"
                                     defaultText="0"
-                                    isAmount={true}
                                     required={true}
                                     className="single-line-input width-112"
                                     error={{

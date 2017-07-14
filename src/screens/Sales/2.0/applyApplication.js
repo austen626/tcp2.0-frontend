@@ -1,40 +1,43 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import Header from '../../../components/Sales/Header';
-import { Form } from 'react-bootstrap';
-import Input from '../../../components/commons/input';
+import Header, { HeaderLeft, HeaderCenter, HeaderRight } from '../../../components/Dealer/Header';
 import Loader from 'shared/Loader';
-import { IconHome, IconList, IconSend } from '../../../assets/images';
+import { IconList, IconSend, IconArrowLeft, TCPLogo } from '../../../assets/images';
+
+import { updateApplicationFilledStatus } from '../../../redux/actions/sales';
 
 function HomeScreen(props) {
 
     const {
         history,
-        avatar,
-        actionLoading,
+        updateApplicationFilledStatus        
     } = props;
 
-    const handleHomeClick = () => {
-        this.props.history.replace('/');
-    }
-
     const handleCompleteOnDeviceClick = () => {
-        history.replace('/applyApplicationBasicDetails');
+        updateApplicationFilledStatus('in_app', history, '/applyApplicationBasicDetails');
     }
 
-    const handleNextClick = () => {
-        history.replace('/applyApplication');
+    const handleSendLink = () => {
+        updateApplicationFilledStatus('send_link', history, '/applyApplicationSummary');
+    }
+
+    const handleArrowBack = () => {
+        history.replace('/applyHome');        
     }
 
     return (
-        <div className="sales">
+        <div className="sales dealer">
 
-            { actionLoading && <Loader />}
-
-            <Header isHome={true} history={history} avatar={avatar}>
-                {localStorage.getItem('role') && localStorage.getItem('role').indexOf('dealer') !== -1 &&
-                    <img src={IconHome} alt="home" className="icon-home" onClick={()=>handleHomeClick()} />
-                }
+            <Header>
+                <HeaderLeft>
+                    <img src={IconArrowLeft} onClick={() => handleArrowBack()} alt="" />
+                </HeaderLeft>
+                <HeaderCenter>
+                    <div className="header-main">
+                        <img className="main-logo" src={TCPLogo} alt="" />
+                    </div>
+                </HeaderCenter>
+                <HeaderRight></HeaderRight>
             </Header>
 
             <div className="apply-application">
@@ -44,24 +47,23 @@ function HomeScreen(props) {
                     </div>
                     <div className="label">Complete Credit Application on this device</div>
                 </div>
-                <div className="button">
+                <div className="button" onClick={() => handleSendLink()}>
                     <div className="icon">
                         <img className="icon-reorder-customer" src={IconSend} alt="reorder" />
                     </div>
                     <div className="label">Send Credit Application Link to a Customer</div>
                 </div>
             </div>
-            
 
         </div>
     )
 }
 
 const mapStateToProps = state => ({
-    avatar: state.auth.avatar
 });
 
 const mapDispatchToProps = dispatch => ({
+    updateApplicationFilledStatus: (data, history, path) => dispatch(updateApplicationFilledStatus(data, history, path))
 });
 
 export default connect(

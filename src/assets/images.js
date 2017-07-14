@@ -90,3 +90,6 @@ export const IconList = require('./images/list.svg');
 export const IconSend = require('./images/send.svg');
 export const IconArrowLeft = require('./images/back.svg');
 export const IconListWhite = require('./images/list-white.svg');
+export const IconStatusComplete = require('./images/status-complete.svg');
+export const IconStatusSend = require('./images/status-send.svg');
+export const IconStatusSent = require('./images/status-sent.svg');

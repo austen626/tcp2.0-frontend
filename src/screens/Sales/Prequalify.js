@@ -166,7 +166,7 @@ class PrequalifyScreen extends Component {
                                     required
                                     className="form-control"
                                     pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                                    mask="999-999-9999"
+                                    mask="9999999999"
                                     maskChar=""
                                     value={phone}
                                     onChange={e => this.changeState({ phone: e.target.value })}
