@@ -50,6 +50,12 @@
     }
 }
 
+.full-dropdown-width {
+    & .options {
+        width: 91%;
+    }
+}
+
 .select-dropdown {
     width: 28.3px;
     height: 28.3px;
@@ -57,7 +63,7 @@
     padding: 6px 8px;
     border-radius: 20px;
     float: right;
-    margin: -3px -8px;
+    margin: -2px -8px;
 
     img {
         position: relative;
