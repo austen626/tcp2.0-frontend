@@ -70,7 +70,23 @@ const RadioField = (props) => {
         </Form.Group>
     )
 }
+
+const getHashValue = (attribute) => {
+    const urlHash = window.location.hash.replace("#", "");
+    if(urlHash.indexOf(attribute) === -1) {
+      return null;
+    }
+    const splitArray = urlHash.split(`${attribute}=`)
+    
+    let value = null;
+    if(splitArray[1]) {
+      value = splitArray[1].split('&')[0];
+    }
+    return value;
+}
+
 export {
     renderField,
-    RadioField
+    RadioField,
+    getHashValue
 };

@@ -27,3 +27,77 @@
         color: #cddbe8;
     }
 }
+
+.regular-checkbox {
+    width: 23px !important;
+    height: 23px !important;
+    margin-right: 10px;
+    border-radius: 4px !important;
+    display: inline-block;
+    position: relative;
+	-webkit-appearance: none;
+}
+
+.regular-checkbox:checked:after {
+	content: '';
+	position: absolute;
+    top: 3px;
+    left: 4px;
+    width: 13px;
+    height: 13px;
+    background: #009D86;
+}
+
+
+@media (max-width: 570px) {
+    
+    .regular-checkbox:checked:after {
+        left: 4px;
+    }
+}
+
+
+.radio-width .input-field {
+    height: 23px;
+}
+
+.regular-radio {
+    width: 23px !important;
+    height: 23px !important;
+    // margin-right: 7.5px;
+    display: inline-block;
+    position: relative;
+	-webkit-appearance: none;
+	padding: 9px;
+	border-radius: 50px;
+}
+
+.regular-radio:checked:after {
+	content: ' ';
+	position: absolute;
+	border-radius: 50px;
+    top: 4px;
+    left: 3px;
+    width: 13px;
+    height: 13px;
+    background: #009D86;
+}
+
+.regular-radio2:checked:after {
+	content: ' ';
+	position: absolute;
+	border-radius: 50px;
+    top: 4px;
+    left: 4px;
+    width: 13px;
+    height: 13px;
+    background: #009D86;
+}
+
+
+@media (max-width: 570px) {
+    
+    .regular-radio:checked:after {
+        left: 4px;
+    }
+}

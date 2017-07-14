@@ -271,7 +271,7 @@ function AddDealer(props) {
                 <HeaderRight></HeaderRight>
             </Header>
 
-            <form onSubmit={(e) => handleSubmit(e)} noValidate>
+            <form action="javascript:void(0)" onSubmit={(e) => handleSubmit(e)} noValidate>
                 {dealer.id &&
                     <Input
                         name="id"
@@ -290,7 +290,7 @@ function AddDealer(props) {
                                 defaultText="Dealer Name"
                                 required={true}
                                 error={{
-                                    'empty': "Please enter Dealer Name"
+                                    'empty': " "
                                 }}
                                 validationResult={validationResult}
                                 handleChange={(e)=>setDealerName(e.target.value)}
@@ -301,14 +301,14 @@ function AddDealer(props) {
                                 <Input
                                     name={dealer.id ? "email" : "dealer_email"}
                                     type="email"
-                                    regex="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
+                                    regex="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$"
                                     defaultValue={dealer.email}
                                     label="Main Dealer User Email"
                                     defaultText="Dealer User Email"
                                     required={true}
                                     error={{
                                         'invalid': "Please enter valid Email address",
-                                        'empty': "Please enter Dealer User Email"
+                                        'empty': " "
                                     }}
                                     validationResult={validationResult}
                                 />
@@ -317,14 +317,14 @@ function AddDealer(props) {
                                 <Input
                                     name={dealer.id ? "contact_email" : "dealer_contact_email"}
                                     type="email"
-                                    regex="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
+                                    regex="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$"
                                     defaultValue={dealer.contact_email}
                                     label="Dealer Contact Email"
                                     defaultText="Dealer Contact Email"
                                     required={true}
                                     error={{
                                         'invalid': "Please enter valid Email address",
-                                        'empty': "Please enter Dealer Contact Email"
+                                        'empty': " "
                                     }}
                                     validationResult={validationResult}
                                 />
@@ -333,15 +333,16 @@ function AddDealer(props) {
                         <Form.Group className="mb-18">
                             <Input
                                 name={dealer.id ? "phone" : "dealer_phone"}
-                                type="text"
+                                type="hidden"
                                 defaultValue={dealer.phone}
                                 label="Phone"
-                                defaultText="999-999-9999"
-                                regex="[0-9]{10}"
+                                defaultText="9999999999"
+                                regex="^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$"
+                                masked={true}
                                 required={true}
                                 error={{
                                     'invalid': "Please enter 10 digit number",
-                                    'empty': "Please enter Phone number"
+                                    'empty': " "
                                 }}
                                 validationResult={validationResult}
                             />
@@ -357,7 +358,7 @@ function AddDealer(props) {
                                 defaultText="Street"
                                 required={true}
                                 error={{
-                                    'empty': "Please enter Street"
+                                    'empty': " "
                                 }}
                                 validationResult={validationResult}
                             />
@@ -371,7 +372,7 @@ function AddDealer(props) {
                                 defaultText="City"
                                 required={true}
                                 error={{
-                                    'empty': "Please enter city"
+                                    'empty': " "
                                 }}
                                 validationResult={validationResult}
                             />
@@ -386,7 +387,7 @@ function AddDealer(props) {
                                 required={true}
                                 options={dropdownList}
                                 error={{
-                                    'empty': "Please enter state"
+                                    'empty': " "
                                 }}
                                 validationResult={validationResult}
                             />
@@ -396,14 +397,13 @@ function AddDealer(props) {
                                 name={dealer.id ? "zip" : "dealer_address_zipcode"}
                                 type="number"
                                 defaultValue={dealer.zip}
-                                regex="[0-9]{6}"
+                                regex="\b\d{5}\b"
                                 label="Zip Code"
                                 defaultText="Zip Code"
-                                maxLength={6}
                                 required={true}
                                 error={{
-                                    'invalid': "Please enter 6 digit number",
-                                    'empty': "Please enter zip code"
+                                    'invalid': "Please enter 5 digit number",
+                                    'empty': " "
                                 }}
                                 validationResult={validationResult}
                             />

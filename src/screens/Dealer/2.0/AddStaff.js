@@ -41,7 +41,7 @@ function AddStaff(props) {
 
         console.log(formData)
 
-        if(!formData.validationResult && formData.formData.role !== "") {
+        if(!formData.validationResult && formData.formData.role && formData.formData.role !== "") {
 
             let data = formData.formData
 
@@ -78,7 +78,7 @@ function AddStaff(props) {
                 <HeaderRight></HeaderRight>
             </Header>
 
-            <form onSubmit={(e) => handleSubmit(e)} noValidate>
+            <form action="javascript:void(0)" onSubmit={(e) => handleSubmit(e)} noValidate>
                 {staff.id && 
                     <Input 
                         name="id" 
@@ -97,7 +97,7 @@ function AddStaff(props) {
                                 defaultText = "First Name"
                                 required = {true}
                                 error = {{
-                                    'empty': "Please enter First Name"
+                                    'empty': " "
                                 }}
                                 validationResult = {validationResult}
                             />
@@ -111,7 +111,7 @@ function AddStaff(props) {
                                 defaultText = "Last Name"
                                 required = {true}
                                 error = {{
-                                    'empty': "Please enter Last Name"
+                                    'empty': " "
                                 }}
                                 validationResult = {validationResult}
                             />
@@ -120,14 +120,14 @@ function AddStaff(props) {
                             <Input 
                                 name="email"
                                 type="email"
-                                regex = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
+                                regex = "^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$"
                                 defaultValue={staff.email} 
                                 label="Email"
                                 defaultText = "Email"
                                 required = {true}
                                 error = {{
                                     'invalid': "Please enter valid Email address",
-                                    'empty': "Please enter user Email"
+                                    'empty': " "
                                 }}
                                 validationResult = {validationResult}
                             />
@@ -141,6 +141,7 @@ function AddStaff(props) {
                                     type="radio"
                                     className="radio-width"
                                     defaultValue="sales"
+                                    required={true}
                                     handleChange={() => hideError()}
                                     checked={staff.role && staff.role[0] == 'sales' ? true : null}
                                 />
@@ -153,6 +154,7 @@ function AddStaff(props) {
                                     type="radio"
                                     className="radio-width"
                                     defaultValue="dealer"
+                                    required={true}
                                     handleChange={() => hideError()}
                                     checked={staff.role && staff.role[0] == 'dealer' ? true : null}
                                 />

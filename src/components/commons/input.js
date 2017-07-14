@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import InputMask from 'react-input-mask';
+import DatePicker from 'react-datepicker';
 
 /*
  * Common Input component
@@ -31,6 +33,7 @@ const Input = (props) => {
         dataName,
         inputRef,
         min,
+        max,
         maxLength,
         labelTransform = true,
         defaultText,
@@ -43,7 +46,10 @@ const Input = (props) => {
         handleChange,
         validationResult,
         error,
-        checked
+        checked,
+        masked = false,
+        isAmount = false,
+        isDate = false
     } = props;
 
     const [ focussed, setFocussed ] = useState(!!value || !!defaultValue);
@@ -71,10 +77,31 @@ const Input = (props) => {
     };
 
     const handleInputChange = (event) => {
+        console.log(event.currentTarget.value)
 
         updateInputValue(event.currentTarget && event.currentTarget.value);
 
         typeof handleChange === 'function' && handleChange(event);
+    };
+
+    const handleDateInputChange = (data) => {
+
+        let month = data.getMonth();
+        let date = data.getDate();
+
+        if(month < 10) {
+            month = '0'+month
+        }
+
+        if(date < 10) {
+            date = '0'+date
+        }
+
+        let temp_date = data.getFullYear()+'-'+month+'-'+date
+
+        updateInputValue(temp_date);
+
+        typeof handleChange === 'function' && handleDateInputChange(date);
     };
 
     useEffect(() => {
@@ -92,8 +119,6 @@ const Input = (props) => {
 
         errorLabel = error[errorType] || null;
     }
-
-    console.log(errorLabel)
 
     const inputId = id || name,
         ariaLabelledBy = id && `${id}-label`,
@@ -116,8 +141,9 @@ const Input = (props) => {
                     </label>
                 )}
                 <div className='input-field'>
+                    {isAmount && <span className="has-amount-sign">$</span>}
                     <input
-                        className={`form-control ${ inputClass } ${ value !== '' ? 'has-input' : 'empty' } ${ showError ? 'invalid' : '' }`}
+                        className={`form-control ${ inputClass } ${ inputValue !== '' ? 'has-input' : 'empty' } ${ showError ? 'invalid' : '' } ${ isAmount ? 'has-amount' : ''}`}
                         ref={inputRef}
                         type={type}
                         id={inputId}
@@ -125,6 +151,7 @@ const Input = (props) => {
                         maxLength={maxLength}
                         name={name}
                         min={min}
+                        max={max}
                         data-name={dataName}
                         value={inputValue}
                         aria-label={ariaLabel}
@@ -141,6 +168,24 @@ const Input = (props) => {
                         checked={checked}
                         {...optionalParams}
                     />
+                    
+                    {masked &&
+                        <InputMask placeholder="(999) 999-9999" className="form-control" mask="(999) 999-9999" value={inputValue} onChange={handleInputChange} 
+                        {...optionalParams}/>
+                    }
+
+                    {isDate && 
+                        <DatePicker 
+                            todayButton="Today"
+                            selected={inputValue ? new Date(inputValue) : null}
+                            onChange={handleDateInputChange}
+                            maxDate={new Date()}
+                            className="form-control medium-input"
+                            dateFormat="MM/dd/yyyy"
+                            placeholderText="MM/DD/YYYY" 
+                        />
+                    }
+
                 </div>
             </div>
             {showError &&

@@ -188,7 +188,7 @@ class PreFilledForm extends Component {
                         autoComplete="none"
                         className="form-control"
                         pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                        mask="999-999-9999"
+                        mask="9999999999"
                         maskChar=""
                         value={app.cell_phone || ''}
                         onChange={e => this.changeFormState("cell_phone", e.target.value, role)}

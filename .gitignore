@@ -1,0 +1,12 @@
+*.iml
+*.idea
+.DS_Store
+node_modules
+*.pem
+store.db
+credentials.json
+.env
+*.code-workspace
+package-lock.json
+.nyc_output/
+coverage/

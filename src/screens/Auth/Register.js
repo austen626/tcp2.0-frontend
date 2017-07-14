@@ -141,7 +141,7 @@ class RegisterScreen extends Component {
                                 required
                                 pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                                 className="input input-mobile form-control"
-                                mask="999-999-9999"
+                                mask="9999999999"
                                 maskChar=""
                                 value={mobile}
                                 onChange={e => this.setState({ mobile: e.target.value })}

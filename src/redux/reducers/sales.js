@@ -1,3 +1,4 @@
+import actions from 'redux-form/lib/actions';
 import {
     SALES_LIST,
     GET_APP_DETAIL,
@@ -13,7 +14,37 @@ import {
     PENDING_TYPE_COUNT_ERROR,
     SET_INCOMPLETE_REMINDER_REQUEST,
     SET_INCOMPLETE_REMINDER_SUCCESS,
-    SET_INCOMPLETE_REMINDER_ERROR
+    SET_INCOMPLETE_REMINDER_ERROR,
+
+
+
+
+
+
+    SET_CUSTOMER_SEARCH_REQUEST,
+
+    GET_CUSTOMER_REQUEST,
+    GET_CUSTOMER_SUCCESS,
+    GET_CUSTOMER_FAILED,
+
+    UPDATE_CUSTOMER_SEARCH_REQUEST,
+
+    SUBMIT_CREDIT_APP_REQUEST,
+    SUBMIT_CREDIT_APP_SUCCESS,
+    SUBMIT_CREDIT_APP_FAILED,
+
+    SET_APP_FILLED_STATUS,
+
+    SUBMIT_CUSTOMER_REPONSE_REQUEST,
+    SUBMIT_CUSTOMER_REPONSE_SUCCESS,
+    SUBMIT_CUSTOMER_REPONSE_FAILED,
+
+    SEND_APP_LINK_REQUEST,
+    SEND_APP_LINK_SUCCESS,
+    SEND_APP_LINK_FAILED,
+
+
+
 } from '../actions/sales';
 
 const INIT_STATE = {
@@ -36,10 +67,40 @@ const INIT_STATE = {
         incompleteCount: 0,
     },
     pendingTypeLoading: false,
-    isReminderLoading: false
+    isReminderLoading: false,
+
+
+
+
+
+
+
+
+
+
+
+
+
+    customer: {main_app: {}, co_app: {}},
+    isCustomerFound: false,
+    searchCustomerApiInitiate: false,
+    actionLoading: false,
+    appFillStatus: 'in_app',
+    
+
+
+
+
+
+
+
+
 };
 
 export default function(state = INIT_STATE, action){
+
+    let temp_customer = {main_app: {}, co_app: {}}
+
     switch (action.type) {
         case SALES_LIST:
             return {
@@ -138,6 +199,127 @@ export default function(state = INIT_STATE, action){
                 ...state,
                 isReminderLoading: false,
             }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        case SET_CUSTOMER_SEARCH_REQUEST:
+            return {
+                ...state,
+                customer: temp_customer,
+                isCustomerFound: false,
+                searchCustomerApiInitiate: false
+            }
+        case SET_APP_FILLED_STATUS:
+            return {
+                ...state,
+                appFillStatus: action.payload,
+            }
+        case GET_CUSTOMER_REQUEST:
+            return {
+                ...state,
+                customer: temp_customer,
+                isCustomerFound: false,
+                searchCustomerApiInitiate: true,
+                actionLoading: true,
+            }
+        case GET_CUSTOMER_SUCCESS:
+            return {
+                ...state,
+                customer: action.payload.data ? action.payload.data : temp_customer,
+                isCustomerFound: action.payload.data ? true : false,
+                searchCustomerApiInitiate: true,
+                actionLoading: false,
+            }
+        case GET_CUSTOMER_FAILED:
+            return {
+                ...state,
+                customer: temp_customer,
+                isCustomerFound: false,
+                searchCustomerApiInitiate: true,
+                actionLoading: false,
+            }
+        case UPDATE_CUSTOMER_SEARCH_REQUEST:
+            return {
+                ...state,
+                customer: action.payload,
+            }
+        case SUBMIT_CREDIT_APP_REQUEST:
+            return {
+                ...state,
+                actionLoading: true,
+            }
+        case SUBMIT_CREDIT_APP_SUCCESS:
+            return {
+                ...state,
+                customer: temp_customer,
+                isCustomerFound: false,
+                actionLoading: false,
+            }
+        case SUBMIT_CREDIT_APP_FAILED:
+            return {
+                ...state,
+                customer: temp_customer,
+                isCustomerFound: false,
+                actionLoading: false,
+            }
+        case SUBMIT_CUSTOMER_REPONSE_REQUEST:
+            return {
+                ...state,
+                actionLoading: true,
+            }
+        case SUBMIT_CUSTOMER_REPONSE_SUCCESS:
+            return {
+                ...state,
+                customer: temp_customer,
+                actionLoading: false,
+            }
+        case SUBMIT_CUSTOMER_REPONSE_FAILED:
+            return {
+                ...state,
+                actionLoading: false,
+            }        
+        case SEND_APP_LINK_REQUEST:
+            return {
+                ...state,
+                actionLoading: true,
+            }
+        case SEND_APP_LINK_SUCCESS:
+            return {
+                ...state,
+                customer: temp_customer,
+                actionLoading: false,
+            }
+        case SEND_APP_LINK_FAILED:
+            return {
+                ...state,
+                actionLoading: false,
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         default:
             return state;
     }

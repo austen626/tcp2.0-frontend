@@ -1,54 +1,48 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { Form } from 'react-bootstrap';
 import Header, { HeaderLeft, HeaderCenter, HeaderRight } from '../../../components/Dealer/Header';
-import { TCPLogo, IconArrowLeft, IconContactAcitve, IconListWhite } from '../../../assets/images';
-import Input from '../../../components/commons/input';
-import Dropdown from '../../../components/commons/dropdown';
-import Checkbox from '../../../components/commons/checkbox';
+import { TCPLogo, IconArrowLeft, IconListWhite, IconStatusComplete, IconStatusSent } from '../../../assets/images';
 import Loader from 'shared/Loader';
 
-import { getFromData } from '../../../components/commons/utility';
-import { updateDealer, addDealer } from '../../../redux/actions/admin';
+import { submiCreditApplication, submiCreditApplicationByMain, updateCustomer } from '../../../redux/actions/sales';
 
 function AddDealer(props) {
 
     const {
         history,
-        dealer,
-        addDealer,
-        updateDealer,
+        customer,
+        appFillStatus,
+        submiCreditApplication,
+        submiCreditApplicationByMain,
         actionLoading,
+        updateCustomer
     } = props;
 
-    const [validationResult, setValidationResult] = useState(null);
 
     const handleArrowBack = () => {
+        if(appFillStatus == "in_app") {
+            history.replace('/applyApplicationEmployement');  
+        } else {
+            history.replace('/applyApplication');  
+        }
+    }
 
+    const handleAddCoApp = () => {
+        let temp_customer = {
+            ...customer,
+            "co_enabled": true,
+        }
+
+        updateCustomer(history, '/applyApplicationBasicDetails', temp_customer) 
     }
 
     const handleSubmit = evt => {
-
         evt.preventDefault();
-        const formData = getFromData(evt);
-
-        setValidationResult(formData.validationResult);
-
-        console.log(formData);
-
-        // if (!formData.validationResult) {
-
-        //     let data = formData.formData
-
-        //     if (dealer.id) {
-
-        //         data = { ...data, updated_email: data.email, updated_phone: data.phone }
-        //         updateDealer(history, data)
-        //     }
-        //     else {
-        //         addDealer(history, data)
-        //     }
-        // }
+        if(appFillStatus == "in_app") {
+            submiCreditApplication(history, customer);
+        } else {
+            submiCreditApplicationByMain(history, customer);
+        }
     }
 
     return (
@@ -69,68 +63,73 @@ function AddDealer(props) {
             </Header>
 
             <div className="sub-header">
-                <button>
+                {/* <button>
                     <img src={IconContactAcitve} alt=""/> 
-                </button>
+                </button> */}
                 <button className="active">
                     <img src={IconListWhite} alt=""/> 
+                    <span>Summary</span>
                     <span className='arrow-down'></span>
                 </button>
             </div>
 
-            <form onSubmit={(e) => handleSubmit(e)} noValidate>
-                {dealer.id &&
-                    <Input
-                        name="id"
-                        type="hidden"
-                        value={dealer.id}
-                    />
-                }
+            <form action="javascript:void(0)" onSubmit={(e) => handleSubmit(e)} noValidate>
+
                 <div className="container black-box">
                     <div className="styled-form">
 
+                        <div className="row other-details summary-row">
+                            <div className="col">
+                                <span><b>Name: </b> {customer.main_app.name}</span>
+                                <span><b>Address: </b> {customer.main_app.street} {customer.main_app.city} {customer.main_app.state} {customer.main_app.zip}</span>
+                                <span><b>Email: </b> {customer.main_app.email}</span>
+                                <span><b>Phone: </b> {customer.main_app.cell_phone}</span>
+                                <span className="status">Credit application</span>
+                                {appFillStatus == "in_app" ?                                             
+                                    <span className="status-icon status-icon-2">
+                                        <img src={IconStatusSent}/>
+                                        complete 
+                                    </span>
+                                    :                                                
+                                    <span className="status-icon">
+                                        <img src={IconStatusComplete}/>
+                                        sent 
+                                    </span>
+                                }
+                            </div>
+                            <div className={`col ${!customer.co_enabled ? 'button-col' : ''}`}>
 
-
-                        <div className="styled-row">
-                            <Form.Group className="styled-column mb-18">
-                                <div className="row">
-                                    <div><b>Name: </b> John Doe</div>
-                                    <div><b>Address: </b> Gold Valley 4 Houston, TX</div>
-                                    <div><b>Email: </b> john@myemail.com</div>
-                                    <div><b>Phone: </b> (123) 456-7890</div>
-                                </div>
-                            </Form.Group>
-                            <Form.Group className="styled-column mb-18">
-                                <div><b>Name: </b> John Doe</div>
-                                <div><b>Address: </b> Gold Valley 4 Houston, TX</div>
-                                <div><b>Email: </b> john@myemail.com</div>
-                                <div><b>Phone: </b> (123) 456-7890</div>
-                            </Form.Group>
+                                {customer.co_enabled ?
+                                    <>
+                                        <span><b>Name: </b> {customer.co_app.name}</span>
+                                        <span><b>Address: </b> {customer.co_app.street} {customer.main_app.city} {customer.main_app.state} {customer.main_app.zip}</span>
+                                        <span><b>Email: </b> {customer.co_app.email}</span>
+                                        <span><b>Phone: </b> {customer.co_app.cell_phone}</span>
+                                        <span className="status">Credit application</span>
+                                        {appFillStatus == "in_app" ?                                             
+                                            <span className="status-icon status-icon-2">
+                                                <img src={IconStatusSent}/>
+                                                complete 
+                                            </span>
+                                            :                                                
+                                            <span className="status-icon">
+                                                <img src={IconStatusComplete}/>
+                                                sent 
+                                            </span>
+                                        }
+                                    </>
+                                    :  
+                                    appFillStatus == "in_app" ?                                      
+                                    <button className="secondary" type="submit" onClick={() => handleAddCoApp()}>Add Co-App</button>
+                                    : ''
+                                }
+                            </div>
                         </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        
                     </div>
                 </div>
                 <div className="footer-container">
-                    <button className="secondary" type="submit">I am done</button>
+                    <button className="secondary" type="submit">{appFillStatus == "in_app" ? 'I am done' : 'Submit'}</button>
                 </div>
             </form>
 
@@ -139,13 +138,16 @@ function AddDealer(props) {
 }
 
 const mapStateToProps = state => ({
-    dealer: state.admin.selectedDealer,
-    actionLoading: state.admin.actionLoading
+    appFillStatus: state.sales.appFillStatus,
+    customer: state.sales.customer,
+    isCustomerFound: state.sales.isCustomerFound,
+    actionLoading: state.sales.actionLoading
 });
 
 const mapDispatchToProps = dispatch => ({
-    addDealer: (history, data) => dispatch(addDealer(history, data)),
-    updateDealer: (history, data) => dispatch(updateDealer(history, data))
+    submiCreditApplication: (history, data) => dispatch(submiCreditApplication(history, data)),
+    submiCreditApplicationByMain: (history, data) => dispatch(submiCreditApplicationByMain(history, data)),
+    updateCustomer: (history, path, data) => dispatch(updateCustomer(history, path, data))
 });
 
 export default connect(

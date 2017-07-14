@@ -59,11 +59,22 @@ import SalesFillApplicationHomeDetailsScreen from './screens/Sales/2.0/fillAppli
 import SalesFillApplicationEmployementDetailsScreen from './screens/Sales/2.0/fillApplicationEmployementDetails';
 import SalesApplicationSummaryScreen from './screens/Sales/2.0/summary';
 
+import CustomerApplicationWelcomeScreen from './screens/Customer/welcome';
+import CustomerApplicationThankYouScreen from './screens/Customer/thankyou';
+import CustomerApplicationBasicDetailsScreen from './screens/Customer/fillApplicationBasicDetails';
+import CustomerApplicationHomeDetailscreen from './screens/Customer/fillApplicationHomeDetails';
+import CustomerApplicationEmployementsDetailsScreen from './screens/Customer/fillApplicationEmployementDetails';
+
 
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "react-datepicker/dist/react-datepicker.css";
 import './assets/css/index.scss';
+
+
+
+import { getHashValue } from 'utils/formUtils';
+
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={(props) => {
@@ -124,6 +135,34 @@ const AuthRoute = ({ component: Component, ...rest }) => (
   }} />
 )
 
+const AuthAppRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={(props) => {
+
+    let customerToken = null;
+
+    if(props.location.pathname === "/welcome") 
+    {
+      customerToken = getHashValue("token");
+      const customerId = getHashValue("customerId");
+      const salesperson_email = getHashValue("salesperson_email");
+
+      localStorage.setItem('customerToken', customerToken);
+      localStorage.setItem('customerId', customerId);
+      localStorage.setItem('salesperson_email', salesperson_email);
+    }
+    else
+    {
+      customerToken = localStorage.getItem('customerToken');
+    }
+
+    if (customerToken !== null) {
+      return <Component {...props} />;
+    } else {
+      return <Redirect to='/login' />;
+    }
+  }} />
+)
+
 function App() {
   return (
     <Router history={history}>
@@ -173,6 +212,13 @@ function App() {
         <AuthRoute exact path="/reset-password" component={ResetPassword} />
 
 
+        <AuthAppRoute exact path="/welcome" component={CustomerApplicationWelcomeScreen} />
+        <AuthAppRoute exact path="/basic" component={CustomerApplicationBasicDetailsScreen} />
+        <AuthAppRoute exact path="/home" component={CustomerApplicationHomeDetailscreen} />
+        <AuthAppRoute exact path="/employement" component={CustomerApplicationEmployementsDetailsScreen} />
+        <AuthAppRoute exact path="/thankyou" component={CustomerApplicationThankYouScreen} />
+
+
         <PrivateRoute exact role="admin" path="/admin/dealers" component={AdminDealerManagement} />
         <PrivateRoute exact role="admin" path="/admin/addDealer" component={AdminAddDealer} />
 
@@ -182,6 +228,7 @@ function App() {
 
 
         <PrivateRoute exact role="sales" path="/" component={SalesHomeScreen} />
+        <PrivateRoute exact role="sales" path="/applyHome" component={SalesHomeScreen} />
         <PrivateRoute exact role="sales" path="/applyApplication" component={SalesApplyApplicationScreen} />
         <PrivateRoute exact role="sales" path="/applyApplicationBasicDetails" component={SalesFillApplicationBasicDetailsScreen} />
         <PrivateRoute exact role="sales" path="/applyApplicationHomeDetails" component={SalesFillApplicationHomeDetailsScreen} />

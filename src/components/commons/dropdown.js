@@ -19,7 +19,7 @@ const Dropdown = ( props ) => {
         required = false,
         handleChange,
         ariaRequired,
-        position = '',
+        position = 'top',
         multiple = false,
         label,
         validationResult,
@@ -62,7 +62,7 @@ const Dropdown = ( props ) => {
 
     const getLabel = () => {
 
-        let selectedLabel = '';
+        let selectedLabel = label;
 
         let selectedOption = selectedValue;
 
@@ -222,7 +222,7 @@ const Dropdown = ( props ) => {
                 <div className={`input-field`}>
                     <select
                         id={ id }
-                        // readOnly={ true }
+                        readOnly={ true }
                         onChange={(e) => handleSelection(e)}
                         disabled={ disabled }
                         name={ id }
@@ -241,24 +241,24 @@ const Dropdown = ( props ) => {
                                 { item.label }
                             </option>
                         )}
-                    </select>
-                    <span className="select-dropdown">
-                        <img className="main-logo" src={IconDownArrow} alt="" />
-                    </span>
-                    {/* <div className='custom-styles'>
+                    </select>                  
+                    <div className='custom-styles'>
+                        
                         <Button
                             role= 'listbox'
                             type= 'button'
                             isDisabled={ disabled }
                             className={`selected-labels ${ toggle ? 'open' : ''}${ errorLabel ? ' invalid' : ''}${ transformLabel() ? '' : ' empty'}`}
                             onClick={ handleToggle }>
-                            { getLabel() }
-                            <span className='icon-arrow-thin'></span>
+                            { getLabel() }                            
+                            <span className="select-dropdown" onClick={ handleToggle }>
+                                <img className="main-logo" src={IconDownArrow} alt="" />
+                            </span>  
                         </Button>
                         { toggle &&
                             <ul className={`options ${ multiple ? 'multiple' : ''} ${ position }`}>
                                 { options && options.map( ( item, idx ) =>
-                                    <li key={ idx }>
+                                    <li key={ idx } class={selectedValue && selectedValue == item.value ? 'active' : ''}>
                                         <Button
                                             onClick={ handleSelection }
                                             optionalParams={{
@@ -275,7 +275,7 @@ const Dropdown = ( props ) => {
                                 )}
                             </ul>
                         }
-                    </div> */}
+                    </div>
                 </div>
             </div>
             { errorLabel &&

@@ -103,11 +103,11 @@ function DealerManagements(props) {
             </Header>
 
             <div className="search-header">
-                <Form>     
+                <form action="javascript:void(0)">     
                     <Form.Group>
                         <Form.Control value={search} placeholder="Search" onChange={(e) => setSearch(e.target.value)}></Form.Control>
                     </Form.Group>
-                </Form>
+                </form>
             </div>
 
             <div className="main">
