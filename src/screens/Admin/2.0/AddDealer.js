@@ -380,6 +380,7 @@ function AddDealer(props) {
                         <Form.Group className="mb-18">
                             <Dropdown
                                 name={dealer.state ? "state" : "dealer_address_state"}
+                                className="full-dropdown-width"
                                 type="dropdown"
                                 defaultValue={dealer.state ? dealer.state : ''}
                                 label="State"

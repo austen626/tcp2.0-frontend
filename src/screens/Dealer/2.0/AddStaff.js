@@ -4,7 +4,6 @@ import { Form } from 'react-bootstrap';
 import Header, { HeaderLeft, HeaderCenter, HeaderRight } from '../../../components/Dealer/Header';
 import { TCPLogo, IconArrowLeft } from '../../../assets/images';
 import Input from '../../../components/commons/input';
-import Dropdown from '../../../components/commons/dropdown';
 import Loader from 'shared/Loader';
 
 import { getFromData } from '../../../components/commons/utility';
