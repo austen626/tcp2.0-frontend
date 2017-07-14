@@ -139,6 +139,7 @@ function AddStaff(props) {
                                     name="role"
                                     type="radio"
                                     className="radio-width"
+                                    inputClass="regular-radio"
                                     defaultValue="sales"
                                     required={true}
                                     handleChange={() => hideError()}
@@ -152,6 +153,7 @@ function AddStaff(props) {
                                     name="role"
                                     type="radio"
                                     className="radio-width"
+                                    inputClass="regular-radio"
                                     defaultValue="dealer"
                                     required={true}
                                     handleChange={() => hideError()}
