@@ -222,7 +222,7 @@ const Dropdown = ( props ) => {
                 <div className={`input-field`}>
                     <select
                         id={ id }
-                        readOnly={ true }
+                        // readOnly={ true }
                         onChange={(e) => handleSelection(e)}
                         disabled={ disabled }
                         name={ id }

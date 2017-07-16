@@ -283,7 +283,7 @@ function AddDealer(props) {
                     <div className="styled-form">
                         <Form.Group className="mb-18">
                             <Input
-                                name={dealer.id ? "company_name" : "dealer_company_name"}
+                                name="company_name"
                                 type="text"
                                 defaultValue={dealer.company_name}
                                 label="Dealer Name"
@@ -299,7 +299,7 @@ function AddDealer(props) {
                         <div className="box">
                             <Form.Group className="mb-18">
                                 <Input
-                                    name={dealer.id ? "email" : "dealer_email"}
+                                    name="email"
                                     type="email"
                                     regex="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$"
                                     defaultValue={dealer.email}
@@ -315,7 +315,7 @@ function AddDealer(props) {
                             </Form.Group>
                             <Form.Group className="mb-18">
                                 <Input
-                                    name={dealer.id ? "contact_email" : "dealer_contact_email"}
+                                    name="contact_email"
                                     type="email"
                                     regex="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$"
                                     defaultValue={dealer.contact_email}
@@ -332,7 +332,7 @@ function AddDealer(props) {
                         </div>
                         <Form.Group className="mb-18">
                             <Input
-                                name={dealer.id ? "phone" : "dealer_phone"}
+                                name="phone"
                                 type="hidden"
                                 defaultValue={dealer.phone}
                                 label="Phone"
@@ -351,7 +351,7 @@ function AddDealer(props) {
                         <span className="title">ADDRESS</span>
                         <Form.Group className="mb-18">
                             <Input
-                                name={dealer.id ? "street" : "dealer_address_street"}
+                                name="street"
                                 type="text"
                                 defaultValue={dealer.street}
                                 label="Street"
@@ -365,7 +365,7 @@ function AddDealer(props) {
                         </Form.Group>
                         <Form.Group className="mb-18">
                             <Input
-                                name={dealer.id ? "city" : "dealer_address_city"}
+                                name="city"
                                 type="text"
                                 defaultValue={dealer.city}
                                 label="City"
@@ -379,7 +379,7 @@ function AddDealer(props) {
                         </Form.Group>
                         <Form.Group className="mb-18">
                             <Dropdown
-                                name={dealer.state ? "state" : "dealer_address_state"}
+                                name="state"
                                 className="full-dropdown-width"
                                 type="dropdown"
                                 defaultValue={dealer.state ? dealer.state : ''}
@@ -395,7 +395,7 @@ function AddDealer(props) {
                         </Form.Group>
                         <Form.Group className="mb-18">
                             <Input
-                                name={dealer.id ? "zip" : "dealer_address_zipcode"}
+                                name="zip"
                                 type="number"
                                 defaultValue={dealer.zip}
                                 regex="\b\d{5}\b"
