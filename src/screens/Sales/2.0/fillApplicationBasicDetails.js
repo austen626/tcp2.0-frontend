@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, createRef } from 'react';
 import { connect } from 'react-redux';
 import { Form } from 'react-bootstrap';
+import { pushNotification } from 'utils/notification';
 import Header, { HeaderLeft, HeaderCenter, HeaderRight } from '../../../components/Dealer/Header';
 import { TCPLogo, IconArrowLeft, IconContactAcitve } from '../../../assets/images';
 import Input from '../../../components/commons/input';
@@ -224,11 +225,31 @@ function AddDealer(props) {
         ]
     } = props;
 
+
+    const [tempStreet, setTempStreet] = useState(customer ? customer.main_app.street : null);
+    const [tempCity, setTempCity] = useState(customer ? customer.main_app.city : null);
+    const [tempState, setTempState] = useState(customer ? customer.main_app.state : null);
+    const [tempZip, setTempZip] = useState(customer ? customer.main_app.zip : null);
+
+    const [coTempStreet, setCoTempStreet] = useState(customer && customer.co_enabled ? customer.co_app.street : null);
+    const [coTempCity, setCoTempCity] = useState(customer && customer.co_enabled ? customer.co_app.city : null);
+    const [coTempState, setCoTempState] = useState(customer && customer.co_enabled ? customer.co_app.state : null);
+    const [coTempZip, setCoTempZip] = useState(customer && customer.co_enabled ? customer.co_app.zip : null);
+
     const [validationResult, setValidationResult] = useState(null);
     const [haveCoApplicant, setHaveCoApplicant] = useState(customer.co_enabled ? customer.co_enabled : false);
+    const [haveCoApplicantSameAddress, setHaveCoApplicantSameAddress] = useState(customer.co_enabled && customer.co_app.co_have_co_applicant_same_address ? customer.co_app.co_have_co_applicant_same_address : false);
+
+    const updateCoApplicantAddress = (check) => {     
+        setCoTempStreet(tempStreet);
+        setCoTempCity(tempCity);
+        setCoTempState(tempState);
+        setCoTempZip(tempZip);
+        setHaveCoApplicantSameAddress(check);
+    }
 
     const handleArrowBack = () => {
-        history.replace('/applyApplication');        
+        history.replace('/applyApplication');
     }
 
     const showHideCoInputField = (check) => {
@@ -270,22 +291,23 @@ function AddDealer(props) {
                 "co_enabled": haveCoApplicant,
                 "co_app": {
                     ...customer.co_app,
-                    "name": haveCoApplicant ? data.co_first_name+" "+data.co_last_name : '',
-                    "first_name": haveCoApplicant ? data.co_first_name : '',
-                    "last_name": haveCoApplicant ? data.co_last_name : '',
-                    "email": haveCoApplicant ? data.co_email : '',
+                    "name": haveCoApplicant ? data.co_first_name+" "+data.co_last_name : null,
+                    "first_name": haveCoApplicant ? data.co_first_name : null,
+                    "last_name": haveCoApplicant ? data.co_last_name : null,
+                    "email": haveCoApplicant ? data.co_email : null,
                     "dobY": "1920",
                     "dobM": "03",
                     "dobD": "07",
-                    "ssn": haveCoApplicant ? data.co_ssn : '',
-                    "driver_license": haveCoApplicant ? data.co_driver_license : '',
-                    "no_of_dependents": haveCoApplicant ? data.co_no_of_dependents : '',
-                    "cell_phone": haveCoApplicant ? data.co_cell_phone : '',
-                    "home_phone": haveCoApplicant ? customer.co_app.home_phone : '',
-                    "street": haveCoApplicant ? data.co_street : '',
-                    "city": haveCoApplicant ? data.co_city : '',
-                    "state": haveCoApplicant ? data.co_state : '',
-                    "zip": haveCoApplicant ? data.co_zip : ''
+                    "co_have_co_applicant_same_address": haveCoApplicantSameAddress ? data.co_have_co_applicant_same_address : null,
+                    "ssn": haveCoApplicant ? data.co_ssn : null,
+                    "driver_license": haveCoApplicant ? data.co_driver_license : null,
+                    "no_of_dependents": haveCoApplicant ? data.co_no_of_dependents : null,
+                    "cell_phone": haveCoApplicant ? data.co_cell_phone : null,
+                    "home_phone": haveCoApplicant ? customer.co_app.home_phone : null,
+                    "street": haveCoApplicant ? data.co_street : null,
+                    "city": haveCoApplicant ? data.co_city : null,
+                    "state": haveCoApplicant ? data.co_state : null,
+                    "zip": haveCoApplicant ? data.co_zip : null
                 }
             }
 
@@ -298,13 +320,17 @@ function AddDealer(props) {
                     },
                     "co_app": {
                         ...temp_customer.co_app,
-                        "id": haveCoApplicant ? customer.co_app.id : ''
+                        "id": haveCoApplicant ? customer.co_app.id : null
                     }
                 }
             }
 
             updateCustomer(history, '/applyApplicationHomeDetails', temp_customer)
-        }
+        } 
+        else 
+        {
+            pushNotification('Please fill mandatory fields', 'error', 'TOP_RIGHT', 3000);
+        } 
     }
 
     return (
@@ -390,12 +416,12 @@ function AddDealer(props) {
                             <Input
                                 name="cell_phone"
                                 type="hidden"
-                                defaultValue={customer.main_app.cell_phone ? customer.main_app.cell_phone.replace(/\-/g,"") : ''}
+                                defaultValue={customer.main_app.cell_phone}
                                 label="Phone"
                                 className="medium-input"
-                                defaultText="9999999999"
+                                defaultText="(123) 456-7890"
                                 regex="^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$"
-                                masked={true}
+                                mask="(999) 999-9999"
                                 required={true}
                                 error={{
                                     'invalid': "Please enter 10 digit number",
@@ -423,13 +449,16 @@ function AddDealer(props) {
                         <Form.Group className="mb-18">
                             <Input
                                 name="ssn"
-                                type="text"
-                                defaultValue={customer.main_app.ssn}
+                                type="hidden"
                                 label="SSN"
-                                defaultText="SSN"
+                                defaultText="#"
+                                regex={customer.main_app.ssn}
+                                mask="999-999-9999"
                                 required={true}
+                                isMatched={customer.main_app.id ? true : false}
                                 error={{
-                                    'empty': " "
+                                    'empty': " ",
+                                    'invalid': "Please enter correct SSN number"
                                 }}
                                 validationResult={validationResult}
                             />
@@ -437,10 +466,12 @@ function AddDealer(props) {
                         <Form.Group className="mb-18">
                             <Input
                                 name="driver_license"
-                                type="text"
+                                type="hidden"
                                 defaultValue={customer.main_app.driver_license}
                                 label="Driver License Number"
-                                defaultText="Driver License Number"
+                                defaultText="#"
+                                mask="**************"
+                                maskChar=" "
                                 required={true}
                                 error={{
                                     'empty': " "
@@ -455,18 +486,21 @@ function AddDealer(props) {
                                 defaultValue={customer.main_app.no_of_dependents}
                                 label="Number of Dependants"
                                 defaultText="0"
+                                regex="\b\d{1,2}\b"
                                 className="small-input"
                                 required={true}
                                 error={{
-                                    'empty': " "
+                                    'empty': " ",
+                                    'invalid': "Please enter valid number"
                                 }}
                                 validationResult={validationResult}
                             />
-                        </Form.Group><Form.Group className="mb-18">
+                        </Form.Group>
+                        <Form.Group className="mb-18">
                             <Input
                                 name="street"
                                 type="text"
-                                defaultValue={customer.main_app.street}
+                                defaultValue={tempStreet}
                                 label="Street"
                                 defaultText="Street"
                                 required={true}
@@ -474,13 +508,14 @@ function AddDealer(props) {
                                     'empty': " "
                                 }}
                                 validationResult={validationResult}
+                                handleChange={(e)=>setTempStreet(e.target.value)}
                             />
                         </Form.Group>
                         <Form.Group className="mb-18">
                             <Input
                                 name="city"
                                 type="text"
-                                defaultValue={customer.main_app.city}
+                                defaultValue={tempCity}
                                 label="City"
                                 defaultText="City"
                                 required={true}
@@ -488,6 +523,7 @@ function AddDealer(props) {
                                     'empty': " "
                                 }}
                                 validationResult={validationResult}
+                                handleChange={(e)=>setTempCity(e.target.value)}
                             />
                         </Form.Group>
                         <div className="styled-row">
@@ -495,7 +531,7 @@ function AddDealer(props) {
                                 <Dropdown
                                     name="state"
                                     type="dropdown"
-                                    defaultValue={customer.main_app.state}
+                                    defaultValue={tempState}
                                     label="State"
                                     defaultText="State"
                                     required={true}
@@ -504,23 +540,24 @@ function AddDealer(props) {
                                         'empty': " "
                                     }}
                                     validationResult={validationResult}
+                                    handleChange={(e)=>setTempState(e)}
                                 />
                             </Form.Group>
                             <Form.Group className="styled-column mb-18">
                                 <Input
                                     name="zip"
                                     type="number"
-                                    defaultValue={customer.main_app.zip}
+                                    defaultValue={tempZip}
                                     regex="\b\d{5}\b"
                                     label="Zip Code"
                                     defaultText="Zip Code"
-                                    maxLength={6}
                                     required={true}
                                     error={{
                                         'invalid': " ",
                                         'empty': " "
                                     }}
                                     validationResult={validationResult}
+                                    handleChange={(e)=>setTempZip(e.target.value)}
                                 />
                             </Form.Group>
                         </div>
@@ -590,12 +627,12 @@ function AddDealer(props) {
                                 <Input
                                     name="co_cell_phone"
                                     type="hidden"
-                                    defaultValue={customer.co_app.cell_phone ? customer.co_app.cell_phone.replace(/\-/g,"") : ''}
+                                    defaultValue={customer.co_app.cell_phone}
                                     label="Phone"
                                     className="medium-input"
-                                    defaultText="9999999999"
+                                    defaultText="(123) 456-7890"
                                     regex="^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$"
-                                    masked={true}
+                                    mask="(999) 999-9999"
                                     required={haveCoApplicant ? true : false}
                                     error={{
                                         'invalid': "Please enter 10 digit number",
@@ -623,13 +660,16 @@ function AddDealer(props) {
                             <Form.Group className="mb-18">
                                 <Input
                                     name="co_ssn"
-                                    type="text"
-                                    defaultValue={customer.co_app.ssn}
+                                    type="hidden"
                                     label="SSN"
-                                    defaultText="SSN"
+                                    defaultText="#"
+                                    regex={customer.co_app.ssn}
+                                    mask="999-999-9999"
                                     required={haveCoApplicant ? true : false}
+                                    isMatched={customer.main_app.id && haveCoApplicant ? true : false}
                                     error={{
-                                        'empty': " "
+                                        'empty': " ",
+                                        'invalid': "Please enter correct SSN number"
                                     }}
                                     validationResult={validationResult}
                                 />
@@ -655,26 +695,34 @@ function AddDealer(props) {
                                     defaultValue={customer.co_app.no_of_dependents}
                                     label="Number of Dependants"
                                     defaultText="0"
+                                    regex="\b\d{1,2}\b"
                                     className="small-input"
                                     required={haveCoApplicant ? true : false}
                                     error={{
-                                        'empty': " "
+                                        'empty': " ",
+                                        'invalid': "Please enter valid number"
                                     }}
                                     validationResult={validationResult}
                                 />
                             </Form.Group>                       
-                            {/* <Form.Group className="mb-18">
+                            <Form.Group className="mb-18">
                                 <Checkbox
                                     name="co_have_co_applicant_same_address"
                                     type="checkbox"
                                     label="Same as Applicant"
+                                    checked={haveCoApplicantSameAddress ? true : null}
+                                    handleChange={(e)=>updateCoApplicantAddress(e.target.checked)}
                                 />
-                            </Form.Group> */}
+                            </Form.Group>
                             <Form.Group className="mb-18">
                                 <Input
                                     name="co_street"
                                     type="text"
-                                    defaultValue={customer.co_app.street}
+                                    {...(haveCoApplicantSameAddress ? {
+                                        value: tempStreet
+                                    } : {
+                                        defaultValue: coTempStreet
+                                    })}
                                     label="Street"
                                     defaultText="Street"
                                     required={haveCoApplicant ? true : false}
@@ -688,7 +736,11 @@ function AddDealer(props) {
                                 <Input
                                     name="co_city"
                                     type="text"
-                                    defaultValue={customer.co_app.city}
+                                    {...(haveCoApplicantSameAddress ? {
+                                        value: tempCity
+                                    } : {
+                                        defaultValue: coTempCity
+                                    })}
                                     label="City"
                                     defaultText="City"
                                     required={haveCoApplicant ? true : false}
@@ -703,7 +755,12 @@ function AddDealer(props) {
                                     <Dropdown
                                         name="co_state"
                                         type="dropdown"
-                                        defaultValue={customer.co_app.state}
+                                        defaultValue={coTempState}
+                                        {...(haveCoApplicantSameAddress ? {
+                                            value: tempState
+                                        } : {
+                                            value: coTempState
+                                        })}
                                         label="State"
                                         defaultText="State"
                                         required={haveCoApplicant ? true : false}
@@ -718,7 +775,11 @@ function AddDealer(props) {
                                     <Input
                                         name="co_zip"
                                         type="number"
-                                        defaultValue={customer.co_app.zip}
+                                        {...(haveCoApplicantSameAddress ? {
+                                            value: tempZip
+                                        } : {
+                                            defaultValue: coTempZip
+                                        })}
                                         regex="\b\d{5}\b"
                                         label="Zip Code"
                                         defaultText="Zip Code"

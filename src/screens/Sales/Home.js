@@ -1,11 +1,11 @@
-import React, { useState, useEffect, createRef } from 'react';
+import React, { useState, useEffect, createRef, useRef } from 'react';
 import { connect } from 'react-redux';
+import { pushNotification } from 'utils/notification';
 import Header from '../../components/Sales/Header';
 import { Form } from 'react-bootstrap';
 import Input from '../../components/commons/input';
 import Loader from 'shared/Loader';
 import { IconHome, IconRight } from '../../assets/images';
-import InputMask from 'react-input-mask';
 
 import { getFromData } from '../../components/commons/utility';
 import { searchCustomer, resetCustomerSearchApiInitiate, updateCustomer } from '../../redux/actions/sales';
@@ -24,21 +24,37 @@ function HomeScreen(props) {
         resetCustomerSearchApiInitiate
     } = props;
 
+    const [hitSearchApi, setHitSearchApi] = useState(false);
     const [validationResult, setValidationResult] = useState(null);
     const [applicantEmail, setApplicantEmail] = useState(isCustomerFound ? customer.main_app.email : null);
-    const [applicantPhone, setApplicantPhone] = useState(isCustomerFound ? customer.main_app.cell_phone.replace(/\-/g,"") : null);
+    const [applicantPhone, setApplicantPhone] = useState(isCustomerFound ? customer.main_app.cell_phone : null);
 
     const submitButton = createRef();
+
+    const timer = useRef(0);
 
     useEffect(() => {  
         resetCustomerSearchApiInitiate(false)
     }, [])
 
     useEffect(() => {
+        let interval = setInterval(function(){
+            timer.current = timer.current+1000;   
+            console.log(timer.current, !searchCustomerApiInitiate)   
+            if(applicantEmail && applicantPhone && !searchCustomerApiInitiate && timer.current === 3000) {
+                setHitSearchApi(!hitSearchApi);
+            }
+            if(timer.current > 5000) {
+                clearInterval(interval);
+            }
+        }, 1000)
+    })
+
+    useEffect(() => {
         if(applicantEmail && applicantPhone && !searchCustomerApiInitiate) {
             submitButton.current.click();
         }
-    }, [applicantEmail, applicantPhone])
+    }, [hitSearchApi])
 
     const handleHomeClick = () => {
         history.replace('/');
@@ -53,7 +69,7 @@ function HomeScreen(props) {
 
             setValidationResult(formData.validationResult);
             if(!formData.validationResult) {
-
+                
                 let data = formData.formData
                 searchCustomer({...data, phone: data.cell_phone})
             }           
@@ -85,7 +101,7 @@ function HomeScreen(props) {
                         "main_app": {
                             ...temp_customer.main_app,
                             "first_name": data.first_name,
-                            "last_name": data.last_name,
+                            "last_name": data.last_name
                         },
                     }
                 } else {
@@ -114,7 +130,7 @@ function HomeScreen(props) {
 
             <div className='main-box'>
                 <p className="title">ENTER CUSTOMER INFORMATION</p>
-                <p className="sub-title">Short instruction donec in semper arcu. Sed quis ante cursus, porta lectus sit amet, mollis lacus.</p>
+                <p className="sub-title">Please begin by entering your customer's email address and/or phone number. If they are already in TCP's database, the customer will appear at the bottom of the screen for you to select. Otherwise, please enter an email address and/or phone number, first name and last name to proceed.</p>
             </div>
             
 
@@ -139,6 +155,7 @@ function HomeScreen(props) {
                                     handleChange={(e) => { 
                                         setApplicantEmail(e.target.value)
                                         resetCustomerSearchApiInitiate(false) 
+                                        timer.current = 0;
                                     }}
                                 />
                             </Form.Group>
@@ -147,11 +164,10 @@ function HomeScreen(props) {
                                     name="cell_phone"
                                     type="hidden"
                                     label="Phone"
-                                    defaultText="9999999999"
+                                    defaultText="(123) 456-7890"
                                     defaultValue={applicantPhone} 
                                     regex="^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$"
-                                    // regex="\b\d{10}\b"
-                                    masked={true}
+                                    mask="(999) 999-9999"
                                     required={true}
                                     error={{
                                         'invalid': "Please enter 10 digit number",
@@ -161,6 +177,7 @@ function HomeScreen(props) {
                                     handleChange={(e) => { 
                                         setApplicantPhone(e.target.value)
                                         resetCustomerSearchApiInitiate(false) 
+                                        timer.current = 0;
                                     }}
                                 />
                             </Form.Group>
@@ -171,7 +188,7 @@ function HomeScreen(props) {
                                 type="text"
                                 label="Applicant First Name"
                                 defaultText="Applicant First Name"
-                                defaultValue={isCustomerFound ? customer.main_app.first_name : ''} 
+                                // defaultValue={isCustomerFound ? customer.main_app.first_name : null} 
                                 required={searchCustomerApiInitiate && !isCustomerFound ? true : false}
                                 error={{
                                     'empty': " "
@@ -185,7 +202,7 @@ function HomeScreen(props) {
                                 type="text"
                                 label="Applicant Last Name"
                                 defaultText="Applicant Last Name"
-                                defaultValue={isCustomerFound ? customer.main_app.last_name : ''} 
+                                // defaultValue={isCustomerFound ? customer.main_app.last_name : null} 
                                 required={searchCustomerApiInitiate && !isCustomerFound ? true : false}
                                 error={{
                                     'empty': " "
@@ -199,15 +216,15 @@ function HomeScreen(props) {
                     <div className="match-found-container">
                         <div className="title">Match Found <img src={IconRight} style={{marginLeft: 10}} /></div>
                         <div className="details">
-                            <p className="name-details">{customer.main_app.name} {customer.co_enabled ? ` & ${customer.co_app.name}` : ''}</p>
+                            <p className="name-details">{customer.main_app.name} {customer.co_enabled ? ` & ${customer.co_app.name}` : null}</p>
                             <div className="row other-details">
                                 <div className="col">
                                     <span>{customer.main_app.street}</span>
                                     <br></br>
-                                    <span>{customer.main_app.email}</span>
+                                    <span>{customer.main_app.city} {customer.main_app.state} {customer.main_app.zip}.</span>
                                 </div>
                                 <div className="col">
-                                    <span>{customer.main_app.city} {customer.main_app.state} {customer.main_app.zip}.</span>
+                                    <span>{customer.main_app.email}</span>
                                     <br></br>
                                     <span>{customer.main_app.cell_phone}</span>
                                 </div>

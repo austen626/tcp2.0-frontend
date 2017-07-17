@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Form } from 'react-bootstrap';
+import { pushNotification } from 'utils/notification';
 import Header, { HeaderLeft, HeaderCenter, HeaderRight } from '../../components/Dealer/Header';
 import { TCPLogo, IconArrowLeft, IconContactAcitve } from '../../assets/images';
 import Input from '../../components/commons/input';
@@ -29,15 +30,29 @@ function AddDealer(props) {
     
     const [coOtherSourceError, setCoOtherSourceError] = useState(false);
     const [coOtherSourceStatus, setCoOtherSourceStatus] = useState(customer.co_enabled && customer.co_app.additional_income && customer.co_app.additional_income != '0' ? "yes" : "no");
+        
+    const [customerAdditionalIncome, setCustomerAdditionalIncome] = useState(customer.main_app.source);
+    const [customerAdditionalIncomeSource, setCustomerAdditionalIncomeSource] = useState(customer.main_app.additional_income);
     
+    const [coCustomerAdditionalIncome, setCoCustomerAdditionalIncome] = useState(customer.co_enabled && customer.co_app.source ? customer.co_app.source : null);
+    const [coCustomerAdditionalIncomeSource, setCoCustomerAdditionalIncomeSource] = useState(customer.co_enabled && customer.co_app.additional_income ? customer.co_app.additional_income : null);
+
     const hideMainAppError = (data) => {
         setOtherSourceStatus(data);
         setOtherSourceError(false);
+        if(data === 'no') {
+            setCustomerAdditionalIncome(null);
+            setCustomerAdditionalIncomeSource(null);
+        }
     }
 
     const hideCoAppError = (data) => {
         setCoOtherSourceStatus(data);
         setCoOtherSourceError(false);
+        if(data === 'no') {
+            setCoCustomerAdditionalIncome(null);
+            setCoCustomerAdditionalIncomeSource(null);
+        }
     }
 
     const handleArrowBack = () => {
@@ -75,26 +90,30 @@ function AddDealer(props) {
                         "job_title": data.job_title,
                         "monthly_income": data.monthly_income,
                         "present_employer": data.present_employer,
-                        "source": data.additional_income_status == "yes" ? data.source : '',
-                        "additional_income": data.additional_income_status == "yes" ? data.additional_income : '',
+                        "source": data.additional_income_status == "yes" ? data.source : null,
+                        "additional_income": data.additional_income_status == "yes" ? data.additional_income : null,
                         "years_there_second": data.years_there_second,
                     },
                     "co_app": {
                         ...customer.co_app,
-                        "additional_income_status": customer.co_enabled ? data.co_additional_income_status : '',
+                        "additional_income_status": customer.co_enabled && !coEmployementStatusCheck ? data.co_additional_income_status : null,
                         "employement_status": customer.co_enabled ? data.co_employement_status : false,
-                        "employer_phone": customer.co_enabled ? data.co_employer_phone : '',
-                        "job_title": customer.co_enabled ? data.co_job_title : '',
-                        "monthly_income": customer.co_enabled ? data.co_monthly_income : '',
-                        "present_employer": customer.co_enabled ? data.co_present_employer : '',
-                        "source": customer.co_enabled ? data.co_additional_income_status == "yes" ? data.co_source : '' : '',
-                        "additional_income": customer.co_enabled ? data.co_additional_income_status == "yes" ? data.co_additional_income : '' : '',
-                        "years_there_second": customer.co_enabled ? data.co_years_there_second : '',
+                        "employer_phone": customer.co_enabled && !coEmployementStatusCheck ? data.co_employer_phone : null,
+                        "job_title": customer.co_enabled && !coEmployementStatusCheck ? data.co_job_title : null,
+                        "monthly_income": customer.co_enabled && !coEmployementStatusCheck ? data.co_monthly_income : null,
+                        "present_employer": customer.co_enabled && !coEmployementStatusCheck ? data.co_present_employer : null,
+                        "source": customer.co_enabled && !coEmployementStatusCheck ? data.co_additional_income_status == "yes" ? data.co_source : null : null,
+                        "additional_income": customer.co_enabled && !coEmployementStatusCheck ? data.co_additional_income_status == "yes" ? data.co_additional_income : null : null,
+                        "years_there_second": customer.co_enabled && !coEmployementStatusCheck ? data.co_years_there_second : null,
                     }
                 }
 
-                updateCustomer(history, '/thankyou', temp_customer)
+                updateCustomer(history, '/customerSummary', temp_customer)
             }
+        } 
+        else 
+        {
+            pushNotification('Please fill mandatory fields', 'error', 'TOP_RIGHT', 3000);
         }
     }
 
@@ -150,7 +169,6 @@ function AddDealer(props) {
                                         defaultValue={customer.main_app.present_employer}
                                         label="Present Employer"
                                         defaultText="Present Employer"
-                                        maxLength={6}
                                         required={true}
                                         error={{
                                             'empty': " "
@@ -196,11 +214,11 @@ function AddDealer(props) {
                                     <Input
                                         name="employer_phone"
                                         type="hidden"
-                                        defaultValue={customer.main_app.employer_phone ? customer.main_app.employer_phone.replace(/\-/g,"") : ''}
+                                        defaultValue={customer.main_app.employer_phone ? customer.main_app.employer_phone : null}
                                         label="Employer's Phone Number"
-                                        defaultText="9999999999"
+                                        defaultText="(123) 456-7890"
                                         regex="^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$"
-                                        masked={true}
+                                        mask="(999) 999-9999"
                                         required={true}
                                         error={{
                                             'invalid': "Please enter 10 digit number",
@@ -260,40 +278,45 @@ function AddDealer(props) {
                                 <div class={`error-label ${ownOtherSourceError ? "show" : "hide"}`}>Please select details</div>
                             </div>
 
-                            <div className="styled-row">
-                                <Form.Group className="styled-column mb-18">
-                                    <Input
-                                        name="source"
-                                        type="text"
-                                        defaultValue={customer.main_app.source}
-                                        label="Source"
-                                        defaultText="Source"
-                                        required={ownOtherSourceStatus === "no" ? false : true}
-                                        disabled={ownOtherSourceStatus === "no" ? true : false}
-                                        error={{
-                                            'empty': " "
-                                        }}
-                                        validationResult={validationResult}
-                                        optionalParams = {{style:{width: 204}}}
-                                    />
-                                </Form.Group>
-                                <Form.Group className="styled-column mb-18">
-                                    <Input
-                                        name="additional_income"
-                                        type="number"
-                                        defaultValue={customer.main_app.additional_income}
-                                        label="Monthly Income"
-                                        defaultText="0"
-                                        required={ownOtherSourceStatus === "no" ? false : true}
-                                        disabled={ownOtherSourceStatus === "no" ? true : false}
-                                        error={{
-                                            'empty': " "
-                                        }}
-                                        validationResult={validationResult}
-                                        optionalParams = {{style:{width: 118}}}
-                                    />
-                                </Form.Group>
-                            </div>
+
+                            {ownOtherSourceStatus === "yes" &&
+
+                                <div className="styled-row">
+                                    <Form.Group className="styled-column mb-18">
+                                        <Input
+                                            name="source"
+                                            type="text"
+                                            defaultValue={customerAdditionalIncomeSource}
+                                            label="Source"
+                                            defaultText="Source"
+                                            required={ownOtherSourceStatus === "no" ? false : true}
+                                            disabled={ownOtherSourceStatus === "no" ? true : false}
+                                            error={{
+                                                'empty': " "
+                                            }}
+                                            validationResult={validationResult}
+                                            optionalParams = {{style:{width: 204}}}
+                                        />
+                                    </Form.Group>
+                                    <Form.Group className="styled-column mb-18">
+                                        <Input
+                                            name="additional_income"
+                                            type="number"
+                                            defaultValue={customerAdditionalIncome}
+                                            label="Monthly Income"
+                                            defaultText="0"
+                                            isAmount={true}
+                                            required={ownOtherSourceStatus === "no" ? false : true}
+                                            disabled={ownOtherSourceStatus === "no" ? true : false}
+                                            error={{
+                                                'empty': " "
+                                            }}
+                                            validationResult={validationResult}
+                                            optionalParams = {{style:{width: 118}}}
+                                        />
+                                    </Form.Group>
+                                </div>
+                            }
 
                             </>
                         }
@@ -339,7 +362,6 @@ function AddDealer(props) {
                                             defaultValue={customer.co_app.present_employer}
                                             label="Present Employer"
                                             defaultText="Present Employer"
-                                            maxLength={6}
                                             required={true}
                                             error={{
                                                 'empty': " "
@@ -385,11 +407,11 @@ function AddDealer(props) {
                                         <Input
                                             name="co_employer_phone"
                                             type="hidden"
-                                            defaultValue={customer.co_app.employer_phone ? customer.co_app.employer_phone.replace(/\-/g,"") : ''}
+                                            defaultValue={customer.co_app.employer_phone ? customer.co_app.employer_phone : null}
                                             label="Employer's Phone Number"
-                                            defaultText="9999999999"
+                                            defaultText="(123) 456-7890"
                                             regex="^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$"
-                                            masked={true}
+                                            mask="(999) 999-9999"
                                             required={true}
                                             error={{
                                                 'invalid': "Please enter 10 digit number",
@@ -406,7 +428,6 @@ function AddDealer(props) {
                                             defaultValue={customer.co_app.monthly_income}
                                             label="Monthly Income"
                                             defaultText="0"
-                                            maxLength={6}
                                             required={true}
                                             error={{
                                                 'empty': " "
@@ -450,40 +471,45 @@ function AddDealer(props) {
                                     <div class={`error-label ${coOtherSourceError ? "show" : "hide"}`}>Please select details</div>
                                 </div>
 
-                                <div className="styled-row">
-                                    <Form.Group className="styled-column mb-18">
-                                        <Input
-                                            name="co_source"
-                                            type="text"
-                                            defaultValue={customer.co_app.source}
-                                            label="Source"
-                                            defaultText="Source"
-                                            required={coOtherSourceStatus === "no" ? false : true}
-                                            disabled={coOtherSourceStatus === "no" ? true : false}
-                                            error={{
-                                                'empty': " "
-                                            }}
-                                            validationResult={validationResult}
-                                            optionalParams = {{style:{width: 204}}}
-                                        />
-                                    </Form.Group>
-                                    <Form.Group className="styled-column mb-18">
-                                        <Input
-                                            name="co_additional_income"
-                                            type="number"
-                                            defaultValue={customer.co_app.additional_income}
-                                            label="Monthly Income"
-                                            defaultText="0"
-                                            required={coOtherSourceStatus === "no" ? false : true}
-                                            disabled={coOtherSourceStatus === "no" ? true : false}
-                                            error={{
-                                                'empty': " "
-                                            }}
-                                            validationResult={validationResult}
-                                            optionalParams = {{style:{width: 118}}}
-                                        />
-                                    </Form.Group>
-                                </div>
+                                {coOtherSourceStatus === "yes" && 
+
+                                    <div className="styled-row">
+                                        <Form.Group className="styled-column mb-18">
+                                            <Input
+                                                name="co_source"
+                                                type="text"
+                                                defaultValue={coCustomerAdditionalIncomeSource}
+                                                label="Source"
+                                                defaultText="Source"
+                                                required={coOtherSourceStatus === "no" ? false : true}
+                                                disabled={coOtherSourceStatus === "no" ? true : false}
+                                                error={{
+                                                    'empty': " "
+                                                }}
+                                                validationResult={validationResult}
+                                                optionalParams = {{style:{width: 204}}}
+                                            />
+                                        </Form.Group>
+                                        <Form.Group className="styled-column mb-18">
+                                            <Input
+                                                name="co_additional_income"
+                                                type="number"
+                                                defaultValue={coCustomerAdditionalIncome}
+                                                label="Monthly Income"
+                                                defaultText="0"
+                                                isAmount={true}
+                                                required={coOtherSourceStatus === "no" ? false : true}
+                                                disabled={coOtherSourceStatus === "no" ? true : false}
+                                                error={{
+                                                    'empty': " "
+                                                }}
+                                                validationResult={validationResult}
+                                                optionalParams = {{style:{width: 118}}}
+                                            />
+                                        </Form.Group>
+                                    </div>
+
+                                }
                             
                             </>
                             

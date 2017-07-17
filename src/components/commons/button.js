@@ -13,6 +13,7 @@ const handleClick = (e, callback) => {
 const Button = ( props ) => {
 
     const {
+        id,
         label,
         role,
         className = null,
@@ -33,6 +34,7 @@ const Button = ( props ) => {
 
         props.children ?
             <button
+                id ={ id }
                 role ={ role }
                 type = { type }
                 ref = { buttonRef }
@@ -52,6 +54,7 @@ const Button = ( props ) => {
             </button>
             :
             <button
+                id ={ id }
                 role ={ role }
                 type = { type }
                 aria-lable = { buttonTitle }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Form } from 'react-bootstrap';
+import { pushNotification } from 'utils/notification';
 import Header, { HeaderLeft, HeaderCenter, HeaderRight } from '../../../components/Dealer/Header';
 import { TCPLogo, IconArrowLeft } from '../../../assets/images';
 import Input from '../../../components/commons/input';
@@ -251,6 +252,10 @@ function AddDealer(props) {
             else {
                 addDealer(history, data)
             }
+        } 
+        else 
+        {
+            pushNotification('Please fill mandatory fields', 'error', 'TOP_RIGHT', 3000);
         }
     }
 
@@ -336,9 +341,9 @@ function AddDealer(props) {
                                 type="hidden"
                                 defaultValue={dealer.phone}
                                 label="Phone"
-                                defaultText="9999999999"
+                                defaultText="(123) 456-7890"
                                 regex="^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$"
-                                masked={true}
+                                mask="(999) 999-9999"
                                 required={true}
                                 error={{
                                     'invalid': "Please enter 10 digit number",
@@ -382,7 +387,7 @@ function AddDealer(props) {
                                 name="state"
                                 className="full-dropdown-width"
                                 type="dropdown"
-                                defaultValue={dealer.state ? dealer.state : ''}
+                                defaultValue={dealer.state ? dealer.state : null}
                                 label="State"
                                 defaultText="State"
                                 required={true}

@@ -101,3 +101,16 @@
         left: 4px;
     }
 }
+
+
+.datepicker-button {
+    color: #ccdbe7 !important;
+    border: 1.5px solid #6793B7;
+    background: #1E2C35 !important;
+    border-radius: 20px;
+    text-align: left;
+
+    &.empty {
+        color: #678fae !important;
+    }
+}

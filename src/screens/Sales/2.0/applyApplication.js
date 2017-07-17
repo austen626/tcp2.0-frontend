@@ -4,13 +4,14 @@ import Header, { HeaderLeft, HeaderCenter, HeaderRight } from '../../../componen
 import Loader from 'shared/Loader';
 import { IconList, IconSend, IconArrowLeft, TCPLogo } from '../../../assets/images';
 
-import { updateApplicationFilledStatus } from '../../../redux/actions/sales';
+import { updateApplicationFilledStatus, resetCustomerSearchApiInitiate } from '../../../redux/actions/sales';
 
 function HomeScreen(props) {
 
     const {
         history,
-        updateApplicationFilledStatus        
+        updateApplicationFilledStatus,
+        resetCustomerSearchApiInitiate      
     } = props;
 
     const handleCompleteOnDeviceClick = () => {
@@ -22,6 +23,11 @@ function HomeScreen(props) {
     }
 
     const handleArrowBack = () => {
+        history.replace('/applyHome');        
+    }
+
+    const handleHomeScreen = () => {
+        resetCustomerSearchApiInitiate(false)
         history.replace('/applyHome');        
     }
 
@@ -55,6 +61,11 @@ function HomeScreen(props) {
                 </div>
             </div>
 
+            <div className="footer-container">
+                <button className="secondary" type="submit" onClick={()=>handleHomeScreen()}>Cancel</button>
+                <button className="secondary" type="submit" onClick={()=>handleHomeScreen()}>Save & Exit</button>
+            </div>
+
         </div>
     )
 }
@@ -63,7 +74,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    updateApplicationFilledStatus: (data, history, path) => dispatch(updateApplicationFilledStatus(data, history, path))
+    updateApplicationFilledStatus: (data, history, path) => dispatch(updateApplicationFilledStatus(data, history, path)),
+    resetCustomerSearchApiInitiate: () => dispatch(resetCustomerSearchApiInitiate()),
 });
 
 export default connect(

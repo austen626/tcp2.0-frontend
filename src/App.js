@@ -64,6 +64,7 @@ import CustomerApplicationThankYouScreen from './screens/Customer/thankyou';
 import CustomerApplicationBasicDetailsScreen from './screens/Customer/fillApplicationBasicDetails';
 import CustomerApplicationHomeDetailscreen from './screens/Customer/fillApplicationHomeDetails';
 import CustomerApplicationEmployementsDetailsScreen from './screens/Customer/fillApplicationEmployementDetails';
+import CustomerSummaryScreen from './screens/Customer/summary';
 
 
 
@@ -73,7 +74,7 @@ import './assets/css/index.scss';
 
 
 
-import { getHashValue } from 'utils/formUtils';
+import { getSearchValue } from 'utils/formUtils';
 
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
@@ -142,9 +143,9 @@ const AuthAppRoute = ({ component: Component, ...rest }) => (
 
     if(props.location.pathname === "/welcome") 
     {
-      customerToken = getHashValue("token");
-      const customerId = getHashValue("customerId");
-      const salesperson_email = getHashValue("salesperson_email");
+      customerToken = getSearchValue("token");
+      const customerId = getSearchValue("customerId");
+      const salesperson_email = getSearchValue("salesperson_email");
 
       localStorage.setItem('customerToken', customerToken);
       localStorage.setItem('customerId', customerId);
@@ -216,6 +217,7 @@ function App() {
         <AuthAppRoute exact path="/basic" component={CustomerApplicationBasicDetailsScreen} />
         <AuthAppRoute exact path="/home" component={CustomerApplicationHomeDetailscreen} />
         <AuthAppRoute exact path="/employement" component={CustomerApplicationEmployementsDetailsScreen} />
+        <AuthAppRoute exact path="/customerSummary" component={CustomerSummaryScreen} />
         <AuthAppRoute exact path="/thankyou" component={CustomerApplicationThankYouScreen} />
 
 

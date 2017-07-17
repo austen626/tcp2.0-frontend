@@ -79,7 +79,7 @@ input:focus {
         }
 
         input, .selected-labels {
-            color: #ccdbe7 !important;
+            color: #ccdbe7;
             border: 1.5px solid #6793B7;
             background: #1E2C35 !important;
             border-radius: 20px;
@@ -272,11 +272,13 @@ input:focus {
         height: 35.9px;
         padding: 7px 0px;
         background-color: var(--teal);
-        text-align: center;
         font-size: 13px;
         font-weight: bold;
         line-height: 1.08;
         color: #ffffff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .details {
@@ -527,9 +529,10 @@ button.secondary {
             img {
                 float: left;
                 background: #009D86;
-                padding: 7px 6px;
+                padding: 6px 6px;
                 border-radius: 12px;
                 margin: -3px;
+                width: 22px;
             }
         }
 

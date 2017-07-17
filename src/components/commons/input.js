@@ -9,13 +9,14 @@ import DatePicker from 'react-datepicker';
  * @returns {JSX.Element}
  */
 
-const inputValidation = (inputVal, required, regexString) => {
+const inputValidation = (inputVal, required, regexString, isMatched) => {
 
     const regex = regexString && new RegExp(regexString, 'i');
 
-    const isValid = regex && inputVal ? regex.test(inputVal) : true;
+    const isValid = regex && inputVal ? regex.test(inputVal) : isMatched && regexString !== inputVal ? false : true
 
-    return !!required && inputVal === '' ? true : !isValid ? true : false;
+    return !!required && inputVal === null ? true : !isValid ? true : false;
+    
 };
 
 const Input = (props) => {
@@ -26,7 +27,7 @@ const Input = (props) => {
         id,
         value,
         defaultValue,
-        className = '',
+        className = null,
         ariaLabel,
         required = false,
         label,
@@ -40,26 +41,28 @@ const Input = (props) => {
         regex,
         optionalParams,
         disabled = false,
-        inputClass = '',
+        inputClass = null,
         onFocus,
         onBlur,
         handleChange,
         validationResult,
         error,
         checked,
-        masked = false,
+        mask = null,
+        maskChar = "_",
         isAmount = false,
-        isDate = false
+        isDate = false,
+        isMatched = false
     } = props;
 
     const [ focussed, setFocussed ] = useState(!!value || !!defaultValue);
-    const [ inputValue, setInputValue ] = useState(value || defaultValue || '');
-    const [ inputInvalid, setInputInvalid ] = useState(required && !(value));
+    const [ inputValue, setInputValue ] = useState(value || defaultValue || null);
+    const [ inputInvalid, setInputInvalid ] = useState(required && !(defaultValue));
 
-    const updateInputValue = (newVal = '') => {
+    const updateInputValue = (newVal = null) => {
 
         setInputValue(newVal);
-        setInputInvalid(inputValidation(newVal, required, regex));
+        setInputInvalid(inputValidation(newVal, required, regex, isMatched));
     };
 
     const handleFocus = () => {
@@ -77,7 +80,6 @@ const Input = (props) => {
     };
 
     const handleInputChange = (event) => {
-        console.log(event.currentTarget.value)
 
         updateInputValue(event.currentTarget && event.currentTarget.value);
 
@@ -86,22 +88,29 @@ const Input = (props) => {
 
     const handleDateInputChange = (data) => {
 
-        let month = data.getMonth();
-        let date = data.getDate();
+        if(data !== null) {
 
-        if(month < 10) {
-            month = '0'+month
+            let month = data.getMonth();
+            let date = data.getDate();
+
+            if(month < 10) {
+                month = '0'+month
+            }
+
+            if(date < 10) {
+                date = '0'+date
+            }
+
+            let temp_date = data.getFullYear()+'-'+month+'-'+date
+
+            updateInputValue(temp_date);
+
+            typeof handleChange === 'function' && handleDateInputChange(date);
         }
-
-        if(date < 10) {
-            date = '0'+date
+        else 
+        {
+            updateInputValue(null);
         }
-
-        let temp_date = data.getFullYear()+'-'+month+'-'+date
-
-        updateInputValue(temp_date);
-
-        typeof handleChange === 'function' && handleDateInputChange(date);
     };
 
     useEffect(() => {
@@ -111,7 +120,14 @@ const Input = (props) => {
         }
     });
 
-    let errorLabel = '';
+    useEffect(() => {
+
+        if ( required ) {
+            updateInputValue(defaultValue);
+        }
+    }, [required]);
+
+    let errorLabel = null;
 
     if (validationResult && validationResult[name] && error ) {
 
@@ -120,21 +136,49 @@ const Input = (props) => {
         errorLabel = error[errorType] || null;
     }
 
+    const range = (size, startAt = 0) => {
+        return [...Array(size).keys()].map(i => startAt - i);
+    }
+
+    const years = range(100, new Date().getFullYear(), 1);
+    
+    const months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+    ];
+
+    const ExampleCustomInput = React.forwardRef(
+        ({ value, onClick }, ref) => (
+          <button type="button" className={`form-control datepicker-button ${value ? null : 'empty'}`} onClick={onClick} ref={ref}>
+            {value ? value : 'MM/DD/YYYY'}
+          </button>
+        ),
+      );
+
     const inputId = id || name,
         ariaLabelledBy = id && `${id}-label`,
-        // showError = !!errorLabel && inputInvalid,
         showError = !!errorLabel && inputInvalid,
-        transform = inputValue !== '' || focussed;
+        transform = inputValue !== null || focussed;
 
     return (
         <div
-            className={`input-holder ${className} ${type} ${disabled ? 'disabled' : ''} ${showError ? 'has-error' : ''}`}
+            className={`input-holder ${className} ${type} ${disabled ? 'disabled' : null} ${showError ? 'has-error' : null}`}
         >
             <div className='input-container'>
                 {label && (
                     <label
                         htmlFor={inputId}
-                        className={`form-label ${labelTransform && transform ? 'transform' : ''
+                        className={`form-label ${labelTransform && transform ? 'transform' : null
                         }`}
                         id={ariaLabelledBy}>
                         <span dangerouslySetInnerHTML={{ __html: label }} />
@@ -143,7 +187,7 @@ const Input = (props) => {
                 <div className='input-field'>
                     {isAmount && <span className="has-amount-sign">$</span>}
                     <input
-                        className={`form-control ${ inputClass } ${ inputValue !== '' ? 'has-input' : 'empty' } ${ showError ? 'invalid' : '' } ${ isAmount ? 'has-amount' : ''}`}
+                        className={`form-control ${ inputClass } ${ inputValue !== null ? 'has-input' : 'empty' } ${ showError ? 'invalid' : null } ${ isAmount ? 'has-amount' : null}`}
                         ref={inputRef}
                         type={type}
                         id={inputId}
@@ -164,26 +208,75 @@ const Input = (props) => {
                         required={required}
                         onChange={handleInputChange}
                         data-regex={regex}
+                        data-isMatched={isMatched}
                         disabled={disabled}
                         checked={checked}
                         {...optionalParams}
                     />
                     
-                    {masked &&
-                        <InputMask placeholder="(999) 999-9999" className="form-control" mask="(999) 999-9999" value={inputValue} onChange={handleInputChange} 
+                    {mask &&
+                        <InputMask maskChar={maskChar} placeholder={defaultText} className="form-control" mask={mask} value={inputValue} onChange={handleInputChange} 
                         {...optionalParams}/>
                     }
 
                     {isDate && 
-                        <DatePicker 
-                            todayButton="Today"
-                            selected={inputValue ? new Date(inputValue) : null}
-                            onChange={handleDateInputChange}
+                        <DatePicker
                             maxDate={new Date()}
                             className="form-control medium-input"
                             dateFormat="MM/dd/yyyy"
                             placeholderText="MM/DD/YYYY" 
-                        />
+                            renderCustomHeader={({
+                                date,
+                                changeYear,
+                                changeMonth,
+                                decreaseMonth,
+                                increaseMonth,
+                                prevMonthButtonDisabled,
+                                nextMonthButtonDisabled
+                            }) => (
+                            <div
+                                style={{
+                                margin: 10,
+                                display: "flex",
+                                justifyContent: "center"
+                                }}
+                            >
+                                <button type='button' onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
+                                    {"<"}
+                                </button>
+                                <select
+                                    value={date.getFullYear()}
+                                    onChange={({ target: { value } }) => changeYear(value)}
+                                    >
+                                    {years.map(option => (
+                                        <option key={option} value={option}>
+                                            {option}
+                                        </option>
+                                    ))}
+                                </select>
+
+                                <select
+                                    value={months[date.getMonth()]}
+                                    onChange={({ target: { value } }) =>
+                                        changeMonth(months.indexOf(value))
+                                    }
+                                >
+                                    {months.map(option => (
+                                        <option key={option} value={option}>
+                                            {option}
+                                        </option>
+                                    ))}
+                                </select>
+
+                                <button type='button' onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
+                                    {">"}
+                                </button>
+                            </div>
+                            )}
+                            selected={inputValue ? new Date(inputValue) : null}
+                            onChange={handleDateInputChange}
+                            customInput={<ExampleCustomInput />}
+                            />
                     }
 
                 </div>
