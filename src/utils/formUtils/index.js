@@ -85,8 +85,23 @@ const getHashValue = (attribute) => {
     return value;
 }
 
+const getSearchValue = (attribute) => {
+    const urlHash = window.location.search.replace("?", "");
+    if(urlHash.indexOf(attribute) === -1) {
+      return null;
+    }
+    const splitArray = urlHash.split(`${attribute}=`)
+    
+    let value = null;
+    if(splitArray[1]) {
+      value = splitArray[1].split('&')[0];
+    }
+    return value;
+}
+
 export {
     renderField,
     RadioField,
-    getHashValue
+    getHashValue,
+    getSearchValue
 };

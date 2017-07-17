@@ -25,6 +25,7 @@ const Dropdown = ( props ) => {
         validationResult,
         error,
         defaultValue,
+        value,
         options,
         labelTransform = true,
         disabled = false
@@ -170,8 +171,6 @@ const Dropdown = ( props ) => {
 
         if ( validationResult && validationResult[ name ] && error ) {
 
-            console.log(validationResult)
-
             const errorType = validationResult[ name ].error;
 
             const updatedErrorLabel = error[ errorType ] || null;
@@ -196,12 +195,18 @@ const Dropdown = ( props ) => {
 
     }, [ validationResult, defaultValue ]);
 
+    useEffect(() => {
+
+            updateSelected( value );
+        
+    }, [ value ]);
+
     useEffect( () => {
         updateSelected( defaultValue || undefined );
     }, [ resetCounter ] );
 
     return (
-        <div className={`input-holder ${ className }`} ref={ container }>
+        <div className={`input-holder ${ className } ${errorLabel ? 'has-error' : null}`} ref={ container }>
             <div className='input-container dropdown scrollbar'>
                 { label && (
                     <label
@@ -242,9 +247,9 @@ const Dropdown = ( props ) => {
                             </option>
                         )}
                     </select>                  
-                    <div className='custom-styles'>
-                        
+                    <div className='custom-styles'>                        
                         <Button
+                            id={`button-${id}`}
                             role= 'listbox'
                             type= 'button'
                             isDisabled={ disabled }

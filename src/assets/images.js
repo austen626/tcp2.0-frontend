@@ -1,5 +1,5 @@
 export const TCPLogo = require('./images/TCPlogo.svg');
-export const IconHome = require('./images/icon-home.svg');
+export const IconHome2 = require('./images/icon-home.svg');
 
 export const IconProfile = require('./images/icon-profile.svg');
 export const IconProfileActive = require('./images/icon-profile-active.png');
@@ -93,3 +93,4 @@ export const IconListWhite = require('./images/list-white.svg');
 export const IconStatusComplete = require('./images/status-complete.svg');
 export const IconStatusSend = require('./images/status-send.svg');
 export const IconStatusSent = require('./images/status-sent.svg');
+export const IconHome = require('./images/home.svg');

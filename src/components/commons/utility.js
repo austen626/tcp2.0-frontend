@@ -18,9 +18,11 @@ const getFromData = (container, ignores, integerKeys) => {
 
         const regexString = dataset.regex;
 
+        const isMatched = dataset.isMatched;
+
         const regex = regexString && new RegExp(regexString, 'i');
 
-        const isValid = regex && value ? regex.test(value): true;
+        const isValid = regex && value ? regex.test(value): isMatched && regexString !== value ? false : true;
 
         const elmResult = element.hasAttribute('required') && value === '' ? { error: 'empty' } : !isValid ? { error: 'invalid' } : null;
 
@@ -38,7 +40,7 @@ const getFromData = (container, ignores, integerKeys) => {
 
             if(type === 'checkbox') 
             {
-                value = value === 'true';
+                value = element.checked;
             }
 
             if(type === 'radio' && checked) 

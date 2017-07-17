@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Form } from 'react-bootstrap';
+import { pushNotification } from 'utils/notification';
 import Header, { HeaderLeft, HeaderCenter, HeaderRight } from '../../../components/Dealer/Header';
 import { TCPLogo, IconArrowLeft, IconContactAcitve } from '../../../assets/images';
 import Input from '../../../components/commons/input';
@@ -19,15 +20,25 @@ function AddDealer(props) {
         actionLoading,
     } = props;
 
+    const [tempOwnOrRent, setTempOwnOrRent] = useState(customer ? customer.main_app.own_or_rent : null);
+    const [tempYearsThereFirst, setTempYearsThereFirst] = useState(customer ? customer.main_app.years_there_first : null);
+    const [tempMonthlyRentMortgagePayment, setTempMonthlyRentMortgagePayment] = useState(customer ? customer.main_app.monthly_rent_mortgage_payment : null);
+
+    const [tempCoOwnOrRent, setCoTempOwnOrRent] = useState(customer && customer.co_enabled ? customer.co_app.own_or_rent : null);
+
     const [validationResult, setValidationResult] = useState(null);
     const [ownRentError, setOwnRentError] = useState(false);
     const [coOwnRentError, setCoOwnRentError] = useState(false);
 
-    const hideMainAppError = () => {
+    const [haveCoApplicantSameAnswers, setHaveCoApplicantSameAnswers] = useState(customer.co_enabled && customer.co_app.have_co_applicant_with_same_answers ? customer.co_app.have_co_applicant_with_same_answers : false);
+
+    const hideMainAppError = (e) => {
+        setTempOwnOrRent(e.target.value)
         setOwnRentError(false);
     }
 
-    const hideCoAppError = () => {
+    const hideCoAppError = (e) => {
+        setCoTempOwnOrRent(e.target.value)
         setCoOwnRentError(false);
     }
 
@@ -66,9 +77,10 @@ function AddDealer(props) {
                     },
                     "co_app": {
                         ...customer.co_app,
-                        "own_or_rent": customer.co_enabled ? data.co_own_or_rent : '',
-                        "years_there_first": customer.co_enabled ? data.co_years_there_first : '',
-                        "monthly_rent_mortgage_payment": customer.co_enabled ? data.co_monthly_rent_mortgage_payment : '',
+                        "own_or_rent": customer.co_enabled ? data.co_own_or_rent : null,
+                        "years_there_first": customer.co_enabled ? data.co_years_there_first : null,
+                        "monthly_rent_mortgage_payment": customer.co_enabled ? data.co_monthly_rent_mortgage_payment : null,
+                        "have_co_applicant_with_same_answers": customer.co_enabled ? data.have_co_applicant_with_same_answers : null
                     }
                 }
 
@@ -84,7 +96,8 @@ function AddDealer(props) {
             if( customer.co_enabled && formData.formData.co_own_or_rent === undefined )
             {
                 setCoOwnRentError(true);
-            }
+            } 
+            pushNotification('Please fill mandatory fields', 'error', 'TOP_RIGHT', 3000);
         }
     }
 
@@ -132,8 +145,8 @@ function AddDealer(props) {
                                         error={{
                                             'empty': "sdsadasd"
                                         }}
-                                        checked={customer.main_app.own_or_rent && customer.main_app.own_or_rent == 'own' ? true : null}
-                                        handleChange={() => hideMainAppError()}
+                                        checked={tempOwnOrRent == 'own' ? true : null}
+                                        handleChange={(e) => hideMainAppError(e)}
                                     />
                                     <label for="own" class="form-label " id="own-label">Own</label>  
                                 </Form.Group>
@@ -149,8 +162,8 @@ function AddDealer(props) {
                                         error={{
                                             'empty': "sdsadasd"
                                         }}
-                                        checked={customer.main_app.own_or_rent && customer.main_app.own_or_rent == 'rent' ? true : null}
-                                        handleChange={() => hideMainAppError()}
+                                        checked={tempOwnOrRent == 'rent' ? true : null}
+                                        handleChange={(e) => hideMainAppError(e)}
                                     />
                                     <label for="rent" class="form-label " id="rent-label">Rent</label>
                                 </Form.Group>
@@ -162,7 +175,7 @@ function AddDealer(props) {
                             <Input
                                 name="years_there_first"
                                 type="number"
-                                defaultValue={customer.main_app.years_there_first ? customer.main_app.years_there_first : ''}
+                                defaultValue={tempYearsThereFirst}
                                 label="How many years did you live there?"
                                 defaultText="0"
                                 required={true}
@@ -171,14 +184,15 @@ function AddDealer(props) {
                                     'empty': " "
                                 }}
                                 validationResult={validationResult}
+                                handleChange={(e)=>setTempYearsThereFirst(e.target.value)}
                             />
                         </Form.Group>
                         <Form.Group className="mb-18">
                             <Input
                                 name="monthly_rent_mortgage_payment"
                                 type="number"
-                                defaultValue={customer.main_app.monthly_rent_mortgage_payment ? customer.main_app.monthly_rent_mortgage_payment : ''}
-                                label="Monthly Mortgage Payment:"
+                                defaultValue={tempMonthlyRentMortgagePayment}
+                                label={`${tempOwnOrRent === 'own' ? "Monthly Mortgage Payment:" : "Monthly Rent Payment:"}`}
                                 isAmount={true}
                                 defaultText="0"
                                 required={true}
@@ -187,6 +201,7 @@ function AddDealer(props) {
                                     'empty': " "
                                 }}
                                 validationResult={validationResult}
+                                handleChange={(e)=>setTempMonthlyRentMortgagePayment(e.target.value)}
                             />
                         </Form.Group>                
                         
@@ -196,16 +211,7 @@ function AddDealer(props) {
 
                             <span className="divider">
                                 <span className="title">Co-applicant</span>
-                            </span>
-
-                            <Form.Group className="mb-18">
-                                <Checkbox
-                                    name="have_co_applicant"
-                                    type="checkbox"
-                                    theme="light-label"
-                                    label="The answes are the same as the answers<br>given by the applicant"
-                                />
-                            </Form.Group>   
+                            </span> 
 
                             <div className="box center-box">
                                 <label class="form-label" style={{textAlign: "center", width: "100%", padding: 0}}>Do you own or rent your home?</label>
@@ -218,8 +224,8 @@ function AddDealer(props) {
                                             className="radio-width"
                                             inputClass="regular-radio"
                                             defaultValue="own"
-                                            checked={customer.co_app.own_or_rent && customer.co_app.own_or_rent == 'own' ? true : null}
-                                            handleChange={() => hideCoAppError()}
+                                            checked={tempCoOwnOrRent == 'own' ? true : null}
+                                            handleChange={(e) => hideCoAppError(e)}
                                         />
                                         <label for="co_own" class="form-label " id="co_own-label">Own</label>  
                                     </Form.Group>
@@ -231,8 +237,8 @@ function AddDealer(props) {
                                             className="radio-width"
                                             inputClass="regular-radio"
                                             defaultValue="rent"
-                                            checked={customer.co_app.own_or_rent && customer.co_app.own_or_rent == 'rent' ? true : null}
-                                            handleChange={() => hideCoAppError()}
+                                            checked={tempCoOwnOrRent == 'rent' ? true : null}
+                                            handleChange={(e) => hideCoAppError(e)}
                                         />
                                         <label for="co_rent" class="form-label " id="co_rent-label">Rent</label>
                                     </Form.Group>
@@ -241,10 +247,25 @@ function AddDealer(props) {
                             </div>
 
                             <Form.Group className="mb-18">
+                                <Checkbox
+                                    name="have_co_applicant_with_same_answers"
+                                    type="checkbox"
+                                    theme="light-label"
+                                    label="The answes are the same as the answers<br>given by the applicant"
+                                    checked={haveCoApplicantSameAnswers ? true : null}
+                                    handleChange={(e)=>setHaveCoApplicantSameAnswers(e.target.checked)}
+                                />
+                            </Form.Group>  
+
+                            <Form.Group className="mb-18">
                                 <Input
                                     name="co_years_there_first"
                                     type="number"
-                                    defaultValue={customer.co_app.years_there_first ? customer.co_app.years_there_first : ''}
+                                    {...(haveCoApplicantSameAnswers ? {
+                                        value: tempYearsThereFirst
+                                    } : {
+                                        defaultValue: customer.co_app.years_there_first ? customer.co_app.years_there_first : null
+                                    })}
                                     label="How many years did you live there?"
                                     defaultText="0"
                                     required={true}
@@ -259,8 +280,12 @@ function AddDealer(props) {
                                 <Input
                                     name="co_monthly_rent_mortgage_payment"
                                     type="number"
-                                    defaultValue={customer.co_app.monthly_rent_mortgage_payment ? customer.co_app.monthly_rent_mortgage_payment : ''}
-                                    label="Monthly Mortgage Payment:"
+                                    {...(haveCoApplicantSameAnswers ? {
+                                        value: tempMonthlyRentMortgagePayment
+                                    } : {
+                                        defaultValue: customer.co_app.monthly_rent_mortgage_payment ? customer.co_app.monthly_rent_mortgage_payment : null
+                                    })}
+                                    label={`${tempCoOwnOrRent === 'own' ? "Monthly Mortgage Payment:" : "Monthly Rent Payment:"}`}
                                     defaultText="0"
                                     isAmount={true}
                                     required={true}

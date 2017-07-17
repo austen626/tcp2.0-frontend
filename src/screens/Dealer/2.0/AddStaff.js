@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Form } from 'react-bootstrap';
+import { pushNotification } from 'utils/notification';
 import Header, { HeaderLeft, HeaderCenter, HeaderRight } from '../../../components/Dealer/Header';
 import { TCPLogo, IconArrowLeft } from '../../../assets/images';
 import Input from '../../../components/commons/input';
@@ -57,6 +58,7 @@ function AddStaff(props) {
         else if (formData.formData.role === undefined) {
 
             setShowStaffTypeError(true);
+            pushNotification('Please fill mandatory fields', 'error', 'TOP_RIGHT', 3000);
         }
     }
 

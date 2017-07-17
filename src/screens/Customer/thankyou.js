@@ -21,7 +21,7 @@ function AddDealer(props) {
 
     const handleSubmit = evt => {
         evt.preventDefault();
-        console.log('Completed');
+        alert('Thank you');
     }
 
     return (
@@ -48,7 +48,7 @@ function AddDealer(props) {
                     </div>
                 </div>
                 <div className="footer-container">
-                    {/* <button className="secondary" type="submit">Close</button> */}
+                    <button className="secondary" type="submit">Close</button>
                 </div>
             </form>
             
