@@ -90,7 +90,7 @@ const Input = (props) => {
 
         if(data !== null) {
 
-            let month = data.getMonth();
+            let month = data.getMonth()+1;
             let date = data.getDate();
 
             if(month < 10) {
@@ -102,6 +102,8 @@ const Input = (props) => {
             }
 
             let temp_date = data.getFullYear()+'-'+month+'-'+date
+
+            console.log(temp_date)
 
             updateInputValue(temp_date);
 
@@ -140,7 +142,7 @@ const Input = (props) => {
         return [...Array(size).keys()].map(i => startAt - i);
     }
 
-    const years = range(100, new Date().getFullYear(), 1);
+    const years = range(120, new Date().getFullYear(), 1);
     
     const months = [
         "January",
