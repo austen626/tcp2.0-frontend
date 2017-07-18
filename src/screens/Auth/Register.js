@@ -34,13 +34,13 @@ class RegisterScreen extends Component {
             history.push('/login')
         } else {
             this.setState({
-                email: paramsQuery.email,
+                email: paramsQuery.email.replace(' ', '+'),
                 role: paramsQuery.role,
                 inviteToken: paramsQuery.invite_token
             })
         }
-
     }
+
     handleSubmit = (event) => {
         event.preventDefault();
 
@@ -98,6 +98,7 @@ class RegisterScreen extends Component {
             email, mobile, password, passwordConfirm,
             passwordEye, passwordConfirmEye,
             validated,  passwordMismatch, error, firstName, lastName, isLoading } = this.state;
+
         return (
             <AuthContainer title="USER REGISTRATION">
                 {
