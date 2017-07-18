@@ -686,7 +686,7 @@ function AddDealer(props) {
                                                 defaultValue={customer.co_app.present_employer}
                                                 label="Present Employer"
                                                 defaultText="Present Employer"
-                                                optionalParams = {{style:{width: 231}}}
+                                                optionalParams = {{style:{width: 190}}}
                                             />
                                         </Form.Group>
                                         <Form.Group className="styled-column mb-18">
@@ -717,11 +717,11 @@ function AddDealer(props) {
                                                 name="co_employer_phone"
                                                 type="hidden"
                                                 defaultValue={customer.co_app.employer_phone}
-                                                label="Employer's Phone Number"
+                                                label="Employer's Phone No."
                                                 defaultText="(123) 456-7890"
                                                 regex="^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$"
                                                 mask="(999) 999-9999"
-                                                optionalParams = {{style:{width: 204}}}
+                                                optionalParams = {{style:{width: 145}}}
                                             />
                                         </Form.Group>
                                         <Form.Group className="styled-column mb-18">
@@ -804,20 +804,32 @@ function AddDealer(props) {
 
 
 
-
-
-
             {activeTab === 'summary_list' &&
                 <form action="javascript:void(0)" onSubmit={(e) => handleSubmit(e)} noValidate>
                     <div className="container black-box">
-                        <div className="styled-form">
+                        <div className="table-div">
+
+                            <table className="summary-row">
+                                <tr>
+                                    <td><span><b>Name: </b> {customer.main_app.name}</span></td>
+                                    <td><span>{customer.co_app.name}</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span><b>Address: </b> {customer.main_app.street} {customer.main_app.city} {customer.main_app.state} {customer.main_app.zip}</span></td>
+                                    <td><span>{customer.co_app.street} {customer.main_app.city} {customer.main_app.state} {customer.main_app.zip}</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span><b>Email: </b> {customer.main_app.email}</span></td>
+                                    <td><span>{customer.co_app.email}</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span><b>Phone: </b> {customer.main_app.cell_phone}</span></td>
+                                    <td><span>{customer.co_app.cell_phone}</span></td>
+                                </tr>
+                            </table>
 
                             <div className="row other-details summary-row">
                                 <div className="col">
-                                    <span><b>Name: </b> {customer.main_app.name}</span>
-                                    <span><b>Address: </b> {customer.main_app.street} {customer.main_app.city} {customer.main_app.state} {customer.main_app.zip}</span>
-                                    <span><b>Email: </b> {customer.main_app.email}</span>
-                                    <span><b>Phone: </b> {customer.main_app.cell_phone}</span>
                                     <span className="status">Credit application</span>
                                     {appFillStatus == "in_app" ?                                             
                                         <span className="status-icon status-icon-2">
@@ -835,10 +847,6 @@ function AddDealer(props) {
 
                                     {customer.co_enabled ?
                                         <>
-                                            <span><b>Name: </b> {customer.co_app.name}</span>
-                                            <span><b>Address: </b> {customer.co_app.street} {customer.main_app.city} {customer.main_app.state} {customer.main_app.zip}</span>
-                                            <span><b>Email: </b> {customer.co_app.email}</span>
-                                            <span><b>Phone: </b> {customer.co_app.cell_phone}</span>
                                             <span className="status">Credit application</span>
                                             {appFillStatus == "in_app" ?                                             
                                                 <span className="status-icon status-icon-2">
