@@ -383,6 +383,7 @@ export function submiCreditApplication(history, data) {
 export function submiCreditApplicationByMain(history, data) { 
 
     let temp_data = {
+        customer_id: data.main_app.id ? data.main_app.id : 0,
         customer_email: data.main_app.email,
         customer_phone: data.main_app.cell_phone,
         first_name: data.main_app.first_name,
@@ -402,7 +403,7 @@ export function submiCreditApplicationByMain(history, data) {
                 type: SEND_APP_LINK_SUCCESS,
             })
             pushNotification("Application Send Successfully", 'success', 'TOP_RIGHT', 3000);
-            history && history.push('/home'); 
+            history && history.push('/applyHome'); 
         } catch (error) {
             dispatch({
                 type: SEND_APP_LINK_FAILED,
