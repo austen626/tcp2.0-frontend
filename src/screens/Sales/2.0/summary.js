@@ -863,7 +863,7 @@ function AddDealer(props) {
                         </div>
                     </div>
                     <div className="footer-container">
-                        <button className="secondary" type="submit">{appFillStatus == "in_app" ? 'I am done' : 'Submit'}</button>
+                        <button className="secondary" type="submit">{appFillStatus == "in_app" ? 'Submit' : 'Submit'}</button>
                     </div>
                 </form>
             }
