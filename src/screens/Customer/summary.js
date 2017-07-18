@@ -291,7 +291,9 @@ function AddDealer(props) {
                                             type="text"
                                             value={customer.co_app.driver_license}
                                             label="Driver License Number"
-                                            defaultText="Driver License Number"
+                                            defaultText="#"
+                                            mask="**************"
+                                            maskChar=" "
                                         />
                                     </Form.Group>
                                     <Form.Group className="mb-18">

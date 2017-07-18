@@ -691,7 +691,9 @@ function AddDealer(props) {
                                     type="text"
                                     defaultValue={customer.co_app.driver_license}
                                     label="Driver License Number"
-                                    defaultText="Driver License Number"
+                                    defaultText="#"
+                                    mask="**************"
+                                    maskChar=" "
                                     required={haveCoApplicant ? true : false}
                                     error={{
                                         'empty': " "
