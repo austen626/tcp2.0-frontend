@@ -70,9 +70,9 @@ class ForgotPassword extends Component {
                             <Form.Label>Registered Mobile Number</Form.Label>
                             <InputMask
                                 required
-                                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                                pattern="^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$"
                                 className="input input-mobile form-control"
-                                mask="9999999999"
+                                mask="(999) 999-9999"
                                 maskChar=""
                                 value={mobile}
                                 onChange={e => this.setState({ mobile: e.target.value })}

@@ -40,16 +40,16 @@ function HomeScreen(props) {
 
     useEffect(() => {
         interval = setInterval(function(){
-            timer.current = timer.current+1000;   
+            timer.current = timer.current+500;   
             console.log(timer.current, !searchCustomerApiInitiate)   
-            if(applicantEmail && applicantPhone && !searchCustomerApiInitiate && timer.current === 3000) {
+            if(applicantEmail && applicantPhone && !searchCustomerApiInitiate && timer.current === 2000) {
                 setHitSearchApi(!hitSearchApi);
             }
             if(timer.current > 5000) {
                 timer.current = 0;
                 clearInterval(interval);
             }
-        }, 1000)
+        }, 500)
     })
 
     useEffect(() => {
