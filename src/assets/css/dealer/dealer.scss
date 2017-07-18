@@ -115,12 +115,6 @@ input:focus {
             }
         }
 
-        @media (max-width: 350px) {
-            input, .selected-labels {
-                width: 290px;
-            }
-        }
-
         .box {
             margin: 15px -15px 8px -15px;
             border-radius: 7px;
@@ -208,6 +202,13 @@ input:focus {
         }
     }
 
+
+    @media (max-width: 350px) {
+        .home-form input, .selected-labels {
+            width: 260px !important;
+        }
+    }
+
     @media (max-width: 570px) {
         .styled-form {
             width: 330px;
@@ -283,7 +284,7 @@ input:focus {
 
     .details {
         height: 83.1px;
-        padding: 15px 0px;
+        padding: 15px 10px;
         background-color: #ffffff;
     }
 
@@ -325,7 +326,7 @@ input:focus {
 
 button.secondary {
     border: none;
-    width: 130px;
+    min-width: 120px;
     height: 35px;
     margin: 0 22px;
     padding: 1px;
@@ -413,10 +414,14 @@ button.secondary {
             color: #ffffff;
         }
     }
-
 }
 
-
+@media (max-width: 350px) {
+    .apply-application {
+        width: 315px;
+        padding: 0px 10px;
+    }
+}
 
 .sub-header {
     display: flex;
@@ -467,7 +472,7 @@ button.secondary {
 
     .styled-column {
         .selected-labels {
-            width: 174px;
+            width: 174px !important;
         }
 
         input {
@@ -602,4 +607,8 @@ button.secondary {
     & button {
         margin: 0 8px;
     }
+}
+
+#have_co_applicant {
+    width: 25px !important;
 }

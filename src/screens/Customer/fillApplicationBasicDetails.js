@@ -262,18 +262,18 @@ function AddDealer(props) {
 
         if (!formData.validationResult) {
 
+            let data = formData.formData
+
             let date = new Date(data.date_of_birth).getDate();
-            let month = new Date(data.date_of_birth).getMonth();
+            let month = new Date(data.date_of_birth).getMonth()+1;
 
             let co_date = null;
             let co_month = null;
 
             if(haveCoApplicant) {
                 co_date = new Date(data.co_date_of_birth).getDate();
-                co_month = new Date(data.co_date_of_birth).getMonth();
+                co_month = new Date(data.co_date_of_birth).getMonth()+1;
             }
-
-            let data = formData.formData
 
             let temp_customer = {
                 ...customer,
@@ -304,8 +304,8 @@ function AddDealer(props) {
                     "last_name": haveCoApplicant ? data.co_last_name : null,
                     "email": haveCoApplicant ? data.co_email : null,
                     "dobY": haveCoApplicant ? new Date(data.co_date_of_birth).getFullYear() : null,
-                    "dobM": co_month > 10 ? co_month : "0"+co_month,
-                    "dobD": co_date > 10 ? co_date : "0"+co_date,
+                    "dobM": haveCoApplicant ? co_month > 10 ? co_month : "0"+co_month : null,
+                    "dobD": haveCoApplicant ? co_date > 10 ? co_date : "0"+co_date : null,
                     "co_have_co_applicant_same_address": haveCoApplicantSameAddress ? data.co_have_co_applicant_same_address : null,
                     "ssn": haveCoApplicant ? data.co_ssn : null,
                     "driver_license": haveCoApplicant ? data.co_driver_license : null,

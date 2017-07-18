@@ -543,7 +543,7 @@ function AddDealer(props) {
                                             defaultValue={customer.main_app.present_employer}
                                             label="Present Employer"
                                             defaultText="Present Employer"
-                                            optionalParams = {{style:{width: 231}}}
+                                            optionalParams = {{style:{width: 190}}}
                                         />
                                     </Form.Group>
                                     <Form.Group className="styled-column mb-18">
@@ -574,11 +574,11 @@ function AddDealer(props) {
                                             name="employer_phone"
                                             type="hidden"
                                             defaultValue={customer.main_app.employer_phone}
-                                            label="Employer's Phone Number"
+                                            label="Employer's Phone No."
                                             defaultText="(123) 456-7890"
                                             regex="^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$"
                                             mask="(999) 999-9999"
-                                            optionalParams = {{style:{width: 204}}}
+                                            optionalParams = {{style:{width: 146}}}
                                         />
                                     </Form.Group>
                                     <Form.Group className="styled-column mb-18">
@@ -863,7 +863,7 @@ function AddDealer(props) {
                         </div>
                     </div>
                     <div className="footer-container">
-                        <button className="secondary" type="submit">{appFillStatus == "in_app" ? 'I am done' : 'Submit'}</button>
+                        <button className="secondary" type="submit">{appFillStatus == "in_app" ? 'Submit' : 'Submit'}</button>
                     </div>
                 </form>
             }

@@ -148,7 +148,7 @@ function AddDealer(props) {
 
             <Modal show={showWarning} onHide={() => setShowWarning(false)}>
                 <Modal.Header closeButton></Modal.Header>
-                <Modal.Body>submitting the application and authorizing TCP to do a credit check from Equifax</Modal.Body>
+                <Modal.Body>Submitting the application and authorizing TCP to do a credit check from Equifax.</Modal.Body>
                 <Modal.Footer>
                 <button class="secondary" onClick={() => {
                     setIsAgree(true)
@@ -194,7 +194,7 @@ function AddDealer(props) {
                                             'empty': " "
                                         }}
                                         validationResult={validationResult}
-                                        optionalParams = {{style:{width: 231}}}
+                                        optionalParams = {{style:{width:190}}}
                                     />
                                 </Form.Group>
                                 <Form.Group className="styled-column mb-18">
@@ -235,7 +235,7 @@ function AddDealer(props) {
                                         name="employer_phone"
                                         type="hidden"
                                         defaultValue={customer.main_app.employer_phone ? customer.main_app.employer_phone : null}
-                                        label="Employer's Phone Number"
+                                        label="Employer's Phone No."
                                         defaultText="(123) 456-7890"
                                         regex="^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$"
                                         mask="(999) 999-9999"
@@ -245,7 +245,7 @@ function AddDealer(props) {
                                             'empty': " "
                                         }}
                                         validationResult={validationResult}
-                                        optionalParams = {{style:{width: 204}}}
+                                        optionalParams = {{style:{width: 146}}}
                                     />
                                 </Form.Group>
                                 <Form.Group className="styled-column mb-18">

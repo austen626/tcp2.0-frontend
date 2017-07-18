@@ -138,7 +138,7 @@ function HomeScreen(props) {
 
             <form onSubmit={(e) => handleSubmit(e)} noValidate>
                 <div className="container">
-                    <div className="styled-form">
+                    <div className="styled-form home-form">
                         <div className="box color-box">
                             <Form.Group className="home-input mb-18">
                                 <Input
