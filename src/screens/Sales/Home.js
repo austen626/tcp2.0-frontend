@@ -32,19 +32,21 @@ function HomeScreen(props) {
     const submitButton = createRef();
 
     const timer = useRef(0);
+    let interval = null;
 
     useEffect(() => {  
         resetCustomerSearchApiInitiate(false)
     }, [])
 
     useEffect(() => {
-        let interval = setInterval(function(){
+        interval = setInterval(function(){
             timer.current = timer.current+1000;   
             console.log(timer.current, !searchCustomerApiInitiate)   
             if(applicantEmail && applicantPhone && !searchCustomerApiInitiate && timer.current === 3000) {
                 setHitSearchApi(!hitSearchApi);
             }
             if(timer.current > 5000) {
+                timer.current = 0;
                 clearInterval(interval);
             }
         }, 1000)
@@ -156,6 +158,7 @@ function HomeScreen(props) {
                                         setApplicantEmail(e.target.value)
                                         resetCustomerSearchApiInitiate(false) 
                                         timer.current = 0;
+                                        clearInterval(interval);
                                     }}
                                 />
                             </Form.Group>
@@ -178,6 +181,7 @@ function HomeScreen(props) {
                                         setApplicantPhone(e.target.value)
                                         resetCustomerSearchApiInitiate(false) 
                                         timer.current = 0;
+                                        clearInterval(interval);
                                     }}
                                 />
                             </Form.Group>
