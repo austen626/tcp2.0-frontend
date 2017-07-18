@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { Form } from 'react-bootstrap';
+import { Form, Modal } from 'react-bootstrap';
 import { pushNotification } from 'utils/notification';
 import Header, { HeaderLeft, HeaderCenter, HeaderRight } from '../../../components/Dealer/Header';
 import { TCPLogo, IconArrowLeft, IconContactAcitve } from '../../../assets/images';
@@ -21,6 +21,8 @@ function AddDealer(props) {
     } = props;
 
     const [validationResult, setValidationResult] = useState(null);
+    const [showWarning, setShowWarning] = useState(false);
+    const [isAgree, setIsAgree] = useState(false);
 
     const [employementStatusCheck, setEmployementStatusCheck] = useState(customer.main_app.employement_status);
     const [coEmployementStatusCheck, setCoEmployementStatusCheck] = useState(customer.co_enabled ? customer.co_app.employement_status : true);
@@ -144,6 +146,22 @@ function AddDealer(props) {
                 </button>
             </div>
 
+            <Modal show={showWarning} onHide={() => setShowWarning(false)}>
+                <Modal.Header closeButton></Modal.Header>
+                <Modal.Body>submitting the application and authorizing TCP to do a credit check from Equifax</Modal.Body>
+                <Modal.Footer>
+                <button class="secondary" onClick={() => {
+                    setIsAgree(true)
+                    setShowWarning(false)
+                }}>
+                    Agree
+                </button>
+                <button class="secondary" onClick={() => setShowWarning(false)}>
+                    Close
+                </button>
+                </Modal.Footer>
+            </Modal>
+
             <form action="javascript:void(0)" onSubmit={(e) => handleSubmit(e)} noValidate>
                 <div className="container">
                     <div className="styled-form">
@@ -176,7 +194,7 @@ function AddDealer(props) {
                                             'empty': " "
                                         }}
                                         validationResult={validationResult}
-                                        optionalParams = {{style:{width: 241}}}
+                                        optionalParams = {{style:{width: 231}}}
                                     />
                                 </Form.Group>
                                 <Form.Group className="styled-column mb-18">
@@ -369,7 +387,7 @@ function AddDealer(props) {
                                                 'empty': " "
                                             }}
                                             validationResult={validationResult}
-                                            optionalParams = {{style:{width: 241}}}
+                                            optionalParams = {{style:{width: 231}}}
                                         />
                                     </Form.Group>
                                     <Form.Group className="styled-column mb-18">
@@ -529,7 +547,11 @@ function AddDealer(props) {
                     </div>
                 </div>
                 <div className="footer-container">
-                    <button className="secondary" type="submit">Next</button>
+                    {isAgree ?
+                        <button className="secondary" type="submit">Save & Submit</button>
+                        :
+                        <button className="secondary" type="button" onClick={() => setShowWarning(true)}>Next</button>
+                    }
                 </div>
             </form>
 

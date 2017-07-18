@@ -111,7 +111,7 @@ input:focus {
 
         @media (max-width: 570px) {
             input, .selected-labels {
-                width: 340px;
+                width: 100%;
             }
         }
 
@@ -210,7 +210,7 @@ input:focus {
 
     @media (max-width: 570px) {
         .styled-form {
-            width: 340px;
+            width: 330px;
         }
     }
 
@@ -232,7 +232,7 @@ input:focus {
 
     @media (max-width: 570px) {
         .styled-form {
-            width: 340px;
+            width: 330px;
         }
     }
 
@@ -441,7 +441,7 @@ button.secondary {
         img {
             width: 25px;
             height: 20.6px;
-            margin-right: 10px;
+            // margin-right: 10px;
         }
 
         span {
@@ -547,6 +547,13 @@ button.secondary {
             }
         }
     }
+
+    @media (max-width: 570px) {
+        .col {
+            margin-top: 15px;
+            margin-bottom: 15px !important;
+        }
+    }
 }
 
 .button-col {
@@ -584,4 +591,15 @@ button.secondary {
 .has-amount-sign {
     position: absolute;
     margin: 7px 0px 7px 16px;
+}
+
+.pointer-none {
+    pointer-events: none !important;
+}
+
+.modal-footer {
+    justify-content: center;
+    & button {
+        margin: 0 8px;
+    }
 }
