@@ -812,19 +812,27 @@ function AddDealer(props) {
                             <table className="summary-row">
                                 <tr>
                                     <td><span><b>Name: </b> {customer.main_app.name}</span></td>
-                                    <td><span>{customer.co_app.name}</span></td>
+                                    <td><span>{customer.co_enabled ? customer.co_app.name : ''}</span></td>
                                 </tr>
                                 <tr>
                                     <td><span><b>Address: </b> {customer.main_app.street} {customer.main_app.city} {customer.main_app.state} {customer.main_app.zip}</span></td>
-                                    <td><span>{customer.co_app.street} {customer.main_app.city} {customer.main_app.state} {customer.main_app.zip}</span></td>
+                                    <td>
+                                        {customer.co_enabled ? 
+                                            <span>{customer.co_app.street} {customer.main_app.city} {customer.main_app.state} {customer.main_app.zip}</span> 
+                                            : 
+                                            appFillStatus == "in_app" ?                                      
+                                                <button className="secondary" type="submit" onClick={() => handleAddCoApp()}>Add Co-App</button>
+                                            : null
+                                        }
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td><span><b>Email: </b> {customer.main_app.email}</span></td>
-                                    <td><span>{customer.co_app.email}</span></td>
+                                    <td><span>{customer.co_enabled ? customer.co_app.email : ''}</span></td>
                                 </tr>
                                 <tr>
                                     <td><span><b>Phone: </b> {customer.main_app.cell_phone}</span></td>
-                                    <td><span>{customer.co_app.cell_phone}</span></td>
+                                    <td><span>{customer.co_enabled ? customer.co_app.cell_phone : ''}</span></td>
                                 </tr>
                             </table>
 
@@ -845,7 +853,7 @@ function AddDealer(props) {
                                 </div>
                                 <div className={`col ${!customer.co_enabled ? 'button-col' : null}`}>
 
-                                    {customer.co_enabled ?
+                                    {customer.co_enabled &&
                                         <>
                                             <span className="status">Credit application</span>
                                             {appFillStatus == "in_app" ?                                             
@@ -859,11 +867,7 @@ function AddDealer(props) {
                                                     sent 
                                                 </span>
                                             }
-                                        </>
-                                        :  
-                                        appFillStatus == "in_app" ?                                      
-                                        <button className="secondary" type="submit" onClick={() => handleAddCoApp()}>Add Co-App</button>
-                                        : null
+                                        </>                                        
                                     }
                                 </div>
                             </div>
