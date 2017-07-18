@@ -33,11 +33,11 @@ function AddDealer(props) {
     const [coOtherSourceError, setCoOtherSourceError] = useState(false);
     const [coOtherSourceStatus, setCoOtherSourceStatus] = useState(customer.co_enabled && customer.co_app.additional_income && customer.co_app.additional_income != '0' ? "yes" : "no");
     
-    const [customerAdditionalIncome, setCustomerAdditionalIncome] = useState(customer.main_app.source);
-    const [customerAdditionalIncomeSource, setCustomerAdditionalIncomeSource] = useState(customer.main_app.additional_income);
+    const [customerAdditionalIncome, setCustomerAdditionalIncome] = useState(customer.main_app.additional_income);
+    const [customerAdditionalIncomeSource, setCustomerAdditionalIncomeSource] = useState(customer.main_app.source);
     
-    const [coCustomerAdditionalIncome, setCoCustomerAdditionalIncome] = useState(customer.co_enabled && customer.co_app.source ? customer.co_app.source : null);
-    const [coCustomerAdditionalIncomeSource, setCoCustomerAdditionalIncomeSource] = useState(customer.co_enabled && customer.co_app.additional_income ? customer.co_app.additional_income : null);
+    const [coCustomerAdditionalIncome, setCoCustomerAdditionalIncome] = useState(customer.co_enabled && customer.co_app.additional_income ? customer.co_app.additional_income : null);
+    const [coCustomerAdditionalIncomeSource, setCoCustomerAdditionalIncomeSource] = useState(customer.co_enabled && customer.co_app.source ? customer.co_app.source : null);
 
     const hideMainAppError = (data) => {
         setOtherSourceStatus(data);
