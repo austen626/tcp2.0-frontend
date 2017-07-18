@@ -265,6 +265,17 @@ function AddDealer(props) {
 
         if (!formData.validationResult) {
 
+            let date = new Date(data.date_of_birth).getDate();
+            let month = new Date(data.date_of_birth).getMonth();
+
+            let co_date = null;
+            let co_month = null;
+
+            if(haveCoApplicant) {
+                co_date = new Date(data.co_date_of_birth).getDate();
+                co_month = new Date(data.co_date_of_birth).getMonth();
+            }
+
             let data = formData.formData
 
             let temp_customer = {
@@ -276,8 +287,8 @@ function AddDealer(props) {
                     "last_name": data.last_name,
                     "email": data.email,
                     "dobY": new Date(data.date_of_birth).getFullYear(),
-                    "dobM": new Date(data.date_of_birth).getMonth(),
-                    "dobD": new Date(data.date_of_birth).getDate(),
+                    "dobM": month > 10 ? month : "0"+month,
+                    "dobD": date > 10 ? date : "0"+date,
                     "ssn": data.ssn,
                     "driver_license": data.driver_license,
                     "no_of_dependents": data.no_of_dependents,
@@ -296,8 +307,8 @@ function AddDealer(props) {
                     "last_name": haveCoApplicant ? data.co_last_name : null,
                     "email": haveCoApplicant ? data.co_email : null,
                     "dobY": haveCoApplicant ? new Date(data.co_date_of_birth).getFullYear() : null,
-                    "dobM": haveCoApplicant ? new Date(data.co_date_of_birth).getMonth() : null,
-                    "dobD": haveCoApplicant ? new Date(data.co_date_of_birth).getDate() : null,
+                    "dobM": co_month > 10 ? co_month : "0"+co_month,
+                    "dobD": co_date > 10 ? co_date : "0"+co_date,
                     "co_have_co_applicant_same_address": haveCoApplicantSameAddress ? data.co_have_co_applicant_same_address : null,
                     "ssn": haveCoApplicant ? data.co_ssn : null,
                     "driver_license": haveCoApplicant ? data.co_driver_license : null,
