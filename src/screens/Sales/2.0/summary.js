@@ -297,7 +297,7 @@ function AddDealer(props) {
                                 <Form.Group className="mb-18">
                                     <Input
                                         name="co_driver_license"
-                                        type="text"
+                                        type="hidden"
                                         value={customer.co_app.driver_license}
                                         label="Driver License Number"
                                         defaultText="#"
