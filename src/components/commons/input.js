@@ -52,6 +52,7 @@ const Input = (props) => {
         maskChar = "_",
         isAmount = false,
         isDate = false,
+        isHidden = false,
         isMatched = false
     } = props;
 
@@ -81,9 +82,15 @@ const Input = (props) => {
 
     const handleInputChange = (event) => {
 
-        // if (evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57)
+        console.log(event.target.value)
+
+        // if (event.currentTarget && event.currentTarget.value.indexOf('e') == '-1')
         // {
-        //     evt.preventDefault();
+        //     console.log('valid', event.currentTarget.value)
+        // }
+        // else 
+        // {
+        //     console.log('inValid', event.currentTarget.value)
         // }
 
         updateInputValue(event.currentTarget && event.currentTarget.value);
@@ -221,10 +228,11 @@ const Input = (props) => {
                         {...optionalParams}
                     />
                     
-                    {mask &&
+                    {mask && <>
                         <InputMask maskChar={maskChar} placeholder={defaultText} className="form-control" mask={mask} value={inputValue} onChange={handleInputChange} 
                         {...optionalParams}/>
-                    }
+                        {isHidden && <span className="ssn-span">{inputValue && inputValue.replace(new RegExp("[0-9]", "g"), "x")}</span>}
+                    </>}
 
                     {isDate && 
                         <DatePicker
