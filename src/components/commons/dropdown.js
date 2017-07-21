@@ -93,6 +93,44 @@ const Dropdown = ( props ) => {
 
         let {
             value
+        } = elm;
+
+        console.log(value)
+
+        if ( multiple ) {
+
+            const tempArray = selectedValue ? [ ...selectedValue ] : [];
+
+            if ( tempArray.includes( value ) ) {
+
+                const index = selectedValue.indexOf( value );
+
+                tempArray.splice( index, 1 );
+            }
+
+            else {
+
+                tempArray.push( value );
+            }
+
+            value = tempArray;
+        }
+
+        updateSelected( value );
+
+        typeof handleChange === 'function' && handleChange( value, name, evt );
+
+        !multiple && updateToggle( !toggle );
+
+        updateErrorLabel( null );
+    };
+
+    const handleSelectionOLD = evt => {
+
+        const elm = evt.currentTarget;
+
+        let {
+            id
         } = elm.dataset;
 
         if ( multiple ) {
@@ -113,6 +151,8 @@ const Dropdown = ( props ) => {
 
             value = tempArray;
         }
+
+        console.log(value)
 
         updateSelected( value );
 
@@ -227,6 +267,7 @@ const Dropdown = ( props ) => {
                 <div className={`input-field`}>
                     <select
                         id={ id }
+                        className={`${ errorLabel ? ' invalid' : ''} ${ selectedValue ? '' : ' empty'}`}
                         // readOnly={ true }
                         onChange={(e) => handleSelection(e)}
                         disabled={ disabled }
@@ -242,12 +283,12 @@ const Dropdown = ( props ) => {
                             <option
                                 key={ idx }
                                 value={ item.value }
-                                data-id={ item.dataId }>
+                                data-value={ item.value }>
                                 { item.label }
                             </option>
                         )}
                     </select>                  
-                    <div className='custom-styles'>                        
+                    {/* <div className='custom-styles'>                        
                         <Button
                             id={`button-${id}`}
                             role= 'listbox'
@@ -280,7 +321,7 @@ const Dropdown = ( props ) => {
                                 )}
                             </ul>
                         }
-                    </div>
+                    </div> */}
                 </div>
             </div>
             { errorLabel &&
