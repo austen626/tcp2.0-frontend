@@ -627,7 +627,7 @@ function AddDealer(props) {
                                                     defaultValue={customer.main_app.source}
                                                     label="Source"
                                                     defaultText="Source"
-                                                    optionalParams={{ style: { width: 204 } }}
+                                                    optionalParams={{ style: { width: 166 } }}
                                                 />
                                             </Form.Group>
                                             <Form.Group className="styled-column mb-18">
@@ -662,12 +662,12 @@ function AddDealer(props) {
                                             type="checkbox"
                                             theme="light-label"
                                             label="Not currently employed"
-                                            checked={customer.co_app.co_employement_status ? true : null}
+                                            checked={customer.co_app.employement_status ? true : null}
                                         />
                                     </Form.Group>
 
 
-                                    {!customer.co_app.co_employement_status &&
+                                    {!customer.co_app.employement_status &&
 
                                         <>
 
@@ -808,7 +808,7 @@ function AddDealer(props) {
                             <table className="summary-row">
                                 <tr>
                                     <td><span><b>Name: </b> {customer.main_app.name}</span></td>
-                                    <td><span>{customer.co_enabled ? customer.co_app.name : ''}</span></td>
+                                    <td><span>{customer.co_enabled ? customer.co_app.name : <span className="hide">text for aligement</span>}</span></td>
                                 </tr>
                                 <tr>
                                     <td><span><b>Address: </b> {customer.main_app.street} {customer.main_app.city} {customer.main_app.state} {customer.main_app.zip}</span></td>

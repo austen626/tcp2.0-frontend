@@ -24,7 +24,7 @@ function AddDealer(props) {
     const [showWarning, setShowWarning] = useState(false);
     const [isAgree, setIsAgree] = useState(false);
 
-    const [employementStatusCheck, setEmployementStatusCheck] = useState(customer.main_app.employement_status);
+    const [employementStatusCheck, setEmployementStatusCheck] = useState(customer.main_app.employement_status ? customer.main_app.employement_status : null);
     const [coEmployementStatusCheck, setCoEmployementStatusCheck] = useState(customer.co_enabled ? customer.co_app.employement_status : true);
 
     const [ownOtherSourceError, setOtherSourceError] = useState(false);
@@ -88,15 +88,15 @@ function AddDealer(props) {
                     ...customer,
                     "main_app": {
                         ...customer.main_app,
-                        "additional_income_status": data.additional_income_status,
-                        "employement_status": data.employement_status,
-                        "employer_phone": data.employer_phone,
-                        "job_title": data.job_title,
-                        "monthly_income": data.monthly_income,
-                        "present_employer": data.present_employer,
-                        "source": data.additional_income_status == "yes" ? data.source : null,
-                        "additional_income": data.additional_income_status == "yes" ? data.additional_income : null,
-                        "years_there_second": data.years_there_second,
+                        "additional_income_status": !employementStatusCheck ? data.additional_income_status : null,
+                        "employement_status": !employementStatusCheck ? data.employement_status : false,
+                        "employer_phone": !employementStatusCheck ? data.employer_phone : null,
+                        "job_title": !employementStatusCheck ? data.job_title : null,
+                        "monthly_income": !employementStatusCheck ? data.monthly_income : null,
+                        "present_employer": !employementStatusCheck ? data.present_employer : null,
+                        "source": !employementStatusCheck ? data.additional_income_status == "yes" ? data.source : null : null,
+                        "additional_income": !employementStatusCheck ? data.additional_income_status == "yes" ? data.additional_income : null : null,
+                        "years_there_second": !employementStatusCheck ? data.years_there_second : null,
                     },
                     "co_app": {
                         ...customer.co_app,
@@ -117,7 +117,7 @@ function AddDealer(props) {
         } 
         else 
         {
-            pushNotification('Please fill mandatory fields', 'error', 'TOP_RIGHT', 3000);
+            pushNotification('The fields marked in Red need to be filled with appropriate data.', 'error', 'TOP_RIGHT', 3000);
         }
     }
 
@@ -319,7 +319,7 @@ function AddDealer(props) {
                                                 'empty': " "
                                             }}
                                             validationResult={validationResult}
-                                            optionalParams = {{style:{width: 204}}}
+                                            optionalParams = {{style:{width: 166}}}
                                         />
                                     </Form.Group>
                                     <Form.Group className="styled-column mb-18">

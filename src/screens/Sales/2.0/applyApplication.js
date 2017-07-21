@@ -10,6 +10,7 @@ function HomeScreen(props) {
 
     const {
         history,
+        isCustomerFound,
         updateApplicationFilledStatus,
         resetCustomerSearchApiInitiate      
     } = props;
@@ -63,7 +64,9 @@ function HomeScreen(props) {
 
             <div className="footer-container">
                 <button className="secondary" type="submit" onClick={()=>handleHomeScreen()}>Cancel</button>
-                <button className="secondary" type="submit" onClick={()=>handleHomeScreen()}>Save & Exit</button>
+                {!isCustomerFound &&
+                    <button className="secondary" type="submit" onClick={()=>handleHomeScreen()}>Save & Exit</button>
+                }
             </div>
 
         </div>
@@ -71,6 +74,7 @@ function HomeScreen(props) {
 }
 
 const mapStateToProps = state => ({
+    isCustomerFound: state.sales.isCustomerFound,
 });
 
 const mapDispatchToProps = dispatch => ({

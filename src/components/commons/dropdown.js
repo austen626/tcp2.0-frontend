@@ -34,7 +34,7 @@ const Dropdown = ( props ) => {
     id = id || name;
 
     // Converting the options and the default value to a string to keep the default select behavior
-    options && options.map( item => item.value =  item.value.toString());
+    options && options.map( item => item.value =  item.value && item.value.toString());
 
     if ( multiple ) {
 

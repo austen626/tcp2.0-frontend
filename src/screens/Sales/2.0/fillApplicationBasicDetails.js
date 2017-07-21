@@ -342,7 +342,7 @@ function AddDealer(props) {
         } 
         else 
         {
-            pushNotification('Please fill mandatory fields', 'error', 'TOP_RIGHT', 3000);
+            pushNotification('The fields marked in Red need to be filled with appropriate data.', 'error', 'TOP_RIGHT', 3000);
         } 
     }
 
@@ -465,9 +465,10 @@ function AddDealer(props) {
                                 type="hidden"
                                 label="SSN"
                                 defaultText="#"
+                                defaultValue={null}
                                 regex={customer.main_app.id ? customer.main_app.ssn : '^(?!0{3}|6{3}|9[0-9]{2})[0-9]{3}-(?!0{3})[0-9]{3}-(?!0{4})[0-9]{4}$'}
                                 mask="999-999-9999"
-                                optionalParams = {{style:{color: '#1e2c35'}}}
+                                optionalParams = {{style:{color: '#1e2c35', caretColor: "#ccdbe7"}}}
                                 isHidden={true}
                                 required={true}
                                 isMatched={customer.main_app.id ? true : false}
@@ -482,7 +483,7 @@ function AddDealer(props) {
                             <Input
                                 name="driver_license"
                                 type="hidden"
-                                defaultValue={customer.main_app.driver_license}
+                                defaultValue={customer.main_app.driver_license ? customer.main_app.driver_license : null}
                                 label="Driver License Number"
                                 defaultText="#"
                                 mask="**************"
@@ -680,7 +681,7 @@ function AddDealer(props) {
                                     defaultText="#"
                                     regex={customer.main_app.id && haveCoApplicant ? customer.co_app.ssn : '^(?!0{3}|6{3}|9[0-9]{2})[0-9]{3}-(?!0{3})[0-9]{3}-(?!0{4})[0-9]{4}$'}
                                     mask="999-999-9999"
-                                    optionalParams = {{style:{color: '#1e2c35'}}}
+                                    optionalParams = {{style:{color: '#1e2c35', caretColor: "#ccdbe7"}}}
                                     isHidden={true}
                                     required={haveCoApplicant ? true : false}
                                     isMatched={customer.main_app.id && haveCoApplicant ? true : false}
