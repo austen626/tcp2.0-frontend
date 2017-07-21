@@ -401,9 +401,9 @@ function AddDealer(props) {
                         <Form.Group className="mb-18">
                             <Input
                                 name="zip"
-                                type="number"
+                                type="text"
                                 defaultValue={dealer.zip}
-                                regex="\b\d{5}\b"
+                                regex="^[0-9]{5}$"
                                 label="Zip Code"
                                 defaultText="Zip Code"
                                 required={true}

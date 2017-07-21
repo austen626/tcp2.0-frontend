@@ -174,14 +174,16 @@ function AddDealer(props) {
                         <Form.Group className="mb-18">
                             <Input
                                 name="years_there_first"
-                                type="number"
+                                type="text"
                                 defaultValue={tempYearsThereFirst}
                                 label="How many years did you live there?"
                                 defaultText="0"
+                                regex="^[0-9]{1,2}$"
                                 required={true}
                                 className="single-line-input"
                                 error={{
-                                    'empty': " "
+                                    'empty': " ",
+                                    'invalid': "Invalid"
                                 }}
                                 validationResult={validationResult}
                                 handleChange={(e)=>setTempYearsThereFirst(e.target.value)}
@@ -190,15 +192,17 @@ function AddDealer(props) {
                         <Form.Group className="mb-18">
                             <Input
                                 name="monthly_rent_mortgage_payment"
-                                type="number"
+                                type="text"
                                 defaultValue={tempMonthlyRentMortgagePayment}
                                 label={`${tempOwnOrRent === 'own' ? "Monthly Mortgage Payment:" : "Monthly Rent Payment:"}`}
                                 isAmount={true}
                                 defaultText="0"
+                                regex="^[0-9]{1,2,3,4,5,6,7,8,9}$"
                                 required={true}
                                 className="single-line-input width-112"
                                 error={{
-                                    'empty': " "
+                                    'empty': " ",
+                                    'invalid': "Invalid"
                                 }}
                                 validationResult={validationResult}
                                 handleChange={(e)=>setTempMonthlyRentMortgagePayment(e.target.value)}
@@ -260,7 +264,7 @@ function AddDealer(props) {
                             <Form.Group className="mb-18">
                                 <Input
                                     name="co_years_there_first"
-                                    type="number"
+                                    type="text"
                                     {...(haveCoApplicantSameAnswers ? {
                                         value: tempYearsThereFirst
                                     } : {
@@ -268,10 +272,12 @@ function AddDealer(props) {
                                     })}
                                     label="How many years did you live there?"
                                     defaultText="0"
+                                    regex="^[0-9]{1,2}$"
                                     required={true}
                                     className="single-line-input"
                                     error={{
-                                        'empty': " "
+                                        'empty': " ",
+                                        'invalid': "Invalid"
                                     }}
                                     validationResult={validationResult}
                                 />
@@ -279,7 +285,7 @@ function AddDealer(props) {
                             <Form.Group className="mb-18">
                                 <Input
                                     name="co_monthly_rent_mortgage_payment"
-                                    type="number"
+                                    type="text"
                                     {...(haveCoApplicantSameAnswers ? {
                                         value: tempMonthlyRentMortgagePayment
                                     } : {
@@ -287,11 +293,13 @@ function AddDealer(props) {
                                     })}
                                     label={`${tempCoOwnOrRent === 'own' ? "Monthly Mortgage Payment:" : "Monthly Rent Payment:"}`}
                                     defaultText="0"
+                                    regex="^[0-9]{1,2,3,4,5,6,7,8,9}$"
                                     isAmount={true}
                                     required={true}
                                     className="single-line-input width-112"
                                     error={{
-                                        'empty': " "
+                                        'empty': " ",
+                                        'invalid': "Invalid"
                                     }}
                                     validationResult={validationResult}
                                 />

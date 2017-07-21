@@ -161,7 +161,7 @@ function AddDealer(props) {
                             <Form.Group className="mb-18">
                                 <Input
                                     name="no_of_dependents"
-                                    type="number"
+                                    type="text"
                                     value={customer.main_app.no_of_dependents}
                                     label="Number of Dependants"
                                     defaultText="0"
@@ -208,8 +208,8 @@ function AddDealer(props) {
                                 <Form.Group className="styled-column mb-18">
                                     <Input
                                         name="zip"
-                                        type="number"
-                                        regex="\b\d{5}\b"
+                                        type="text"
+                                        regex="^[0-9]{5}$"
                                         value={customer.main_app.zip}
                                         label="Zip Code"
                                         defaultText="Zip Code"
@@ -299,7 +299,7 @@ function AddDealer(props) {
                                     <Form.Group className="mb-18">
                                         <Input
                                             name="co_no_of_dependents"
-                                            type="number"
+                                            type="text"
                                             value={customer.co_app.no_of_dependents}
                                             label="Number of Dependants"
                                             defaultText="0"
@@ -351,9 +351,9 @@ function AddDealer(props) {
                                         <Form.Group className="styled-column mb-18">
                                             <Input
                                                 name="co_zip"
-                                                type="number"
+                                                type="text"
                                                 defaultValue={customer.co_app.zip}
-                                                regex="\b\d{5}\b"
+                                                regex="^[0-9]{5}$"
                                                 label="Zip Code"
                                                 defaultText="Zip Code"
                                             />
@@ -411,7 +411,7 @@ function AddDealer(props) {
                             <Form.Group className="mb-18">
                                 <Input
                                     name="years_there_first"
-                                    type="number"
+                                    type="text"
                                     defaultValue={customer.main_app.years_there_first}
                                     label="How many years did you live there?"
                                     defaultText="0"
@@ -422,7 +422,7 @@ function AddDealer(props) {
                             <Form.Group className="mb-18">
                                 <Input
                                     name="monthly_rent_mortgage_payment"
-                                    type="number"
+                                    type="text"
                                     defaultValue={customer.main_app.monthly_rent_mortgage_payment}
                                     label={`${customer.main_app.own_or_rent === 'own' ? "Monthly Mortgage Payment:" : "Monthly Rent Payment:"}`}
                                     isAmount={true}
@@ -482,7 +482,7 @@ function AddDealer(props) {
                                     <Form.Group className="mb-18">
                                         <Input
                                             name="co_years_there_first"
-                                            type="number"
+                                            type="text"
                                             defaultValue={customer.co_app.years_there_first}
                                             label="How many years did you live there?"
                                             defaultText="0"
@@ -493,7 +493,7 @@ function AddDealer(props) {
                                     <Form.Group className="mb-18">
                                         <Input
                                             name="co_monthly_rent_mortgage_payment"
-                                            type="number"
+                                            type="text"
                                             defaultValue={customer.co_app.monthly_rent_mortgage_payment}
                                             label={`${customer.co_app.own_or_rent === 'own' ? "Monthly Mortgage Payment:" : "Monthly Rent Payment:"}`}
                                             defaultText="0"
@@ -542,7 +542,7 @@ function AddDealer(props) {
                                         <Form.Group className="styled-column mb-18">
                                             <Input
                                                 name="years_there_second"
-                                                type="number"
+                                                type="text"
                                                 defaultValue={customer.main_app.years_there_second}
                                                 label="Years There"
                                                 defaultText="0"
@@ -577,7 +577,7 @@ function AddDealer(props) {
                                         <Form.Group className="styled-column mb-18">
                                             <Input
                                                 name="monthly_income"
-                                                type="number"
+                                                type="text"
                                                 defaultValue={customer.main_app.monthly_income}
                                                 label="Monthly Income"
                                                 isAmount={true}
@@ -633,7 +633,7 @@ function AddDealer(props) {
                                             <Form.Group className="styled-column mb-18">
                                                 <Input
                                                     name="additional_income"
-                                                    type="number"
+                                                    type="text"
                                                     defaultValue={customer.main_app.additional_income}
                                                     label="Monthly Income"
                                                     defaultText="0"
@@ -685,7 +685,7 @@ function AddDealer(props) {
                                                 <Form.Group className="styled-column mb-18">
                                                     <Input
                                                         name="co_years_there_second"
-                                                        type="number"
+                                                        type="text"
                                                         defaultValue={customer.co_app.years_there_second}
                                                         label="Years There"
                                                         defaultText="0"
@@ -720,7 +720,7 @@ function AddDealer(props) {
                                                 <Form.Group className="styled-column mb-18">
                                                     <Input
                                                         name="co_monthly_income"
-                                                        type="number"
+                                                        type="text"
                                                         defaultValue={customer.co_app.monthly_income}
                                                         label="Monthly Income"
                                                         defaultText="0"
@@ -775,7 +775,7 @@ function AddDealer(props) {
                                                     <Form.Group className="styled-column mb-18">
                                                         <Input
                                                             name="co_additional_income"
-                                                            type="number"
+                                                            type="text"
                                                             defaultValue={customer.co_app.co_additional_income}
                                                             label="Monthly Income"
                                                             defaultText="0"

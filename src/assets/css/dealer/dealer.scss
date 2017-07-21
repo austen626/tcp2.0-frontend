@@ -637,6 +637,17 @@ table.summary-row {
     
 }
 
+.ssn-span {
+    color: white;
+    position: absolute;
+    margin-top: -32px;
+    margin-left: 14px;
+    background: #1e2c35;
+    width: 130px;
+    display: block;
+    cursor: text;
+}
+
 @media (max-width: 570px) {
     .table-div {
         padding: 22px 0;

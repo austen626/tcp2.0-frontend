@@ -198,13 +198,15 @@ function AddDealer(props) {
                                 <Form.Group className="styled-column mb-18">
                                     <Input
                                         name="years_there_second"
-                                        type="number"
+                                        type="text"
                                         defaultValue={customer.main_app.years_there_second}
                                         label="Years There"
                                         defaultText="0"
                                         required={true}
+                                        regex="^[0-9]{1,2}$"
                                         error={{
-                                            'empty': " "
+                                            'empty': " ",
+                                            "invalid": "Invalid"
                                         }}
                                         validationResult={validationResult}
                                         optionalParams = {{style:{width: 87}}}
@@ -249,13 +251,15 @@ function AddDealer(props) {
                                 <Form.Group className="styled-column mb-18">
                                     <Input
                                         name="monthly_income"
-                                        type="number"
+                                        type="text"
                                         defaultValue={customer.main_app.monthly_income}
                                         label="Monthly Income"
                                         defaultText="0"
+                                        regex="^[0-9]{1,2,3,4,5,6,7,8,9}$"
                                         required={true}
                                         error={{
-                                            'empty': " "
+                                            'empty': " ",
+                                            "invalid": "Invalid"
                                         }}
                                         validationResult={validationResult}
                                         optionalParams = {{style:{width: 118}}}
@@ -319,15 +323,17 @@ function AddDealer(props) {
                                     <Form.Group className="styled-column mb-18">
                                         <Input
                                             name="additional_income"
-                                            type="number"
+                                            type="text"
                                             defaultValue={customerAdditionalIncome}
                                             label="Monthly Income"
                                             defaultText="0"
+                                            regex="^[0-9]{1,2,3,4,5,6,7,8,9}$"
                                             isAmount={true}
                                             required={ownOtherSourceStatus === "no" ? false : true}
                                             disabled={ownOtherSourceStatus === "no" ? true : false}
                                             error={{
-                                                'empty': " "
+                                                'empty': " ",
+                                                "invalid": "Invalid"
                                             }}
                                             validationResult={validationResult}
                                             optionalParams = {{style:{width: 118}}}
@@ -391,13 +397,15 @@ function AddDealer(props) {
                                     <Form.Group className="styled-column mb-18">
                                         <Input
                                             name="co_years_there_second"
-                                            type="number"
+                                            type="text"
                                             defaultValue={customer.co_app.years_there_second}
                                             label="Years There"
                                             defaultText="0"
+                                            regex="^[0-9]{1,2}$"
                                             required={true}
                                             error={{
-                                                'empty': " "
+                                                'empty': " ",
+                                                'invalid': "Invalid"
                                             }}
                                             validationResult={validationResult}
                                             optionalParams = {{style:{width: 87}}}
@@ -442,13 +450,15 @@ function AddDealer(props) {
                                     <Form.Group className="styled-column mb-18">
                                         <Input
                                             name="co_monthly_income"
-                                            type="number"
+                                            type="text"
                                             defaultValue={customer.co_app.monthly_income}
                                             label="Monthly Income"
                                             defaultText="0"
+                                            regex="^[0-9]{1,2,3,4,5,6,7,8,9}$"
                                             required={true}
                                             error={{
-                                                'empty': " "
+                                                'empty': " ",
+                                                'Invalid': "Invalid"
                                             }}
                                             validationResult={validationResult}
                                             optionalParams = {{style:{width: 118}}}
@@ -511,15 +521,17 @@ function AddDealer(props) {
                                         <Form.Group className="styled-column mb-18">
                                             <Input
                                                 name="co_additional_income"
-                                                type="number"
+                                                type="text"
                                                 defaultValue={coCustomerAdditionalIncome}
                                                 label="Monthly Income"
                                                 defaultText="0"
+                                                regex="^[0-9]{1,2,3,4,5,6,7,8,9}$"
                                                 isAmount={true}
                                                 required={coOtherSourceStatus === "no" ? false : true}
                                                 disabled={coOtherSourceStatus === "no" ? true : false}
                                                 error={{
-                                                    'empty': " "
+                                                    'empty': " ",
+                                                    'invalid': "Invalid"
                                                 }}
                                                 validationResult={validationResult}
                                                 optionalParams = {{style:{width: 118}}}

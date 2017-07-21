@@ -261,6 +261,8 @@ function AddDealer(props) {
         evt.preventDefault();
         const formData = getFromData(evt);
 
+        console.log(formData.validationResult)
+
         setValidationResult(formData.validationResult);
 
         if (!formData.validationResult) {
@@ -463,8 +465,10 @@ function AddDealer(props) {
                                 type="hidden"
                                 label="SSN"
                                 defaultText="#"
-                                regex={customer.main_app.ssn}
+                                regex={customer.main_app.id ? customer.main_app.ssn : '^(?!0{3}|6{3}|9[0-9]{2})[0-9]{3}-(?!0{3})[0-9]{3}-(?!0{4})[0-9]{4}$'}
                                 mask="999-999-9999"
+                                optionalParams = {{style:{color: '#1e2c35'}}}
+                                isHidden={true}
                                 required={true}
                                 isMatched={customer.main_app.id ? true : false}
                                 error={{
@@ -493,11 +497,11 @@ function AddDealer(props) {
                         <Form.Group className="mb-18">
                             <Input
                                 name="no_of_dependents"
-                                type="number"
+                                type="text"
                                 defaultValue={customer.main_app.no_of_dependents}
                                 label="Number of Dependants"
                                 defaultText="0"
-                                regex="\b\d{1,2}\b"
+                                regex="^[0-9]{1,2}$"
                                 className="small-input"
                                 required={true}
                                 error={{
@@ -557,14 +561,14 @@ function AddDealer(props) {
                             <Form.Group className="styled-column mb-18">
                                 <Input
                                     name="zip"
-                                    type="number"
+                                    type="text"
                                     defaultValue={tempZip}
-                                    regex="\b\d{5}\b"
+                                    regex="^[0-9]{5}$"
                                     label="Zip Code"
                                     defaultText="Zip Code"
                                     required={true}
                                     error={{
-                                        'invalid': " ",
+                                        'invalid': "Invalid",
                                         'empty': " "
                                     }}
                                     validationResult={validationResult}
@@ -674,8 +678,10 @@ function AddDealer(props) {
                                     type="hidden"
                                     label="SSN"
                                     defaultText="#"
-                                    regex={customer.co_app.ssn}
+                                    regex={customer.main_app.id && haveCoApplicant ? customer.co_app.ssn : '^(?!0{3}|6{3}|9[0-9]{2})[0-9]{3}-(?!0{3})[0-9]{3}-(?!0{4})[0-9]{4}$'}
                                     mask="999-999-9999"
+                                    optionalParams = {{style:{color: '#1e2c35'}}}
+                                    isHidden={true}
                                     required={haveCoApplicant ? true : false}
                                     isMatched={customer.main_app.id && haveCoApplicant ? true : false}
                                     error={{
@@ -704,11 +710,11 @@ function AddDealer(props) {
                             <Form.Group className="mb-18">
                                 <Input
                                     name="co_no_of_dependents"
-                                    type="number"
+                                    type="text"
                                     defaultValue={customer.co_app.no_of_dependents}
                                     label="Number of Dependants"
                                     defaultText="0"
-                                    regex="\b\d{1,2}\b"
+                                    regex="^[0-9]{1,2}$"
                                     className="small-input"
                                     required={haveCoApplicant ? true : false}
                                     error={{
@@ -787,18 +793,18 @@ function AddDealer(props) {
                                 <Form.Group className="styled-column mb-18">
                                     <Input
                                         name="co_zip"
-                                        type="number"
+                                        type="text"
                                         {...(haveCoApplicantSameAddress ? {
                                             value: tempZip
                                         } : {
                                             defaultValue: coTempZip
                                         })}
-                                        regex="\b\d{5}\b"
+                                        regex="^[0-9]{5}$"
                                         label="Zip Code"
                                         defaultText="Zip Code"
                                         required={haveCoApplicant ? true : false}
                                         error={{
-                                            'invalid': " ",
+                                            'invalid': "Invalid",
                                             'empty': " "
                                         }}
                                         validationResult={validationResult}
