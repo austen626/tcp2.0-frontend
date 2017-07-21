@@ -1,4 +1,4 @@
-.selected-labels, select {
+.selected-labels, .dropdown select {
     height: 39px !important;
     padding: .375rem .75rem;
     color: #ccdbe7;
@@ -91,7 +91,7 @@
 
 
 
-select {
+.dropdown select {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -101,13 +101,13 @@ select {
   }
   
   /* CAUTION: IE hackery ahead */
-  select::-ms-expand { 
+  .dropdown select::-ms-expand { 
       display: none; /* remove default arrow on ie10 and ie11 */
   }
   
   /* target Internet Explorer 9 to undo the custom arrow */
   @media screen and (min-width:0\0) {
-      select {
+    .dropdown select {
           background:none\9;
           padding: 5px\9;
       } 

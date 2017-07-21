@@ -11,6 +11,10 @@ import DatePicker from 'react-datepicker';
 
 const inputValidation = (inputVal, required, regexString, isMatched) => {
 
+    if(inputVal === '') {
+        inputVal = null
+    }
+
     const regex = regexString && new RegExp(regexString, 'i');
 
     const isValid = regex && inputVal ? regex.test(inputVal) : isMatched && regexString !== inputVal ? false : true
@@ -61,8 +65,9 @@ const Input = (props) => {
     const [ inputInvalid, setInputInvalid ] = useState(required && !(defaultValue));
 
     const updateInputValue = (newVal = null) => {
-
+        
         setInputValue(newVal);
+
         setInputInvalid(inputValidation(newVal, required, regex, isMatched));
     };
 
@@ -81,17 +86,6 @@ const Input = (props) => {
     };
 
     const handleInputChange = (event) => {
-
-        console.log(event.target.value)
-
-        // if (event.currentTarget && event.currentTarget.value.indexOf('e') == '-1')
-        // {
-        //     console.log('valid', event.currentTarget.value)
-        // }
-        // else 
-        // {
-        //     console.log('inValid', event.currentTarget.value)
-        // }
 
         updateInputValue(event.currentTarget && event.currentTarget.value);
 
@@ -114,8 +108,6 @@ const Input = (props) => {
             }
 
             let temp_date = data.getFullYear()+'-'+month+'-'+date
-
-            console.log(temp_date)
 
             updateInputValue(temp_date);
 
@@ -173,7 +165,7 @@ const Input = (props) => {
 
     const ExampleCustomInput = React.forwardRef(
         ({ value, onClick }, ref) => (
-          <button type="button" className={`form-control datepicker-button ${value ? null : 'empty'}`} onClick={onClick} ref={ref}>
+          <button type="button" className={`form-control datepicker-button ${inputValue ? '' : 'empty'}`} onClick={onClick} ref={ref}>
             {value ? value : 'MM/DD/YYYY'}
           </button>
         ),
@@ -186,13 +178,13 @@ const Input = (props) => {
 
     return (
         <div
-            className={`input-holder ${className} ${type} ${disabled ? 'disabled' : null} ${showError ? 'has-error' : null}`}
+            className={`input-holder ${className} ${type} ${disabled ? 'disabled' : ''} ${showError ? 'has-error' : ''}`}
         >
             <div className='input-container'>
                 {label && (
                     <label
                         htmlFor={inputId}
-                        className={`form-label ${labelTransform && transform ? 'transform' : null
+                        className={`form-label ${labelTransform && transform ? 'transform' : ''
                         }`}
                         id={ariaLabelledBy}>
                         <span dangerouslySetInnerHTML={{ __html: label }} />
@@ -201,7 +193,7 @@ const Input = (props) => {
                 <div className='input-field'>
                     {isAmount && <span className="has-amount-sign">$</span>}
                     <input
-                        className={`form-control ${ inputClass } ${ inputValue !== null ? 'has-input' : 'empty' } ${ showError ? 'invalid' : null } ${ isAmount ? 'has-amount' : null}`}
+                        className={`form-control ${ inputClass } ${ inputValue !== null ? 'has-input' : 'empty' } ${ showError ? 'invalid' : '' } ${ isAmount ? 'has-amount' : ''}`}
                         ref={inputRef}
                         type={type}
                         id={inputId}
@@ -229,8 +221,17 @@ const Input = (props) => {
                     />
                     
                     {mask && <>
-                        <InputMask maskChar={maskChar} placeholder={defaultText} className="form-control" mask={mask} value={inputValue} onChange={handleInputChange} 
-                        {...optionalParams}/>
+                        <InputMask 
+                            maskChar={maskChar} 
+                            placeholder={defaultText} 
+                            className="form-control" 
+                            mask={mask} 
+                            value={inputValue} 
+                            onFocus={handleFocus}
+                            onBlur={handleBlur} 
+                            onChange={handleInputChange} 
+                            {...optionalParams}
+                        />
                         {isHidden && <span className="ssn-span">{inputValue && inputValue.replace(new RegExp("[0-9]", "g"), "x")}</span>}
                     </>}
 

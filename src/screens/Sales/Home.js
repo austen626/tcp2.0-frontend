@@ -129,14 +129,15 @@ function HomeScreen(props) {
                     <img src={IconHome} alt="home" className="icon-home" onClick={()=>handleHomeClick()} />
                 }
             </Header>
-
-            <div className='main-box'>
-                <p className="title">ENTER CUSTOMER INFORMATION</p>
-                <p className="sub-title">Please begin by entering your customer's email address and/or phone number. If they are already in TCP's database, the customer will appear at the bottom of the screen for you to select. Otherwise, please enter an email address and/or phone number, first name and last name to proceed.</p>
-            </div>
             
 
             <form onSubmit={(e) => handleSubmit(e)} noValidate>
+
+                <div className='main-box'>
+                    <p className="title">ENTER CUSTOMER INFORMATION</p>
+                    <p className="sub-title">Please begin by entering your customer's email address and/or phone number. If they are already in TCP's database, the customer will appear at the bottom of the screen for you to select. Otherwise, please enter an email address and/or phone number, first name and last name to proceed.</p>
+                </div>
+                
                 <div className="container">
                     <div className="styled-form home-form">
                         <div className="box color-box">

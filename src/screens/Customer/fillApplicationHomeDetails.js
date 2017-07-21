@@ -98,7 +98,7 @@ function AddDealer(props) {
                 setCoOwnRentError(true);
             }
 
-            pushNotification('Please fill mandatory fields', 'error', 'TOP_RIGHT', 3000);
+            pushNotification('The fields marked in Red need to be filled with appropriate data.', 'error', 'TOP_RIGHT', 3000);
         }
     }
 

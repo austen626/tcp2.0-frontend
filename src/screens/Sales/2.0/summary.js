@@ -15,6 +15,7 @@ function AddDealer(props) {
     const {
         history,
         customer,
+        isCustomerFound,
         appFillStatus,
         submiCreditApplication,
         submiCreditApplicationByMain,
@@ -70,16 +71,18 @@ function AddDealer(props) {
             </Header>
 
             <div className="sub-header">
-
+                
                 <button className={`${activeTab === 'profile' ? 'active' : ''}`} onClick={()=>handleTabChange('profile')}>
                     <img src={IconContactAcitve} alt=""/> 
                     {activeTab === 'profile' && <span className='arrow-down'></span>}
                 </button>
 
-                <button style={{minWidth: 238}} className={`${activeTab === 'credit_details' ? 'active' : ''}`} onClick={()=>handleTabChange('credit_details')}>
-                    <span>Summary</span>
-                    {activeTab === 'credit_details' && <span className='arrow-down'></span>}
-                </button>
+                {appFillStatus == "in_app" &&
+                    <button style={{minWidth: 238}} className={`${activeTab === 'credit_details' ? 'active' : ''}`} onClick={()=>handleTabChange('credit_details')}>
+                        <span>Summary</span>
+                        {activeTab === 'credit_details' && <span className='arrow-down'></span>}
+                    </button>
+                }
 
                 <button className={`${activeTab === 'summary_list' ? 'active' : ''}`} onClick={()=>handleTabChange('summary_list')}>
                     <img src={IconListWhite} alt=""/> 
@@ -144,161 +147,26 @@ function AddDealer(props) {
                                     disabled={true}
                                 />
                             </Form.Group>
-                            <Form.Group className="mb-18">
-                                <Input
-                                    name="date_of_birth"
-                                    type="hidden"
-                                    value={customer.main_app.dobY && customer.main_app.dobM && customer.main_app.dobD ? `${customer.main_app.dobY}-${customer.main_app.dobM}-${customer.main_app.dobD}` : null}
-                                        label="Date of Birth"
-                                    className="medium-input"
-                                    defaultText="MM / DD / YYYY"
-                                    disabled={true}
-                                    isDate={true}
-                                />
-                            </Form.Group>
-                            <Form.Group className="mb-18">
-                                <Input
-                                    name="driver_license"
-                                    type="hidden"
-                                    value={customer.main_app.driver_license}
-                                    label="Driver License Number"
-                                    defaultText="#"
-                                    mask="**************"
-                                    maskChar=" "
-                                />
-                            </Form.Group>
-                            <Form.Group className="mb-18">
-                                <Input
-                                    name="no_of_dependents"
-                                    type="text"
-                                    value={customer.main_app.no_of_dependents}
-                                    label="Number of Dependants"
-                                    defaultText="0"
-                                    regex="\b\d{1,2}\b"
-                                    className="small-input"
-                                    disabled={true}
-                                />
-                            </Form.Group>
-                            <Form.Group className="mb-18">
-                                <Input
-                                    name="street"
-                                    type="text"
-                                    value={customer.main_app.street}
-                                    label="Street"
-                                    defaultText="Street"
-                                    disabled={true}
-                                />
-                            </Form.Group>
-                            <Form.Group className="mb-18">
-                                <Input
-                                    name="city"
-                                    type="text"
-                                    value={customer.main_app.city}
-                                    label="City"
-                                    defaultText="City"
-                                    disabled={true}
-                                />
-                            </Form.Group>
-                            <div className="styled-row">
-                                <Form.Group className="styled-column mb-18">
-                                    <Dropdown
-                                        name="state"
-                                        type="dropdown"
-                                        label="State"
-                                        defaultText="State"
-                                        defaultValue={customer.main_app.state}
-                                        disabled={true}
-                                        options={[{
-                                            label: customer.main_app.state,
-                                            value: customer.main_app.state
-                                        }]}
-                                    />
-                                </Form.Group>
-                                <Form.Group className="styled-column mb-18">
-                                    <Input
-                                        name="zip"
-                                        type="text"
-                                        regex="^[0-9]{5}$"
-                                        value={customer.main_app.zip}
-                                        label="Zip Code"
-                                        defaultText="Zip Code"
-                                        disabled={true}
-                                    />
-                                </Form.Group>
-                            </div>
-                            <Form.Group className="mb-18">
-                                <Checkbox
-                                    name="have_co_applicant"
-                                    type="checkbox"
-                                    label="Add co-applicant"
-                                    checked={customer.co_enabled ? true : null}
-                                />
-                            </Form.Group>  
 
-                            {customer.co_enabled &&                                     
-
-                                <>
-
-                                <span className="divider">
-                                    <span className="title">Co-applicant</span>
-                                </span>
-
+                            {appFillStatus == "in_app" || isCustomerFound &&
+                            <>
                                 <Form.Group className="mb-18">
                                     <Input
-                                        name="co_first_name"
-                                        type="text"
-                                        value={customer.co_app.first_name}
-                                        label="Co-applicant First Name"
-                                        defaultText="Co-applicant First Name"
-                                    />
-                                </Form.Group>
-                                <Form.Group className="mb-18">
-                                    <Input
-                                        name="co_last_name"
-                                        type="text"
-                                        value={customer.co_app.last_name}
-                                        label="Co-applicant Last Name"
-                                        defaultText="Co-applicant Last Name"
-                                    />
-                                </Form.Group>
-                                <Form.Group className="mb-18">
-                                    <Input
-                                        name="co_email"
-                                        type="email"
-                                        regex="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$"
-                                        value={customer.co_app.email}
-                                        label="Email"
-                                        defaultText="Email"
-                                    />
-                                </Form.Group>
-                                <Form.Group className="mb-18">
-                                    <Input
-                                        name="co_cell_phone"
+                                        name="date_of_birth"
                                         type="hidden"
-                                        value={customer.co_app.cell_phone}
-                                        label="Phone"
-                                        className="medium-input"
-                                        defaultText="(123) 456-7890"
-                                        regex="^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$"
-                                        mask="(999) 999-9999"
-                                    />
-                                </Form.Group>
-                                <Form.Group className="mb-18">
-                                    <Input
-                                        name="co_date_of_birth"
-                                        type="hidden"
-                                        value={customer.co_app.dobY && customer.co_app.dobM && customer.co_app.dobD ? `${customer.co_app.dobY}-${customer.co_app.dobM}-${customer.co_app.dobD}` : null}
-                                        label="Date of Birth"
+                                        value={customer.main_app.dobY && customer.main_app.dobM && customer.main_app.dobD ? `${customer.main_app.dobY}-${customer.main_app.dobM}-${customer.main_app.dobD}` : null}
+                                            label="Date of Birth"
                                         className="medium-input"
                                         defaultText="MM / DD / YYYY"
+                                        disabled={true}
                                         isDate={true}
                                     />
                                 </Form.Group>
                                 <Form.Group className="mb-18">
                                     <Input
-                                        name="co_driver_license"
+                                        name="driver_license"
                                         type="hidden"
-                                        value={customer.co_app.driver_license}
+                                        value={customer.main_app.driver_license}
                                         label="Driver License Number"
                                         defaultText="#"
                                         mask="**************"
@@ -307,69 +175,209 @@ function AddDealer(props) {
                                 </Form.Group>
                                 <Form.Group className="mb-18">
                                     <Input
-                                        name="co_no_of_dependents"
+                                        name="no_of_dependents"
                                         type="text"
-                                        value={customer.co_app.no_of_dependents}
+                                        value={customer.main_app.no_of_dependents}
                                         label="Number of Dependants"
                                         defaultText="0"
                                         regex="\b\d{1,2}\b"
                                         className="small-input"
-                                    />
-                                </Form.Group>                       
-                                <Form.Group className="mb-18">
-                                    <Checkbox
-                                        name="co_have_co_applicant_same_address"
-                                        type="checkbox"
-                                        label="Same as Applicant"
-                                        checked={customer.co_app.co_have_co_applicant_same_address ? true : null}
+                                        disabled={true}
                                     />
                                 </Form.Group>
                                 <Form.Group className="mb-18">
                                     <Input
-                                        name="co_street"
+                                        name="street"
                                         type="text"
+                                        value={customer.main_app.street}
                                         label="Street"
                                         defaultText="Street"
-                                        defaultValue={customer.co_app.street}
-                                        disabled={customer.co_enabled ? true : false}
+                                        disabled={true}
                                     />
                                 </Form.Group>
                                 <Form.Group className="mb-18">
                                     <Input
-                                        name="co_city"
+                                        name="city"
                                         type="text"
+                                        value={customer.main_app.city}
                                         label="City"
-                                        defaultValue={customer.co_app.city}
                                         defaultText="City"
+                                        disabled={true}
                                     />
                                 </Form.Group>
                                 <div className="styled-row">
                                     <Form.Group className="styled-column mb-18">
                                         <Dropdown
-                                            name="co_state"
+                                            name="state"
                                             type="dropdown"
                                             label="State"
                                             defaultText="State"
-                                            defaultValue={customer.co_app.state}
+                                            defaultValue={customer.main_app.state}
+                                            disabled={true}
                                             options={[{
-                                                label: customer.co_app.state,
-                                                value: customer.co_app.state
+                                                label: customer.main_app.state,
+                                                value: customer.main_app.state
                                             }]}
                                         />
                                     </Form.Group>
                                     <Form.Group className="styled-column mb-18">
                                         <Input
-                                            name="co_zip"
+                                            name="zip"
                                             type="text"
-                                            defaultValue={customer.co_app.zip}
                                             regex="^[0-9]{5}$"
+                                            value={customer.main_app.zip}
                                             label="Zip Code"
                                             defaultText="Zip Code"
+                                            disabled={true}
                                         />
                                     </Form.Group>
                                 </div>
+                                <Form.Group className="mb-18">
+                                    <Checkbox
+                                        name="have_co_applicant"
+                                        type="checkbox"
+                                        label="Add co-applicant"
+                                        checked={customer.co_enabled ? true : null}
+                                    />
+                                </Form.Group>  
 
-                                </>
+                                {customer.co_enabled &&                                     
+
+                                    <>
+
+                                    <span className="divider">
+                                        <span className="title">Co-applicant</span>
+                                    </span>
+
+                                    <Form.Group className="mb-18">
+                                        <Input
+                                            name="co_first_name"
+                                            type="text"
+                                            value={customer.co_app.first_name}
+                                            label="Co-applicant First Name"
+                                            defaultText="Co-applicant First Name"
+                                        />
+                                    </Form.Group>
+                                    <Form.Group className="mb-18">
+                                        <Input
+                                            name="co_last_name"
+                                            type="text"
+                                            value={customer.co_app.last_name}
+                                            label="Co-applicant Last Name"
+                                            defaultText="Co-applicant Last Name"
+                                        />
+                                    </Form.Group>
+                                    <Form.Group className="mb-18">
+                                        <Input
+                                            name="co_email"
+                                            type="email"
+                                            regex="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$"
+                                            value={customer.co_app.email}
+                                            label="Email"
+                                            defaultText="Email"
+                                        />
+                                    </Form.Group>
+                                    <Form.Group className="mb-18">
+                                        <Input
+                                            name="co_cell_phone"
+                                            type="hidden"
+                                            value={customer.co_app.cell_phone}
+                                            label="Phone"
+                                            className="medium-input"
+                                            defaultText="(123) 456-7890"
+                                            regex="^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$"
+                                            mask="(999) 999-9999"
+                                        />
+                                    </Form.Group>
+                                    <Form.Group className="mb-18">
+                                        <Input
+                                            name="co_date_of_birth"
+                                            type="hidden"
+                                            value={customer.co_app.dobY && customer.co_app.dobM && customer.co_app.dobD ? `${customer.co_app.dobY}-${customer.co_app.dobM}-${customer.co_app.dobD}` : null}
+                                            label="Date of Birth"
+                                            className="medium-input"
+                                            defaultText="MM / DD / YYYY"
+                                            isDate={true}
+                                        />
+                                    </Form.Group>
+                                    <Form.Group className="mb-18">
+                                        <Input
+                                            name="co_driver_license"
+                                            type="hidden"
+                                            value={customer.co_app.driver_license}
+                                            label="Driver License Number"
+                                            defaultText="#"
+                                            mask="**************"
+                                            maskChar=" "
+                                        />
+                                    </Form.Group>
+                                    <Form.Group className="mb-18">
+                                        <Input
+                                            name="co_no_of_dependents"
+                                            type="text"
+                                            value={customer.co_app.no_of_dependents}
+                                            label="Number of Dependants"
+                                            defaultText="0"
+                                            regex="\b\d{1,2}\b"
+                                            className="small-input"
+                                        />
+                                    </Form.Group>                       
+                                    <Form.Group className="mb-18">
+                                        <Checkbox
+                                            name="co_have_co_applicant_same_address"
+                                            type="checkbox"
+                                            label="Same as Applicant"
+                                            checked={customer.co_app.co_have_co_applicant_same_address ? true : null}
+                                        />
+                                    </Form.Group>
+                                    <Form.Group className="mb-18">
+                                        <Input
+                                            name="co_street"
+                                            type="text"
+                                            label="Street"
+                                            defaultText="Street"
+                                            defaultValue={customer.co_app.street}
+                                            disabled={customer.co_enabled ? true : false}
+                                        />
+                                    </Form.Group>
+                                    <Form.Group className="mb-18">
+                                        <Input
+                                            name="co_city"
+                                            type="text"
+                                            label="City"
+                                            defaultValue={customer.co_app.city}
+                                            defaultText="City"
+                                        />
+                                    </Form.Group>
+                                    <div className="styled-row">
+                                        <Form.Group className="styled-column mb-18">
+                                            <Dropdown
+                                                name="co_state"
+                                                type="dropdown"
+                                                label="State"
+                                                defaultText="State"
+                                                defaultValue={customer.co_app.state}
+                                                options={[{
+                                                    label: customer.co_app.state,
+                                                    value: customer.co_app.state
+                                                }]}
+                                            />
+                                        </Form.Group>
+                                        <Form.Group className="styled-column mb-18">
+                                            <Input
+                                                name="co_zip"
+                                                type="text"
+                                                defaultValue={customer.co_app.zip}
+                                                regex="^[0-9]{5}$"
+                                                label="Zip Code"
+                                                defaultText="Zip Code"
+                                            />
+                                        </Form.Group>
+                                    </div>
+
+                                    </>
+                                }
+                            </>
                             }
 
                         </div>
@@ -636,7 +644,7 @@ function AddDealer(props) {
                                                 defaultValue={customer.main_app.source}
                                                 label="Source"
                                                 defaultText="Source"
-                                                optionalParams = {{style:{width: 204}}}
+                                                optionalParams = {{style:{width: 166}}}
                                             />
                                         </Form.Group>
                                         <Form.Group className="styled-column mb-18">
@@ -671,12 +679,12 @@ function AddDealer(props) {
                                         type="checkbox"
                                         theme="light-label"
                                         label="Not currently employed"
-                                        checked={customer.co_app.co_employement_status ? true : null}
+                                        checked={customer.co_app.employement_status ? true : null}
                                     />
                                 </Form.Group>
 
 
-                                {!customer.co_app.co_employement_status &&
+                                {!customer.co_app.employement_status &&
 
                                 <>
 
@@ -814,7 +822,7 @@ function AddDealer(props) {
                             <table className="summary-row">
                                 <tr>
                                     <td><span><b>Name: </b> {customer.main_app.name}</span></td>
-                                    <td><span>{customer.co_enabled ? customer.co_app.name : ''}</span></td>
+                                    <td><span>{customer.co_enabled ? customer.co_app.name : <span className="hide">text for aligement</span>}</span></td>
                                 </tr>
                                 <tr>
                                     <td><span><b>Address: </b> {customer.main_app.street} {customer.main_app.city} {customer.main_app.state} {customer.main_app.zip}</span></td>
@@ -890,7 +898,7 @@ const mapStateToProps = state => ({
     appFillStatus: state.sales.appFillStatus,
     customer: state.sales.customer,
     isCustomerFound: state.sales.isCustomerFound,
-    actionLoading: state.sales.actionLoading
+    actionLoading: state.sales.actionLoading,
 });
 
 const mapDispatchToProps = dispatch => ({
