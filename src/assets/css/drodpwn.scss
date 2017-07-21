@@ -1,4 +1,4 @@
-.selected-labels {
+.selected-labels, select {
     height: 39px !important;
     padding: .375rem .75rem;
     color: #ccdbe7;
@@ -11,17 +11,21 @@
     &.empty {
         color: #5b93aa !important;
     }
+
+    option {
+        color: #ccdbe7;
+    }
 }
 
 .has-error {
-    & button.empty {
+    & .empty {
         border-color: #cf4343 !important;
     }
 }
 
 .dropdown {
     select {
-        display: none;
+        // display: none;
     }
     & .options {
         width: auto;
@@ -77,3 +81,38 @@
         right: 1px;
     }
 } 
+
+
+
+
+
+
+
+
+
+
+
+
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: url(../images/dropdown.png) 99% / 20% no-repeat #1E2C35 !important;
+    box-shadow: none !important;
+    outline: none !important;
+  }
+  
+  /* CAUTION: IE hackery ahead */
+  select::-ms-expand { 
+      display: none; /* remove default arrow on ie10 and ie11 */
+  }
+  
+  /* target Internet Explorer 9 to undo the custom arrow */
+  @media screen and (min-width:0\0) {
+      select {
+          background:none\9;
+          padding: 5px\9;
+      } 
+  }
+  

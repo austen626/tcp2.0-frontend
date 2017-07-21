@@ -110,7 +110,7 @@ input:focus {
         }
 
         @media (max-width: 570px) {
-            input, .selected-labels {
+            input, .selected-labels, select {
                 width: 100%;
             }
         }
@@ -204,7 +204,7 @@ input:focus {
 
 
     @media (max-width: 350px) {
-        .home-form input, .selected-labels {
+        .home-form input, .selected-labels, select {
             width: 260px !important;
         }
     }
@@ -471,7 +471,7 @@ button.secondary {
     justify-content: space-between;
 
     .styled-column {
-        .selected-labels {
+        .selected-labels, select {
             width: 174px !important;
         }
 
