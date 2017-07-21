@@ -184,7 +184,7 @@ function AddDealer(props) {
                                 className="single-line-input"
                                 error={{
                                     'empty': " ",
-                                    'invalid': 'Invalid'
+                                    'invalid': ' '
                                 }}
                                 validationResult={validationResult}
                                 handleChange={(e)=>setTempYearsThereFirst(e.target.value)}
@@ -197,12 +197,12 @@ function AddDealer(props) {
                                 defaultValue={tempMonthlyRentMortgagePayment}
                                 label={`${tempOwnOrRent === 'own' ? "Monthly Mortgage Payment:" : "Monthly Rent Payment:"}`}
                                 defaultText="0"
-                                regex="^[0-9]{1,2,3,4,5,6,7,8,9}$"
+                                regex="^[0-9]{1,20}$"
                                 required={true}
                                 className="single-line-input width-112"
                                 error={{
                                     'empty': " ",
-                                    'invalid': 'Invalid'
+                                    'invalid': ' '
                                 }}
                                 validationResult={validationResult}
                                 handleChange={(e)=>setTempMonthlyRentMortgagePayment(e.target.value)}
@@ -286,7 +286,7 @@ function AddDealer(props) {
                                     className="single-line-input"
                                     error={{
                                         'empty': " ",
-                                        'invalid': "Invalid"
+                                        'invalid': " "
                                     }}
                                     validationResult={validationResult}
                                 />
@@ -302,12 +302,12 @@ function AddDealer(props) {
                                     })}
                                     label="Monthly Mortgage Payment:"
                                     defaultText="0"
-                                    regex="^[0-9]{1,2,3,4,5,6,7,8,9}$"
+                                    regex="^[0-9]{1,20}$"
                                     required={true}
                                     className="single-line-input width-112"
                                     error={{
                                         'empty': " ",
-                                        'invalid': "Invalid"
+                                        'invalid': " "
                                     }}
                                     validationResult={validationResult}
                                 />

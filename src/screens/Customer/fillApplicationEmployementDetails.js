@@ -255,7 +255,7 @@ function AddDealer(props) {
                                         defaultValue={customer.main_app.monthly_income}
                                         label="Monthly Income"
                                         defaultText="0"
-                                        regex="^[0-9]{1,2,3,4,5,6,7,8,9}$"
+                                        regex="^[0-9]{1,20}$"
                                         required={true}
                                         error={{
                                             'empty': " ",
@@ -327,7 +327,7 @@ function AddDealer(props) {
                                             defaultValue={customerAdditionalIncome}
                                             label="Monthly Income"
                                             defaultText="0"
-                                            regex="^[0-9]{1,2,3,4,5,6,7,8,9}$"
+                                            regex="^[0-9]{1,20}$"
                                             isAmount={true}
                                             required={ownOtherSourceStatus === "no" ? false : true}
                                             disabled={ownOtherSourceStatus === "no" ? true : false}
@@ -405,7 +405,7 @@ function AddDealer(props) {
                                             required={true}
                                             error={{
                                                 'empty': " ",
-                                                'invalid': "Invalid"
+                                                'invalid': " "
                                             }}
                                             validationResult={validationResult}
                                             optionalParams = {{style:{width: 87}}}
@@ -454,11 +454,11 @@ function AddDealer(props) {
                                             defaultValue={customer.co_app.monthly_income}
                                             label="Monthly Income"
                                             defaultText="0"
-                                            regex="^[0-9]{1,2,3,4,5,6,7,8,9}$"
+                                            regex="^[0-9]{1,20}$"
                                             required={true}
                                             error={{
                                                 'empty': " ",
-                                                'Invalid': "Invalid"
+                                                'Invalid': " "
                                             }}
                                             validationResult={validationResult}
                                             optionalParams = {{style:{width: 118}}}
@@ -525,13 +525,13 @@ function AddDealer(props) {
                                                 defaultValue={coCustomerAdditionalIncome}
                                                 label="Monthly Income"
                                                 defaultText="0"
-                                                regex="^[0-9]{1,2,3,4,5,6,7,8,9}$"
+                                                regex="^[0-9]{1,20}$"
                                                 isAmount={true}
                                                 required={coOtherSourceStatus === "no" ? false : true}
                                                 disabled={coOtherSourceStatus === "no" ? true : false}
                                                 error={{
                                                     'empty': " ",
-                                                    'invalid': "Invalid"
+                                                    'invalid': " "
                                                 }}
                                                 validationResult={validationResult}
                                                 optionalParams = {{style:{width: 118}}}
