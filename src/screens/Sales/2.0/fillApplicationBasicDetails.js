@@ -568,7 +568,7 @@ function AddDealer(props) {
                                     defaultText="Zip Code"
                                     required={true}
                                     error={{
-                                        'invalid': "Invalid",
+                                        'invalid': " ",
                                         'empty': " "
                                     }}
                                     validationResult={validationResult}
@@ -804,7 +804,7 @@ function AddDealer(props) {
                                         defaultText="Zip Code"
                                         required={haveCoApplicant ? true : false}
                                         error={{
-                                            'invalid': "Invalid",
+                                            'invalid': " ",
                                             'empty': " "
                                         }}
                                         validationResult={validationResult}
