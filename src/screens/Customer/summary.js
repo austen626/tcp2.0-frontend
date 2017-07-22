@@ -769,7 +769,7 @@ function AddDealer(props) {
                                                             defaultValue={customer.co_app.source}
                                                             label="Source"
                                                             defaultText="Source"
-                                                            optionalParams={{ style: { width: 204 } }}
+                                                            optionalParams={{ style: { width: 166 } }}
                                                         />
                                                     </Form.Group>
                                                     <Form.Group className="styled-column mb-18">
