@@ -148,7 +148,7 @@ function AddDealer(props) {
                                 />
                             </Form.Group>
 
-                            {appFillStatus == "in_app" || isCustomerFound &&
+                            {(appFillStatus == "in_app" || isCustomerFound) &&
                             <>
                                 <Form.Group className="mb-18">
                                     <Input
