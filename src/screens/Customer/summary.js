@@ -828,26 +828,6 @@ function AddDealer(props) {
                                     <td><span>{customer.co_enabled ? customer.co_app.cell_phone : ''}</span></td>
                                 </tr>
                             </table>
-                            <div className="row other-details summary-row">
-                                <div className="col">
-                                    <span className="status">Credit application</span>
-                                    <span className="status-icon">
-                                        <img src={IconStatusSent} />
-                                            sent
-                                        </span>
-                                </div>
-                                <div className={`col ${!customer.co_enabled ? 'button-col' : null}`}>
-                                    {customer.co_enabled &&
-                                        <>
-                                            <span className="status">Credit application</span>
-                                            <span className="status-icon">
-                                                <img src={IconStatusSent} />
-                                                    sent
-                                                </span>
-                                        </>
-                                    }
-                                </div>
-                            </div>
                         </div>
                         <div className="table-div status">
                             <div className="row other-details summary-row">
