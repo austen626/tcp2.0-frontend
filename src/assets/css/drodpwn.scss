@@ -98,18 +98,25 @@
     background: url(../images/dropdown.png) 99% / 20% no-repeat #1E2C35 !important;
     box-shadow: none !important;
     outline: none !important;
-  }
+}
   
-  /* CAUTION: IE hackery ahead */
-  .dropdown select::-ms-expand { 
-      display: none; /* remove default arrow on ie10 and ie11 */
-  }
+/* CAUTION: IE hackery ahead */
+.dropdown select::-ms-expand { 
+    display: none; /* remove default arrow on ie10 and ie11 */
+}
   
-  /* target Internet Explorer 9 to undo the custom arrow */
-  @media screen and (min-width:0\0) {
-    .dropdown select {
-          background:none\9;
-          padding: 5px\9;
-      } 
-  }
-  
+/* target Internet Explorer 9 to undo the custom arrow */
+@media screen and (min-width:0\0) {
+.dropdown select {
+        background:none\9;
+        padding: 5px\9;
+    } 
+}
+
+
+
+.full-dropdown-width {
+    & .dropdown select {
+        background: url(../images/dropdown.png) 99% / 9% no-repeat #1E2C35 !important;
+    }
+}

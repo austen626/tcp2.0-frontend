@@ -236,8 +236,6 @@ function AddDealer(props) {
         evt.preventDefault();
         const formData = getFromData(evt);
 
-        console.log(formData)
-
         setValidationResult(formData.validationResult);
 
         if (!formData.validationResult) {

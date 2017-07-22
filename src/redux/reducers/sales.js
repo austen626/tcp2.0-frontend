@@ -83,6 +83,7 @@ const INIT_STATE = {
 
     customer: {main_app: {}, co_app: {}},
     isCustomerFound: false,
+    isCustomerSubmitted: false,
     searchCustomerApiInitiate: false,
     actionLoading: false,
     appFillStatus: 'in_app',
@@ -283,6 +284,7 @@ export default function(state = INIT_STATE, action){
                 ...state,
                 customer: temp_customer,
                 actionLoading: false,
+                isCustomerSubmitted: true,
             }
         case SUBMIT_CUSTOMER_REPONSE_FAILED:
             return {

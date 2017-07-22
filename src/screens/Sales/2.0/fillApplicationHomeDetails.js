@@ -217,6 +217,20 @@ function AddDealer(props) {
                                 <span className="title">Co-applicant</span>
                             </span> 
 
+                            <Form.Group className="mb-18">
+                                <Checkbox
+                                    name="have_co_applicant_with_same_answers"
+                                    type="checkbox"
+                                    theme="light-label"
+                                    label="The answes are the same as the answers<br>given by the applicant"
+                                    checked={haveCoApplicantSameAnswers ? true : null}
+                                    handleChange={(e)=>{
+                                        setHaveCoApplicantSameAnswers(e.target.checked)
+                                        setCoTempOwnOrRent(e.target.checked ? tempOwnOrRent : tempCoOwnOrRent)
+                                    }}
+                                />
+                            </Form.Group> 
+
                             <div className="box center-box">
                                 <label class="form-label" style={{textAlign: "center", width: "100%", padding: 0}}>Do you own or rent your home?</label>
                                 <div className="radio-box center">
@@ -228,7 +242,12 @@ function AddDealer(props) {
                                             className="radio-width"
                                             inputClass="regular-radio"
                                             defaultValue="own"
-                                            checked={tempCoOwnOrRent == 'own' ? true : null}
+                                            {...(haveCoApplicantSameAnswers ? {
+                                                checked: tempOwnOrRent == 'own' ? true : null,
+                                                disabled: true
+                                            } : {
+                                                checked: tempCoOwnOrRent == 'own' ? true : null
+                                            })}
                                             handleChange={(e) => hideCoAppError(e)}
                                         />
                                         <label for="co_own" class="form-label " id="co_own-label">Own</label>  
@@ -241,25 +260,19 @@ function AddDealer(props) {
                                             className="radio-width"
                                             inputClass="regular-radio"
                                             defaultValue="rent"
-                                            checked={tempCoOwnOrRent == 'rent' ? true : null}
+                                            {...(haveCoApplicantSameAnswers ? {
+                                                checked: tempOwnOrRent == 'rent' ? true : null,
+                                                disabled: true
+                                            } : {
+                                                checked: tempCoOwnOrRent == 'rent' ? true : null
+                                            })}
                                             handleChange={(e) => hideCoAppError(e)}
                                         />
                                         <label for="co_rent" class="form-label " id="co_rent-label">Rent</label>
                                     </Form.Group>
                                 </div>
                                 <div class={`error-label ${coOwnRentError ? "show" : "hide"}`}>Please select details</div>
-                            </div>
-
-                            <Form.Group className="mb-18">
-                                <Checkbox
-                                    name="have_co_applicant_with_same_answers"
-                                    type="checkbox"
-                                    theme="light-label"
-                                    label="The answes are the same as the answers<br>given by the applicant"
-                                    checked={haveCoApplicantSameAnswers ? true : null}
-                                    handleChange={(e)=>setHaveCoApplicantSameAnswers(e.target.checked)}
-                                />
-                            </Form.Group>  
+                            </div> 
 
                             <Form.Group className="mb-18">
                                 <Input
@@ -287,11 +300,12 @@ function AddDealer(props) {
                                     name="co_monthly_rent_mortgage_payment"
                                     type="text"
                                     {...(haveCoApplicantSameAnswers ? {
-                                        value: tempMonthlyRentMortgagePayment
+                                        value: tempMonthlyRentMortgagePayment,
+                                        label: `${tempOwnOrRent === 'own' ? "Monthly Mortgage Payment:" : "Monthly Rent Payment:"}`
                                     } : {
-                                        defaultValue: customer.co_app.monthly_rent_mortgage_payment ? customer.co_app.monthly_rent_mortgage_payment : null
+                                        defaultValue: customer.co_app.monthly_rent_mortgage_payment ? customer.co_app.monthly_rent_mortgage_payment : null,
+                                        label: `${tempCoOwnOrRent === 'own' ? "Monthly Mortgage Payment:" : "Monthly Rent Payment:"}`
                                     })}
-                                    label={`${tempCoOwnOrRent === 'own' ? "Monthly Mortgage Payment:" : "Monthly Rent Payment:"}`}
                                     defaultText="0"
                                     regex="^[0-9]{1,20}$"
                                     isAmount={true}

@@ -17,6 +17,7 @@ function AddDealer(props) {
         customer,
         actionLoading,
         updateCustomer,
+        isCustomerSubmitted
     } = props;
 
     const [activeTab, setActiveTab] = useState('summary_list');
@@ -72,10 +73,14 @@ function AddDealer(props) {
                     {activeTab === 'credit_details' && <span className='arrow-down'></span>}
                 </button>
 
+                {!isCustomerSubmitted &&
+
                 <button className={`${activeTab === 'summary_list' ? 'active' : ''}`} onClick={() => handleTabChange('summary_list')}>
                     <img src={IconListWhite} alt="" />
                     {activeTab === 'summary_list' && <span className='arrow-down'></span>}
                 </button>
+
+                }
 
             </div>
 
@@ -510,6 +515,7 @@ function AddDealer(props) {
                     </div>
 
 
+                    {!isCustomerSubmitted &&
 
                     <div className="container">
                         <div className="styled-form">
@@ -790,6 +796,9 @@ function AddDealer(props) {
                             }
                         </div>
                     </div>
+                    
+                    }
+
                 </>
             }
 
@@ -866,7 +875,8 @@ function AddDealer(props) {
 const mapStateToProps = state => ({
     customer: state.sales.customer,
     isCustomerFound: state.sales.isCustomerFound,
-    actionLoading: state.sales.actionLoading
+    actionLoading: state.sales.actionLoading,
+    isCustomerSubmitted: state.sales.isCustomerSubmitted
 });
 
 const mapDispatchToProps = dispatch => ({
