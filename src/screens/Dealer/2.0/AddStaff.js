@@ -39,8 +39,6 @@ function AddStaff(props) {
 
         setValidationResult(formData.validationResult);
 
-        console.log(formData)
-
         if(!formData.validationResult && formData.formData.role && formData.formData.role !== "") {
 
             let data = formData.formData

@@ -254,6 +254,7 @@ function AddDealer(props) {
                                         type="text"
                                         defaultValue={customer.main_app.monthly_income}
                                         label="Monthly Income"
+                                        isAmount={true}
                                         defaultText="0"
                                         regex="^[0-9]{1,20}$"
                                         required={true}
@@ -454,6 +455,7 @@ function AddDealer(props) {
                                             defaultValue={customer.co_app.monthly_income}
                                             label="Monthly Income"
                                             defaultText="0"
+                                            isAmount={true}
                                             regex="^[0-9]{1,20}$"
                                             required={true}
                                             error={{
@@ -525,6 +527,7 @@ function AddDealer(props) {
                                                 defaultValue={coCustomerAdditionalIncome}
                                                 label="Monthly Income"
                                                 defaultText="0"
+                                                isAmount={true}
                                                 regex="^[0-9]{1,20}$"
                                                 isAmount={true}
                                                 required={coOtherSourceStatus === "no" ? false : true}
