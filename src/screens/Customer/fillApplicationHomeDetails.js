@@ -215,16 +215,7 @@ function AddDealer(props) {
 
                             <span className="divider">
                                 <span className="title">Co-applicant</span>
-                            </span>
-
-                            <Form.Group className="mb-18">
-                                <Checkbox
-                                    name="have_co_applicant"
-                                    type="checkbox"
-                                    theme="light-label"
-                                    label="The answes are the same as the answers<br>given by the applicant"
-                                />
-                            </Form.Group>   
+                            </span>  
 
                             <div className="box center-box">
                                 <label class="form-label" style={{textAlign: "center", width: "100%", padding: 0}}>Do you own or rent your home?</label>

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Header, { HeaderLeft, HeaderCenter, HeaderRight } from '../../components/Dealer/Header';
-import { TCPLogo } from '../../assets/images';
+import { TCPLogo, IconArrowLeft } from '../../assets/images';
 import Loader from 'shared/Loader';
 
 import { customerResponseSubmit } from '../../redux/actions/sales';
@@ -21,14 +21,20 @@ function AddDealer(props) {
 
     const handleSubmit = evt => {
         evt.preventDefault();
-        alert('Thank you');
+        // alert('Thank you');
+    }
+
+    const handleBackScreen = () => {
+        history.replace('/customerSummary');
     }
 
     return (
         <div className="dealer">
 
             <Header>
-                <HeaderLeft></HeaderLeft>
+                <HeaderLeft>
+                    <img src={IconArrowLeft} onClick={() => handleBackScreen()} alt="" />
+                </HeaderLeft>
                 <HeaderCenter>
                     <div className="header-main">
                         <img className="main-logo" src={TCPLogo} alt="" />
