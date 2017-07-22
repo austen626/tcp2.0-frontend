@@ -20,7 +20,7 @@ function AddDealer(props) {
         isCustomerSubmitted
     } = props;
 
-    const [activeTab, setActiveTab] = useState('summary_list');
+    const [activeTab, setActiveTab] = useState(!isCustomerSubmitted ? 'summary_list' : 'profile');
 
     const handleAddCoApp = () => {
         let temp_customer = {
@@ -50,7 +50,7 @@ function AddDealer(props) {
 
             <Header>
                 <HeaderLeft>
-                    <img src={IconArrowLeft} onClick={() => handleBackScreen()} alt="" />
+                    {!isCustomerSubmitted ? <img src={IconArrowLeft} onClick={() => handleBackScreen()} alt="" /> : ''}
                 </HeaderLeft>
                 <HeaderCenter>
                     <div className="header-main">
@@ -515,7 +515,6 @@ function AddDealer(props) {
                     </div>
 
 
-                    {!isCustomerSubmitted &&
 
                     <div className="container">
                         <div className="styled-form">
@@ -797,7 +796,6 @@ function AddDealer(props) {
                         </div>
                     </div>
                     
-                    }
 
                 </>
             }
@@ -809,7 +807,7 @@ function AddDealer(props) {
 
 
 
-            {activeTab === 'summary_list' &&
+            {activeTab === 'summary_list' && !isCustomerSubmitted &&
                 <form action="javascript:void(0)" onSubmit={(e) => handleSubmit(e)} noValidate>
                     <div className="container black-box">
                         <div className="table-div">
