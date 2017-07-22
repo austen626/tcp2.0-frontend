@@ -804,7 +804,6 @@ function AddDealer(props) {
                 <form action="javascript:void(0)" onSubmit={(e) => handleSubmit(e)} noValidate>
                     <div className="container black-box">
                         <div className="table-div">
-
                             <table className="summary-row">
                                 <tr>
                                     <td><span><b>Name: </b> {customer.main_app.name}</span></td>
@@ -829,7 +828,28 @@ function AddDealer(props) {
                                     <td><span>{customer.co_enabled ? customer.co_app.cell_phone : ''}</span></td>
                                 </tr>
                             </table>
-
+                            <div className="row other-details summary-row">
+                                <div className="col">
+                                    <span className="status">Credit application</span>
+                                    <span className="status-icon">
+                                        <img src={IconStatusSent} />
+                                            sent
+                                        </span>
+                                </div>
+                                <div className={`col ${!customer.co_enabled ? 'button-col' : null}`}>
+                                    {customer.co_enabled &&
+                                        <>
+                                            <span className="status">Credit application</span>
+                                            <span className="status-icon">
+                                                <img src={IconStatusSent} />
+                                                    sent
+                                                </span>
+                                        </>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div className="table-div status">
                             <div className="row other-details summary-row">
                                 <div className="col">
                                     <span className="status">Credit application</span>
@@ -851,7 +871,6 @@ function AddDealer(props) {
                                     }
                                 </div>
                             </div>
-
                         </div>
                     </div>
                     <div className="footer-container">

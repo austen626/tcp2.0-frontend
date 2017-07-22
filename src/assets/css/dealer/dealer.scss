@@ -489,7 +489,7 @@ button.secondary {
 .summary-row {
 
     .col {
-        margin-top: 15px;
+        // margin-top: 15px;
         padding: 10px; 
         // margin-bottom: 62px !important;
         width: 50%;
@@ -557,7 +557,7 @@ button.secondary {
 
     @media (max-width: 570px) {
         .col {
-            margin-top: 15px;
+            // margin-top: 15px;
             // margin-bottom: 15px !important;
         }
     }
@@ -636,9 +636,15 @@ table.summary-row {
 
 .table-div {
     padding: 62px 0;    
+    padding-bottom: 5px;
     max-width: 380px;
     margin: auto;
+    width: 100%;
+    overflow: auto;  
     
+    &.status {
+        padding: 20px 0;   
+    }
 }
 
 .ssn-span {
