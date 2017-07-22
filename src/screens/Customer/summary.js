@@ -740,7 +740,7 @@ function AddDealer(props) {
                                                             className="radio-width"
                                                             inputClass="regular-radio"
                                                             defaultValue="yes"
-                                                            checked={customer.co_app.co_additional_income_status === "yes" ? true : null}
+                                                            checked={customer.co_app.additional_income_status === "yes" ? true : null}
                                                         />
                                                         <label for="co_yes" class="form-label " id="co_yes-label">Yes</label>
                                                     </Form.Group>
@@ -752,21 +752,21 @@ function AddDealer(props) {
                                                             className="radio-width"
                                                             inputClass="regular-radio regular-radio2"
                                                             defaultValue="no"
-                                                            checked={customer.co_app.co_additional_income_status === "no" ? true : null}
+                                                            checked={customer.co_app.additional_income_status === "no" ? true : null}
                                                         />
                                                         <label for="co_no" class="form-label " id="co_no-label">No</label>
                                                     </Form.Group>
                                                 </div>
                                             </div>
 
-                                            {customer.co_app.co_additional_income_status === "yes" &&
+                                            {customer.co_app.additional_income_status === "yes" &&
 
                                                 <div className="styled-row">
                                                     <Form.Group className="styled-column mb-18">
                                                         <Input
                                                             name="co_source"
                                                             type="text"
-                                                            defaultValue={customer.co_app.co_source}
+                                                            defaultValue={customer.co_app.source}
                                                             label="Source"
                                                             defaultText="Source"
                                                             optionalParams={{ style: { width: 204 } }}
@@ -776,7 +776,7 @@ function AddDealer(props) {
                                                         <Input
                                                             name="co_additional_income"
                                                             type="text"
-                                                            defaultValue={customer.co_app.co_additional_income}
+                                                            defaultValue={customer.co_app.additional_income}
                                                             label="Monthly Income"
                                                             defaultText="0"
                                                             optionalParams={{ style: { width: 118 } }}
