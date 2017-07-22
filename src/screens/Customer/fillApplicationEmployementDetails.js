@@ -515,7 +515,7 @@ function AddDealer(props) {
                                                     'empty': " "
                                                 }}
                                                 validationResult={validationResult}
-                                                optionalParams = {{style:{width: 204}}}
+                                                optionalParams = {{style:{width: 166}}}
                                             />
                                         </Form.Group>
                                         <Form.Group className="styled-column mb-18">
