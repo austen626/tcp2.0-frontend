@@ -461,7 +461,7 @@ function AddDealer(props) {
                                 defaultText="#"
                                 regex={customer.main_app.id ? customer.main_app.ssn : '^(?!0{3}|6{3}|9[0-9]{2})[0-9]{3}-(?!0{3})[0-9]{3}-(?!0{4})[0-9]{4}$'}
                                 mask="999-999-9999"
-                                optionalParams = {{style:{color: '#1e2c35', caretColor: "#ccdbe7"}}}
+                                optionalParams = {{style:{color: 'transparent', caretColor: "#ccdbe7"}}}
                                 isHidden={true}
                                 required={true}
                                 isMatched={customer.main_app.id ? true : false}
@@ -675,7 +675,7 @@ function AddDealer(props) {
                                     defaultText="#"
                                     regex={customer.main_app.id && haveCoApplicant ? customer.co_app.ssn : '^(?!0{3}|6{3}|9[0-9]{2})[0-9]{3}-(?!0{3})[0-9]{3}-(?!0{4})[0-9]{4}$'}
                                     mask="999-999-9999"
-                                    optionalParams = {{style:{color: '#1e2c35', caretColor: "#ccdbe7"}}}
+                                    optionalParams = {{style:{color: 'transparent', caretColor: "#ccdbe7"}}}
                                     isHidden={true}
                                     required={haveCoApplicant ? true : false}
                                     isMatched={customer.main_app.id && haveCoApplicant ? true : false}
