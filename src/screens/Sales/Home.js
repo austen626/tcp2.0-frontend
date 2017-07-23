@@ -35,6 +35,8 @@ function HomeScreen(props) {
     let interval = null;
 
     useEffect(() => {  
+        setApplicantPhone(null);
+        setApplicantEmail(null);
         resetCustomerSearchApiInitiate(false)
     }, [])
 
