@@ -26,8 +26,8 @@ function HomeScreen(props) {
 
     const [hitSearchApi, setHitSearchApi] = useState(false);
     const [validationResult, setValidationResult] = useState(null);
-    const [applicantEmail, setApplicantEmail] = useState(isCustomerFound ? customer.main_app.email : null);
-    const [applicantPhone, setApplicantPhone] = useState(isCustomerFound ? customer.main_app.cell_phone : null);
+    const [applicantEmail, setApplicantEmail] = useState(null);
+    const [applicantPhone, setApplicantPhone] = useState(null);
 
     const submitButton = createRef();
 
