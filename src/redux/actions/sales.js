@@ -370,7 +370,7 @@ export function submiCreditApplication(history, data) {
 
         } catch (error) {
 
-            pushNotification(error.response.data.error, 'error', 'TOP_RIGHT', 3000);
+            pushNotification(error.response.data.message, 'error', 'TOP_RIGHT', 3000);
 
             dispatch({
                 type: SUBMIT_CREDIT_APP_FAILED
@@ -471,7 +471,7 @@ export function customerResponseSubmit(history, data) {
 
         } catch (error) {
 
-            pushNotification(error.response.data.error, 'error', 'TOP_RIGHT', 3000);
+            pushNotification(error.response.data.message, 'error', 'TOP_RIGHT', 3000);
 
             dispatch({
                 type: SUBMIT_CUSTOMER_REPONSE_FAILED
