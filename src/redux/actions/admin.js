@@ -281,7 +281,7 @@ export function updateDealer(history, data) {
             pushNotification(notificationMsg.REQUEST_SUCCESS, 'success', 'TOP_RIGHT', 3000);
             history && history.push('/admin/dealers');
         } catch (error) {
-            pushNotification(error.response.data.error, 'error', 'TOP_RIGHT', 3000);
+            pushNotification(error.response.data.message, 'error', 'TOP_RIGHT', 3000);
             dispatch({
                 type: UPDATE_DEALER_REQUEST_FAILED,
             })
@@ -304,7 +304,7 @@ export function addDealer(history, data) {
             pushNotification(notificationMsg.REQUEST_SUCCESS, 'success', 'TOP_RIGHT', 3000);
             history && history.push('/admin/dealers');
         } catch (error) {
-            pushNotification(error.response.data.error, 'error', 'TOP_RIGHT', 3000);
+            pushNotification(error.response.data.message, 'error', 'TOP_RIGHT', 3000);
             dispatch({
                 type: ADD_DEALER_REQUEST_FAILED,
             })
@@ -326,7 +326,7 @@ export function deleteDealer(id) {
             })
             pushNotification(notificationMsg.REQUEST_SUCCESS, 'success', 'TOP_RIGHT', 3000);
         } catch (error) {
-            pushNotification(error.response.data.error, 'error', 'TOP_RIGHT', 3000);
+            pushNotification(error.response.data.message, 'error', 'TOP_RIGHT', 3000);
             dispatch({
                 type: DELETE_DEALER_REQUEST_FAILED,
             })
