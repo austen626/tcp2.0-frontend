@@ -8,7 +8,7 @@ import Loader from 'shared/Loader';
 import { IconHome, IconRight } from '../../assets/images';
 
 import { getFromData } from '../../components/commons/utility';
-import { searchCustomer, resetCustomerSearchApiInitiate, updateCustomer } from '../../redux/actions/sales';
+import { searchCustomer, resetCustomerSearchApiInitiate, updateCustomer, validateEmailAddress } from '../../redux/actions/sales';
 
 function HomeScreen(props) {
 
@@ -20,6 +20,7 @@ function HomeScreen(props) {
         actionLoading,
         searchCustomer,
         updateCustomer,
+        validateEmailAddress,
         searchCustomerApiInitiate,
         resetCustomerSearchApiInitiate
     } = props;
@@ -89,7 +90,7 @@ function HomeScreen(props) {
                     ...customer,
                     "main_app": {
                         ...customer.main_app,
-                        "name": data.first_name+" "+data.last_name,
+                        "name": customer.main_app.first_name+" "+customer.main_app.last_name,
                         "email": data.email,
                         "cell_phone": data.cell_phone,
                     },
@@ -114,6 +115,23 @@ function HomeScreen(props) {
                         ...temp_customer
                     }
                 }
+
+                
+
+
+
+
+
+
+                if(!isCustomerFound) {
+                    validateEmailAddress(applicantEmail);
+                }
+
+
+
+
+
+
 
                 updateCustomer(history, '/applyApplication', temp_customer);
             }
@@ -195,7 +213,7 @@ function HomeScreen(props) {
                                 type="text"
                                 label="Applicant First Name"
                                 defaultText="Applicant First Name"
-                                // defaultValue={isCustomerFound ? customer.main_app.first_name : null} 
+                                disabled={isCustomerFound} 
                                 required={searchCustomerApiInitiate && !isCustomerFound ? true : false}
                                 error={{
                                     'empty': " "
@@ -209,7 +227,7 @@ function HomeScreen(props) {
                                 type="text"
                                 label="Applicant Last Name"
                                 defaultText="Applicant Last Name"
-                                // defaultValue={isCustomerFound ? customer.main_app.last_name : null} 
+                                disabled={isCustomerFound} 
                                 required={searchCustomerApiInitiate && !isCustomerFound ? true : false}
                                 error={{
                                     'empty': " "
@@ -257,6 +275,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     searchCustomer: (data) => dispatch(searchCustomer(data)),
+    validateEmailAddress: (data) => dispatch(validateEmailAddress(data)),
     resetCustomerSearchApiInitiate: () => dispatch(resetCustomerSearchApiInitiate()),
     updateCustomer: (history, path, data) => dispatch(updateCustomer(history, path, data))
 });

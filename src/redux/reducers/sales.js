@@ -43,6 +43,10 @@ import {
     SEND_APP_LINK_SUCCESS,
     SEND_APP_LINK_FAILED,
 
+    VALIDATE_EMAIL_REQUEST,
+    VALIDATE_EMAIL_SUCCESS,
+    VALIDATE_EMAIL_FAILED,
+
 
 
 } from '../actions/sales';
@@ -87,6 +91,7 @@ const INIT_STATE = {
     searchCustomerApiInitiate: false,
     actionLoading: false,
     appFillStatus: 'in_app',
+    emailValidate: true
     
 
 
@@ -219,7 +224,8 @@ export default function(state = INIT_STATE, action){
                 ...state,
                 customer: temp_customer,
                 isCustomerFound: false,
-                searchCustomerApiInitiate: false
+                searchCustomerApiInitiate: false,
+                emailValidate: true
             }
         case SET_APP_FILLED_STATUS:
             return {
@@ -242,6 +248,7 @@ export default function(state = INIT_STATE, action){
                 searchCustomerApiInitiate: true,
                 actionLoading: false,
                 isCustomerSubmitted: false,
+                emailValidate: true
             }
         case GET_CUSTOMER_FAILED:
             return {
@@ -251,6 +258,34 @@ export default function(state = INIT_STATE, action){
                 searchCustomerApiInitiate: true,
                 actionLoading: false,
             }
+
+
+
+        
+        case VALIDATE_EMAIL_REQUEST:
+            return {
+                ...state,
+                emailValidate: false,
+                actionLoading: true,
+            }
+        case VALIDATE_EMAIL_SUCCESS:
+            return {
+                ...state,                
+                emailValidate: true,
+                actionLoading: false,
+            }
+        case VALIDATE_EMAIL_FAILED:
+            return {
+                ...state,                
+                emailValidate: false,
+                actionLoading: false,
+            }
+
+
+
+
+
+
         case UPDATE_CUSTOMER_SEARCH_REQUEST:
             return {
                 ...state,
@@ -299,7 +334,7 @@ export default function(state = INIT_STATE, action){
         case SEND_APP_LINK_SUCCESS:
             return {
                 ...state,
-                customer: temp_customer,
+                // customer: temp_customer,
                 actionLoading: false,
             }
         case SEND_APP_LINK_FAILED:

@@ -320,15 +320,9 @@ input[type=number] {
 
 
 
-
-
-
-
-
-
-
-
-
+.form-control:disabled, .form-control[readonly] {
+    opacity: 0.5 !important;
+}
 
 
 

@@ -67,6 +67,10 @@ export const SEND_APP_LINK_REQUEST = "SEND_APP_LINK_REQUEST";
 export const SEND_APP_LINK_SUCCESS = "SEND_APP_LINK_SUCCESS";
 export const SEND_APP_LINK_FAILED = "SEND_APP_LINK_FAILED";
 
+export const VALIDATE_EMAIL_REQUEST = "VALIDATE_EMAIL_REQUEST";
+export const VALIDATE_EMAIL_SUCCESS = "VALIDATE_EMAIL_SUCCESS";
+export const VALIDATE_EMAIL_FAILED = "VALIDATE_EMAIL_FAILED";
+
 
 
 
@@ -300,6 +304,28 @@ export function searchCustomer(data) {
     }
 }
 
+export function validateEmailAddress(email) {
+
+    let temp_data = {"email":email}
+
+    return async function(dispatch) {
+        dispatch({
+            type: VALIDATE_EMAIL_REQUEST,
+        })
+        try {
+            await API.post(`/accounts/validate-email`, temp_data);
+            dispatch({
+                type: VALIDATE_EMAIL_SUCCESS,
+            })
+        } catch (error) {
+            dispatch({
+                type: VALIDATE_EMAIL_FAILED,
+            })
+            pushNotification("Invalid email address", 'error', 'TOP_RIGHT', 3000);   
+        }    
+    }
+}
+
 
 export function resetCustomerSearchApiInitiate() {
     return async function(dispatch) {
@@ -316,7 +342,7 @@ export function updateApplicationFilledStatus(data, history, path) {
             type: SET_APP_FILLED_STATUS,
             payload: data
         })       
-        history && history.push(path);   
+        history && path && history.push(path);   
     }
 }
 
@@ -380,7 +406,7 @@ export function submiCreditApplication(history, data) {
 }
 
 
-export function submiCreditApplicationByMain(history, data) { 
+export function submiCreditApplicationByMail(history, data) { 
 
     let temp_data = {
         customer_id: data.main_app.id ? data.main_app.id : 0,
@@ -403,7 +429,7 @@ export function submiCreditApplicationByMain(history, data) {
                 type: SEND_APP_LINK_SUCCESS,
             })
             pushNotification("Application Send Successfully", 'success', 'TOP_RIGHT', 3000);
-            history && history.push('/applyHome'); 
+            history && history.push('/applyApplicationSummary');
         } catch (error) {
             dispatch({
                 type: SEND_APP_LINK_FAILED,

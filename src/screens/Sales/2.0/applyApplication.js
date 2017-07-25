@@ -4,15 +4,19 @@ import Header, { HeaderLeft, HeaderCenter, HeaderRight } from '../../../componen
 import Loader from 'shared/Loader';
 import { IconList, IconSend, IconArrowLeft, TCPLogo } from '../../../assets/images';
 
-import { updateApplicationFilledStatus, resetCustomerSearchApiInitiate } from '../../../redux/actions/sales';
+import { updateApplicationFilledStatus, resetCustomerSearchApiInitiate, submiCreditApplicationByMail } from '../../../redux/actions/sales';
 
 function HomeScreen(props) {
 
     const {
         history,
+        customer,
+        actionLoading,
         isCustomerFound,
+        emailValidate,
         updateApplicationFilledStatus,
-        resetCustomerSearchApiInitiate      
+        resetCustomerSearchApiInitiate,
+        submiCreditApplicationByMail    
     } = props;
 
     const handleCompleteOnDeviceClick = () => {
@@ -20,7 +24,8 @@ function HomeScreen(props) {
     }
 
     const handleSendLink = () => {
-        updateApplicationFilledStatus('send_link', history, '/applyApplicationSummary');
+        updateApplicationFilledStatus('send_link', null, null);
+        submiCreditApplicationByMail(history, customer);
     }
 
     const handleArrowBack = () => {
@@ -35,6 +40,8 @@ function HomeScreen(props) {
     return (
         <div className="sales dealer">
 
+            { actionLoading && <Loader />}
+
             <Header>
                 <HeaderLeft>
                     <img src={IconArrowLeft} onClick={() => handleArrowBack()} alt="" />
@@ -47,14 +54,22 @@ function HomeScreen(props) {
                 <HeaderRight></HeaderRight>
             </Header>
 
+
             <div className="apply-application">
-                <div className="button" onClick={() => handleCompleteOnDeviceClick()}>
+
+                {!emailValidate && !actionLoading &&
+                    <div style={{textAlign:"center"}}>
+                        <label className="error-label" style={{marginLeft: 0}}>Invalid valid email address</label>
+                    </div>
+                }
+
+                <div className="button" onClick={() => emailValidate ? handleCompleteOnDeviceClick() : ''}>
                     <div className="icon">
                         <img className="icon-new-customer" src={IconList} alt="new" />
                     </div>
                     <div className="label">Complete Credit Application on this device</div>
                 </div>
-                <div className="button" onClick={() => handleSendLink()}>
+                <div className="button" onClick={() => emailValidate ? handleSendLink() : ''}>
                     <div className="icon">
                         <img className="icon-reorder-customer" src={IconSend} alt="reorder" />
                     </div>
@@ -63,8 +78,8 @@ function HomeScreen(props) {
             </div>
 
             <div className="footer-container">
-                <button className="secondary" type="submit" onClick={()=>handleHomeScreen()}>Cancel</button>
-                {!isCustomerFound &&
+                { !actionLoading && <button className="secondary" type="submit" onClick={()=>handleHomeScreen()}>Cancel</button> }
+                { !isCustomerFound && emailValidate &&
                     <button className="secondary" type="submit" onClick={()=>handleHomeScreen()}>Save & Exit</button>
                 }
             </div>
@@ -73,13 +88,17 @@ function HomeScreen(props) {
     )
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = state => ({    
+    customer: state.sales.customer,
+    actionLoading: state.sales.actionLoading,
     isCustomerFound: state.sales.isCustomerFound,
+    emailValidate: state.sales.emailValidate
 });
 
 const mapDispatchToProps = dispatch => ({
     updateApplicationFilledStatus: (data, history, path) => dispatch(updateApplicationFilledStatus(data, history, path)),
     resetCustomerSearchApiInitiate: () => dispatch(resetCustomerSearchApiInitiate()),
+    submiCreditApplicationByMail: (history, data) => dispatch(submiCreditApplicationByMail(history, data)),
 });
 
 export default connect(
