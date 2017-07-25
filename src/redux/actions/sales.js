@@ -424,7 +424,7 @@ export function submiCreditApplicationByMail(history, data) {
         })           
 
         try {
-            await API.post(`/sales/creditapp`, { ...temp_data });
+            const response =  await API.post(`/sales/creditapp`, { ...temp_data });
             dispatch({
                 type: SEND_APP_LINK_SUCCESS,
             })

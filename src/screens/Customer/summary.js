@@ -86,6 +86,7 @@ function AddDealer(props) {
 
 
 
+
             {activeTab === 'profile' &&
                 <>
                     <div className="container pointer-none" style={{ marginBottom: 0 }}>
@@ -97,7 +98,6 @@ function AddDealer(props) {
                                     value={customer.main_app.first_name}
                                     label="Applicant First Name"
                                     defaultText="Applicant First Name"
-                                    disabled={true}
                                 />
                             </Form.Group>
                             <Form.Group className="mb-18">
@@ -107,7 +107,6 @@ function AddDealer(props) {
                                     value={customer.main_app.last_name}
                                     label="Applicant Last Name"
                                     defaultText="Applicant Last Name"
-                                    disabled={true}
                                 />
                             </Form.Group>
                             <Form.Group className="mb-18">
@@ -118,7 +117,6 @@ function AddDealer(props) {
                                     value={customer.main_app.email}
                                     label="Email"
                                     defaultText="Email"
-                                    disabled={true}
                                 />
                             </Form.Group>
                             <Form.Group className="mb-18">
@@ -131,7 +129,6 @@ function AddDealer(props) {
                                     defaultText="(123) 456-7890"
                                     regex="^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$"
                                     mask="(999) 999-9999"
-                                    disabled={true}
                                 />
                             </Form.Group>
                             <Form.Group className="mb-18">
@@ -142,7 +139,6 @@ function AddDealer(props) {
                                     label="Date of Birth"
                                     className="medium-input"
                                     defaultText="MM / DD / YYYY"
-                                    disabled={true}
                                     isDate={true}
                                 />
                             </Form.Group>
@@ -166,7 +162,6 @@ function AddDealer(props) {
                                     defaultText="0"
                                     regex="\b\d{1,2}\b"
                                     className="small-input"
-                                    disabled={true}
                                 />
                             </Form.Group>
                             <Form.Group className="mb-18">
@@ -176,7 +171,6 @@ function AddDealer(props) {
                                     value={customer.main_app.street}
                                     label="Street"
                                     defaultText="Street"
-                                    disabled={true}
                                 />
                             </Form.Group>
                             <Form.Group className="mb-18">
@@ -186,7 +180,6 @@ function AddDealer(props) {
                                     value={customer.main_app.city}
                                     label="City"
                                     defaultText="City"
-                                    disabled={true}
                                 />
                             </Form.Group>
                             <div className="styled-row">
@@ -197,7 +190,6 @@ function AddDealer(props) {
                                         label="State"
                                         defaultText="State"
                                         defaultValue={customer.main_app.state}
-                                        disabled={true}
                                         options={[{
                                             label: customer.main_app.state,
                                             value: customer.main_app.state
@@ -212,7 +204,6 @@ function AddDealer(props) {
                                         value={customer.main_app.zip}
                                         label="Zip Code"
                                         defaultText="Zip Code"
-                                        disabled={true}
                                     />
                                 </Form.Group>
                             </div>
@@ -321,7 +312,6 @@ function AddDealer(props) {
                                             label="Street"
                                             defaultText="Street"
                                             defaultValue={customer.co_app.street}
-                                            disabled={customer.co_enabled ? true : false}
                                         />
                                     </Form.Group>
                                     <Form.Group className="mb-18">
