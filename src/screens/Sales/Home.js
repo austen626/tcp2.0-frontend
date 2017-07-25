@@ -105,6 +105,7 @@ function HomeScreen(props) {
                         ...temp_customer,
                         "main_app": {
                             ...temp_customer.main_app,
+                            "name": data.first_name+" "+data.last_name,
                             "first_name": data.first_name,
                             "last_name": data.last_name
                         },
