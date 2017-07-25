@@ -248,6 +248,7 @@ export default function(state = INIT_STATE, action){
                 searchCustomerApiInitiate: true,
                 actionLoading: false,
                 isCustomerSubmitted: false,
+                emailValidate: true
             }
         case GET_CUSTOMER_FAILED:
             return {
