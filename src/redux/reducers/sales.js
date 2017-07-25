@@ -224,7 +224,8 @@ export default function(state = INIT_STATE, action){
                 ...state,
                 customer: temp_customer,
                 isCustomerFound: false,
-                searchCustomerApiInitiate: false
+                searchCustomerApiInitiate: false,
+                emailValidate: true
             }
         case SET_APP_FILLED_STATUS:
             return {
