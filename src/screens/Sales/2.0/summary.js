@@ -8,7 +8,7 @@ import Input from '../../../components/commons/input';
 import Dropdown from '../../../components/commons/dropdown';
 import Checkbox from '../../../components/commons/checkbox';
 
-import { submiCreditApplication, submiCreditApplicationByMain, updateCustomer, resetCustomerSearchApiInitiate } from '../../../redux/actions/sales';
+import { submiCreditApplication, submiCreditApplicationByMail, updateCustomer, resetCustomerSearchApiInitiate } from '../../../redux/actions/sales';
 
 function AddDealer(props) {
 
@@ -18,7 +18,8 @@ function AddDealer(props) {
         isCustomerFound,
         appFillStatus,
         submiCreditApplication,
-        submiCreditApplicationByMain,
+        submiCreditApplicationByMail,
+        emailValidate,
         actionLoading,
         updateCustomer,
         resetCustomerSearchApiInitiate
@@ -40,7 +41,9 @@ function AddDealer(props) {
         if(appFillStatus == "in_app") {
             submiCreditApplication(history, customer);
         } else {
-            submiCreditApplicationByMain(history, customer);
+            // submiCreditApplicationByMail(history, customer);
+            resetCustomerSearchApiInitiate(false)
+            history.replace('/applyHome');   
         }
     }
 
@@ -815,7 +818,7 @@ function AddDealer(props) {
 
 
             {activeTab === 'summary_list' &&
-                <form action="javascript:void(0)" onSubmit={(e) => handleSubmit(e)} noValidate>
+                <form action="javascript:void(0)" onSubmit={(e) => emailValidate ? handleSubmit(e) : ''} noValidate>
                     <div className="container black-box">
                         <div className="table-div">
                             <table className="summary-row">
@@ -845,46 +848,50 @@ function AddDealer(props) {
                                 </tr>
                             </table>
                         </div>
-                        <div className="table-div status">
-                            <div className="row other-details summary-row">
-                                <div className="col">
-                                    <span className="status">Credit application</span>
-                                    {appFillStatus == "in_app" ?                                             
-                                        <span className="status-icon status-icon-2">
-                                            <img src={IconStatusComplete}/>
-                                            completed 
-                                        </span>
-                                        :                                                
-                                        <span className="status-icon">
-                                            <img src={IconStatusSent}/>
-                                            sent 
-                                        </span>
-                                    }
-                                </div>
-                                <div className={`col ${!customer.co_enabled ? 'button-col' : null}`}>
 
-                                    {customer.co_enabled &&
-                                        <>
-                                            <span className="status">Credit application</span>
-                                            {appFillStatus == "in_app" ?                                             
-                                                <span className="status-icon status-icon-2">
-                                                    <img src={IconStatusComplete}/>
-                                                    completed 
-                                                </span>
-                                                :                                                
-                                                <span className="status-icon">
-                                                    <img src={IconStatusSent}/>
-                                                    sent 
-                                                </span>
-                                            }
-                                        </>                                        
-                                    }
+                        { !actionLoading &&
+                            <div className="table-div status">
+                                <div className="row other-details summary-row">
+                                    <div className="col">
+                                        <span className="status">Credit application</span>
+                                        {appFillStatus == "in_app" ?                                             
+                                            <span className="status-icon status-icon-2">
+                                                <img src={IconStatusComplete}/>
+                                                completed 
+                                            </span>
+                                            :                                                
+                                            <span className="status-icon">
+                                                <img src={IconStatusSent}/>
+                                                sent 
+                                            </span>
+                                        }
+                                    </div>
+                                    <div className={`col ${!customer.co_enabled ? 'button-col' : null}`}>
+
+                                        {customer.co_enabled &&
+                                            <>
+                                                <span className="status">Credit application</span>
+                                                {appFillStatus == "in_app" ?                                             
+                                                    <span className="status-icon status-icon-2">
+                                                        <img src={IconStatusComplete}/>
+                                                        completed 
+                                                    </span>
+                                                    :                                                
+                                                    <span className="status-icon">
+                                                        <img src={IconStatusSent}/>
+                                                        sent 
+                                                    </span>
+                                                }
+                                            </>                                        
+                                        }
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        }
+
                     </div>
                     <div className="footer-container">
-                        <button className="secondary" type="submit">{appFillStatus == "in_app" ? 'Submit' : 'Submit'}</button>
+                        <button className="secondary" type="submit">{appFillStatus == "in_app" ? 'Submit' : 'Close'}</button>
                     </div>
                 </form>
             }
@@ -898,11 +905,12 @@ const mapStateToProps = state => ({
     customer: state.sales.customer,
     isCustomerFound: state.sales.isCustomerFound,
     actionLoading: state.sales.actionLoading,
+    emailValidate: state.sales.emailValidate
 });
 
 const mapDispatchToProps = dispatch => ({
     submiCreditApplication: (history, data) => dispatch(submiCreditApplication(history, data)),
-    submiCreditApplicationByMain: (history, data) => dispatch(submiCreditApplicationByMain(history, data)),
+    submiCreditApplicationByMail: (history, data) => dispatch(submiCreditApplicationByMail(history, data)),
     updateCustomer: (history, path, data) => dispatch(updateCustomer(history, path, data)),
     resetCustomerSearchApiInitiate: () => dispatch(resetCustomerSearchApiInitiate()),
 });

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Form } from 'react-bootstrap';
 import Header, { HeaderLeft, HeaderCenter, HeaderRight } from '../../components/Dealer/Header';
-import { TCPLogo, IconArrowLeft, IconListWhite, IconStatusSent,IconContactAcitve } from '../../assets/images';
+import { TCPLogo, IconArrowLeft, IconListWhite, IconStatusComplete, IconContactAcitve } from '../../assets/images';
 import Loader from 'shared/Loader';
 import Input from '../../components/commons/input';
 import Dropdown from '../../components/commons/dropdown';
@@ -83,12 +83,6 @@ function AddDealer(props) {
                 }
 
             </div>
-
-
-
-
-
-
 
 
 
@@ -840,9 +834,9 @@ function AddDealer(props) {
                             <div className="row other-details summary-row">
                                 <div className="col">
                                     <span className="status">Credit application</span>
-                                    <span className="status-icon">
-                                        <img src={IconStatusSent} />
-                                            sent
+                                    <span className="status-icon status-icon-2">
+                                        <img src={IconStatusComplete} />
+                                            completed
                                         </span>
                                 </div>
                                 <div className={`col ${!customer.co_enabled ? 'button-col' : null}`}>
@@ -850,9 +844,9 @@ function AddDealer(props) {
                                     {customer.co_enabled &&
                                         <>
                                             <span className="status">Credit application</span>
-                                            <span className="status-icon">
-                                                <img src={IconStatusSent} />
-                                                    sent
+                                            <span className="status-icon status-icon-2">
+                                                <img src={IconStatusComplete} />
+                                                    completed
                                                 </span>
                                         </>
                                     }
