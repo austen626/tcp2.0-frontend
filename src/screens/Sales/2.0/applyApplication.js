@@ -59,7 +59,7 @@ function HomeScreen(props) {
 
                 {!emailValidate && !actionLoading &&
                     <div style={{textAlign:"center"}}>
-                        <label className="error-label" style={{marginLeft: 0}}>Invalid valid email address</label>
+                        <label className="error-label" style={{marginLeft: 0}}>Invalid email address</label>
                     </div>
                 }
 
