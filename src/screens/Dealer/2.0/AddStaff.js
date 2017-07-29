@@ -141,6 +141,7 @@ function AddStaff(props) {
                                     className="radio-width"
                                     inputClass="regular-radio"
                                     defaultValue="sales"
+                                    disabled={staff.id ? true : false}
                                     required={true}
                                     handleChange={() => hideError()}
                                     checked={staff.role && staff.role[0] == 'sales' ? true : null}
@@ -155,6 +156,7 @@ function AddStaff(props) {
                                     className="radio-width"
                                     inputClass="regular-radio"
                                     defaultValue="dealer"
+                                    disabled={staff.id ? true : false}
                                     required={true}
                                     handleChange={() => hideError()}
                                     checked={staff.role && staff.role[0] == 'dealer' ? true : null}
