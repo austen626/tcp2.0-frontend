@@ -35,6 +35,10 @@ function HomeScreen(props) {
     }
 
     const handleHomeScreen = () => {
+        history.replace('/applyHome');        
+    }
+
+    const handleClearWithHomeScreen = () => {
         resetCustomerSearchApiInitiate(false)
         history.replace('/applyHome');        
     }
@@ -96,9 +100,9 @@ function HomeScreen(props) {
             </div>
 
             <div className="footer-container">
-                { !actionLoading && <button className="secondary" type="submit" onClick={()=>handleHomeScreen()}>Cancel</button> }
+                { !actionLoading && <button className="secondary" type="submit" onClick={()=>handleClearWithHomeScreen()}>Cancel</button> }
                 { !isCustomerFound && emailValidate &&
-                    <button className="secondary" type="submit" onClick={()=>handleHomeScreen()}>Save & Exit</button>
+                    <button className="secondary" type="submit" onClick={()=>handleClearWithHomeScreen()}>Save & Exit</button>
                 }
             </div>
 
