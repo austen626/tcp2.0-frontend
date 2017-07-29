@@ -47,6 +47,8 @@ import {
     VALIDATE_EMAIL_SUCCESS,
     VALIDATE_EMAIL_FAILED,
 
+    SUBMIT_CUSTOMER_REPONSE_TO_THANKYOU
+
 
 
 } from '../actions/sales';
@@ -315,7 +317,6 @@ export default function(state = INIT_STATE, action){
             return {
                 ...state,
                 actionLoading: false,
-                isCustomerSubmitted: true,
             }
         case SUBMIT_CUSTOMER_REPONSE_FAILED:
             return {
@@ -336,6 +337,12 @@ export default function(state = INIT_STATE, action){
             return {
                 ...state,
                 actionLoading: false,
+            }        
+        case SUBMIT_CUSTOMER_REPONSE_TO_THANKYOU:
+            return {
+                ...state,
+                actionLoading: false,
+                isCustomerSubmitted: true,
             }
 
 
