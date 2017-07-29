@@ -9,7 +9,7 @@ import Checkbox from '../../components/commons/checkbox';
 import Loader from 'shared/Loader';
 
 import { getFromData } from '../../components/commons/utility';
-import { submiCreditApplication, updateCustomer } from '../../redux/actions/sales';
+import { customerResponseSubmit, updateCustomer } from '../../redux/actions/sales';
 
 function AddDealer(props) {
 
@@ -18,7 +18,7 @@ function AddDealer(props) {
         customer,
         updateCustomer,
         actionLoading,
-        submiCreditApplication
+        customerResponseSubmit
     } = props;
 
     const [validationResult, setValidationResult] = useState(null);
@@ -112,7 +112,7 @@ function AddDealer(props) {
                 }
 
                 updateCustomer(history, null, temp_customer);
-                submiCreditApplication(history, '/customerSummary', temp_customer);
+                customerResponseSubmit(history, temp_customer);
             }
         } 
         else 
@@ -581,7 +581,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     updateCustomer: (history, path, data) => dispatch(updateCustomer(history, path, data)),
-    submiCreditApplication: (history, path, data) => dispatch(submiCreditApplication(history, path, data)),
+    customerResponseSubmit: (history, data) => dispatch(customerResponseSubmit(history, data)),
 });
 
 export default connect(

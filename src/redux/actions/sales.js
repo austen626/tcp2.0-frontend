@@ -493,6 +493,7 @@ export function customerResponseSubmit(history, data) {
             })
 
             pushNotification("Application Updated Successfully", 'success', 'TOP_RIGHT', 3000);
+            history && history.push('/customerSummary')
 
         } catch (error) {
 
