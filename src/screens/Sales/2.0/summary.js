@@ -117,49 +117,54 @@ function AddDealer(props) {
                                     defaultText="Applicant Last Name"
                                 />
                             </Form.Group>
-                            <Form.Group className="mb-18">
-                                <Input
-                                    name="street"
-                                    type="text"
-                                    value={customer.main_app.street}
-                                    label="Street"
-                                    defaultText="Street"
-                                />
-                            </Form.Group>
-                            <Form.Group className="mb-18">
-                                <Input
-                                    name="city"
-                                    type="text"
-                                    value={customer.main_app.city}
-                                    label="City"
-                                    defaultText="City"
-                                />
-                            </Form.Group>
-                            <div className="styled-row">
-                                <Form.Group className="styled-column mb-18">
-                                    <Dropdown
-                                        name="state"
-                                        type="dropdown"
-                                        label="State"
-                                        defaultText="State"
-                                        defaultValue={customer.main_app.state}
-                                        options={[{
-                                            label: customer.main_app.state,
-                                            value: customer.main_app.state
-                                        }]}
-                                    />
-                                </Form.Group>
-                                <Form.Group className="styled-column mb-18">
+
+                            {(appFillStatus == "in_app" || isCustomerFound) &&
+                            <>
+                                <Form.Group className="mb-18">
                                     <Input
-                                        name="zip"
+                                        name="street"
                                         type="text"
-                                        regex="^[0-9]{5}$"
-                                        value={customer.main_app.zip}
-                                        label="Zip Code"
-                                        defaultText="Zip Code"
+                                        value={customer.main_app.street}
+                                        label="Street"
+                                        defaultText="Street"
                                     />
                                 </Form.Group>
-                            </div>
+                                <Form.Group className="mb-18">
+                                    <Input
+                                        name="city"
+                                        type="text"
+                                        value={customer.main_app.city}
+                                        label="City"
+                                        defaultText="City"
+                                    />
+                                </Form.Group>
+                                <div className="styled-row">
+                                    <Form.Group className="styled-column mb-18">
+                                        <Dropdown
+                                            name="state"
+                                            type="dropdown"
+                                            label="State"
+                                            defaultText="State"
+                                            defaultValue={customer.main_app.state}
+                                            options={[{
+                                                label: customer.main_app.state,
+                                                value: customer.main_app.state
+                                            }]}
+                                        />
+                                    </Form.Group>
+                                    <Form.Group className="styled-column mb-18">
+                                        <Input
+                                            name="zip"
+                                            type="text"
+                                            regex="^[0-9]{5}$"
+                                            value={customer.main_app.zip}
+                                            label="Zip Code"
+                                            defaultText="Zip Code"
+                                        />
+                                    </Form.Group>
+                                </div>
+                            </>
+                            }
                             <Form.Group className="mb-18">
                                 <Input
                                     name="email"
