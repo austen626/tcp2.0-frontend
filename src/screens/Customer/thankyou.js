@@ -16,7 +16,7 @@ function AddDealer(props) {
     } = props;
 
     useEffect(() => { 
-        customerResponseSubmit(history, customer) 
+        // customerResponseSubmit(history, customer) 
     }, [])
 
     const handleSubmit = evt => {
