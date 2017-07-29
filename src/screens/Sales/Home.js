@@ -35,11 +35,6 @@ function HomeScreen(props) {
     const timer = useRef(0);
     let interval = null;
 
-    useEffect(() => {  
-        setApplicantPhone(null);
-        setApplicantEmail(null);
-        resetCustomerSearchApiInitiate(false)
-    }, [])
 
     useEffect(() => {
         interval = setInterval(function(){
@@ -117,22 +112,10 @@ function HomeScreen(props) {
                     }
                 }
 
-                
-
-
-
-
-
 
                 if(!isCustomerFound) {
                     validateEmailAddress(applicantEmail);
                 }
-
-
-
-
-
-
 
                 updateCustomer(history, '/applyApplication', temp_customer);
             }
@@ -169,7 +152,7 @@ function HomeScreen(props) {
                                     regex="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$"
                                     label="Applicant Email"
                                     defaultText="Applicant Email"
-                                    defaultValue={applicantEmail} 
+                                    defaultValue={customer.main_app.email ? customer.main_app.email : applicantEmail} 
                                     required={true}
                                     error={{
                                         'invalid': "Please enter valid Email address",
@@ -190,7 +173,7 @@ function HomeScreen(props) {
                                     type="hidden"
                                     label="Phone"
                                     defaultText="(123) 456-7890"
-                                    defaultValue={applicantPhone} 
+                                    defaultValue={customer.main_app.cell_phone ? customer.main_app.cell_phone : applicantPhone} 
                                     regex="^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$"
                                     mask="(999) 999-9999"
                                     required={true}
@@ -214,6 +197,7 @@ function HomeScreen(props) {
                                 type="text"
                                 label="Applicant First Name"
                                 defaultText="Applicant First Name"
+                                defaultValue={customer.main_app.first_name ? customer.main_app.first_name : applicantPhone} 
                                 disabled={isCustomerFound} 
                                 required={searchCustomerApiInitiate && !isCustomerFound ? true : false}
                                 error={{
@@ -228,6 +212,7 @@ function HomeScreen(props) {
                                 type="text"
                                 label="Applicant Last Name"
                                 defaultText="Applicant Last Name"
+                                defaultValue={customer.main_app.last_name ? customer.main_app.last_name : applicantPhone} 
                                 disabled={isCustomerFound} 
                                 required={searchCustomerApiInitiate && !isCustomerFound ? true : false}
                                 error={{
