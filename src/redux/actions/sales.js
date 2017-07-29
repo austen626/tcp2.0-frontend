@@ -71,6 +71,8 @@ export const VALIDATE_EMAIL_REQUEST = "VALIDATE_EMAIL_REQUEST";
 export const VALIDATE_EMAIL_SUCCESS = "VALIDATE_EMAIL_SUCCESS";
 export const VALIDATE_EMAIL_FAILED = "VALIDATE_EMAIL_FAILED";
 
+export const SUBMIT_CUSTOMER_REPONSE_TO_THANKYOU = "SUBMIT_CUSTOMER_REPONSE_TO_THANKYOU";
+
 
 
 
@@ -505,5 +507,13 @@ export function customerResponseSubmit(history, data) {
 
             history && history.push('/basic')
         }       
+    }
+}
+
+export function getCustomerToThankYouPage() {
+    return async function(dispatch) {
+        dispatch({
+            type: SUBMIT_CUSTOMER_REPONSE_TO_THANKYOU,
+        })    
     }
 }

@@ -8,7 +8,7 @@ import Input from '../../components/commons/input';
 import Dropdown from '../../components/commons/dropdown';
 import Checkbox from '../../components/commons/checkbox';
 
-import { updateCustomer } from '../../redux/actions/sales';
+import { updateCustomer,getCustomerToThankYouPage } from '../../redux/actions/sales';
 
 function AddDealer(props) {
 
@@ -17,7 +17,8 @@ function AddDealer(props) {
         customer,
         actionLoading,
         updateCustomer,
-        isCustomerSubmitted
+        isCustomerSubmitted,
+        getCustomerToThankYouPage
     } = props;
 
     const [activeTab, setActiveTab] = useState(!isCustomerSubmitted ? 'summary_list' : 'profile');
@@ -32,6 +33,7 @@ function AddDealer(props) {
 
     const handleSubmit = evt => {
         evt.preventDefault();
+        getCustomerToThankYouPage()
         history.replace('/thankyou');
     }
 
@@ -862,6 +864,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     updateCustomer: (history, path, data) => dispatch(updateCustomer(history, path, data)),
+    getCustomerToThankYouPage: () => dispatch(getCustomerToThankYouPage())
 });
 
 export default connect(
