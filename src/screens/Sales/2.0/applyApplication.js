@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { Modal } from 'react-bootstrap';
 import Header, { HeaderLeft, HeaderCenter, HeaderRight } from '../../../components/Dealer/Header';
 import Loader from 'shared/Loader';
 import { IconList, IconSend, IconArrowLeft, TCPLogo } from '../../../assets/images';
@@ -19,13 +20,14 @@ function HomeScreen(props) {
         submiCreditApplicationByMail    
     } = props;
 
+    const [showWarning, setShowWarning] = useState(false);
+
     const handleCompleteOnDeviceClick = () => {
         updateApplicationFilledStatus('in_app', history, '/applyApplicationBasicDetails');
     }
 
     const handleSendLink = () => {
-        updateApplicationFilledStatus('send_link', null, null);
-        submiCreditApplicationByMail(history, customer);
+        setShowWarning(true)
     }
 
     const handleArrowBack = () => {
@@ -54,6 +56,22 @@ function HomeScreen(props) {
                 <HeaderRight></HeaderRight>
             </Header>
 
+            <Modal show={showWarning} onHide={() => setShowWarning(false)}>
+                <Modal.Header closeButton></Modal.Header>
+                <Modal.Body> Press Ok to send the application link to the consumer.</Modal.Body>
+                <Modal.Footer>
+                <button class="secondary" onClick={() => {
+                    setShowWarning(false);
+                    updateApplicationFilledStatus('send_link', null, null);
+                    submiCreditApplicationByMail(history, customer);
+                }}>
+                    OK
+                </button>
+                <button class="secondary" onClick={() => setShowWarning(false)}>
+                    Close
+                </button>
+                </Modal.Footer>
+            </Modal>
 
             <div className="apply-application">
 

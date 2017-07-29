@@ -719,11 +719,11 @@ function AddDealer(props) {
                                     validationResult={validationResult}
                                 />
                             </Form.Group>                       
-                            <Form.Group className="mb-18">
+                            <Form.Group className="mb-18" style={{marginTop:35}}>
                                 <Checkbox
                                     name="co_have_co_applicant_same_address"
                                     type="checkbox"
-                                    label="Same as Applicant"
+                                    label="Same as Applicant Address"
                                     checked={haveCoApplicantSameAddress ? true : null}
                                     handleChange={(e)=>updateCoApplicantAddress(e.target.checked)}
                                 />

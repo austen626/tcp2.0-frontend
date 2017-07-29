@@ -416,7 +416,7 @@ function AddDealer(props) {
                 </div>
                 <div className="footer-container">
                     <button className="secondary" onClick={() => handleArrowBack()}>Cancel</button>
-                    <button className="secondary" type="submit">{dealer.id ? 'Save' : 'Add'}</button>
+                    <button className="secondary" type="submit">{dealer.id ? 'Save' : 'Send'}</button>
                 </div>
             </form>
 

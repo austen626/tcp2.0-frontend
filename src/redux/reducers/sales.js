@@ -299,15 +299,11 @@ export default function(state = INIT_STATE, action){
         case SUBMIT_CREDIT_APP_SUCCESS:
             return {
                 ...state,
-                customer: temp_customer,
-                isCustomerFound: false,
                 actionLoading: false,
             }
         case SUBMIT_CREDIT_APP_FAILED:
             return {
                 ...state,
-                customer: temp_customer,
-                isCustomerFound: false,
                 actionLoading: false,
             }
         case SUBMIT_CUSTOMER_REPONSE_REQUEST:
@@ -334,7 +330,6 @@ export default function(state = INIT_STATE, action){
         case SEND_APP_LINK_SUCCESS:
             return {
                 ...state,
-                // customer: temp_customer,
                 actionLoading: false,
             }
         case SEND_APP_LINK_FAILED:

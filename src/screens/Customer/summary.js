@@ -111,6 +111,49 @@ function AddDealer(props) {
                             </Form.Group>
                             <Form.Group className="mb-18">
                                 <Input
+                                    name="street"
+                                    type="text"
+                                    value={customer.main_app.street}
+                                    label="Street"
+                                    defaultText="Street"
+                                />
+                            </Form.Group>
+                            <Form.Group className="mb-18">
+                                <Input
+                                    name="city"
+                                    type="text"
+                                    value={customer.main_app.city}
+                                    label="City"
+                                    defaultText="City"
+                                />
+                            </Form.Group>
+                            <div className="styled-row">
+                                <Form.Group className="styled-column mb-18">
+                                    <Dropdown
+                                        name="state"
+                                        type="dropdown"
+                                        label="State"
+                                        defaultText="State"
+                                        defaultValue={customer.main_app.state}
+                                        options={[{
+                                            label: customer.main_app.state,
+                                            value: customer.main_app.state
+                                        }]}
+                                    />
+                                </Form.Group>
+                                <Form.Group className="styled-column mb-18">
+                                    <Input
+                                        name="zip"
+                                        type="text"
+                                        regex="^[0-9]{5}$"
+                                        value={customer.main_app.zip}
+                                        label="Zip Code"
+                                        defaultText="Zip Code"
+                                    />
+                                </Form.Group>
+                            </div>
+                            <Form.Group className="mb-18">
+                                <Input
                                     name="email"
                                     type="email"
                                     regex="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$"
@@ -165,49 +208,6 @@ function AddDealer(props) {
                                 />
                             </Form.Group>
                             <Form.Group className="mb-18">
-                                <Input
-                                    name="street"
-                                    type="text"
-                                    value={customer.main_app.street}
-                                    label="Street"
-                                    defaultText="Street"
-                                />
-                            </Form.Group>
-                            <Form.Group className="mb-18">
-                                <Input
-                                    name="city"
-                                    type="text"
-                                    value={customer.main_app.city}
-                                    label="City"
-                                    defaultText="City"
-                                />
-                            </Form.Group>
-                            <div className="styled-row">
-                                <Form.Group className="styled-column mb-18">
-                                    <Dropdown
-                                        name="state"
-                                        type="dropdown"
-                                        label="State"
-                                        defaultText="State"
-                                        defaultValue={customer.main_app.state}
-                                        options={[{
-                                            label: customer.main_app.state,
-                                            value: customer.main_app.state
-                                        }]}
-                                    />
-                                </Form.Group>
-                                <Form.Group className="styled-column mb-18">
-                                    <Input
-                                        name="zip"
-                                        type="text"
-                                        regex="^[0-9]{5}$"
-                                        value={customer.main_app.zip}
-                                        label="Zip Code"
-                                        defaultText="Zip Code"
-                                    />
-                                </Form.Group>
-                            </div>
-                            <Form.Group className="mb-18">
                                 <Checkbox
                                     name="have_co_applicant"
                                     type="checkbox"
@@ -242,6 +242,57 @@ function AddDealer(props) {
                                             defaultText="Co-applicant Last Name"
                                         />
                                     </Form.Group>
+                                    <Form.Group className="mb-18" style={{marginTop:35}}>
+                                        <Checkbox
+                                            name="co_have_co_applicant_same_address"
+                                            type="checkbox"
+                                            label="Same as Applicant Address"
+                                            checked={customer.co_app.co_have_co_applicant_same_address ? true : null}
+                                        />
+                                    </Form.Group>
+                                    <Form.Group className="mb-18">
+                                        <Input
+                                            name="co_street"
+                                            type="text"
+                                            label="Street"
+                                            defaultText="Street"
+                                            defaultValue={customer.co_app.street}
+                                        />
+                                    </Form.Group>
+                                    <Form.Group className="mb-18">
+                                        <Input
+                                            name="co_city"
+                                            type="text"
+                                            label="City"
+                                            defaultValue={customer.co_app.city}
+                                            defaultText="City"
+                                        />
+                                    </Form.Group>
+                                    <div className="styled-row">
+                                        <Form.Group className="styled-column mb-18">
+                                            <Dropdown
+                                                name="co_state"
+                                                type="dropdown"
+                                                label="State"
+                                                defaultText="State"
+                                                defaultValue={customer.co_app.state}
+                                                options={[{
+                                                    label: customer.co_app.state,
+                                                    value: customer.co_app.state
+                                                }]}
+                                            />
+                                        </Form.Group>
+                                        <Form.Group className="styled-column mb-18">
+                                            <Input
+                                                name="co_zip"
+                                                type="text"
+                                                defaultValue={customer.co_app.zip}
+                                                regex="^[0-9]{5}$"
+                                                label="Zip Code"
+                                                defaultText="Zip Code"
+                                            />
+                                        </Form.Group>
+                                    </div>
                                     <Form.Group className="mb-18">
                                         <Input
                                             name="co_email"
@@ -297,58 +348,6 @@ function AddDealer(props) {
                                             className="small-input"
                                         />
                                     </Form.Group>
-                                    <Form.Group className="mb-18">
-                                        <Checkbox
-                                            name="co_have_co_applicant_same_address"
-                                            type="checkbox"
-                                            label="Same as Applicant"
-                                            checked={customer.co_app.co_have_co_applicant_same_address ? true : null}
-                                        />
-                                    </Form.Group>
-                                    <Form.Group className="mb-18">
-                                        <Input
-                                            name="co_street"
-                                            type="text"
-                                            label="Street"
-                                            defaultText="Street"
-                                            defaultValue={customer.co_app.street}
-                                        />
-                                    </Form.Group>
-                                    <Form.Group className="mb-18">
-                                        <Input
-                                            name="co_city"
-                                            type="text"
-                                            label="City"
-                                            defaultValue={customer.co_app.city}
-                                            defaultText="City"
-                                        />
-                                    </Form.Group>
-                                    <div className="styled-row">
-                                        <Form.Group className="styled-column mb-18">
-                                            <Dropdown
-                                                name="co_state"
-                                                type="dropdown"
-                                                label="State"
-                                                defaultText="State"
-                                                defaultValue={customer.co_app.state}
-                                                options={[{
-                                                    label: customer.co_app.state,
-                                                    value: customer.co_app.state
-                                                }]}
-                                            />
-                                        </Form.Group>
-                                        <Form.Group className="styled-column mb-18">
-                                            <Input
-                                                name="co_zip"
-                                                type="text"
-                                                defaultValue={customer.co_app.zip}
-                                                regex="^[0-9]{5}$"
-                                                label="Zip Code"
-                                                defaultText="Zip Code"
-                                            />
-                                        </Form.Group>
-                                    </div>
-
                                 </>
                             }
 
@@ -500,7 +499,7 @@ function AddDealer(props) {
 
 
 
-                    <div className="container">
+                    <div className="container pointer-none">
                         <div className="styled-form">
 
                             <Form.Group className="mb-18">
@@ -576,64 +575,64 @@ function AddDealer(props) {
                                         </Form.Group>
                                     </div>
 
-                                    <div className="box center-box" style={{ width: 290, marginTop: 22 }}>
-                                        <label class="form-label" style={{ textAlign: "center", width: "100%", padding: 0 }}>Do you have any other sources of income</label>
-                                        <div className="radio-box center">
-                                            <Form.Group className="mb-18 radio-filed">
-                                                <Input
-                                                    id="yes"
-                                                    name="additional_income_status"
-                                                    type="radio"
-                                                    className="radio-width"
-                                                    inputClass="regular-radio"
-                                                    defaultValue="yes"
-                                                    checked={customer.main_app.additional_income_status === "yes" ? true : null}
-                                                />
-                                                <label for="yes" class="form-label " id="yes-label">Yes</label>
-                                            </Form.Group>
-                                            <Form.Group className="mb-18 radio-filed">
-                                                <Input
-                                                    id="no"
-                                                    name="additional_income_status"
-                                                    type="radio"
-                                                    className="radio-width"
-                                                    inputClass="regular-radio regular-radio2"
-                                                    defaultValue="no"
-                                                    checked={customer.main_app.additional_income_status === "no" ? true : null}
-                                                />
-                                                <label for="no" class="form-label " id="no-label">No</label>
-                                            </Form.Group>
-                                        </div>
-                                    </div>
-
-                                    {customer.main_app.additional_income_status === "yes" &&
-
-                                        <div className="styled-row">
-                                            <Form.Group className="styled-column mb-18">
-                                                <Input
-                                                    name="source"
-                                                    type="text"
-                                                    defaultValue={customer.main_app.source}
-                                                    label="Source"
-                                                    defaultText="Source"
-                                                    optionalParams={{ style: { width: 166 } }}
-                                                />
-                                            </Form.Group>
-                                            <Form.Group className="styled-column mb-18">
-                                                <Input
-                                                    name="additional_income"
-                                                    type="text"
-                                                    defaultValue={customer.main_app.additional_income}
-                                                    label="Monthly Income"
-                                                    defaultText="0"
-                                                    isAmount={true}
-                                                    optionalParams={{ style: { width: 118 } }}
-                                                />
-                                            </Form.Group>
-                                        </div>
-                                    }
-
                                 </>
+                            }
+
+                            <div className="box center-box" style={{ width: 290, marginTop: 22 }}>
+                                <label class="form-label" style={{ textAlign: "center", width: "100%", padding: 0 }}>Do you have any other sources of income</label>
+                                <div className="radio-box center">
+                                    <Form.Group className="mb-18 radio-filed">
+                                        <Input
+                                            id="yes"
+                                            name="additional_income_status"
+                                            type="radio"
+                                            className="radio-width"
+                                            inputClass="regular-radio"
+                                            defaultValue="yes"
+                                            checked={customer.main_app.additional_income_status === "yes" ? true : null}
+                                        />
+                                        <label for="yes" class="form-label " id="yes-label">Yes</label>
+                                    </Form.Group>
+                                    <Form.Group className="mb-18 radio-filed">
+                                        <Input
+                                            id="no"
+                                            name="additional_income_status"
+                                            type="radio"
+                                            className="radio-width"
+                                            inputClass="regular-radio regular-radio2"
+                                            defaultValue="no"
+                                            checked={customer.main_app.additional_income_status === "no" ? true : null}
+                                        />
+                                        <label for="no" class="form-label " id="no-label">No</label>
+                                    </Form.Group>
+                                </div>
+                            </div>
+
+                            {customer.main_app.additional_income_status === "yes" &&
+
+                                <div className="styled-row">
+                                    <Form.Group className="styled-column mb-18">
+                                        <Input
+                                            name="source"
+                                            type="text"
+                                            defaultValue={customer.main_app.source}
+                                            label="Source"
+                                            defaultText="Source"
+                                            optionalParams={{ style: { width: 166 } }}
+                                        />
+                                    </Form.Group>
+                                    <Form.Group className="styled-column mb-18">
+                                        <Input
+                                            name="additional_income"
+                                            type="text"
+                                            defaultValue={customer.main_app.additional_income}
+                                            label="Monthly Income"
+                                            defaultText="0"
+                                            isAmount={true}
+                                            optionalParams={{ style: { width: 118 } }}
+                                        />
+                                    </Form.Group>
+                                </div>
                             }
 
 
@@ -717,63 +716,63 @@ function AddDealer(props) {
                                                     />
                                                 </Form.Group>
                                             </div>
-
-                                            <div className="box center-box" style={{ width: 290, marginTop: 22 }}>
-                                                <label class="form-label" style={{ textAlign: "center", width: "100%", padding: 0 }}>Do you have any other sources of income</label>
-                                                <div className="radio-box center">
-                                                    <Form.Group className="mb-18 radio-filed">
-                                                        <Input
-                                                            id="co_yes"
-                                                            name="co_additional_income_status"
-                                                            type="radio"
-                                                            className="radio-width"
-                                                            inputClass="regular-radio"
-                                                            defaultValue="yes"
-                                                            checked={customer.co_app.additional_income_status === "yes" ? true : null}
-                                                        />
-                                                        <label for="co_yes" class="form-label " id="co_yes-label">Yes</label>
-                                                    </Form.Group>
-                                                    <Form.Group className="mb-18 radio-filed">
-                                                        <Input
-                                                            id="co_no"
-                                                            name="co_additional_income_status"
-                                                            type="radio"
-                                                            className="radio-width"
-                                                            inputClass="regular-radio regular-radio2"
-                                                            defaultValue="no"
-                                                            checked={customer.co_app.additional_income_status === "no" ? true : null}
-                                                        />
-                                                        <label for="co_no" class="form-label " id="co_no-label">No</label>
-                                                    </Form.Group>
-                                                </div>
-                                            </div>
-
-                                            {customer.co_app.additional_income_status === "yes" &&
-
-                                                <div className="styled-row">
-                                                    <Form.Group className="styled-column mb-18">
-                                                        <Input
-                                                            name="co_source"
-                                                            type="text"
-                                                            defaultValue={customer.co_app.source}
-                                                            label="Source"
-                                                            defaultText="Source"
-                                                            optionalParams={{ style: { width: 166 } }}
-                                                        />
-                                                    </Form.Group>
-                                                    <Form.Group className="styled-column mb-18">
-                                                        <Input
-                                                            name="co_additional_income"
-                                                            type="text"
-                                                            defaultValue={customer.co_app.additional_income}
-                                                            label="Monthly Income"
-                                                            defaultText="0"
-                                                            optionalParams={{ style: { width: 118 } }}
-                                                        />
-                                                    </Form.Group>
-                                                </div>
-                                            }
                                         </>
+                                    }
+
+                                    <div className="box center-box" style={{ width: 290, marginTop: 22 }}>
+                                        <label class="form-label" style={{ textAlign: "center", width: "100%", padding: 0 }}>Do you have any other sources of income</label>
+                                        <div className="radio-box center">
+                                            <Form.Group className="mb-18 radio-filed">
+                                                <Input
+                                                    id="co_yes"
+                                                    name="co_additional_income_status"
+                                                    type="radio"
+                                                    className="radio-width"
+                                                    inputClass="regular-radio"
+                                                    defaultValue="yes"
+                                                    checked={customer.co_app.additional_income_status === "yes" ? true : null}
+                                                />
+                                                <label for="co_yes" class="form-label " id="co_yes-label">Yes</label>
+                                            </Form.Group>
+                                            <Form.Group className="mb-18 radio-filed">
+                                                <Input
+                                                    id="co_no"
+                                                    name="co_additional_income_status"
+                                                    type="radio"
+                                                    className="radio-width"
+                                                    inputClass="regular-radio regular-radio2"
+                                                    defaultValue="no"
+                                                    checked={customer.co_app.additional_income_status === "no" ? true : null}
+                                                />
+                                                <label for="co_no" class="form-label " id="co_no-label">No</label>
+                                            </Form.Group>
+                                        </div>
+                                    </div>
+
+                                    {customer.co_app.additional_income_status === "yes" &&
+
+                                        <div className="styled-row">
+                                            <Form.Group className="styled-column mb-18">
+                                                <Input
+                                                    name="co_source"
+                                                    type="text"
+                                                    defaultValue={customer.co_app.source}
+                                                    label="Source"
+                                                    defaultText="Source"
+                                                    optionalParams={{ style: { width: 166 } }}
+                                                />
+                                            </Form.Group>
+                                            <Form.Group className="styled-column mb-18">
+                                                <Input
+                                                    name="co_additional_income"
+                                                    type="text"
+                                                    defaultValue={customer.co_app.additional_income}
+                                                    label="Monthly Income"
+                                                    defaultText="0"
+                                                    optionalParams={{ style: { width: 118 } }}
+                                                />
+                                            </Form.Group>
+                                        </div>
                                     }
                                 </>
                             }
@@ -845,7 +844,7 @@ function AddDealer(props) {
                         </div>
                     </div>
                     <div className="footer-container">
-                        <button className="secondary" type="submit">Submit</button>
+                        <button className="secondary" type="submit">Close</button>
                     </div>
                 </form>
             }
