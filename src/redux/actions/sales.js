@@ -353,12 +353,12 @@ export function updateCustomer(history, path, data) {
             type: UPDATE_CUSTOMER_SEARCH_REQUEST,
             payload: data
         })    
-        history && history.push(path);   
+        history && path && history.push(path);   
     }
 }
 
 
-export function submiCreditApplication(history, data) {
+export function submiCreditApplication(history, path, data) {
 
     let temp_data = {
         contact : {
@@ -391,8 +391,7 @@ export function submiCreditApplication(history, data) {
             })
 
             pushNotification("Application Updated Successfully", 'success', 'TOP_RIGHT', 3000);
-
-            history && history.push('/applyHome');
+            history && history.push(path);
 
         } catch (error) {
 

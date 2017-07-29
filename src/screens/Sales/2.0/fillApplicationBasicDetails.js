@@ -411,6 +411,71 @@ function AddDealer(props) {
                         </Form.Group>
                         <Form.Group className="mb-18">
                             <Input
+                                name="street"
+                                type="text"
+                                defaultValue={tempStreet}
+                                label="Street"
+                                defaultText="Street"
+                                required={true}
+                                error={{
+                                    'empty': " "
+                                }}
+                                validationResult={validationResult}
+                                handleChange={(e)=>setTempStreet(e.target.value)}
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-18">
+                            <Input
+                                name="city"
+                                type="text"
+                                defaultValue={tempCity}
+                                label="City"
+                                defaultText="City"
+                                required={true}
+                                error={{
+                                    'empty': " "
+                                }}
+                                validationResult={validationResult}
+                                handleChange={(e)=>setTempCity(e.target.value)}
+                            />
+                        </Form.Group>
+                        <div className="styled-row">
+                            <Form.Group className="styled-column mb-18">
+                                <Dropdown
+                                    name="state"
+                                    type="dropdown"
+                                    defaultValue={tempState}
+                                    label="State"
+                                    defaultText="State"
+                                    required={true}
+                                    options={dropdownList}
+                                    error={{
+                                        'empty': " "
+                                    }}
+                                    validationResult={validationResult}
+                                    handleChange={(e)=>setTempState(e)}
+                                />
+                            </Form.Group>
+                            <Form.Group className="styled-column mb-18">
+                                <Input
+                                    name="zip"
+                                    type="text"
+                                    defaultValue={tempZip}
+                                    regex="^[0-9]{5}$"
+                                    label="Zip Code"
+                                    defaultText="Zip Code"
+                                    required={true}
+                                    error={{
+                                        'invalid': " ",
+                                        'empty': " "
+                                    }}
+                                    validationResult={validationResult}
+                                    handleChange={(e)=>setTempZip(e.target.value)}
+                                />
+                            </Form.Group>
+                        </div>
+                        <Form.Group className="mb-18">
+                            <Input
                                 name="email"
                                 type="email"
                                 regex="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$"
@@ -513,71 +578,6 @@ function AddDealer(props) {
                             />
                         </Form.Group>
                         <Form.Group className="mb-18">
-                            <Input
-                                name="street"
-                                type="text"
-                                defaultValue={tempStreet}
-                                label="Street"
-                                defaultText="Street"
-                                required={true}
-                                error={{
-                                    'empty': " "
-                                }}
-                                validationResult={validationResult}
-                                handleChange={(e)=>setTempStreet(e.target.value)}
-                            />
-                        </Form.Group>
-                        <Form.Group className="mb-18">
-                            <Input
-                                name="city"
-                                type="text"
-                                defaultValue={tempCity}
-                                label="City"
-                                defaultText="City"
-                                required={true}
-                                error={{
-                                    'empty': " "
-                                }}
-                                validationResult={validationResult}
-                                handleChange={(e)=>setTempCity(e.target.value)}
-                            />
-                        </Form.Group>
-                        <div className="styled-row">
-                            <Form.Group className="styled-column mb-18">
-                                <Dropdown
-                                    name="state"
-                                    type="dropdown"
-                                    defaultValue={tempState}
-                                    label="State"
-                                    defaultText="State"
-                                    required={true}
-                                    options={dropdownList}
-                                    error={{
-                                        'empty': " "
-                                    }}
-                                    validationResult={validationResult}
-                                    handleChange={(e)=>setTempState(e)}
-                                />
-                            </Form.Group>
-                            <Form.Group className="styled-column mb-18">
-                                <Input
-                                    name="zip"
-                                    type="text"
-                                    defaultValue={tempZip}
-                                    regex="^[0-9]{5}$"
-                                    label="Zip Code"
-                                    defaultText="Zip Code"
-                                    required={true}
-                                    error={{
-                                        'invalid': " ",
-                                        'empty': " "
-                                    }}
-                                    validationResult={validationResult}
-                                    handleChange={(e)=>setTempZip(e.target.value)}
-                                />
-                            </Form.Group>
-                        </div>
-                        <Form.Group className="mb-18">
                             <Checkbox
                                 name="have_co_applicant"
                                 type="checkbox"
@@ -622,7 +622,94 @@ function AddDealer(props) {
                                     }}
                                     validationResult={validationResult}
                                 />
+                            </Form.Group>      
+                            <Form.Group className="mb-18" style={{marginTop:35}}>
+                                <Checkbox
+                                    name="co_have_co_applicant_same_address"
+                                    type="checkbox"
+                                    label="Same as Applicant Address"
+                                    checked={haveCoApplicantSameAddress ? true : null}
+                                    handleChange={(e)=>updateCoApplicantAddress(e.target.checked)}
+                                />
                             </Form.Group>
+                            <Form.Group className="mb-18">
+                                <Input
+                                    name="co_street"
+                                    type="text"
+                                    {...(haveCoApplicantSameAddress ? {
+                                        value: tempStreet
+                                    } : {
+                                        defaultValue: coTempStreet
+                                    })}
+                                    label="Street"
+                                    defaultText="Street"
+                                    required={haveCoApplicant ? true : false}
+                                    error={{
+                                        'empty': " "
+                                    }}
+                                    validationResult={validationResult}
+                                />
+                            </Form.Group>
+                            <Form.Group className="mb-18">
+                                <Input
+                                    name="co_city"
+                                    type="text"
+                                    {...(haveCoApplicantSameAddress ? {
+                                        value: tempCity
+                                    } : {
+                                        defaultValue: coTempCity
+                                    })}
+                                    label="City"
+                                    defaultText="City"
+                                    required={haveCoApplicant ? true : false}
+                                    error={{
+                                        'empty': " "
+                                    }}
+                                    validationResult={validationResult}
+                                />
+                            </Form.Group>
+                            <div className="styled-row">
+                                <Form.Group className="styled-column mb-18">
+                                    <Dropdown
+                                        name="co_state"
+                                        type="dropdown"
+                                        defaultValue={coTempState}
+                                        {...(haveCoApplicantSameAddress ? {
+                                            value: tempState
+                                        } : {
+                                            value: coTempState
+                                        })}
+                                        label="State"
+                                        defaultText="State"
+                                        required={haveCoApplicant ? true : false}
+                                        options={dropdownList}
+                                        error={{
+                                            'empty': " "
+                                        }}
+                                        validationResult={validationResult}
+                                    />
+                                </Form.Group>
+                                <Form.Group className="styled-column mb-18">
+                                    <Input
+                                        name="co_zip"
+                                        type="text"
+                                        {...(haveCoApplicantSameAddress ? {
+                                            value: tempZip
+                                        } : {
+                                            defaultValue: coTempZip
+                                        })}
+                                        regex="^[0-9]{5}$"
+                                        label="Zip Code"
+                                        defaultText="Zip Code"
+                                        required={haveCoApplicant ? true : false}
+                                        error={{
+                                            'invalid': " ",
+                                            'empty': " "
+                                        }}
+                                        validationResult={validationResult}
+                                    />
+                                </Form.Group>
+                            </div>
                             <Form.Group className="mb-18">
                                 <Input
                                     name="co_email"
@@ -724,95 +811,7 @@ function AddDealer(props) {
                                     }}
                                     validationResult={validationResult}
                                 />
-                            </Form.Group>                       
-                            <Form.Group className="mb-18">
-                                <Checkbox
-                                    name="co_have_co_applicant_same_address"
-                                    type="checkbox"
-                                    label="Same as Applicant"
-                                    checked={haveCoApplicantSameAddress ? true : null}
-                                    handleChange={(e)=>updateCoApplicantAddress(e.target.checked)}
-                                />
-                            </Form.Group>
-                            <Form.Group className="mb-18">
-                                <Input
-                                    name="co_street"
-                                    type="text"
-                                    {...(haveCoApplicantSameAddress ? {
-                                        value: tempStreet
-                                    } : {
-                                        defaultValue: coTempStreet
-                                    })}
-                                    label="Street"
-                                    defaultText="Street"
-                                    required={haveCoApplicant ? true : false}
-                                    error={{
-                                        'empty': " "
-                                    }}
-                                    validationResult={validationResult}
-                                />
-                            </Form.Group>
-                            <Form.Group className="mb-18">
-                                <Input
-                                    name="co_city"
-                                    type="text"
-                                    {...(haveCoApplicantSameAddress ? {
-                                        value: tempCity
-                                    } : {
-                                        defaultValue: coTempCity
-                                    })}
-                                    label="City"
-                                    defaultText="City"
-                                    required={haveCoApplicant ? true : false}
-                                    error={{
-                                        'empty': " "
-                                    }}
-                                    validationResult={validationResult}
-                                />
-                            </Form.Group>
-                            <div className="styled-row">
-                                <Form.Group className="styled-column mb-18">
-                                    <Dropdown
-                                        name="co_state"
-                                        type="dropdown"
-                                        defaultValue={coTempState}
-                                        {...(haveCoApplicantSameAddress ? {
-                                            value: tempState
-                                        } : {
-                                            value: coTempState
-                                        })}
-                                        label="State"
-                                        defaultText="State"
-                                        required={haveCoApplicant ? true : false}
-                                        options={dropdownList}
-                                        error={{
-                                            'empty': " "
-                                        }}
-                                        validationResult={validationResult}
-                                    />
-                                </Form.Group>
-                                <Form.Group className="styled-column mb-18">
-                                    <Input
-                                        name="co_zip"
-                                        type="text"
-                                        {...(haveCoApplicantSameAddress ? {
-                                            value: tempZip
-                                        } : {
-                                            defaultValue: coTempZip
-                                        })}
-                                        regex="^[0-9]{5}$"
-                                        label="Zip Code"
-                                        defaultText="Zip Code"
-                                        required={haveCoApplicant ? true : false}
-                                        error={{
-                                            'invalid': " ",
-                                            'empty': " "
-                                        }}
-                                        validationResult={validationResult}
-                                    />
-                                </Form.Group>
-                            </div>
-
+                            </Form.Group> 
                             </>
                         }
 

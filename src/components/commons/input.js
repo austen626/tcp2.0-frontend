@@ -291,7 +291,7 @@ const Input = (props) => {
                             )}
                             selected={inputValue ? new Date(inputValue) : null}
                             onChange={handleDateInputChange}
-                            customInput={<ExampleCustomInput />}
+                            // customInput={<ExampleCustomInput />}
                             />
                     }
 

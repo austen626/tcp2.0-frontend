@@ -179,7 +179,7 @@ function AddDealer(props) {
                                 defaultValue={tempYearsThereFirst}
                                 label="How many years did you live there?"
                                 defaultText="0"
-                                regex="^[0-9]{1,2}$"
+                                regex="^[0-9][\w\.\d]{0,5}$"
                                 required={true}
                                 className="single-line-input"
                                 error={{
@@ -198,7 +198,7 @@ function AddDealer(props) {
                                 label={`${tempOwnOrRent === 'own' ? "Monthly Mortgage Payment:" : "Monthly Rent Payment:"}`}
                                 defaultText="0"
                                 isAmount={true}
-                                regex="^[0-9]{1,20}$"
+                                regex="^[0-9][\w\.\d]{0,20}$"
                                 required={true}
                                 className="single-line-input width-112"
                                 error={{
@@ -231,72 +231,74 @@ function AddDealer(props) {
                                     }}
                                 />
                             </Form.Group> 
+                            
+                            <div className={`${haveCoApplicantSameAnswers ? 'hide' : ''}`} >
 
-                            <div className="box center-box">
-                                <label class="form-label" style={{textAlign: "center", width: "100%", padding: 0}}>Do you own or rent your home?</label>
-                                <div className="radio-box center">
-                                    <Form.Group className="mb-18 radio-filed">
-                                        <Input 
-                                            id ="co_own"
-                                            name="co_own_or_rent"
-                                            type="radio"
-                                            className="radio-width"
-                                            inputClass="regular-radio"
-                                            defaultValue="own"
-                                            {...(haveCoApplicantSameAnswers ? {
-                                                checked: tempOwnOrRent == 'own' ? true : null,
-                                                disabled: true
-                                            } : {
-                                                checked: tempCoOwnOrRent == 'own' ? true : null
-                                            })}
-                                            handleChange={(e) => hideCoAppError(e)}
-                                        />
-                                        <label for="co_own" class="form-label " id="co_own-label">Own</label>  
-                                    </Form.Group>
-                                    <Form.Group className="mb-18 radio-filed">
-                                        <Input 
-                                            id ="co_rent"
-                                            name="co_own_or_rent"
-                                            type="radio"
-                                            className="radio-width"
-                                            inputClass="regular-radio"
-                                            defaultValue="rent"
-                                            {...(haveCoApplicantSameAnswers ? {
-                                                checked: tempOwnOrRent == 'rent' ? true : null,
-                                                disabled: true
-                                            } : {
-                                                checked: tempCoOwnOrRent == 'rent' ? true : null
-                                            })}
-                                            handleChange={(e) => hideCoAppError(e)}
-                                        />
-                                        <label for="co_rent" class="form-label " id="co_rent-label">Rent</label>
-                                    </Form.Group>
-                                </div>
-                                <div class={`error-label ${coOwnRentError ? "show" : "hide"}`}>Please select details</div>
-                            </div> 
+                                <div className="box center-box">
+                                    <label class="form-label" style={{textAlign: "center", width: "100%", padding: 0}}>Do you own or rent your home?</label>
+                                    <div className="radio-box center">
+                                        <Form.Group className="mb-18 radio-filed">
+                                            <Input 
+                                                id ="co_own"
+                                                name="co_own_or_rent"
+                                                type="radio"
+                                                className="radio-width"
+                                                inputClass="regular-radio"
+                                                defaultValue="own"
+                                                {...(haveCoApplicantSameAnswers ? {
+                                                    checked: tempOwnOrRent == 'own' ? true : null,
+                                                    disabled: true
+                                                } : {
+                                                    checked: tempCoOwnOrRent == 'own' ? true : null
+                                                })}
+                                                handleChange={(e) => hideCoAppError(e)}
+                                            />
+                                            <label for="co_own" class="form-label " id="co_own-label">Own</label>  
+                                        </Form.Group>
+                                        <Form.Group className="mb-18 radio-filed">
+                                            <Input 
+                                                id ="co_rent"
+                                                name="co_own_or_rent"
+                                                type="radio"
+                                                className="radio-width"
+                                                inputClass="regular-radio"
+                                                defaultValue="rent"
+                                                {...(haveCoApplicantSameAnswers ? {
+                                                    checked: tempOwnOrRent == 'rent' ? true : null,
+                                                    disabled: true
+                                                } : {
+                                                    checked: tempCoOwnOrRent == 'rent' ? true : null
+                                                })}
+                                                handleChange={(e) => hideCoAppError(e)}
+                                            />
+                                            <label for="co_rent" class="form-label " id="co_rent-label">Rent</label>
+                                        </Form.Group>
+                                    </div>
+                                    <div class={`error-label ${coOwnRentError ? "show" : "hide"}`}>Please select details</div>
+                                </div> 
 
-                            <Form.Group className="mb-18">
-                                <Input
-                                    name="co_years_there_first"
-                                    type="text"
-                                    {...(haveCoApplicantSameAnswers ? {
-                                        value: tempYearsThereFirst
-                                    } : {
-                                        defaultValue: customer.co_app.years_there_first ? customer.co_app.years_there_first : null
-                                    })}
-                                    label="How many years did you live there?"
-                                    defaultText="0"
-                                    regex="^[0-9]{1,2}$"
-                                    required={true}
-                                    className="single-line-input"
-                                    error={{
-                                        'empty': " ",
-                                        'invalid': " "
-                                    }}
-                                    validationResult={validationResult}
-                                />
-                            </Form.Group>
-                            <Form.Group className="mb-18">
+                                <Form.Group className="mb-18">
+                                    <Input
+                                        name="co_years_there_first"
+                                        type="text"
+                                        {...(haveCoApplicantSameAnswers ? {
+                                            value: tempYearsThereFirst
+                                        } : {
+                                            defaultValue: customer.co_app.years_there_first ? customer.co_app.years_there_first : null
+                                        })}
+                                        label="How many years did you live there?"
+                                        defaultText="0"
+                                        regex="^[0-9][\w\.\d]{0,5}$"
+                                        required={true}
+                                        className="single-line-input"
+                                        error={{
+                                            'empty': " ",
+                                            'invalid': " "
+                                        }}
+                                        validationResult={validationResult}
+                                    />
+                                </Form.Group>
+                                <Form.Group className="mb-18">
                                 <Input
                                     name="co_monthly_rent_mortgage_payment"
                                     type="text"
@@ -309,7 +311,7 @@ function AddDealer(props) {
                                     })}
                                     defaultText="0"
                                     isAmount={true}
-                                    regex="^[0-9]{1,20}$"
+                                    regex="^[0-9][\w\.\d]{0,20}$"
                                     required={true}
                                     className="single-line-input width-112"
                                     error={{
@@ -320,6 +322,8 @@ function AddDealer(props) {
                                 />
                             </Form.Group> 
 
+                            </div>
+                            
                             </>
                         }
 

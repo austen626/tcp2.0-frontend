@@ -61,7 +61,7 @@ class HomeScreen extends Component {
                     {/* <Button style={{ marginTop: 50, marginBottom: 30 }} onClick={this.handlePreApprovalsClick}>Manage Pre Approvals</Button>
                     <Button style={{ marginBottom: 30 }} onClick={this.handlePrendingApplicationClick}>Manage Contracts/Applications</Button>
                     <Button onClick={this.handleRequestFundingsClick}>View Funding Requests</Button> */}
-                    <Button  style={{ marginTop: 50, marginBottom: 30 }} onClick={() => this.handleHomeRedirection('dealer-management')}>Dealers Management</Button>
+                    <Button  style={{ marginTop: 50, marginBottom: 30 }} onClick={() => this.handleHomeRedirection('dealer-management')}>Dealer Management</Button>
                 </div>
             </div>
         )
