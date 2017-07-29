@@ -35,7 +35,6 @@ function HomeScreen(props) {
     const timer = useRef(0);
     let interval = null;
 
-
     useEffect(() => {
         interval = setInterval(function(){
             timer.current = timer.current+500;   
@@ -197,7 +196,7 @@ function HomeScreen(props) {
                                 type="text"
                                 label="Applicant First Name"
                                 defaultText="Applicant First Name"
-                                defaultValue={customer.main_app.first_name ? customer.main_app.first_name : applicantPhone} 
+                                defaultValue={customer.main_app.first_name ? customer.main_app.first_name : null} 
                                 disabled={isCustomerFound} 
                                 required={searchCustomerApiInitiate && !isCustomerFound ? true : false}
                                 error={{
@@ -212,7 +211,7 @@ function HomeScreen(props) {
                                 type="text"
                                 label="Applicant Last Name"
                                 defaultText="Applicant Last Name"
-                                defaultValue={customer.main_app.last_name ? customer.main_app.last_name : applicantPhone} 
+                                defaultValue={customer.main_app.last_name ? customer.main_app.last_name : null} 
                                 disabled={isCustomerFound} 
                                 required={searchCustomerApiInitiate && !isCustomerFound ? true : false}
                                 error={{
