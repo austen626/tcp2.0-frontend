@@ -464,7 +464,7 @@ function AddDealer(props) {
                                             name="have_co_applicant_with_same_answers"
                                             type="checkbox"
                                             theme="light-label"
-                                            label="The answes are the same as the answers<br>given by the applicant"
+                                            label="The answers are the same as the answers<br>given by the applicant"
                                             checked={customer.co_app.have_co_applicant_with_same_answers ? true : null}
                                         />
                                     </Form.Group>

@@ -404,22 +404,6 @@ function AddDealer(props) {
                         </Form.Group>
                         <Form.Group className="mb-18">
                             <Input
-                                name="email"
-                                type="email"
-                                regex="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$"
-                                defaultValue={customer.main_app.email}
-                                label="Email"
-                                defaultText="Email"
-                                required={true}
-                                error={{
-                                    'invalid': "Please enter valid Email address",
-                                    'empty': " "
-                                }}
-                                validationResult={validationResult}
-                            />
-                        </Form.Group>
-                        <Form.Group className="mb-18">
-                            <Input
                                 name="street"
                                 type="text"
                                 defaultValue={tempStreet}
@@ -483,6 +467,22 @@ function AddDealer(props) {
                                 />
                             </Form.Group>
                         </div>
+                        <Form.Group className="mb-18">
+                            <Input
+                                name="email"
+                                type="email"
+                                regex="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$"
+                                defaultValue={customer.main_app.email}
+                                label="Email"
+                                defaultText="Email"
+                                required={true}
+                                error={{
+                                    'invalid': "Please enter valid Email address",
+                                    'empty': " "
+                                }}
+                                validationResult={validationResult}
+                            />
+                        </Form.Group>
                         <Form.Group className="mb-18">
                             <Input
                                 name="cell_phone"
