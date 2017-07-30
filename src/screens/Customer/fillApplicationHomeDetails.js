@@ -223,7 +223,7 @@ function AddDealer(props) {
                                     name="have_co_applicant_with_same_answers"
                                     type="checkbox"
                                     theme="light-label"
-                                    label="The answes are the same as the answers<br>given by the applicant"
+                                    label="The answers are the same as the answers<br>given by the applicant"
                                     checked={haveCoApplicantSameAnswers ? true : null}
                                     handleChange={(e)=>{
                                         setHaveCoApplicantSameAnswers(e.target.checked)

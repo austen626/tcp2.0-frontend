@@ -92,7 +92,7 @@ class TwoFAScreen extends Component {
                 <div className="twofa-page">
                     <div className="wrapper">
                         <div className="tip">
-                            A text message with your code has been sent to a number ending {endCode}
+                            A text message with your code has been sent to a number ending with {endCode}
                         </div>
                         <form action="javascript:void(0)" method="post" onSubmit={this.onVerify} >
                             <div className="inputs">
