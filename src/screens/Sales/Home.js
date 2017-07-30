@@ -35,6 +35,7 @@ function HomeScreen(props) {
     const timer = useRef(0);
     let interval = null;
 
+
     useEffect(() => {
         interval = setInterval(function(){
             timer.current = timer.current+500;   
