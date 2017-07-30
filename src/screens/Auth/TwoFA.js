@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Form, Button } from 'react-bootstrap';
 import { codeVerify, sendAgain, forgotCodeVerify } from '../../redux/actions/auth';
+import { resetCustomerSearchApiInitiate } from '../../redux/actions/sales';
 
 import AuthContainer from '../../components/AuthContainer';
 import { AuthCheckbox } from '../../components/Checkbox';
@@ -64,6 +65,7 @@ class TwoFAScreen extends Component {
             if (result.ok) {
                 localStorage.setItem('token', result.token);
                 localStorage.setItem('role', result.role);
+                
                 if(checkAskAgain) {
                     localStorage.setItem('isDonotAskAgain', true);
                 } else {
@@ -78,6 +80,9 @@ class TwoFAScreen extends Component {
                 {
                     this.props.history.replace('/');
                 }
+
+                this.props.resetCustomerSearchApiInitiate();
+
             } else {
                 this.setState({ error: result.error });
             }
@@ -139,6 +144,7 @@ export default connect(
     {
         codeVerify,
         sendAgain,
-        forgotCodeVerify
+        forgotCodeVerify,
+        resetCustomerSearchApiInitiate
     }
 )(TwoFAScreen);

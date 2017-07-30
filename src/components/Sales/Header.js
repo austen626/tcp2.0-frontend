@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Row } from 'react-bootstrap';
 import { pushNotification } from 'utils/notification';
 import { message } from 'shared/constant';
 import { TCPLogo, IconProfile, IconLogout } from '../../assets/images';
+
+import { resetCustomerSearchApiInitiate } from '../../redux/actions/sales';
 
 class Header extends Component {
     menuContent = React.createRef();
@@ -28,6 +31,7 @@ class Header extends Component {
     }
 
     onLogout = () => {
+        this.props.resetCustomerSearchApiInitiate();
         localStorage.removeItem('token');
         this.props.history.replace('/login');
     }
@@ -94,4 +98,12 @@ class Header extends Component {
     }
 }
 
-export default Header;
+const mapStateToProps = state => ({
+});
+
+export default connect(
+    mapStateToProps,
+    {
+        resetCustomerSearchApiInitiate
+    }
+)(Header);
