@@ -49,7 +49,7 @@ function AddDealer(props) {
                 <div className="container">
                     <div className="styled-form">
                         <div className="welcome-text">
-                            <p><b>THANK YOU</b><br></br>for your application. Someone will be in touch with you. You can close the browser.</p>
+                            <p><b>THANK YOU </b><br></br>for your application! A representative of [Dealer Name] will contact you with next steps. Please feel free to contact [Dealer Name] at [Dealer Phone] or Travis Capital Partners at (800) 832-2806 or by email at info@traviscapitalpartners.com. You may close your browser or press the TCP logo at the top of your screen to return home.</p>
                         </div>
                     </div>
                 </div>

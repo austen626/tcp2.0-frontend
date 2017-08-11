@@ -31,6 +31,16 @@ const getFromData = (container, ignores, integerKeys) => {
             validationResult[name] = elmResult;
         }
 
+        if(name === "date_of_birth" || name === "co_date_of_birth") 
+        {
+            let diff_ms = Date.now() - new Date(value).getTime();
+            let age_dt = new Date(diff_ms);
+
+            if(Math.abs(age_dt.getUTCFullYear() - 1970) < 18 || new Date(value).getFullYear() >= new Date().getFullYear()) {
+                validationResult[name] = { error: 'ageError' };
+            }
+        }
+
         if(name !== "")
         {
             if(integerKeys && integerKeys.includes(name))

@@ -45,7 +45,7 @@ const Checkbox = (props) => {
                         id={ id || name }
                         onChange={ checkboxChange }
                         disabled={disabled}
-                        className='regular-checkbox'
+                        className='form-control regular-checkbox'
                         { ...extraProps }
                     />
                     <span className='icon-check'/>

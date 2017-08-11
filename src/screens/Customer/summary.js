@@ -65,19 +65,19 @@ function AddDealer(props) {
 
             <div className="sub-header">
 
-                <button className={`${activeTab === 'profile' ? 'active' : ''}`} onClick={() => handleTabChange('profile')}>
+                <button className={`btn ${activeTab === 'profile' ? 'active' : ''}`} onClick={() => handleTabChange('profile')}>
                     <img src={IconContactAcitve} alt="" />
                     {activeTab === 'profile' && <span className='arrow-down'></span>}
                 </button>
 
-                <button style={{ minWidth: 238 }} className={`${activeTab === 'credit_details' ? 'active' : ''}`} onClick={() => handleTabChange('credit_details')}>
+                <button style={{ minWidth: 238 }} className={`btn ${activeTab === 'credit_details' ? 'active' : ''}`} onClick={() => handleTabChange('credit_details')}>
                     <span>Summary</span>
                     {activeTab === 'credit_details' && <span className='arrow-down'></span>}
                 </button>
 
                 {!isCustomerSubmitted &&
 
-                <button className={`${activeTab === 'summary_list' ? 'active' : ''}`} onClick={() => handleTabChange('summary_list')}>
+                <button className={`btn ${activeTab === 'summary_list' ? 'active' : ''}`} onClick={() => handleTabChange('summary_list')}>
                     <img src={IconListWhite} alt="" />
                     {activeTab === 'summary_list' && <span className='arrow-down'></span>}
                 </button>
@@ -180,7 +180,7 @@ function AddDealer(props) {
                                 <Input
                                     name="date_of_birth"
                                     type="hidden"
-                                    value={customer.main_app.dobY && customer.main_app.dobM && customer.main_app.dobD ? `${customer.main_app.dobY}-${customer.main_app.dobM}-${customer.main_app.dobD}` : null}
+                                    value={customer.main_app.dobY && customer.main_app.dobM && customer.main_app.dobD ? `${customer.main_app.dobM}/${customer.main_app.dobD}/${customer.main_app.dobY}` : null}
                                     label="Date of Birth"
                                     className="medium-input"
                                     defaultText="MM / DD / YYYY"
@@ -321,7 +321,7 @@ function AddDealer(props) {
                                         <Input
                                             name="co_date_of_birth"
                                             type="hidden"
-                                            value={customer.co_app.dobY && customer.co_app.dobM && customer.co_app.dobD ? `${customer.co_app.dobY}-${customer.co_app.dobM}-${customer.co_app.dobD}` : null}
+                                            value={customer.co_app.dobY && customer.co_app.dobM && customer.co_app.dobD ? `${customer.co_app.dobM}/${customer.co_app.dobD}/${customer.co_app.dobY}` : null}
                                             label="Date of Birth"
                                             className="medium-input"
                                             defaultText="MM / DD / YYYY"
@@ -807,7 +807,8 @@ function AddDealer(props) {
                                         {customer.co_enabled ? 
                                             <span>{customer.co_app.street} {customer.main_app.city} {customer.main_app.state} {customer.main_app.zip}</span> 
                                             :                                     
-                                            <button className="secondary" type="submit" onClick={() => handleAddCoApp()}>Add Co-App</button>
+                                            // <button className="btn secondary" type="submit" onClick={() => handleAddCoApp()}>Add Co-App</button>
+                                            ""
                                         }
                                     </td>
                                 </tr>
@@ -846,7 +847,7 @@ function AddDealer(props) {
                         </div>
                     </div>
                     <div className="footer-container">
-                        <button className="secondary" type="submit">Close</button>
+                        <button className="btn secondary" type="submit">Close</button>
                     </div>
                 </form>
             }

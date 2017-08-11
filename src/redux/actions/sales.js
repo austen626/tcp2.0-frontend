@@ -297,11 +297,13 @@ export function searchCustomer(data) {
                 type: GET_CUSTOMER_SUCCESS,
                 payload: response.data && response.data.data && response.data.data.main_app && response.data.data.main_app.id !== '' ? response.data : null 
             })
+            return true
         } catch (error) {
             dispatch({
                 type: GET_CUSTOMER_FAILED,
             })
             pushNotification("No Match Found", 'error', 'TOP_RIGHT', 3000);   
+            return false
         }    
     }
 }
@@ -495,7 +497,7 @@ export function customerResponseSubmit(history, data) {
             })
 
             pushNotification("Application Updated Successfully", 'success', 'TOP_RIGHT', 3000);
-            history && history.push('/customerSummary')
+            history && history.push('/thankyou')
 
         } catch (error) {
 

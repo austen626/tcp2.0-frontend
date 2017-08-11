@@ -23,7 +23,6 @@ function AddDealer(props) {
 
     const [validationResult, setValidationResult] = useState(null);
     const [showWarning, setShowWarning] = useState(false);
-    const [isAgree, setIsAgree] = useState(false);
 
     const [employementStatusCheck, setEmployementStatusCheck] = useState(customer.main_app.employement_status ? customer.main_app.employement_status : null);
     const [coEmployementStatusCheck, setCoEmployementStatusCheck] = useState(customer.co_enabled ? customer.co_app.employement_status : true);
@@ -113,8 +112,8 @@ function AddDealer(props) {
                     }
                 }
 
-                updateCustomer(history, null, temp_customer)
-                submiCreditApplication(history, '/applyApplicationSummary', temp_customer);
+                updateCustomer(history, null, temp_customer);
+                setShowWarning(true);               
             }
         } 
         else 
@@ -150,15 +149,18 @@ function AddDealer(props) {
 
             <Modal show={showWarning} onHide={() => setShowWarning(false)}>
                 <Modal.Header closeButton></Modal.Header>
-                <Modal.Body>Submitting the application and authorizing TCP to do a credit check from Equifax.</Modal.Body>
+                <Modal.Body>
+                    By selecting “I agree,” below, you attest that you have read the following to the customer and they have indicated that they agree:
+                    If you agree to the following, you will be giving [Name of Dealer] and its assigns, including Travis Capital Partners, LLC, the right to investigate your credit capacity and credit history. Seller or its assigns, agents, and any other company seeking to grant me/us the requested credit (the “potential creditor”), including Travis Capital Partners, LLC, may request a credit report for any legitimate purpose associated with your application for credit, extending credit, modifying the terms of your credit agreement, or a collection on your account. You hereby authorize Seller or its assigns, agents, and any other company seeking to grant me/us the requested credit (the “potential creditor”) to make whatever credit inquiries they deem necessary in connection with my credit application or in the course of review or collection of any credit extended in reliance on this application. You authorize and instruct any person or consumer reporting agency to complete and furnish Seller, or its assigns and agents, any information they may have or obtain in response to such credit inquiries and agree that the same shall remain the property of the potential creditor whether or not credit is extended. You certify that you have read the above information and the information is true and correct. You certify that You have read the information above and You agree to the terms of this Credit Application. Do you agree?
+                </Modal.Body>
                 <Modal.Footer>
-                <button class="secondary" onClick={() => {
-                    setIsAgree(true)
+                <button class="btn secondary" onClick={() => {
                     setShowWarning(false)
+                    submiCreditApplication(history, '/applyApplicationSummary', customer);
                 }}>
-                    Agree
+                    I Agree
                 </button>
-                <button class="secondary" onClick={() => setShowWarning(false)}>
+                <button class="btn secondary" onClick={() => setShowWarning(false)}>
                     Close
                 </button>
                 </Modal.Footer>
@@ -560,11 +562,12 @@ function AddDealer(props) {
                     </div>
                 </div>
                 <div className="footer-container">
-                    {isAgree ?
-                        <button className="secondary" type="submit">Save & Submit</button>
+                    {/* {isAgree ?
+                        <input className="btn secondary" type="submit" value="Save & Submit"/>
                         :
-                        <button className="secondary" type="button" onClick={() => setShowWarning(true)}>Next</button>
-                    }
+                        <input className="btn secondary" type="button" value="Finish" onClick={() => setShowWarning(true)}/>
+                    } */}
+                    <input className="btn secondary" type="submit" value="Finish"/>
                 </div>
             </form>
 
