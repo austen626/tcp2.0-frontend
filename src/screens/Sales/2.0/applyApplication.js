@@ -85,18 +85,20 @@ function HomeScreen(props) {
                     </div>
                 }
 
-                <div className="button" onClick={() => emailValidate ? handleCompleteOnDeviceClick() : ''}>
+                <button className={`btn button ${customer.invite_status == "completed" ? "disabled" : ""}`} onClick={() => emailValidate && customer.invite_status !== "completed" ? handleCompleteOnDeviceClick() : ''}>
                     <div className="icon">
                         <img className="icon-new-customer" src={IconList} alt="new" />
                     </div>
                     <div className="label">Complete Credit Application on this device</div>
-                </div>
-                <div className="button" onClick={() => emailValidate ? handleSendLink() : ''}>
+                </button>
+
+
+                <button className={`btn button ${customer.invite_status == "sent" || customer.invite_status == "completed" ? "disabled" : ""}`} onClick={() => emailValidate && customer.invite_status !== "sent" && customer.invite_status !== "completed" ? handleSendLink() : ''}>
                     <div className="icon">
                         <img className="icon-reorder-customer" src={IconSend} alt="reorder" />
                     </div>
                     <div className="label">Send Credit Application Link to a Customer</div>
-                </div>
+                </button>
             </div>
 
             <div className="footer-container">

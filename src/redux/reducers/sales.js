@@ -87,7 +87,7 @@ const INIT_STATE = {
 
 
 
-    customer: {main_app: {}, co_app: {}},
+    customer: {main_app: {}, co_app: {}, invite_status: null, ssn: null, co_ssn: null},
     isCustomerFound: false,
     isCustomerSubmitted: false,
     searchCustomerApiInitiate: false,
@@ -243,9 +243,32 @@ export default function(state = INIT_STATE, action){
                 actionLoading: true,
             }
         case GET_CUSTOMER_SUCCESS:
+
+            let customer = null;
+            
+            if(action.payload.data) {
+                customer = {
+                    ...action.payload.data,
+                    main_app: {
+                        ...action.payload.data.main_app,
+                        ssn: null
+                    },
+                    co_app: {
+                        ...action.payload.data.co_app,
+                        ssn: null
+                    },
+                    ssn: action.payload.data.main_app.ssn, 
+                    co_ssn: action.payload.data.co_app ? action.payload.data.co_app.ssn : null
+                }
+            } else {
+                customer = {
+                    ...temp_customer
+                }
+            }
+
             return {
                 ...state,
-                customer: action.payload.data ? action.payload.data : temp_customer,
+                customer: customer,
                 isCustomerFound: action.payload.data ? true : false,
                 searchCustomerApiInitiate: true,
                 actionLoading: false,

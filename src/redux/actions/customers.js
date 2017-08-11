@@ -36,10 +36,6 @@ export function searchCustomers(body, type) {
             type: SEARCH_CUSTOMERS
         });
         try {
-            // let url = '/sales/search-customer-local';
-            // if(type === "main") {
-            //     url = '/sales/search-customer-nortridge';
-            // }
             const url = '/sales/search-customer-nortridge';
             const response = await API.post(url, body);
             dispatch({

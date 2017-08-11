@@ -92,7 +92,7 @@
     .form-control:focus {
         outline: none !important;
         border: solid 2px #009e87;
-        box-shadow: 0 0 10px #719ECE;
+        box-shadow: 0 0 10px #719ECE !important;
     }
     .form-check {
         color: #97b0c6;
@@ -144,7 +144,7 @@
     .form-control:focus {
         outline: none !important;
         border: solid 2px #009e87;
-        box-shadow: 0 0 10px #719ECE;
+        box-shadow: 0 0 10px #719ECE !important;
     }
 
     .button {

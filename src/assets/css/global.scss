@@ -324,6 +324,13 @@ input[type=number] {
     opacity: 0.5 !important;
 }
 
+.form-control:focus {
+    box-shadow: 0 0 10px #719ECE !important;
+}
+
+.btn:focus {
+    box-shadow: 0 0 10px #719ECE !important;
+}
 
 
 

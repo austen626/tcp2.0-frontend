@@ -326,7 +326,7 @@ input:focus {
     align-items: center;
 }
 
-button.secondary {
+.secondary {
     border: none;
     min-width: 120px;
     height: 35px;
@@ -400,6 +400,8 @@ button.secondary {
         background-color: #009d86;
         height: 59px;
         margin-bottom: 28px;
+        padding: 0;
+        border: 0;
 
         .icon {    
             width: 58px;

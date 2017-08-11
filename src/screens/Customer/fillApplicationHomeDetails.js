@@ -20,11 +20,11 @@ function AddDealer(props) {
         actionLoading,
     } = props;
 
-    const [tempOwnOrRent, setTempOwnOrRent] = useState(customer ? customer.main_app.own_or_rent : null);
+    const [tempOwnOrRent, setTempOwnOrRent] = useState(customer && customer.main_app.own_or_rent ? customer.main_app.own_or_rent : "own");
     const [tempYearsThereFirst, setTempYearsThereFirst] = useState(customer ? customer.main_app.years_there_first : null);
     const [tempMonthlyRentMortgagePayment, setTempMonthlyRentMortgagePayment] = useState(customer ? customer.main_app.monthly_rent_mortgage_payment : null);
 
-    const [tempCoOwnOrRent, setCoTempOwnOrRent] = useState(customer && customer.co_enabled ? customer.co_app.own_or_rent : null);
+    const [tempCoOwnOrRent, setCoTempOwnOrRent] = useState(customer && customer.co_enabled && customer.co_app.own_or_rent ? customer.co_app.own_or_rent : "own");
 
     const [validationResult, setValidationResult] = useState(null);
     const [ownRentError, setOwnRentError] = useState(false);
@@ -330,7 +330,7 @@ function AddDealer(props) {
                     </div>
                 </div>
                 <div className="footer-container">
-                    <button className="secondary" type="submit">Next</button>
+                    <input className="btn secondary" type="submit" value="Next"/>
                 </div>
             </form>
 

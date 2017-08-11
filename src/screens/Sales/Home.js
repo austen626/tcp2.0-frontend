@@ -1,14 +1,13 @@
-import React, { useState, useEffect, createRef, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
-import { pushNotification } from 'utils/notification';
 import Header from '../../components/Sales/Header';
 import { Form } from 'react-bootstrap';
 import Input from '../../components/commons/input';
-import Loader from 'shared/Loader';
 import { IconHome, IconRight } from '../../assets/images';
 
 import { getFromData } from '../../components/commons/utility';
 import { searchCustomer, resetCustomerSearchApiInitiate, updateCustomer, validateEmailAddress } from '../../redux/actions/sales';
+import { CHANGE_SELECTED_FUNDING_REQUEST_FAILED } from 'redux/actions/admin';
 
 function HomeScreen(props) {
 
@@ -25,39 +24,24 @@ function HomeScreen(props) {
         resetCustomerSearchApiInitiate
     } = props;
 
-    const [hitSearchApi, setHitSearchApi] = useState(false);
     const [validationResult, setValidationResult] = useState(null);
     const [applicantEmail, setApplicantEmail] = useState(null);
     const [applicantPhone, setApplicantPhone] = useState(null);
 
-    const submitButton = createRef();
-
-    const timer = useRef(0);
-    let interval = null;
-
-
-    useEffect(() => {
-        interval = setInterval(function(){
-            timer.current = timer.current+500;   
-            console.log(timer.current, !searchCustomerApiInitiate)   
-            if(applicantEmail && applicantPhone && !searchCustomerApiInitiate && timer.current === 2000) {
-                setHitSearchApi(!hitSearchApi);
-            }
-            if(timer.current > 5000) {
-                timer.current = 0;
-                clearInterval(interval);
-            }
-        }, 500)
-    })
-
-    useEffect(() => {
-        if(applicantEmail && applicantPhone && !searchCustomerApiInitiate) {
-            submitButton.current.click();
-        }
-    }, [hitSearchApi])
-
     const handleHomeClick = () => {
         history.replace('/');
+    }
+
+    const searchCustomerFun = (data) => {
+        if(!searchCustomerApiInitiate) {
+            searchCustomer(data).then(res => {
+                if (res) {
+
+                } else {
+                    searchCustomer({email: null, phone: applicantPhone})
+                }
+            })
+        }
     }
 
     const handleSubmit = evt => {
@@ -86,8 +70,6 @@ function HomeScreen(props) {
                     "main_app": {
                         ...customer.main_app,
                         "name": customer.main_app.first_name+" "+customer.main_app.last_name,
-                        "email": data.email,
-                        "cell_phone": data.cell_phone,
                     },
                     "co_app": {
                         ...customer.co_app,
@@ -126,8 +108,6 @@ function HomeScreen(props) {
     return (
         <div className="sales">
 
-            { actionLoading && <Loader />}
-
             <Header isHome={true} history={history} avatar={avatar}>
                 {localStorage.getItem('role') && localStorage.getItem('role').indexOf('dealer') !== -1 &&
                     <img src={IconHome} alt="home" className="icon-home" onClick={()=>handleHomeClick()} />
@@ -161,10 +141,9 @@ function HomeScreen(props) {
                                     validationResult={validationResult}
                                     handleChange={(e) => { 
                                         setApplicantEmail(e.target.value)
-                                        resetCustomerSearchApiInitiate(false) 
-                                        timer.current = 0;
-                                        clearInterval(interval);
+                                        resetCustomerSearchApiInitiate(false)
                                     }}
+                                    onBlur={()=>searchCustomerFun({email: applicantEmail, phone: null})}
                                 />
                             </Form.Group>
                             <Form.Group className="home-input mb-18">
@@ -184,43 +163,76 @@ function HomeScreen(props) {
                                     validationResult={validationResult}
                                     handleChange={(e) => { 
                                         setApplicantPhone(e.target.value)
-                                        resetCustomerSearchApiInitiate(false) 
-                                        timer.current = 0;
-                                        clearInterval(interval);
+                                        resetCustomerSearchApiInitiate(false)
                                     }}
+                                    onBlur={()=>searchCustomerFun({email: applicantEmail, phone: null})}
                                 />
                             </Form.Group>
                         </div>
-                        <Form.Group className="home-input mb-18">
-                            <Input
-                                name="first_name"
-                                type="text"
-                                label="Applicant First Name"
-                                defaultText="Applicant First Name"
-                                defaultValue={customer.main_app.first_name ? customer.main_app.first_name : null} 
-                                disabled={isCustomerFound} 
-                                required={searchCustomerApiInitiate && !isCustomerFound ? true : false}
-                                error={{
-                                    'empty': " "
-                                }}
-                                validationResult={validationResult}
-                            />
-                        </Form.Group>
-                        <Form.Group className="home-input mb-18">
-                            <Input
-                                name="last_name"
-                                type="text"
-                                label="Applicant Last Name"
-                                defaultText="Applicant Last Name"
-                                defaultValue={customer.main_app.last_name ? customer.main_app.last_name : null} 
-                                disabled={isCustomerFound} 
-                                required={searchCustomerApiInitiate && !isCustomerFound ? true : false}
-                                error={{
-                                    'empty': " "
-                                }}
-                                validationResult={validationResult}
-                            />
-                        </Form.Group>
+                        {isCustomerFound ?
+                        <>
+                            <Form.Group className="home-input mb-18">
+                                <Input
+                                    name="first_name"
+                                    type="text"
+                                    label="Applicant First Name"
+                                    defaultText="Applicant First Name"
+                                    value={customer.main_app.first_name} 
+                                    required={false}
+                                    error={{
+                                        'empty': " "
+                                    }}
+                                    validationResult={validationResult}
+                                />
+                            </Form.Group>
+                            <Form.Group className="home-input mb-18">
+                                <Input
+                                    name="last_name"
+                                    type="text"
+                                    label="Applicant Last Name"
+                                    defaultText="Applicant Last Name"
+                                    value={customer.main_app.last_name} 
+                                    required={false}
+                                    error={{
+                                        'empty': " "
+                                    }}
+                                    validationResult={validationResult}
+                                />
+                            </Form.Group>
+                        </>
+                        :
+                        <>
+                            <Form.Group className="home-input mb-18">
+                                <Input
+                                    name="first_name"
+                                    type="text"
+                                    label="Applicant First Name"
+                                    defaultText="Applicant First Name"
+                                    defaultvalue={null} 
+                                    required={true}
+                                    error={{
+                                        'empty': " "
+                                    }}
+                                    validationResult={validationResult}
+                                />
+                            </Form.Group>
+                            <Form.Group className="home-input mb-18">
+                                <Input
+                                    name="last_name"
+                                    type="text"
+                                    label="Applicant Last Name"
+                                    defaultText="Applicant Last Name"
+                                    defaultvalue={null} 
+                                    required={true}
+                                    error={{
+                                        'empty': " "
+                                    }}
+                                    validationResult={validationResult}
+                                />
+                            </Form.Group>
+                        </>
+                        }
+                        
                     </div>
                 </div>
                 {isCustomerFound &&
@@ -244,7 +256,11 @@ function HomeScreen(props) {
                     </div>
                 }
                 <div className="footer-container">
-                    <button ref={submitButton} className="secondary" type="submit">Next</button>
+                    {actionLoading ?
+                        <button className="btn secondary" type="submit" disabled >Searching...</button>
+                    :
+                        <button className="btn secondary" type="submit" >Next</button>
+                    }
                 </div>
             </form>
         </div>

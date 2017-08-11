@@ -9,7 +9,7 @@ import DatePicker from 'react-datepicker';
  * @returns {JSX.Element}
  */
 
-const inputValidation = (inputVal, required, regexString, isMatched) => {
+const inputValidation = (inputVal, required, regexString, isMatched, name) => {
 
     if(inputVal === '') {
         inputVal = null
@@ -17,7 +17,17 @@ const inputValidation = (inputVal, required, regexString, isMatched) => {
 
     const regex = regexString && new RegExp(regexString, 'i');
 
-    const isValid = regex && inputVal ? regex.test(inputVal) : isMatched && regexString !== inputVal ? false : true
+    let isValid = regex && inputVal ? regex.test(inputVal) : isMatched && regexString !== inputVal ? false : true
+
+    if(name === "date_of_birth" || name === "co_date_of_birth") 
+    {
+        let diff_ms = Date.now() - new Date(inputVal).getTime();
+        let age_dt = new Date(diff_ms);
+        
+        if(Math.abs(age_dt.getUTCFullYear() - 1970) < 18 || new Date(inputVal).getFullYear() >= new Date().getFullYear()) {
+            isValid = false
+        }
+    }
 
     return !!required && inputVal === null ? true : !isValid ? true : false;
     
@@ -61,6 +71,7 @@ const Input = (props) => {
     } = props;
 
     const [ focussed, setFocussed ] = useState(!!value || !!defaultValue);
+    // const [ manualDate, setManualDate ] = useState(!!value || !!defaultValue);
     const [ inputValue, setInputValue ] = useState(value || defaultValue || null);
     const [ inputInvalid, setInputInvalid ] = useState(required && !(defaultValue));
 
@@ -68,7 +79,7 @@ const Input = (props) => {
         
         setInputValue(newVal);
 
-        setInputInvalid(inputValidation(newVal, required, regex, isMatched));
+        setInputInvalid(inputValidation(newVal, required, regex, isMatched, name));
     };
 
     const handleFocus = () => {
@@ -87,14 +98,16 @@ const Input = (props) => {
 
     const handleInputChange = (event) => {
 
-        updateInputValue(event.currentTarget && event.currentTarget.value);
+            updateInputValue(event.currentTarget && event.currentTarget.value);
 
         typeof handleChange === 'function' && handleChange(event);
     };
 
     const handleDateInputChange = (data) => {
-
+        
         if(data !== null) {
+
+            data = new Date(data);
 
             let month = data.getMonth()+1;
             let date = data.getDate();
@@ -119,12 +132,41 @@ const Input = (props) => {
         }
     };
 
+    // const handleDateInputManualChange = (data) => {
+
+    //     console.log(data.currentTarget.value);
+    //     console.log(data.currentTarget.value.indexOf('_'));
+        
+    //     if(data.currentTarget.value !== null && data.currentTarget.value.indexOf('_') == -1  && data.currentTarget.value.indexOf('NaN') == -1) {
+
+    //         data = new Date(data.currentTarget.value);
+
+    //         let month = data.getMonth()+1;
+    //         let date = data.getDate();
+
+    //         if(month < 10) {
+    //             month = '0'+month
+    //         }
+
+    //         if(date < 10) {
+    //             date = '0'+date
+    //         }
+
+    //         let temp_date = data.getFullYear()+'-'+month+'-'+date
+
+    //         console.log(temp_date)
+            
+    //         setManualDate(temp_date)
+    //         handleDateInputChange(temp_date);
+    //     }
+    // };
+
     useEffect(() => {
 
         if ( defaultValue === undefined && value !== undefined && value !== inputValue) {
             updateInputValue(value);
         }
-    });
+    }, [value, defaultValue]);
 
     useEffect(() => {
 
@@ -163,18 +205,32 @@ const Input = (props) => {
         "December"
     ];
 
-    const ExampleCustomInput = React.forwardRef(
-        ({ value, onClick }, ref) => (
-          <button type="button" className={`form-control datepicker-button ${inputValue ? '' : 'empty'}`} onClick={onClick} ref={ref}>
-            {value ? value : 'MM/DD/YYYY'}
-          </button>
-        ),
-      );
+    {/* <button type="button" className={`form-control datepicker-button ${inputValue ? '' : 'empty'}`} onClick={onClick} ref={ref}>
+        {value ? value : 'MM/DD/YYYY'}
+    </button> */}
+
+    // const ExampleCustomInput = React.forwardRef(
+    //     ({ value, onClick }, ref) => (
+    //         <InputMask 
+    //             onClick={onClick} 
+    //             ref={ref} 
+    //             defaultValue={value} 
+    //             placeholder="MM/DD/YYYY" 
+    //             className="form-control" 
+    //             mask="99/99/9999" 
+    //             onChange={handleDateInputManualChange}
+    //         />
+    //     ),
+    //   );
 
     const inputId = id || name,
         ariaLabelledBy = id && `${id}-label`,
         showError = !!errorLabel && inputInvalid,
         transform = inputValue !== null || focussed;
+
+    if(name == "date_of_birth" || name === "co_date_of_birth") {
+        console.log(showError)
+    }
 
     return (
         <div

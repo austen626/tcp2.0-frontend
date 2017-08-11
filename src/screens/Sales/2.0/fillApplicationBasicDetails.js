@@ -509,7 +509,7 @@ function AddDealer(props) {
                             />
                         </Form.Group>
                         <Form.Group className="mb-18">
-                            <Input
+                            {/* <Input
                                 name="date_of_birth"
                                 type="hidden"
                                 defaultValue={customer.main_app.dobY && customer.main_app.dobM && customer.main_app.dobD ? `${customer.main_app.dobY}-${customer.main_app.dobM}-${customer.main_app.dobD}` : null}
@@ -522,6 +522,23 @@ function AddDealer(props) {
                                     'empty': " "
                                 }}
                                 validationResult={validationResult}
+                            /> */}
+                            <Input
+                                name="date_of_birth"
+                                type="hidden"
+                                defaultValue={customer.main_app.dobY && customer.main_app.dobM && customer.main_app.dobD ? `${customer.main_app.dobM}/${customer.main_app.dobD}/${customer.main_app.dobY}` : null}
+                                    label="Date of Birth"
+                                className="medium-input"
+                                defaultText="MM / DD / YYYY"
+                                required={true}
+                                regex="^(?:(?:(?:0?[13578]|1[02])(\/|-|\.)31)\1|(?:(?:0?[1,3-9]|1[0-2])(\/|-|\.)(?:29|30)\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:0?2(\/|-|\.)29\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:(?:0?[1-9])|(?:1[0-2]))(\/|-|\.)(?:0?[1-9]|1\d|2[0-8])\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$"
+                                mask="99/99/9999"
+                                error={{
+                                    'empty': " ",
+                                    'invalid': "Please enter valid date",
+                                    'ageError': "Date of birth should be greater than 18"
+                                }}
+                                validationResult={validationResult}
                             />
                         </Form.Group>
                         <Form.Group className="mb-18">
@@ -530,9 +547,9 @@ function AddDealer(props) {
                                 type="hidden"
                                 label="SSN"
                                 defaultText="#"
-                                defaultValue={null}
-                                regex={customer.main_app.id ? customer.main_app.ssn : '^(?!0{3}|6{3}|9[0-9]{2})[0-9]{3}-(?!0{3})[0-9]{3}-(?!0{4})[0-9]{4}$'}
-                                mask="999-999-9999"
+                                defaultValue={customer.main_app.id ? customer.main_app.ssn : null}
+                                regex={customer.main_app.id ? customer.ssn : '^(?!0{3}|6{3}|9[0-9]{2})[0-9]{3}-(?!0{2})[0-9]{2}-(?!0{4})[0-9]{4}$'}
+                                mask="999-99-9999"
                                 optionalParams = {{style:{color: 'transparent', caretColor: "#ccdbe7"}}}
                                 isHidden={true}
                                 required={true}
@@ -745,7 +762,7 @@ function AddDealer(props) {
                                 />
                             </Form.Group>
                             <Form.Group className="mb-18">
-                                <Input
+                                {/* <Input
                                     name="co_date_of_birth"
                                     type="hidden"
                                     defaultValue={customer.co_app.dobY && customer.co_app.dobM && customer.co_app.dobD ? `${customer.co_app.dobY}-${customer.co_app.dobM}-${customer.co_app.dobD}` : null}
@@ -758,6 +775,23 @@ function AddDealer(props) {
                                         'empty': " "
                                     }}
                                     validationResult={validationResult}
+                                /> */}
+                                <Input
+                                    name="co_date_of_birth"
+                                    type="hidden"
+                                    defaultValue={customer.co_app.dobY && customer.co_app.dobM && customer.co_app.dobD ? `${customer.co_app.dobM}/${customer.co_app.dobD}/${customer.co_app.dobY}` : null}
+                                    label="Date of Birth"
+                                    className="medium-inpu/${customer.co_app.dobY}t"
+                                    defaultText="MM / DD / YYYY"
+                                    required={true}
+                                    regex="^(?:(?:(?:0?[13578]|1[02])(\/|-|\.)31)\1|(?:(?:0?[1,3-9]|1[0-2])(\/|-|\.)(?:29|30)\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:0?2(\/|-|\.)29\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:(?:0?[1-9])|(?:1[0-2]))(\/|-|\.)(?:0?[1-9]|1\d|2[0-8])\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$"
+                                    mask="99/99/9999"
+                                    error={{
+                                        'empty': " ",
+                                        'invalid': "Please enter valid date",
+                                        'ageError': "Date of birth should be greater than 18"
+                                    }}
+                                    validationResult={validationResult}
                                 />
                             </Form.Group>
                             <Form.Group className="mb-18">
@@ -766,8 +800,9 @@ function AddDealer(props) {
                                     type="hidden"
                                     label="SSN"
                                     defaultText="#"
-                                    regex={customer.main_app.id && haveCoApplicant ? customer.co_app.ssn : '^(?!0{3}|6{3}|9[0-9]{2})[0-9]{3}-(?!0{3})[0-9]{3}-(?!0{4})[0-9]{4}$'}
-                                    mask="999-999-9999"
+                                    defaultValue={customer.main_app.id && haveCoApplicant ? customer.co_app.ssn : null}
+                                    regex={customer.main_app.id && haveCoApplicant ? customer.ssn : '^(?!0{3}|6{3}|9[0-9]{2})[0-9]{3}-(?!0{2})[0-9]{2}-(?!0{4})[0-9]{4}$'}
+                                    mask="999-99-9999"
                                     optionalParams = {{style:{color: 'transparent', caretColor: "#ccdbe7"}}}
                                     isHidden={true}
                                     required={haveCoApplicant ? true : false}
@@ -821,7 +856,7 @@ function AddDealer(props) {
                     </div>
                 </div>
                 <div className="footer-container">
-                    <button className="secondary" type="submit">Next</button>
+                    <input className="btn secondary" type="submit" value="Next"/>
                 </div>
             </form>
 
