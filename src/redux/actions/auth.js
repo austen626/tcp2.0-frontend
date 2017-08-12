@@ -114,3 +114,14 @@ export function getMe() {
         }
     }
 }
+
+export function getMeData() {
+    return async function(dispatch) {
+        try {
+            const response = await API.get('accounts/me');
+            return response.data
+        } catch (error) {
+            return error.response.data;
+        }
+    }
+}

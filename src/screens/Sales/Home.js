@@ -21,13 +21,14 @@ function HomeScreen(props) {
         updateCustomer,
         validateEmailAddress,
         searchCustomerApiInitiate,
+        isCustomerEnterManually,
         resetCustomerSearchApiInitiate
     } = props;
 
     const [validationResult, setValidationResult] = useState(null);
     const [applicantEmail, setApplicantEmail] = useState(null);
     const [applicantPhone, setApplicantPhone] = useState(null);
-    const [isCustomerFoundCheckAccess, setCustomerFoundCheckAccess] = useState(false);
+    const [isCustomerFoundCheckAccess, setCustomerFoundCheckAccess] = useState(isCustomerEnterManually);
 
     const handleHomeClick = () => {
         history.replace('/');
@@ -267,7 +268,8 @@ const mapStateToProps = state => ({
     customer: state.sales.customer,
     isCustomerFound: state.sales.isCustomerFound,
     actionLoading: state.sales.actionLoading,
-    searchCustomerApiInitiate: state.sales.searchCustomerApiInitiate
+    searchCustomerApiInitiate: state.sales.searchCustomerApiInitiate,
+    isCustomerEnterManually: state.sales.isCustomerEnterManually
 });
 
 const mapDispatchToProps = dispatch => ({

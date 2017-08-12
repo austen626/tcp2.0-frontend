@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Form, Button } from 'react-bootstrap';
-import { codeVerify, sendAgain, forgotCodeVerify } from '../../redux/actions/auth';
+import { codeVerify, sendAgain, forgotCodeVerify,getMeData } from '../../redux/actions/auth';
 import { resetCustomerSearchApiInitiate } from '../../redux/actions/sales';
 
 import AuthContainer from '../../components/AuthContainer';
@@ -63,6 +63,7 @@ class TwoFAScreen extends Component {
             });
     
             if (result.ok) {
+
                 localStorage.setItem('token', result.token);
                 localStorage.setItem('role', result.role);
                 
@@ -78,6 +79,11 @@ class TwoFAScreen extends Component {
                 } 
                 else 
                 {
+                    const loginUserData = await this.props.getMeData();
+                    if(loginUserData) {
+                        localStorage.setItem('dealer_name', loginUserData.dealer_name);
+                    }
+
                     this.props.history.replace('/');
                 }
 
@@ -145,6 +151,7 @@ export default connect(
         codeVerify,
         sendAgain,
         forgotCodeVerify,
+        getMeData,
         resetCustomerSearchApiInitiate
     }
 )(TwoFAScreen);
