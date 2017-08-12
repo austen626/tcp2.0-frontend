@@ -343,3 +343,9 @@ input[type=number] {
 .swal2-popup {
     zoom: 75%;
 }
+
+
+.modal-body.fixed-height {
+    max-height: 200px;
+    overflow: auto;
+}

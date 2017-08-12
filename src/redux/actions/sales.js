@@ -427,7 +427,7 @@ export function submiCreditApplicationByMail(history, data) {
         })           
 
         try {
-            const response =  await API.post(`/sales/creditapp`, { ...temp_data });
+            await API.post(`/sales/creditapp`, { ...temp_data });
             dispatch({
                 type: SEND_APP_LINK_SUCCESS,
             })
@@ -437,7 +437,7 @@ export function submiCreditApplicationByMail(history, data) {
             dispatch({
                 type: SEND_APP_LINK_FAILED,
             })
-            pushNotification("No Match Found", 'error', 'TOP_RIGHT', 3000);   
+            pushNotification("Error while sending mail", 'error', 'TOP_RIGHT', 3000);   
         } 
     }
 }

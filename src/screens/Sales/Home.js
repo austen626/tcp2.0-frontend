@@ -27,6 +27,7 @@ function HomeScreen(props) {
     const [validationResult, setValidationResult] = useState(null);
     const [applicantEmail, setApplicantEmail] = useState(null);
     const [applicantPhone, setApplicantPhone] = useState(null);
+    const [isCustomerFoundCheckAccess, setCustomerFoundCheckAccess] = useState(false);
 
     const handleHomeClick = () => {
         history.replace('/');
@@ -34,13 +35,18 @@ function HomeScreen(props) {
 
     const searchCustomerFun = (data) => {
         if(!searchCustomerApiInitiate) {
-            searchCustomer(data).then(res => {
-                if (res) {
+            if(applicantEmail) {
+                searchCustomer(data).then(res => {
+                    if (res) {
 
-                } else {
-                    searchCustomer({email: null, phone: applicantPhone})
-                }
-            })
+                    } else if(applicantPhone && applicantPhone.indexOf('_') == -1) {
+                        searchCustomer({email: null, phone: applicantPhone})
+                    }
+                })
+            }
+            else if(applicantPhone && applicantPhone.indexOf('_') == -1) {
+                searchCustomer({email: null, phone: applicantPhone})
+            }
         }
     }
 
@@ -69,7 +75,11 @@ function HomeScreen(props) {
                     ...customer,
                     "main_app": {
                         ...customer.main_app,
-                        "name": customer.main_app.first_name+" "+customer.main_app.last_name,
+                        "name": data.first_name+" "+customer.main_app.last_name,
+                        "email": data.email,
+                        "cell_phone": data.cell_phone,
+                        "first_name": data.first_name,
+                        "last_name": data.last_name
                     },
                     "co_app": {
                         ...customer.co_app,
@@ -83,6 +93,8 @@ function HomeScreen(props) {
                         "main_app": {
                             ...temp_customer.main_app,
                             "name": data.first_name+" "+data.last_name,
+                            "email": data.email,
+                            "cell_phone": data.cell_phone,
                             "first_name": data.first_name,
                             "last_name": data.last_name
                         },
@@ -90,7 +102,7 @@ function HomeScreen(props) {
                 } else {
                     temp_customer = {
                         id: customer.main_app.id,
-                        ...temp_customer
+                        ...temp_customer,
                     }
                 }
 
@@ -132,7 +144,11 @@ function HomeScreen(props) {
                                     regex="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$"
                                     label="Applicant Email"
                                     defaultText="Applicant Email"
-                                    defaultValue={customer.main_app.email ? customer.main_app.email : applicantEmail} 
+                                    {...(isCustomerFoundCheckAccess ? {
+                                        value: customer.main_app.email
+                                    } : {
+                                        defaultValue: applicantEmail
+                                    })}
                                     required={true}
                                     error={{
                                         'invalid': "Please enter valid Email address",
@@ -142,6 +158,7 @@ function HomeScreen(props) {
                                     handleChange={(e) => { 
                                         setApplicantEmail(e.target.value)
                                         resetCustomerSearchApiInitiate(false)
+                                        setCustomerFoundCheckAccess(false)
                                     }}
                                     onBlur={()=>searchCustomerFun({email: applicantEmail, phone: null})}
                                 />
@@ -152,7 +169,11 @@ function HomeScreen(props) {
                                     type="hidden"
                                     label="Phone"
                                     defaultText="(123) 456-7890"
-                                    defaultValue={customer.main_app.cell_phone ? customer.main_app.cell_phone : applicantPhone} 
+                                    {...(isCustomerFoundCheckAccess ? {
+                                        value: customer.main_app.cell_phone
+                                    } : {
+                                        defaultValue: applicantPhone
+                                    })}
                                     regex="^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$"
                                     mask="(999) 999-9999"
                                     required={true}
@@ -164,81 +185,55 @@ function HomeScreen(props) {
                                     handleChange={(e) => { 
                                         setApplicantPhone(e.target.value)
                                         resetCustomerSearchApiInitiate(false)
+                                        setCustomerFoundCheckAccess(false)
                                     }}
                                     onBlur={()=>searchCustomerFun({email: applicantEmail, phone: null})}
                                 />
                             </Form.Group>
                         </div>
-                        {isCustomerFound ?
-                        <>
-                            <Form.Group className="home-input mb-18">
-                                <Input
-                                    name="first_name"
-                                    type="text"
-                                    label="Applicant First Name"
-                                    defaultText="Applicant First Name"
-                                    value={customer.main_app.first_name} 
-                                    required={false}
-                                    error={{
-                                        'empty': " "
-                                    }}
-                                    validationResult={validationResult}
-                                />
-                            </Form.Group>
-                            <Form.Group className="home-input mb-18">
-                                <Input
-                                    name="last_name"
-                                    type="text"
-                                    label="Applicant Last Name"
-                                    defaultText="Applicant Last Name"
-                                    value={customer.main_app.last_name} 
-                                    required={false}
-                                    error={{
-                                        'empty': " "
-                                    }}
-                                    validationResult={validationResult}
-                                />
-                            </Form.Group>
-                        </>
-                        :
-                        <>
-                            <Form.Group className="home-input mb-18">
-                                <Input
-                                    name="first_name"
-                                    type="text"
-                                    label="Applicant First Name"
-                                    defaultText="Applicant First Name"
-                                    defaultvalue={null} 
-                                    required={true}
-                                    error={{
-                                        'empty': " "
-                                    }}
-                                    validationResult={validationResult}
-                                />
-                            </Form.Group>
-                            <Form.Group className="home-input mb-18">
-                                <Input
-                                    name="last_name"
-                                    type="text"
-                                    label="Applicant Last Name"
-                                    defaultText="Applicant Last Name"
-                                    defaultvalue={null} 
-                                    required={true}
-                                    error={{
-                                        'empty': " "
-                                    }}
-                                    validationResult={validationResult}
-                                />
-                            </Form.Group>
-                        </>
-                        }
+                        <Form.Group className="home-input mb-18">
+                            <Input
+                                name="first_name"
+                                type="text"
+                                label="Applicant First Name"
+                                defaultText="Applicant First Name"
+                                {...(isCustomerFoundCheckAccess ? {
+                                    value: customer.main_app.first_name
+                                } : {
+                                    defaultValue: null
+                                })}
+                                required={true}
+                                error={{
+                                    'empty': " "
+                                }}
+                                validationResult={validationResult}
+                            />
+                        </Form.Group>
+                        <Form.Group className="home-input mb-18">
+                            <Input
+                                name="last_name"
+                                type="text"
+                                label="Applicant Last Name"
+                                defaultText="Applicant Last Name"
+                                {...(isCustomerFoundCheckAccess ? {
+                                    value: customer.main_app.last_name
+                                } : {
+                                    defaultValue: null
+                                })}
+                                required={true}
+                                error={{
+                                    'empty': " "
+                                }}
+                                validationResult={validationResult}
+                            />
+                        </Form.Group>
                         
                     </div>
                 </div>
                 {isCustomerFound &&
                     <div className="match-found-container">
                         <div className="title">Match Found <img src={IconRight} style={{marginLeft: 10}} /></div>
-                        <div className="details">
+                        <div className="details" style={{cursor: "pointer"}} onClick={() => setCustomerFoundCheckAccess(true)}>
                             <p className="name-details">{customer.main_app.name} {customer.co_enabled ? ` & ${customer.co_app.name}` : null}</p>
                             <div className="row other-details">
                                 <div className="col">
