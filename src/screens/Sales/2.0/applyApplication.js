@@ -4,6 +4,7 @@ import { Modal } from 'react-bootstrap';
 import Header, { HeaderLeft, HeaderCenter, HeaderRight } from '../../../components/Dealer/Header';
 import Loader from 'shared/Loader';
 import { IconList, IconSend, IconArrowLeft, TCPLogo } from '../../../assets/images';
+import { pushNotification } from 'utils/notification';
 
 import { updateApplicationFilledStatus, resetCustomerSearchApiInitiate, submiCreditApplicationByMail } from '../../../redux/actions/sales';
 
@@ -23,20 +24,34 @@ function HomeScreen(props) {
     const [showWarning, setShowWarning] = useState(false);
 
     const handleCompleteOnDeviceClick = () => {
-        updateApplicationFilledStatus('in_app', history, '/applyApplicationBasicDetails');
+        if(customer.invite_status == "completed")
+        {
+            pushNotification("Credit application already submitted", 'warning', 'TOP_RIGHT', 3000);   
+        }
+        else
+        {
+            updateApplicationFilledStatus('in_app', history, '/applyApplicationBasicDetails');
+        }
     }
 
     const handleSendLink = () => {
-        setShowWarning(true)
+        if(customer.invite_status == "sent")
+        {
+            pushNotification("Main already sent to applicant", 'warning', 'TOP_RIGHT', 3000); 
+        }
+        else if(customer.invite_status == "completed")
+        {
+            pushNotification("Credit application already submitted", 'warning', 'TOP_RIGHT', 3000); 
+        }
+        else
+        {
+            setShowWarning(true)
+        }
     }
 
     const handleArrowBack = () => {
-        history.replace('/applyHome');        
-    }
-
-    const handleHomeScreen = () => {
-        history.replace('/applyHome');        
-    }
+        history.replace('/');        
+    }   
 
     const handleClearWithHomeScreen = () => {
         resetCustomerSearchApiInitiate(false)
@@ -85,7 +100,7 @@ function HomeScreen(props) {
                     </div>
                 }
 
-                <button className={`btn button ${customer.invite_status == "completed" ? "disabled" : ""}`} onClick={() => emailValidate && customer.invite_status !== "completed" ? handleCompleteOnDeviceClick() : ''}>
+                <button className={`btn button ${customer.invite_status == "completed" ? "disabled" : ""}`} onClick={() => emailValidate ? handleCompleteOnDeviceClick() : ''}>
                     <div className="icon">
                         <img className="icon-new-customer" src={IconList} alt="new" />
                     </div>
@@ -93,7 +108,7 @@ function HomeScreen(props) {
                 </button>
 
 
-                <button className={`btn button ${customer.invite_status == "sent" || customer.invite_status == "completed" ? "disabled" : ""}`} onClick={() => emailValidate && customer.invite_status !== "sent" && customer.invite_status !== "completed" ? handleSendLink() : ''}>
+                <button className={`btn button ${customer.invite_status == "sent" || customer.invite_status == "completed" ? "disabled" : ""}`} onClick={() => emailValidate ? handleSendLink() : ''}>
                     <div className="icon">
                         <img className="icon-reorder-customer" src={IconSend} alt="reorder" />
                     </div>

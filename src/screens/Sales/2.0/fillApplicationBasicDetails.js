@@ -536,7 +536,7 @@ function AddDealer(props) {
                                 error={{
                                     'empty': " ",
                                     'invalid': "Please enter valid date",
-                                    'ageError': "Date of birth should be greater than 18"
+                                    'ageError': "The applicant should be 18 years old or above"
                                 }}
                                 validationResult={validationResult}
                             />
@@ -547,7 +547,7 @@ function AddDealer(props) {
                                 type="hidden"
                                 label="SSN"
                                 defaultText="#"
-                                defaultValue={customer.main_app.id ? customer.main_app.ssn : null}
+                                defaultValue={customer.main_app.ssn ? customer.main_app.ssn : null}
                                 regex={customer.main_app.id ? customer.ssn : '^(?!0{3}|6{3}|9[0-9]{2})[0-9]{3}-(?!0{2})[0-9]{2}-(?!0{4})[0-9]{4}$'}
                                 mask="999-99-9999"
                                 optionalParams = {{style:{color: 'transparent', caretColor: "#ccdbe7"}}}
@@ -789,7 +789,7 @@ function AddDealer(props) {
                                     error={{
                                         'empty': " ",
                                         'invalid': "Please enter valid date",
-                                        'ageError': "Date of birth should be greater than 18"
+                                        'ageError': "The applicant should be 18 years old or above"
                                     }}
                                     validationResult={validationResult}
                                 />
@@ -800,7 +800,7 @@ function AddDealer(props) {
                                     type="hidden"
                                     label="SSN"
                                     defaultText="#"
-                                    defaultValue={customer.main_app.id && haveCoApplicant ? customer.co_app.ssn : null}
+                                    defaultValue={customer.main_app.ssn && haveCoApplicant ? customer.co_app.ssn : null}
                                     regex={customer.main_app.id && haveCoApplicant ? customer.ssn : '^(?!0{3}|6{3}|9[0-9]{2})[0-9]{3}-(?!0{2})[0-9]{2}-(?!0{4})[0-9]{4}$'}
                                     mask="999-99-9999"
                                     optionalParams = {{style:{color: 'transparent', caretColor: "#ccdbe7"}}}
