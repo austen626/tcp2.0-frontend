@@ -89,6 +89,7 @@ const INIT_STATE = {
 
     customer: {main_app: {}, co_app: {}, invite_status: null, ssn: null, co_ssn: null},
     isCustomerFound: false,
+    isCustomerEnterManually: false,
     isCustomerSubmitted: false,
     searchCustomerApiInitiate: false,
     actionLoading: false,
@@ -315,6 +316,7 @@ export default function(state = INIT_STATE, action){
             return {
                 ...state,
                 customer: action.payload,
+                isCustomerEnterManually: true
             }
         case SUBMIT_CREDIT_APP_REQUEST:
             return {
