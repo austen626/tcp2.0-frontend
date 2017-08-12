@@ -27,7 +27,7 @@ function HomeScreen(props) {
     const [validationResult, setValidationResult] = useState(null);
     const [applicantEmail, setApplicantEmail] = useState(null);
     const [applicantPhone, setApplicantPhone] = useState(null);
-    const [isCustomerFoundCheckAccess, setCustomerFoundCheckAccess] = useState(false);
+    const [isCustomerFoundCheckAccess, setCustomerFoundCheckAccess] = useState(isCustomerFound);
 
     const handleHomeClick = () => {
         history.replace('/');
