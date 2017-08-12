@@ -37,7 +37,7 @@ function HomeScreen(props) {
     const handleSendLink = () => {
         if(customer.invite_status == "sent")
         {
-            pushNotification("Main already sent to applicant", 'warning', 'TOP_RIGHT', 3000); 
+            pushNotification("Mail already sent to applicant", 'warning', 'TOP_RIGHT', 3000); 
         }
         else if(customer.invite_status == "completed")
         {
