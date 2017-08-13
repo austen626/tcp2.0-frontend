@@ -266,9 +266,14 @@ input:focus {
     }
 }
 
-.match-found-container {
+.match-found-result {
+    // margin-bottom: 60.5px;
     position: fixed;
     bottom: 60.5px;
+    width: 100%;
+}
+
+.match-found-container {
     width: 100%;
 
     .title {

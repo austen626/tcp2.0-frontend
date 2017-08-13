@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { pushNotification } from 'utils/notification';
 import { connect } from 'react-redux';
 import Header from '../../components/Sales/Header';
 import { Form } from 'react-bootstrap';
@@ -6,7 +7,7 @@ import Input from '../../components/commons/input';
 import { IconHome, IconRight } from '../../assets/images';
 
 import { getFromData } from '../../components/commons/utility';
-import { searchCustomer, resetCustomerSearchApiInitiate, updateCustomer, validateEmailAddress } from '../../redux/actions/sales';
+import { searchCustomer, updateCustomer, validateEmailAddress, selectCustomer, resetSearchCustomerSearchApiInitiate } from '../../redux/actions/sales';
 import { CHANGE_SELECTED_FUNDING_REQUEST_FAILED } from 'redux/actions/admin';
 import { Redirect } from 'react-router-dom';
 
@@ -15,15 +16,18 @@ function HomeScreen(props) {
     const {
         history,
         avatar,
+        email_customer_search,
+        phone_customer_search,
         customer,
         isCustomerFound,
         actionLoading,
         searchCustomer,
+        selectCustomer,
         updateCustomer,
         validateEmailAddress,
         searchCustomerApiInitiate,
         isCustomerEnterManually,
-        resetCustomerSearchApiInitiate
+        resetSearchCustomerSearchApiInitiate
     } = props;
 
     const [validationResult, setValidationResult] = useState(null);
@@ -31,31 +35,8 @@ function HomeScreen(props) {
     const [applicantPhone, setApplicantPhone] = useState(null);
     const [isCustomerFoundCheckAccess, setCustomerFoundCheckAccess] = useState(isCustomerEnterManually);
 
-    const [searchWithEmail, setSearchWithEmail] = useState(false);
-    const [searchWithNumber, setSearchWithNumber] = useState(false);
-
     const handleHomeClick = () => {
         history.replace('/');
-    }
-
-    const searchCustomerFun = (data) => {
-        if(!searchCustomerApiInitiate) {
-            if(applicantEmail && !searchWithEmail) {
-                searchCustomer(data).then(res => {
-                    if (res) {
-
-                    } else if(applicantPhone && applicantPhone.indexOf('_') == -1) {
-                        searchCustomer({email: null, phone: applicantPhone})
-                        setSearchWithNumber(true)
-                    }
-                })
-                setSearchWithEmail(true)
-            }
-            else if(applicantPhone && applicantPhone.indexOf('_') == -1 && !searchWithNumber) {
-                searchCustomer({email: null, phone: applicantPhone})
-                setSearchWithNumber(true)
-            }
-        }
     }
 
     const handleSubmit = evt => {
@@ -165,11 +146,10 @@ function HomeScreen(props) {
                                     validationResult={validationResult}
                                     handleChange={(e) => { 
                                         setApplicantEmail(e.target.value)
-                                        resetCustomerSearchApiInitiate(false)
+                                        resetSearchCustomerSearchApiInitiate("email")
                                         setCustomerFoundCheckAccess(false)
-                                        setSearchWithEmail(false)
                                     }}
-                                    onBlur={()=>searchCustomerFun({email: applicantEmail, phone: null})}
+                                    onBlur={()=> applicantEmail != null ? searchCustomer({email: applicantEmail, phone: null}) : null}
                                 />
                             </Form.Group>
                             <Form.Group className="home-input mb-18">
@@ -193,11 +173,10 @@ function HomeScreen(props) {
                                     validationResult={validationResult}
                                     handleChange={(e) => { 
                                         setApplicantPhone(e.target.value)
-                                        resetCustomerSearchApiInitiate(false)
+                                        resetSearchCustomerSearchApiInitiate("phone")
                                         setCustomerFoundCheckAccess(false)
-                                        setSearchWithNumber(false)
                                     }}
-                                    onBlur={()=>searchCustomerFun({email: applicantEmail, phone: null})}
+                                    onBlur={()=> applicantPhone != null && applicantPhone.indexOf('_') == -1 ? searchCustomer({email: null, phone: applicantPhone}) : null}
                                 />
                             </Form.Group>
                         </div>
@@ -240,26 +219,62 @@ function HomeScreen(props) {
                         
                     </div>
                 </div>
-                {isCustomerFound &&
-                    <div className="match-found-container">
-                        <div className="title">Match Found <img src={IconRight} style={{marginLeft: 10}} /></div>
-                        <div className="details" style={{cursor: "pointer"}} onClick={() => setCustomerFoundCheckAccess(true)}>
-                            <p className="name-details">{customer.main_app.name} {customer.co_enabled ? ` & ${customer.co_app.name}` : null}</p>
-                            <div className="row other-details">
-                                <div className="col">
-                                    <span>{customer.main_app.street}</span>
-                                    <br></br>
-                                    <span>{customer.main_app.city} {customer.main_app.state} {customer.main_app.zip}.</span>
-                                </div>
-                                <div className="col">
-                                    <span>{customer.main_app.email}</span>
-                                    <br></br>
-                                    <span>{customer.main_app.cell_phone}</span>
+                <div className="match-found-result">
+                    {email_customer_search &&
+                        <div className="match-found-container">
+                            <div className="title">Match Found By Applicant Email<img src={IconRight} style={{marginLeft: 10}} /></div>
+                            <div 
+                                className="details" 
+                                style={{cursor: "pointer"}} 
+                                onClick={() => {
+                                    setCustomerFoundCheckAccess(true)
+                                    selectCustomer(email_customer_search)
+                                }}
+                            >
+                                <p className="name-details">{email_customer_search.main_app.name} {email_customer_search.co_enabled ? ` & ${email_customer_search.co_app.name}` : null}</p>
+                                <div className="row other-details">
+                                    <div className="col">
+                                        <span>{email_customer_search.main_app.street}</span>
+                                        <br></br>
+                                        <span>{email_customer_search.main_app.city} {email_customer_search.main_app.state} {email_customer_search.main_app.zip}.</span>
+                                    </div>
+                                    <div className="col">
+                                        <span>{email_customer_search.main_app.email}</span>
+                                        <br></br>
+                                        <span>{email_customer_search.main_app.cell_phone}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                }
+                    }
+                    {phone_customer_search &&
+                        <div className="match-found-container">
+                            <div className="title">Match Found By Applicant Phone<img src={IconRight} style={{marginLeft: 10}} /></div>
+                            <div 
+                                className="details" 
+                                style={{cursor: "pointer"}} 
+                                onClick={() => {
+                                    setCustomerFoundCheckAccess(true)
+                                    selectCustomer(phone_customer_search)
+                                }}
+                            >
+                                <p className="name-details">{phone_customer_search.main_app.name} {phone_customer_search.co_enabled ? ` & ${phone_customer_search.co_app.name}` : null}</p>
+                                <div className="row other-details">
+                                    <div className="col">
+                                        <span>{phone_customer_search.main_app.street}</span>
+                                        <br></br>
+                                        <span>{phone_customer_search.main_app.city} {phone_customer_search.main_app.state} {phone_customer_search.main_app.zip}.</span>
+                                    </div>
+                                    <div className="col">
+                                        <span>{phone_customer_search.main_app.email}</span>
+                                        <br></br>
+                                        <span>{phone_customer_search.main_app.cell_phone}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
                 <div className="footer-container">
                     {actionLoading ?
                         <button className="btn secondary" type="submit" disabled >Searching...</button>
@@ -277,6 +292,8 @@ function HomeScreen(props) {
 
 const mapStateToProps = state => ({
     avatar: state.auth.avatar,
+    email_customer_search: state.sales.email_customer_search,
+    phone_customer_search: state.sales.phone_customer_search,
     customer: state.sales.customer,
     isCustomerFound: state.sales.isCustomerFound,
     actionLoading: state.sales.actionLoading,
@@ -286,8 +303,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     searchCustomer: (data) => dispatch(searchCustomer(data)),
+    selectCustomer: (data) => dispatch(selectCustomer(data)),
     validateEmailAddress: (data) => dispatch(validateEmailAddress(data)),
-    resetCustomerSearchApiInitiate: () => dispatch(resetCustomerSearchApiInitiate()),
+    resetSearchCustomerSearchApiInitiate: (data) => dispatch(resetSearchCustomerSearchApiInitiate(data)),
     updateCustomer: (history, path, data) => dispatch(updateCustomer(history, path, data))
 });
 
