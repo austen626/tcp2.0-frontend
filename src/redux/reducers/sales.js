@@ -265,7 +265,8 @@ export default function(state = INIT_STATE, action){
                 } : {
                     phone_customer_search: null
                 }),
-                actionLoading: true
+                actionLoading: true,
+                searchCustomerApiInitiate: true,
             }
         case GET_SEARCH_CUSTOMER_SUCCESS:
 
@@ -296,7 +297,8 @@ export default function(state = INIT_STATE, action){
                 } : {
                     phone_customer_search: customer
                 }),
-                actionLoading: false
+                actionLoading: false,
+                searchCustomerApiInitiate: true,
             }
         case GET_SEARCH_CUSTOMER_FAILED:
             return {
@@ -306,7 +308,8 @@ export default function(state = INIT_STATE, action){
                 } : {
                     phone_customer_search: null
                 }),
-                actionLoading: false
+                actionLoading: false,
+                searchCustomerApiInitiate: true,
             }
 
 
@@ -370,7 +373,7 @@ export default function(state = INIT_STATE, action){
         case VALIDATE_EMAIL_REQUEST:
             return {
                 ...state,
-                emailValidate: false,
+                emailValidate: true,
                 actionLoading: true,
             }
         case VALIDATE_EMAIL_SUCCESS:
@@ -382,7 +385,7 @@ export default function(state = INIT_STATE, action){
         case VALIDATE_EMAIL_FAILED:
             return {
                 ...state,                
-                emailValidate: false,
+                emailValidate: true,
                 actionLoading: false,
             }
 

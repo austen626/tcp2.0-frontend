@@ -44,18 +44,19 @@ function HomeScreen(props) {
         evt.preventDefault();
         const formData = getFromData(evt);
 
-        if(!searchCustomerApiInitiate) {
+        setValidationResult(formData.validationResult);
 
-            setValidationResult(formData.validationResult);
-            if(!formData.validationResult) {
-                
-                let data = formData.formData
-                searchCustomer({...data, phone: data.cell_phone})
-            }           
+        if(!searchCustomerApiInitiate && !formData.validationResult) {
+
+            if(applicantEmail !== null && applicantEmail !== "") { searchCustomer({email: applicantEmail, phone: null}) }
+            if(applicantPhone !== null && applicantPhone.indexOf('_') == -1) { searchCustomer({email: null, phone: applicantPhone})  }
+
+        } else if((email_customer_search || phone_customer_search) && customer.main_app.id == undefined && !formData.validationResult) {           
+            
+            pushNotification("Please select applicant", 'error', 'TOP_RIGHT', 3000);
 
         } else {
 
-            setValidationResult(formData.validationResult);
             if(!formData.validationResult) {
 
                 let data = formData.formData
@@ -149,7 +150,7 @@ function HomeScreen(props) {
                                         resetSearchCustomerSearchApiInitiate("email")
                                         setCustomerFoundCheckAccess(false)
                                     }}
-                                    onBlur={()=> applicantEmail != null ? searchCustomer({email: applicantEmail, phone: null}) : null}
+                                    onBlur={()=> applicantEmail !== null && applicantEmail !== "" ? searchCustomer({email: applicantEmail, phone: null}) : null}
                                 />
                             </Form.Group>
                             <Form.Group className="home-input mb-18">
