@@ -147,11 +147,13 @@ const AuthAppRoute = ({ component: Component, ...rest }) => (
       const customerId = getSearchValue("customerId");
       const salesperson_email = getSearchValue("salesperson_email");
       const dealer_company_name = getSearchValue("dealer_company_name");
+      const dealer_company_number = getSearchValue("dealer_company_number");
 
       localStorage.setItem('customerToken', customerToken);
       localStorage.setItem('customerId', customerId);
       localStorage.setItem('salesperson_email', salesperson_email);
       localStorage.setItem('dealer_name', dealer_company_name);
+      localStorage.setItem('dealer_number', dealer_company_number);
     }
     else
     {

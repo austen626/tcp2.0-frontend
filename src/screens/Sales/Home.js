@@ -8,6 +8,7 @@ import { IconHome, IconRight } from '../../assets/images';
 import { getFromData } from '../../components/commons/utility';
 import { searchCustomer, resetCustomerSearchApiInitiate, updateCustomer, validateEmailAddress } from '../../redux/actions/sales';
 import { CHANGE_SELECTED_FUNDING_REQUEST_FAILED } from 'redux/actions/admin';
+import { Redirect } from 'react-router-dom';
 
 function HomeScreen(props) {
 
@@ -30,23 +31,29 @@ function HomeScreen(props) {
     const [applicantPhone, setApplicantPhone] = useState(null);
     const [isCustomerFoundCheckAccess, setCustomerFoundCheckAccess] = useState(isCustomerEnterManually);
 
+    const [searchWithEmail, setSearchWithEmail] = useState(false);
+    const [searchWithNumber, setSearchWithNumber] = useState(false);
+
     const handleHomeClick = () => {
         history.replace('/');
     }
 
     const searchCustomerFun = (data) => {
         if(!searchCustomerApiInitiate) {
-            if(applicantEmail) {
+            if(applicantEmail && !searchWithEmail) {
                 searchCustomer(data).then(res => {
                     if (res) {
 
                     } else if(applicantPhone && applicantPhone.indexOf('_') == -1) {
                         searchCustomer({email: null, phone: applicantPhone})
+                        setSearchWithNumber(true)
                     }
                 })
+                setSearchWithEmail(true)
             }
-            else if(applicantPhone && applicantPhone.indexOf('_') == -1) {
+            else if(applicantPhone && applicantPhone.indexOf('_') == -1 && !searchWithNumber) {
                 searchCustomer({email: null, phone: applicantPhone})
+                setSearchWithNumber(true)
             }
         }
     }
@@ -160,6 +167,7 @@ function HomeScreen(props) {
                                         setApplicantEmail(e.target.value)
                                         resetCustomerSearchApiInitiate(false)
                                         setCustomerFoundCheckAccess(false)
+                                        setSearchWithEmail(false)
                                     }}
                                     onBlur={()=>searchCustomerFun({email: applicantEmail, phone: null})}
                                 />
@@ -187,6 +195,7 @@ function HomeScreen(props) {
                                         setApplicantPhone(e.target.value)
                                         resetCustomerSearchApiInitiate(false)
                                         setCustomerFoundCheckAccess(false)
+                                        setSearchWithNumber(false)
                                     }}
                                     onBlur={()=>searchCustomerFun({email: applicantEmail, phone: null})}
                                 />
@@ -258,6 +267,9 @@ function HomeScreen(props) {
                         <button className="btn secondary" type="submit" >Next</button>
                     }
                 </div>
+
+
+                {/* <button className="btn secondary" type="button" onClick={() => {window.location = "https://google.com"}}>dsfds</button> */}
             </form>
         </div>
     )
