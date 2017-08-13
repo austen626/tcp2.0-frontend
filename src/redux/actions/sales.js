@@ -358,28 +358,6 @@ export function selectCustomer(data) {
 }
 
 
-export function searchCustomerFromLink(data) {
-
-    return async function(dispatch) {
-        dispatch({
-            type: GET_CUSTOMER_REQUEST,
-        })
-        try {
-            const response = await API.post(`/sales/search-customer`, { ...data });
-            dispatch({
-                type: GET_CUSTOMER_SUCCESS,
-                payload: response.data && response.data.data && response.data.data.main_app && response.data.data.main_app.id !== '' ? response.data.data : null 
-            })
-        } catch (error) {
-            dispatch({
-                type: GET_CUSTOMER_FAILED,
-            })
-            pushNotification("No Match found by email", 'error', 'TOP_RIGHT', 3000);  
-        }    
-    }
-}
-
-
 export function validateEmailAddress(email) {
 
     let temp_data = {"email":email}
@@ -397,7 +375,7 @@ export function validateEmailAddress(email) {
             dispatch({
                 type: VALIDATE_EMAIL_FAILED,
             })
-            pushNotification("Invalid email address", 'error', 'TOP_RIGHT', 3000);   
+            // pushNotification("Invalid email address", 'error', 'TOP_RIGHT', 3000);   
         }    
     }
 }
@@ -523,7 +501,7 @@ export function getCustomerApiInitiate(data) {
             const response = await API.post(`/sales/search-customer-id`, { id: data, token: localStorage.getItem('customerToken') });
             dispatch({
                 type: GET_CUSTOMER_SUCCESS,
-                payload: response.data && response.data.data && response.data.data.main_app && response.data.data.main_app.id !== '' ? response.data : null 
+                payload: response.data && response.data.data && response.data.data.main_app && response.data.data.main_app.id !== '' ? response.data.data : null 
             })
         } catch (error) {
             dispatch({
