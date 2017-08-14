@@ -32,12 +32,12 @@ export const IconSearchInActive = require('./images/icon-search-inactive.svg');
 export const IconSearchActive = require('./images/icon-search-active.svg');
 export const IconFilterInActive = require('./images/icon-filter-inactive.svg');
 export const IconFilterActive = require('./images/icon-filter-active.svg');
-export const IconAwesomePaperPlaneSend = require('./images/Icon-awesome-paper-plane-send.svg'); 
-export const IconAwesomePaperPlane = require('./images/Icon-awesome-paper-plane.svg'); 
-export const IconAwesomePenFancy = require('./images/Icon-awesome-pen-fancy.svg'); 
-export const IconAwesomePenFancyRight = require('./images/Icon-awesome-pen-fancy-right.svg'); 
-export const IconEnvelopeClosed = require('./images/Icon-envelope-closed.svg'); 
-export const IconEnvelopeOpen = require('./images/Icon-envelope-open.svg'); 
+export const IconAwesomePaperPlaneSend = require('./images/Icon-awesome-paper-plane-send.svg');
+export const IconAwesomePaperPlane = require('./images/Icon-awesome-paper-plane.svg');
+export const IconAwesomePenFancy = require('./images/Icon-awesome-pen-fancy.svg');
+export const IconAwesomePenFancyRight = require('./images/Icon-awesome-pen-fancy-right.svg');
+export const IconEnvelopeClosed = require('./images/Icon-envelope-closed.svg');
+export const IconEnvelopeOpen = require('./images/Icon-envelope-open.svg');
 export const IconCaledar = require('./images/Icon-metro-calendar.svg');
 
 
@@ -93,4 +93,5 @@ export const IconListWhite = require('./images/list-white.svg');
 export const IconStatusComplete = require('./images/status-complete.svg');
 export const IconStatusSend = require('./images/status-send.svg');
 export const IconStatusSent = require('./images/status-sent.svg');
+export const IconMenu = require('./images/icon-menu.svg');
 export const IconHome = require('./images/home.svg');

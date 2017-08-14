@@ -3,10 +3,11 @@ import Swal from 'sweetalert2';
 import { connect } from 'react-redux';
 import Header, { HeaderLeft, HeaderCenter, HeaderRight } from '../../../components/Dealer/Header';
 import { Form, Row, Col } from 'react-bootstrap';
-import { TCPLogo, IconAdd, IconArrowLeft, IconDeleteNew } from '../../../assets/images';
+import { TCPLogo, IconAdd, IconMenu, IconDeleteNew } from '../../../assets/images';
 import Loader from 'shared/Loader';
 
 import {SliderContainer, SliderItem} from "../style";
+import {getDealers} from "../../../redux/actions/admin";
 
 function AdminHome(props) {
   const OPTION_FUNDING = 'funding';
@@ -79,7 +80,7 @@ function AdminHome(props) {
 
       <Header>
         <HeaderLeft>
-          <img src={IconArrowLeft} onClick={() => handleArrowBack()} alt=""/>
+          <img className="icon-menu" src={IconMenu} onClick={() => handleArrowBack()} alt=""/>
         </HeaderLeft>
         <HeaderCenter>
           <div className="header-main">
@@ -87,7 +88,7 @@ function AdminHome(props) {
           </div>
         </HeaderCenter>
         <HeaderRight>
-          <img src={IconAdd} onClick={() => handleAddEditDealer({})} alt=""/>
+          <img src={IconAdd} alt=""/>
         </HeaderRight>
       </Header>
 
@@ -114,10 +115,10 @@ function AdminHome(props) {
                 </div>
                 {(openDealerIndex ===  ('map'+item.id)) && (
                   <Col key={item.id} xs={12} className="single-row-details">
-                    <button className="delete" onClick={() => handleDeleteDealer(item)}>
+                    <button className="delete">
                       <img src={IconDeleteNew} alt=""/> Delete
                     </button>
-                    <button className="edit" onClick={() => handleAddEditDealer(item)}>Edit</button>
+                    <button className="edit">Edit</button>
                   </Col>
                 )}
               </Row>
@@ -159,7 +160,9 @@ const mapStateToProps = state => ({
   actionLoading: state.admin.actionLoading
 });
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+  getDealers: () => dispatch(getDealers()),
+});
 
 export default connect(
   mapStateToProps,
