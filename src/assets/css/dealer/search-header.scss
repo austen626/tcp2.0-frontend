@@ -6,7 +6,7 @@
     background: #3A5C77;
 
     form {
-        
+
         .form-group {
             margin-bottom: 0;
         }
@@ -31,6 +31,10 @@
 .list {
     height: calc(100vh - 110px);
     overflow: auto;
+
+    &.with-footer {
+        height: calc(100vh - 160px);
+    }
 
     .single-row {
         // padding: 15px;
@@ -87,7 +91,7 @@
             }
         }
     }
-    
+
     .single-row:hover .arrow-icon {
         background: #309e87;
         padding: 6px;
@@ -137,7 +141,7 @@
 
 
 
-    
+
 }
 
 

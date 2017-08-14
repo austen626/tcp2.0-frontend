@@ -23,19 +23,13 @@ class HomeScreen extends Component {
         this.props.history.push('/admin/fundings');
     }
 
-
-
-
-
-
-
-
-
-
     handleHomeRedirection = (screen) => {
         switch(screen) {
             case "dealer-management":
                 this.props.history.push('/admin/dealers');
+                break;
+            case "main":
+                this.props.history.push('/admin/main');
                 break;
             default:
                 this.props.history.push('/');
@@ -51,11 +45,11 @@ class HomeScreen extends Component {
 
 
 
-    
+
 
     render() {
         return (
-            <div className="dealer">                
+            <div className="dealer">
                 <Header isHome={true} history={this.props.history} avatar={this.props.avatar} className="home-header"></Header>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
                     {/* <Button style={{ marginTop: 50, marginBottom: 30 }} onClick={this.handlePreApprovalsClick}>Manage Pre Approvals</Button>
@@ -69,12 +63,12 @@ class HomeScreen extends Component {
 }
 
 const mapStateToProps = state => ({
-    
+
 });
 
 export default connect(
     mapStateToProps,
     {
-        
+
     }
 )(HomeScreen);
