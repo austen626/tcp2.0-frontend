@@ -20,11 +20,11 @@ function AddDealer(props) {
         actionLoading,
     } = props;
 
-    const [tempOwnOrRent, setTempOwnOrRent] = useState(customer && customer.main_app.own_or_rent ? customer.main_app.own_or_rent : "own");
+    const [tempOwnOrRent, setTempOwnOrRent] = useState(customer && customer.main_app.own_or_rent ? customer.main_app.own_or_rent.toLowerCase() : "own");
     const [tempYearsThereFirst, setTempYearsThereFirst] = useState(customer ? customer.main_app.years_there_first : null);
     const [tempMonthlyRentMortgagePayment, setTempMonthlyRentMortgagePayment] = useState(customer ? customer.main_app.monthly_rent_mortgage_payment : null);
 
-    const [tempCoOwnOrRent, setCoTempOwnOrRent] = useState(customer && customer.co_enabled && customer.co_app.own_or_rent ? customer.co_app.own_or_rent : "own");
+    const [tempCoOwnOrRent, setCoTempOwnOrRent] = useState(customer && customer.co_enabled && customer.co_app.own_or_rent ? customer.co_app.own_or_rent.toLowerCase() : "own");
 
     const [validationResult, setValidationResult] = useState(null);
     const [ownRentError, setOwnRentError] = useState(false);
@@ -145,6 +145,9 @@ function AddDealer(props) {
                                         required={true}
                                         error={{
                                             'empty': "sdsadasd"
+                                        }}
+                                        optionalParams={{
+                                            autoFocus: true
                                         }}
                                         checked={tempOwnOrRent == 'own' ? true : null}
                                         handleChange={(e) => hideMainAppError(e)}

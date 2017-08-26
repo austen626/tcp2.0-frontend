@@ -89,11 +89,11 @@ const Input = (props) => {
         typeof onFocus === 'function' && onFocus();
     };
 
-    const handleBlur = () => {
+    const handleBlur = (event) => {
 
         setFocussed(false);
 
-        typeof onBlur === 'function' && onBlur();
+        typeof onBlur === 'function' && onBlur(event);
     };
 
     const handleInputChange = (event) => {
@@ -246,50 +246,70 @@ const Input = (props) => {
                         <span dangerouslySetInnerHTML={{ __html: label }} />
                     </label>
                 )}
-                <div className='input-field'>
-                    {isAmount && <span className="has-amount-sign">$</span>}
-                    <input
-                        className={`form-control ${ inputClass } ${ inputValue !== null ? 'has-input' : 'empty' } ${ showError ? 'invalid' : '' } ${ isAmount ? 'has-amount' : ''}`}
-                        ref={inputRef}
-                        type={type}
-                        id={inputId}
-                        placeholder={defaultText}
-                        maxLength={maxLength}
-                        name={name}
-                        min={min}
-                        max={max}
-                        data-name={dataName}
-                        value={inputValue}
-                        aria-label={ariaLabel}
-                        {...(label && {
-                            'aria-labelledby': ariaLabelledBy
-                        })}
-                        autoComplete='off'
-                        onFocus={handleFocus}
-                        onBlur={handleBlur}
-                        required={required}
-                        onChange={handleInputChange}
-                        data-regex={regex}
-                        data-isMatched={isMatched}
-                        disabled={disabled}
-                        checked={checked}
-                        {...optionalParams}
-                    />
-                    
-                    {mask && <>
-                        <InputMask 
-                            maskChar={maskChar} 
-                            placeholder={defaultText} 
-                            className="form-control" 
-                            mask={mask} 
-                            value={inputValue} 
+                <div className='input-field'>                    
+                    {!mask ?
+                        <input
+                            className={`form-control ${ inputClass } ${ inputValue !== null ? 'has-input' : 'empty' } ${ showError ? 'invalid' : '' } ${ isAmount ? 'has-amount' : ''}`}
+                            ref={inputRef}
+                            type={type}
+                            id={inputId}
+                            placeholder={defaultText}
+                            maxLength={maxLength}
+                            name={name}
+                            min={min}
+                            max={max}
+                            data-name={dataName}
+                            value={inputValue}
+                            aria-label={ariaLabel}
+                            {...(label && {
+                                'aria-labelledby': ariaLabelledBy
+                            })}
+                            autoComplete='off'
                             onFocus={handleFocus}
-                            onBlur={handleBlur} 
-                            onChange={handleInputChange} 
+                            onBlur={handleBlur}
+                            required={required}
+                            onChange={handleInputChange}
+                            data-regex={regex}
+                            data-isMatched={isMatched}
+                            disabled={disabled}
+                            checked={checked}
                             {...optionalParams}
                         />
-                        {isHidden && <span className="ssn-span">{inputValue && inputValue.replace(new RegExp("[0-9]", "g"), "x")}</span>}
-                    </>}
+                    :
+                        <>
+                            <InputMask 
+                                maskChar={maskChar} 
+                                mask={mask} 
+                                className={`form-control ${ inputClass } ${ inputValue !== null ? 'has-input' : 'empty' } ${ showError ? 'invalid' : '' } ${ isAmount ? 'has-amount' : ''}`}
+                                ref={inputRef}
+                                id={inputId}
+                                placeholder={defaultText}
+                                maxLength={maxLength}
+                                name={name}
+                                min={min}
+                                max={max}
+                                data-name={dataName}
+                                value={inputValue}
+                                aria-label={ariaLabel}
+                                {...(label && {
+                                    'aria-labelledby': ariaLabelledBy
+                                })}
+                                autoComplete='off'
+                                onFocus={handleFocus}
+                                onBlur={handleBlur}
+                                required={required}
+                                onChange={handleInputChange}
+                                data-regex={regex}
+                                data-isMatched={isMatched}
+                                disabled={disabled}
+                                checked={checked}
+                                {...optionalParams}
+                            />
+                            {isHidden && <span className="ssn-span">{inputValue && inputValue.replace(new RegExp("[0-9]", "g"), "x")}</span>}
+                        </>
+                    }
+                    
+                    {isAmount && <span className="has-amount-sign">$</span>}
 
                     {isDate && 
                         <DatePicker

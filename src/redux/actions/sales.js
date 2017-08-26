@@ -294,44 +294,35 @@ export function reminderIncompleteRequest(action) {
 
 export function searchCustomer(data) {
 
-    let search_type = "email";
-
-    if(data.email == null) {
-        search_type = "phone";
-    }
-
     return async function(dispatch) {
         dispatch({
             type: GET_SEARCH_CUSTOMER_REQUEST,
-            search_type: search_type,
         })
         try {
             const response = await API.post(`/sales/search-customer`, { ...data });
             dispatch({
                 type: GET_SEARCH_CUSTOMER_SUCCESS,
-                search_type: search_type,
-                payload: response.data && response.data.data && response.data.data.main_app && response.data.data.main_app.id !== '' ? response.data : null 
+                payload: response.data 
             })
+            if(response.data.data.length == 0) {
+                return false 
+            } else {
+                return true
+            }
         } catch (error) {
             dispatch({
                 type: GET_SEARCH_CUSTOMER_FAILED,
-                search_type: search_type,
             })
-            if(data.email == null) {
-                pushNotification("No match found by phone ", 'error', 'TOP_RIGHT', 3000);  
-            } else {
-                pushNotification("No Match found by email", 'error', 'TOP_RIGHT', 3000);  
-            } 
+            return false
         }    
     }
 }
 
 
-export function resetSearchCustomerSearchApiInitiate(search_type) {
+export function resetSearchCustomerSearchApiInitiate() {
     return async function(dispatch) {
         dispatch({
             type: SET_SEARCH_CUSTOMER_SEARCH_REQUEST,
-            search_type: search_type,
         })       
     }
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { pushNotification } from 'utils/notification';
 import { connect } from 'react-redux';
 import Header from '../../components/Sales/Header';
@@ -8,16 +8,13 @@ import { IconHome, IconRight } from '../../assets/images';
 
 import { getFromData } from '../../components/commons/utility';
 import { searchCustomer, updateCustomer, validateEmailAddress, selectCustomer, resetSearchCustomerSearchApiInitiate } from '../../redux/actions/sales';
-import { CHANGE_SELECTED_FUNDING_REQUEST_FAILED } from 'redux/actions/admin';
-import { Redirect } from 'react-router-dom';
 
 function HomeScreen(props) {
 
     const {
         history,
         avatar,
-        email_customer_search,
-        phone_customer_search,
+        customer_search_result,
         customer,
         isCustomerFound,
         actionLoading,
@@ -26,17 +23,68 @@ function HomeScreen(props) {
         updateCustomer,
         validateEmailAddress,
         searchCustomerApiInitiate,
-        isCustomerEnterManually,
         resetSearchCustomerSearchApiInitiate
     } = props;
 
     const [validationResult, setValidationResult] = useState(null);
     const [applicantEmail, setApplicantEmail] = useState(null);
     const [applicantPhone, setApplicantPhone] = useState(null);
-    const [isCustomerFoundCheckAccess, setCustomerFoundCheckAccess] = useState(isCustomerEnterManually);
+
+    
+    useEffect(() => {
+        resetSearchCustomerSearchApiInitiate()
+    }, []);
+
+
+    useEffect(() => {
+        let temp_phone = null;
+        let temp_email = null;
+        
+        if(applicantPhone && applicantPhone != "" && applicantPhone.indexOf('_') == -1) {
+            temp_phone = applicantPhone;
+        }
+        
+        if(applicantEmail && applicantEmail != "") {
+            temp_email = applicantEmail;
+        }
+
+        if(!searchCustomerApiInitiate && (applicantEmail || (applicantPhone && applicantPhone.indexOf('_') == -1))) {
+            searchCustomer({ email: temp_email, phone: temp_phone }).then ( res => {
+                if(!res && customer_search_result.length == 0) {
+                    pushNotification("No match found", 'error', 'TOP_RIGHT', 3000); 
+                }
+            })
+        }
+    }, [applicantEmail, applicantPhone]);
+
 
     const handleHomeClick = () => {
         history.replace('/');
+    }
+
+    const triggerNextPage = (customer_search) => {
+        let temp_customer = {
+            ...customer_search,
+            id: customer_search.main_app.id,
+        }
+        if(customer_search.invite_status == "COMPLETED" || customer_search.invite_status == "SENT") {
+
+            temp_customer = {
+                ...temp_customer,
+                main_app : {
+                    ...temp_customer.main_app,
+                    additional_income_status: temp_customer.main_app.additional_income && temp_customer.main_app.additional_income != '0' ? "yes" : "no"
+                },
+                co_app : {
+                    ...temp_customer.co_app,
+                    additional_income_status: temp_customer.co_enabled && temp_customer.co_app.additional_income && temp_customer.co_app.additional_income != '0' ? "yes" : "no"
+                }
+            }
+
+            updateCustomer(history, '/applyApplicationSummary', temp_customer);
+        } else {
+            updateCustomer(history, '/applyApplication', temp_customer);
+        }
     }
 
     const handleSubmit = evt => {
@@ -48,10 +96,11 @@ function HomeScreen(props) {
 
         if(!searchCustomerApiInitiate && !formData.validationResult) {
 
-            if(applicantEmail !== null && applicantEmail !== "") { searchCustomer({email: applicantEmail, phone: null}) }
-            if(applicantPhone !== null && applicantPhone.indexOf('_') == -1) { searchCustomer({email: null, phone: applicantPhone})  }
+            if(applicantEmail || (applicantPhone && applicantPhone.indexOf('_') == -1)) {
+                searchCustomer({email: applicantEmail, phone: (applicantPhone && applicantPhone.indexOf('_') !== -1) ? null : applicantPhone})
+            }
 
-        } else if((email_customer_search || phone_customer_search) && customer.main_app.id == undefined && !formData.validationResult) {           
+        } else if((customer_search_result.length > 0) && customer.main_app.id == undefined && !formData.validationResult) {           
             
             pushNotification("Please select applicant", 'error', 'TOP_RIGHT', 3000);
 
@@ -63,6 +112,7 @@ function HomeScreen(props) {
 
                 let temp_customer = {
                     ...customer,
+                    id: 0,
                     "main_app": {
                         ...customer.main_app,
                         "name": data.first_name+" "+customer.main_app.last_name,
@@ -76,36 +126,14 @@ function HomeScreen(props) {
                     }
                 }
 
-                if(!isCustomerFound) {
-                    temp_customer = {
-                        id: 0,
-                        ...temp_customer,
-                        "main_app": {
-                            ...temp_customer.main_app,
-                            "name": data.first_name+" "+data.last_name,
-                            "email": data.email,
-                            "cell_phone": data.cell_phone,
-                            "first_name": data.first_name,
-                            "last_name": data.last_name
-                        },
-                    }
-                } else {
-                    temp_customer = {
-                        id: customer.main_app.id,
-                        ...temp_customer,
-                    }
-                }
-
-
-                if(!isCustomerFound) {
-                    validateEmailAddress(applicantEmail);
-                }
+                validateEmailAddress(applicantEmail);
 
                 updateCustomer(history, '/applyApplication', temp_customer);
             }
         }
 
     }
+
 
     return (
         <div className="sales">
@@ -134,7 +162,7 @@ function HomeScreen(props) {
                                     regex="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$"
                                     label="Applicant Email"
                                     defaultText="Applicant Email"
-                                    {...(isCustomerFoundCheckAccess ? {
+                                    {...(isCustomerFound ? {
                                         value: customer.main_app.email
                                     } : {
                                         defaultValue: applicantEmail
@@ -144,13 +172,12 @@ function HomeScreen(props) {
                                         'invalid': "Please enter valid Email address",
                                         'empty': "Please enter Applicant Email"
                                     }}
-                                    validationResult={validationResult}
-                                    handleChange={(e) => { 
-                                        setApplicantEmail(e.target.value)
-                                        resetSearchCustomerSearchApiInitiate("email")
-                                        setCustomerFoundCheckAccess(false)
+                                    optionalParams={{
+                                        autoFocus: true
                                     }}
-                                    onBlur={()=> applicantEmail !== null && applicantEmail !== "" ? searchCustomer({email: applicantEmail, phone: null}) : null}
+                                    validationResult={validationResult}
+                                    handleChange={() => {resetSearchCustomerSearchApiInitiate()}}
+                                    onBlur={(e)=> {setApplicantEmail(e.target.value)}}
                                 />
                             </Form.Group>
                             <Form.Group className="home-input mb-18">
@@ -159,7 +186,7 @@ function HomeScreen(props) {
                                     type="hidden"
                                     label="Phone"
                                     defaultText="(123) 456-7890"
-                                    {...(isCustomerFoundCheckAccess ? {
+                                    {...(isCustomerFound ? {
                                         value: customer.main_app.cell_phone
                                     } : {
                                         defaultValue: applicantPhone
@@ -172,12 +199,8 @@ function HomeScreen(props) {
                                         'empty': "Please enter Phone number"
                                     }}
                                     validationResult={validationResult}
-                                    handleChange={(e) => { 
-                                        setApplicantPhone(e.target.value)
-                                        resetSearchCustomerSearchApiInitiate("phone")
-                                        setCustomerFoundCheckAccess(false)
-                                    }}
-                                    onBlur={()=> applicantPhone != null && applicantPhone.indexOf('_') == -1 ? searchCustomer({email: null, phone: applicantPhone}) : null}
+                                    handleChange={() => {resetSearchCustomerSearchApiInitiate()}}
+                                    onBlur={(e)=> {setApplicantPhone(e.target.value)}}
                                 />
                             </Form.Group>
                         </div>
@@ -187,7 +210,7 @@ function HomeScreen(props) {
                                 type="text"
                                 label="Applicant First Name"
                                 defaultText="Applicant First Name"
-                                {...(isCustomerFoundCheckAccess ? {
+                                {...(isCustomerFound ? {
                                     value: customer.main_app.first_name
                                 } : {
                                     defaultValue: null
@@ -205,7 +228,7 @@ function HomeScreen(props) {
                                 type="text"
                                 label="Applicant Last Name"
                                 defaultText="Applicant Last Name"
-                                {...(isCustomerFoundCheckAccess ? {
+                                {...(isCustomerFound ? {
                                     value: customer.main_app.last_name
                                 } : {
                                     defaultValue: null
@@ -221,60 +244,33 @@ function HomeScreen(props) {
                     </div>
                 </div>
                 <div className="match-found-result">
-                    {email_customer_search &&
+                    { customer_search_result && customer_search_result.map((customer_search) => (
                         <div className="match-found-container">
-                            <div className="title">Match Found By Applicant Email<img src={IconRight} style={{marginLeft: 10}} /></div>
+                            <div className="title">Match Found <img src={IconRight} style={{marginLeft: 10}} /></div>
                             <div 
                                 className="details" 
                                 style={{cursor: "pointer"}} 
                                 onClick={() => {
-                                    setCustomerFoundCheckAccess(true)
-                                    selectCustomer(email_customer_search)
+                                    selectCustomer(customer_search)
+                                    triggerNextPage(customer_search)
                                 }}
                             >
-                                <p className="name-details">{email_customer_search.main_app.name} {email_customer_search.co_enabled ? ` & ${email_customer_search.co_app.name}` : null}</p>
+                                <p className="name-details">{customer_search.main_app.name} {customer_search.co_enabled ? ` & ${customer_search.co_app.name}` : null}</p>
                                 <div className="row other-details">
                                     <div className="col">
-                                        <span>{email_customer_search.main_app.street}</span>
+                                        <span>{customer_search.main_app.street}</span>
                                         <br></br>
-                                        <span>{email_customer_search.main_app.city} {email_customer_search.main_app.state} {email_customer_search.main_app.zip}.</span>
+                                        <span>{customer_search.main_app.city} {customer_search.main_app.state} {customer_search.main_app.zip}.</span>
                                     </div>
                                     <div className="col">
-                                        <span>{email_customer_search.main_app.email}</span>
+                                        <span>{customer_search.main_app.email}</span>
                                         <br></br>
-                                        <span>{email_customer_search.main_app.cell_phone}</span>
+                                        <span>{customer_search.main_app.cell_phone}</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    }
-                    {phone_customer_search &&
-                        <div className="match-found-container">
-                            <div className="title">Match Found By Applicant Phone<img src={IconRight} style={{marginLeft: 10}} /></div>
-                            <div 
-                                className="details" 
-                                style={{cursor: "pointer"}} 
-                                onClick={() => {
-                                    setCustomerFoundCheckAccess(true)
-                                    selectCustomer(phone_customer_search)
-                                }}
-                            >
-                                <p className="name-details">{phone_customer_search.main_app.name} {phone_customer_search.co_enabled ? ` & ${phone_customer_search.co_app.name}` : null}</p>
-                                <div className="row other-details">
-                                    <div className="col">
-                                        <span>{phone_customer_search.main_app.street}</span>
-                                        <br></br>
-                                        <span>{phone_customer_search.main_app.city} {phone_customer_search.main_app.state} {phone_customer_search.main_app.zip}.</span>
-                                    </div>
-                                    <div className="col">
-                                        <span>{phone_customer_search.main_app.email}</span>
-                                        <br></br>
-                                        <span>{phone_customer_search.main_app.cell_phone}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    }
+                    ))} 
                 </div>
                 <div className="footer-container">
                     {actionLoading ?
@@ -284,8 +280,6 @@ function HomeScreen(props) {
                     }
                 </div>
 
-
-                {/* <button className="btn secondary" type="button" onClick={() => {window.location = "https://google.com"}}>dsfds</button> */}
             </form>
         </div>
     )
@@ -293,13 +287,11 @@ function HomeScreen(props) {
 
 const mapStateToProps = state => ({
     avatar: state.auth.avatar,
-    email_customer_search: state.sales.email_customer_search,
-    phone_customer_search: state.sales.phone_customer_search,
+    customer_search_result: state.sales.customer_search_result,
     customer: state.sales.customer,
     isCustomerFound: state.sales.isCustomerFound,
     actionLoading: state.sales.actionLoading,
     searchCustomerApiInitiate: state.sales.searchCustomerApiInitiate,
-    isCustomerEnterManually: state.sales.isCustomerEnterManually
 });
 
 const mapDispatchToProps = dispatch => ({

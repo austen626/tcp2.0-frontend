@@ -32,9 +32,10 @@ input:focus {
 }
 
 .container {
-    margin-bottom: 100px;
-    // height: calc(100vh - 145px);
-    // overflow: auto;
+    // margin-bottom: 100px;
+    height: calc(100vh - 145.5px);
+    overflow: auto;
+    max-width: 100%;
 
     .styled-form {
         width: 380px;
@@ -224,6 +225,10 @@ input:focus {
     }
 }
 
+.summary-container {
+    height: calc(100vh - 85.5px);
+}
+
 .black-box {
     background-color: #20313e;
     max-width: 100%;
@@ -382,6 +387,10 @@ input:focus {
 
 .radio-filed:last-child {    
     margin-right: 0;
+}
+
+.employed-radio-filed {
+    margin-right: 25px; 
 }
 
 .hide {
@@ -603,8 +612,9 @@ input:focus {
 }
 
 .has-amount-sign {
-    position: absolute;
+    position: relative;
     margin: 7px 0px 7px 16px;
+    top: -31px;
 }
 
 .pointer-none {
@@ -656,12 +666,13 @@ table.summary-row {
 
 .ssn-span {
     color: white;
-    position: absolute;
+    // position: absolute;
     margin-top: -32px;
     margin-left: 14px;
     display: block;
     cursor: text;
     letter-spacing: 1px;
+    height: 39px;
 }
 
 @media (max-width: 570px) {

@@ -204,7 +204,7 @@ function AddDealer(props) {
                                     type="text"
                                     value={customer.main_app.no_of_dependents}
                                     label="Number of Dependants"
-                                    defaultText="0"
+                                    defaultText="#"
                                     regex="\b\d{1,2}\b"
                                     className="small-input"
                                 />
@@ -345,7 +345,7 @@ function AddDealer(props) {
                                             type="text"
                                             value={customer.co_app.no_of_dependents}
                                             label="Number of Dependants"
-                                            defaultText="0"
+                                            defaultText="#"
                                             regex="\b\d{1,2}\b"
                                             className="small-input"
                                         />
@@ -581,7 +581,7 @@ function AddDealer(props) {
                             }
 
                             <div className="box center-box" style={{ width: 290, marginTop: 22 }}>
-                                <label class="form-label" style={{ textAlign: "center", width: "100%", padding: 0 }}>Do you have any other sources of income</label>
+                                <label class="form-label" style={{ textAlign: "center", width: "100%", padding: 0 }}>Do you have any other sources of income?</label>
                                 <div className="radio-box center">
                                     <Form.Group className="mb-18 radio-filed">
                                         <Input
@@ -722,7 +722,7 @@ function AddDealer(props) {
                                     }
 
                                     <div className="box center-box" style={{ width: 290, marginTop: 22 }}>
-                                        <label class="form-label" style={{ textAlign: "center", width: "100%", padding: 0 }}>Do you have any other sources of income</label>
+                                        <label class="form-label" style={{ textAlign: "center", width: "100%", padding: 0 }}>Do you have any other sources of income?</label>
                                         <div className="radio-box center">
                                             <Form.Group className="mb-18 radio-filed">
                                                 <Input

@@ -1,4 +1,4 @@
-import React, { useState, createRef } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Form } from 'react-bootstrap';
 import { pushNotification } from 'utils/notification';
@@ -392,6 +392,9 @@ function AddDealer(props) {
                                 error={{
                                     'empty': " "
                                 }}
+                                optionalParams={{
+                                    autoFocus: true
+                                }}
                                 validationResult={validationResult}
                             />
                         </Form.Group>
@@ -583,7 +586,7 @@ function AddDealer(props) {
                                 type="text"
                                 defaultValue={customer.main_app.no_of_dependents}
                                 label="Number of Dependants"
-                                defaultText="0"
+                                defaultText="#"
                                 regex="^[0-9]{1,2}$"
                                 className="small-input"
                                 required={true}
@@ -836,7 +839,7 @@ function AddDealer(props) {
                                     type="text"
                                     defaultValue={customer.co_app.no_of_dependents}
                                     label="Number of Dependants"
-                                    defaultText="0"
+                                    defaultText="#"
                                     regex="^[0-9]{1,2}$"
                                     className="small-input"
                                     required={haveCoApplicant ? true : false}
