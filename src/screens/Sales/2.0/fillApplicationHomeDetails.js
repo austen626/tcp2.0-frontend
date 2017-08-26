@@ -13,6 +13,7 @@ import { updateCustomer } from '../../../redux/actions/sales';
 
 function AddDealer(props) {
 
+
     const {
         history,
         customer,
@@ -38,6 +39,7 @@ function AddDealer(props) {
     }
 
     const hideCoAppError = (e) => {
+        console.log(e.target.value)
         setCoTempOwnOrRent(e.target.value)
         setCoOwnRentError(false);
     }
@@ -248,12 +250,14 @@ function AddDealer(props) {
                                                 inputClass="regular-radio"
                                                 defaultValue="own"
                                                 {...(haveCoApplicantSameAnswers ? {
-                                                    checked: tempOwnOrRent == 'own' ? true : null,
-                                                    disabled: true
+                                                    checked: tempOwnOrRent.toLowerCase() == 'own' ? true : null,
                                                 } : {
-                                                    checked: tempCoOwnOrRent == 'own' ? true : null
+                                                    checked: tempCoOwnOrRent.toLowerCase() == 'own' ? true : false
                                                 })}
-                                                handleChange={(e) => hideCoAppError(e)}
+                                                handleChange={(e) => {
+                                                    console.log(e)
+                                                    hideCoAppError(e)
+                                                }}
                                             />
                                             <label for="co_own" class="form-label " id="co_own-label">Own</label>  
                                         </Form.Group>
@@ -266,18 +270,22 @@ function AddDealer(props) {
                                                 inputClass="regular-radio"
                                                 defaultValue="rent"
                                                 {...(haveCoApplicantSameAnswers ? {
-                                                    checked: tempOwnOrRent == 'rent' ? true : null,
-                                                    disabled: true
+                                                    checked: tempOwnOrRent.toLowerCase() == 'rent' ? true : null,
                                                 } : {
-                                                    checked: tempCoOwnOrRent == 'rent' ? true : null
+                                                    checked: tempCoOwnOrRent.toLowerCase() == 'rent' ? true : false
                                                 })}
-                                                handleChange={(e) => hideCoAppError(e)}
+                                                handleChange={(e) => {
+                                                    console.log(e)
+                                                    hideCoAppError(e)
+                                                }}
                                             />
                                             <label for="co_rent" class="form-label " id="co_rent-label">Rent</label>
                                         </Form.Group>
                                     </div>
                                     <div class={`error-label ${coOwnRentError ? "show" : "hide"}`}>Please select details</div>
-                                </div> 
+                                </div>
+
+                                {console.log(haveCoApplicantSameAnswers, tempCoOwnOrRent)} 
 
                                 <Form.Group className="mb-18">
                                     <Input
@@ -301,28 +309,28 @@ function AddDealer(props) {
                                     />
                                 </Form.Group>
                                 <Form.Group className="mb-18">
-                                <Input
-                                    name="co_monthly_rent_mortgage_payment"
-                                    type="text"
-                                    {...(haveCoApplicantSameAnswers ? {
-                                        value: tempMonthlyRentMortgagePayment,
-                                        label: `${tempOwnOrRent === 'own' ? "Monthly Mortgage Payment:" : "Monthly Rent Payment:"}`
-                                    } : {
-                                        defaultValue: customer.co_app.monthly_rent_mortgage_payment ? customer.co_app.monthly_rent_mortgage_payment : null,
-                                        label: `${tempCoOwnOrRent === 'own' ? "Monthly Mortgage Payment:" : "Monthly Rent Payment:"}`
-                                    })}
-                                    defaultText="0"
-                                    regex="^[0-9][\w\.\d]{0,20}$"
-                                    isAmount={true}
-                                    required={true}
-                                    className="single-line-input width-112"
-                                    error={{
-                                        'empty': " ",
-                                        'invalid': " "
-                                    }}
-                                    validationResult={validationResult}
-                                />
-                            </Form.Group> 
+                                    <Input
+                                        name="co_monthly_rent_mortgage_payment"
+                                        type="text"
+                                        {...(haveCoApplicantSameAnswers ? {
+                                            value: tempMonthlyRentMortgagePayment,
+                                            label: `${tempOwnOrRent.toLowerCase() === 'own' ? "Monthly Mortgage Payment:" : "Monthly Rent Payment:"}`
+                                        } : {
+                                            defaultValue: customer.co_app.monthly_rent_mortgage_payment ? customer.co_app.monthly_rent_mortgage_payment : null,
+                                            label: `${tempCoOwnOrRent.toLowerCase() === 'own' ? "Monthly Mortgage Payment:" : "Monthly Rent Payment:"}`
+                                        })}
+                                        defaultText="0"
+                                        regex="^[0-9][\w\.\d]{0,20}$"
+                                        isAmount={true}
+                                        required={true}
+                                        className="single-line-input width-112"
+                                        error={{
+                                            'empty': " ",
+                                            'invalid': " "
+                                        }}
+                                        validationResult={validationResult}
+                                    />
+                                </Form.Group> 
 
                             </div>
                             

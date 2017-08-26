@@ -100,6 +100,7 @@ function HomeScreen(props) {
     const handleSubmit = evt => {
         
         evt.preventDefault();
+
         const formData = getFromData(evt);
 
         setValidationResult(formData.validationResult);
@@ -144,6 +145,18 @@ function HomeScreen(props) {
 
     }
 
+    const refreshPhoneApiCheck = () => {
+        if(applicantPhone && applicantPhone.indexOf('_') == -1) {
+            resetSearchCustomerSearchApiInitiate()
+        }
+    }
+
+    const refreshEmailApiCheck = () => {
+        if(applicantEmail) {
+            resetSearchCustomerSearchApiInitiate()
+        }
+    }
+
 
     return (
         <div className="sales">
@@ -186,7 +199,7 @@ function HomeScreen(props) {
                                         autoFocus: true
                                     }}
                                     validationResult={validationResult}
-                                    handleChange={() => {resetSearchCustomerSearchApiInitiate()}}
+                                    handleChange={(e) => {refreshEmailApiCheck()}}
                                     onBlur={(e)=> {setApplicantEmail(e.target.value)}}
                                 />
                             </Form.Group>
@@ -209,7 +222,7 @@ function HomeScreen(props) {
                                         'empty': "Please enter Phone number"
                                     }}
                                     validationResult={validationResult}
-                                    handleChange={() => {resetSearchCustomerSearchApiInitiate()}}
+                                    handleChange={() => {refreshPhoneApiCheck()}}
                                     onBlur={(e)=> {setApplicantPhone(e.target.value)}}
                                 />
                             </Form.Group>

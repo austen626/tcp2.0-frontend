@@ -666,13 +666,14 @@ table.summary-row {
 
 .ssn-span {
     color: white;
-    // position: absolute;
-    margin-top: -32px;
+    margin-top: -22px;
     margin-left: 14px;
     display: block;
     cursor: text;
     letter-spacing: 1px;
-    height: 39px;
+    height: 8px;
+    line-height: 1px;
+    width: 100px;
 }
 
 @media (max-width: 570px) {
