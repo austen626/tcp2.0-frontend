@@ -868,11 +868,18 @@ function AddDealer(props) {
                                                 <img src={IconStatusComplete}/>
                                                 completed 
                                             </span>
-                                            :                                                
-                                            <span className="status-icon">
-                                                <img src={IconStatusSent}/>
-                                                sent 
-                                            </span>
+                                            : 
+                                            customer.invite_status == "SENT" ?                                               
+                                                <span className="status-icon">
+                                                    <img src={IconStatusSent}/>
+                                                    sent 
+                                                </span>
+                                                :
+                                                <span className="status-icon status-icon-2">
+                                                    <img src={IconStatusComplete}/>
+                                                    completed 
+                                                </span>
+
                                         }
                                     </div>
                                     <div className={`col ${!customer.co_enabled ? 'button-col' : null}`}>
@@ -885,11 +892,17 @@ function AddDealer(props) {
                                                         <img src={IconStatusComplete}/>
                                                         completed 
                                                     </span>
-                                                    :                                                
-                                                    <span className="status-icon">
-                                                        <img src={IconStatusSent}/>
-                                                        sent 
-                                                    </span>
+                                                    :
+                                                    customer.invite_status == "SENT" ?                                               
+                                                        <span className="status-icon">
+                                                            <img src={IconStatusSent}/>
+                                                            sent 
+                                                        </span>
+                                                        :
+                                                        <span className="status-icon status-icon-2">
+                                                            <img src={IconStatusComplete}/>
+                                                            completed 
+                                                        </span>
                                                 }
                                             </>                                        
                                         }

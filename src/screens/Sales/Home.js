@@ -7,7 +7,7 @@ import Input from '../../components/commons/input';
 import { IconHome, IconRight } from '../../assets/images';
 
 import { getFromData } from '../../components/commons/utility';
-import { searchCustomer, updateCustomer, validateEmailAddress, selectCustomer, resetSearchCustomerSearchApiInitiate } from '../../redux/actions/sales';
+import { updateApplicationFilledStatus, searchCustomer, updateCustomer, validateEmailAddress, selectCustomer, resetSearchCustomerSearchApiInitiate } from '../../redux/actions/sales';
 
 function HomeScreen(props) {
 
@@ -23,6 +23,7 @@ function HomeScreen(props) {
         updateCustomer,
         validateEmailAddress,
         searchCustomerApiInitiate,
+        updateApplicationFilledStatus,
         resetSearchCustomerSearchApiInitiate
     } = props;
 
@@ -79,6 +80,15 @@ function HomeScreen(props) {
                     ...temp_customer.co_app,
                     additional_income_status: temp_customer.co_enabled && temp_customer.co_app.additional_income && temp_customer.co_app.additional_income != '0' ? "yes" : "no"
                 }
+            }
+
+            if(customer_search.invite_status == "COMPLETED") 
+            {
+                updateApplicationFilledStatus('in_app', null, null);
+            }
+            else
+            {
+                updateApplicationFilledStatus('send_link', null, null);
             }
 
             updateCustomer(history, '/applyApplicationSummary', temp_customer);
@@ -299,7 +309,8 @@ const mapDispatchToProps = dispatch => ({
     selectCustomer: (data) => dispatch(selectCustomer(data)),
     validateEmailAddress: (data) => dispatch(validateEmailAddress(data)),
     resetSearchCustomerSearchApiInitiate: (data) => dispatch(resetSearchCustomerSearchApiInitiate(data)),
-    updateCustomer: (history, path, data) => dispatch(updateCustomer(history, path, data))
+    updateCustomer: (history, path, data) => dispatch(updateCustomer(history, path, data)),
+    updateApplicationFilledStatus: (data, history, path) => dispatch(updateApplicationFilledStatus(data, history, path))
 });
 
 export default connect(
