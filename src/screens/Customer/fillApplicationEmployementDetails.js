@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { Form, Modal } from 'react-bootstrap';
 import { pushNotification } from 'utils/notification';
@@ -21,11 +21,13 @@ function AddDealer(props) {
         customerResponseSubmit
     } = props;
 
+    const modalAgreebtn = useRef();
+
     const [validationResult, setValidationResult] = useState(null);
     const [showWarning, setShowWarning] = useState(false);
 
-    const [employementStatusCheck, setEmployementStatusCheck] = useState(customer.main_app.employement_status);
-    const [coEmployementStatusCheck, setCoEmployementStatusCheck] = useState(customer.co_enabled ? customer.co_app.employement_status : true);
+    const [employementStatusCheck, setEmployementStatusCheck] = useState(customer.main_app.employement_status && customer.main_app.employement_status == "not employed" ? "not employed" : "employed");
+    const [coEmployementStatusCheck, setCoEmployementStatusCheck] = useState(customer.co_enabled && customer.co_app.employement_status && customer.co_app.employement_status == "not employed" ? "not employed" : "employed");
 
     const [ownOtherSourceError, setOtherSourceError] = useState(false);
     const [ownOtherSourceStatus, setOtherSourceStatus] = useState(customer.main_app.additional_income && customer.main_app.additional_income != '0' ? "yes" : "no");
@@ -70,7 +72,7 @@ function AddDealer(props) {
 
         if (!formData.validationResult) {
 
-            if( !employementStatusCheck && formData.formData.additional_income_status === undefined)
+            if( employementStatusCheck == "employed" && formData.formData.additional_income_status === undefined)
             {
                 setOtherSourceError(true);
             }
@@ -87,31 +89,32 @@ function AddDealer(props) {
                     "main_app": {
                         ...customer.main_app,
                         "additional_income_status": data.additional_income_status,
-                        "employement_status": !employementStatusCheck ? data.employement_status : false,
-                        "employer_phone": !employementStatusCheck ? data.employer_phone : null,
-                        "job_title": !employementStatusCheck ? data.job_title : null,
-                        "monthly_income": !employementStatusCheck ? data.monthly_income : null,
-                        "present_employer": !employementStatusCheck ? data.present_employer : null,
+                        "employement_status": employementStatusCheck == "employed" ? "employed" : "not employed",
+                        "employer_phone": employementStatusCheck == "employed" ? data.employer_phone : null,
+                        "job_title": employementStatusCheck == "employed" ? data.job_title : null,
+                        "monthly_income": employementStatusCheck == "employed" ? data.monthly_income : null,
+                        "present_employer": employementStatusCheck == "employed" ? data.present_employer : null,
                         "source": data.additional_income_status == "yes" ? data.source : null,
                         "additional_income": data.additional_income_status == "yes" ? data.additional_income : null,
-                        "years_there_second": !employementStatusCheck ? data.years_there_second : null,
+                        "years_there_second": employementStatusCheck == "employed" ? data.years_there_second : null,
                     },
                     "co_app": {
                         ...customer.co_app,
                         "additional_income_status": customer.co_enabled ? data.co_additional_income_status : null,
-                        "employement_status": customer.co_enabled ? data.co_employement_status : false,
-                        "employer_phone": customer.co_enabled && !coEmployementStatusCheck ? data.co_employer_phone : null,
-                        "job_title": customer.co_enabled && !coEmployementStatusCheck ? data.co_job_title : null,
-                        "monthly_income": customer.co_enabled && !coEmployementStatusCheck ? data.co_monthly_income : null,
-                        "present_employer": customer.co_enabled && !coEmployementStatusCheck ? data.co_present_employer : null,
+                        "employement_status": customer.co_enabled && coEmployementStatusCheck == "employed" ? "employed" : "not employed",
+                        "employer_phone": customer.co_enabled && coEmployementStatusCheck == "employed" ? data.co_employer_phone : null,
+                        "job_title": customer.co_enabled && coEmployementStatusCheck == "employed" ? data.co_job_title : null,
+                        "monthly_income": customer.co_enabled && coEmployementStatusCheck == "employed" ? data.co_monthly_income : null,
+                        "present_employer": customer.co_enabled && coEmployementStatusCheck == "employed" ? data.co_present_employer : null,
                         "source": customer.co_enabled ? data.co_additional_income_status == "yes" ? data.co_source : null : null,
                         "additional_income": customer.co_enabled ? data.co_additional_income_status == "yes" ? data.co_additional_income : null : null,
-                        "years_there_second": customer.co_enabled && !coEmployementStatusCheck ? data.co_years_there_second : null,
+                        "years_there_second": customer.co_enabled && coEmployementStatusCheck == "employed" ? data.co_years_there_second : null,
                     }
                 }
 
                 updateCustomer(history, null, temp_customer);
                 setShowWarning(true);
+                modalAgreebtn.current.autoFocus(true);
             }
         } 
         else 
@@ -143,7 +146,7 @@ function AddDealer(props) {
                     By selecting “I agree,” below, you are giving <b>{localStorage.getItem('dealer_name').replace("%20", " ")}</b> and its assigns, including Travis Capital Partners, LLC, the right to investigate your credit capacity and credit history. Seller or its assigns, agents, and any other company seeking to grant me/us the requested credit (the “potential creditor”), including Travis Capital Partners, LLC, may request a credit report for any legitimate purpose associated with your application for credit, extending credit, modifying the terms of your credit agreement, or a collection on your account. You hereby authorize Seller or its assigns, agents, and any other company seeking to grant me/us the requested credit (the “potential creditor”) to make whatever credit inquiries they deem necessary in connection with my credit application or in the course of review or collection of any credit extended in reliance on this application. You authorize and instruct any person or consumer reporting agency to complete and furnish Seller, or its assigns and agents, any information they may have or obtain in response to such credit inquiries and agree that the same shall remain the property of the potential creditor whether or not credit is extended. You certify that you have read the above information and the information is true and correct. You certify that You have read the information above and You agree to the terms of this Credit Application.
                 </Modal.Body>
                 <Modal.Footer>
-                <button class="btn secondary" onClick={() => {
+                <button ref={modalAgreebtn} class="btn secondary" onClick={() => {
                     setShowWarning(false)
                     customerResponseSubmit(history, customer)
                 }}>
@@ -167,18 +170,42 @@ function AddDealer(props) {
                 <div className="container">
                     <div className="styled-form">
 
-                        <Form.Group className="mb-18">
-                            <Checkbox
-                                name="employement_status"
-                                type="checkbox"
-                                theme="light-label"
-                                label="Not currently employed"
-                                checked={employementStatusCheck ? true : null}
-                                handleChange={(e)=>setEmployementStatusCheck(e.target.checked)}
-                            />
-                        </Form.Group>
+                    <div className="box center-box" style={{width: 290, marginTop: 22}}>
+                            <label class="form-label" style={{textAlign: "center", width: "100%", padding: 0}}>Are you currently employed?</label>
+                            <div className="radio-box center">
+                                <Form.Group className="mb-18 radio-filed employed-radio-filed">
+                                    <Input 
+                                        id ="employed_status"
+                                        name="employement_status"
+                                        type="radio"
+                                        className="radio-width"
+                                        inputClass="regular-radio"
+                                        defaultValue="employed"
+                                        optionalParams={{
+                                            autoFocus: true
+                                        }}
+                                        checked={employementStatusCheck == "employed" ? true : null}
+                                        handleChange={(e) => setEmployementStatusCheck(e.target.value)}
+                                    />
+                                    <label for="employed_status" class="form-label" id="employed_status-label">Employed</label>  
+                                </Form.Group>
+                                <Form.Group className="mb-18 radio-filed">
+                                    <Input 
+                                        id ="not_employed_status"
+                                        name="employement_status"
+                                        type="radio"
+                                        className="radio-width"
+                                        inputClass="regular-radio regular-radio2"
+                                        defaultValue="not employed"
+                                        checked={employementStatusCheck == "not employed" ? true : null}
+                                        handleChange={(e) => setEmployementStatusCheck(e.target.value)}
+                                    />
+                                    <label for="not_employed_status" class="form-label" id="not_employed_status-label">Not Employed</label>
+                                </Form.Group>
+                            </div>
+                        </div>
 
-                        {!employementStatusCheck &&
+                        {employementStatusCheck == "employed" &&
 
                             <>
 
@@ -275,7 +302,7 @@ function AddDealer(props) {
                         }
 
                         <div className="box center-box" style={{width: 290, marginTop: 22}}>
-                            <label class="form-label" style={{textAlign: "center", width: "100%", padding: 0}}>Do you have any other sources of income</label>
+                            <label class="form-label" style={{textAlign: "center", width: "100%", padding: 0}}>Do you have any other sources of income?</label>
                             <div className="radio-box center">
                                 <Form.Group className="mb-18 radio-filed">
                                     <Input 
@@ -366,19 +393,41 @@ function AddDealer(props) {
                                 <span className="title">Co-applicant</span>
                             </span>
 
-                            <Form.Group className="mb-18">
-                                <Checkbox
-                                    name="co_employement_status"
-                                    type="checkbox"
-                                    theme="light-label"
-                                    label="Not currently employed"
-                                    checked={coEmployementStatusCheck ? true : null}
-                                    handleChange={(e)=>setCoEmployementStatusCheck(e.target.checked)}
-                                />
-                            </Form.Group>
+
+                            <div className="box center-box" style={{width: 290, marginTop: 22}}>
+                                <label class="form-label" style={{textAlign: "center", width: "100%", padding: 0}}>Are you currently employed?</label>
+                                <div className="radio-box center">
+                                    <Form.Group className="mb-18 radio-filed employed-radio-filed">
+                                        <Input 
+                                            id ="co_employed_status"
+                                            name="co_employement_status"
+                                            type="radio"
+                                            className="radio-width"
+                                            inputClass="regular-radio"
+                                            defaultValue="employed"
+                                            checked={coEmployementStatusCheck == "employed" ? true : null}
+                                            handleChange={(e) => setCoEmployementStatusCheck(e.target.value)}
+                                        />
+                                        <label for="co_employed_status" class="form-label" id="co_employed_status-label">Employed</label>  
+                                    </Form.Group>
+                                    <Form.Group className="mb-18 radio-filed">
+                                        <Input 
+                                            id ="co_not_employed_status"
+                                            name="co_employement_status"
+                                            type="radio"
+                                            className="radio-width"
+                                            inputClass="regular-radio regular-radio2"
+                                            defaultValue="not employed"
+                                            checked={coEmployementStatusCheck == "not employed" ? true : null}
+                                            handleChange={(e) => setCoEmployementStatusCheck(e.target.value)}
+                                        />
+                                        <label for="co_not_employed_status" class="form-label" id="co_not_employed_status-label">Not Employed</label>
+                                    </Form.Group>
+                                </div>
+                            </div>
 
 
-                            {!coEmployementStatusCheck &&
+                            {coEmployementStatusCheck == "employed" &&
 
                             <>
 
@@ -476,7 +525,7 @@ function AddDealer(props) {
                             }
 
                             <div className="box center-box" style={{width: 290, marginTop: 22}}>
-                                <label class="form-label" style={{textAlign: "center", width: "100%", padding: 0}}>Do you have any other sources of income</label>
+                                <label class="form-label" style={{textAlign: "center", width: "100%", padding: 0}}>Do you have any other sources of income?</label>
                                 <div className="radio-box center">
                                     <Form.Group className="mb-18 radio-filed">
                                         <Input 

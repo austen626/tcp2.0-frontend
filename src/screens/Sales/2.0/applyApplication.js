@@ -24,7 +24,7 @@ function HomeScreen(props) {
     const [showWarning, setShowWarning] = useState(false);
 
     const handleCompleteOnDeviceClick = () => {
-        if(customer.invite_status == "completed")
+        if(customer.invite_status == "COMPLETED")
         {
             pushNotification("Credit application already submitted", 'warning', 'TOP_RIGHT', 3000);   
         }
@@ -35,18 +35,7 @@ function HomeScreen(props) {
     }
 
     const handleSendLink = () => {
-        if(customer.invite_status == "sent")
-        {
-            pushNotification("Mail already sent to applicant", 'warning', 'TOP_RIGHT', 3000); 
-        }
-        else if(customer.invite_status == "completed")
-        {
-            pushNotification("Credit application already submitted", 'warning', 'TOP_RIGHT', 3000); 
-        }
-        else
-        {
-            setShowWarning(true)
-        }
+        setShowWarning(true)
     }
 
     const handleArrowBack = () => {
@@ -100,7 +89,7 @@ function HomeScreen(props) {
                     </div>
                 }
 
-                <button className={`btn button ${customer.invite_status == "completed" ? "disabled" : ""}`} onClick={() => emailValidate ? handleCompleteOnDeviceClick() : ''}>
+                <button autoFocus={true} className="btn button" onClick={() => emailValidate ? handleCompleteOnDeviceClick() : ''}>
                     <div className="icon">
                         <img className="icon-new-customer" src={IconList} alt="new" />
                     </div>
@@ -108,7 +97,7 @@ function HomeScreen(props) {
                 </button>
 
 
-                <button className={`btn button ${customer.invite_status == "sent" || customer.invite_status == "completed" ? "disabled" : ""}`} onClick={() => emailValidate ? handleSendLink() : ''}>
+                <button className="btn button" onClick={() => emailValidate ? handleSendLink() : ''}>
                     <div className="icon">
                         <img className="icon-reorder-customer" src={IconSend} alt="reorder" />
                     </div>

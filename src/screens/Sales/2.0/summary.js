@@ -73,17 +73,17 @@ function AddDealer(props) {
                     {activeTab === 'profile' && <span className='arrow-down'></span>}
                 </button>
 
+                <button style={{minWidth: 238}} className={`btn ${activeTab === 'summary_list' ? 'active' : ''}`} onClick={()=>handleTabChange('summary_list')}>
+                    <span>Summary</span>
+                    {activeTab === 'summary_list' && <span className='arrow-down'></span>}
+                </button>
+
                 {appFillStatus == "in_app" &&
-                    <button style={{minWidth: 238}} className={`btn ${activeTab === 'credit_details' ? 'active' : ''}`} onClick={()=>handleTabChange('credit_details')}>
-                        <span>Summary</span>
+                    <button className={`btn ${activeTab === 'credit_details' ? 'active' : ''}`} onClick={()=>handleTabChange('credit_details')}>
+                        <img src={IconListWhite} alt=""/> 
                         {activeTab === 'credit_details' && <span className='arrow-down'></span>}
                     </button>
                 }
-
-                <button className={`btn ${activeTab === 'summary_list' ? 'active' : ''}`} onClick={()=>handleTabChange('summary_list')}>
-                    <img src={IconListWhite} alt=""/> 
-                    {activeTab === 'summary_list' && <span className='arrow-down'></span>}
-                </button>
 
             </div>
 
@@ -97,8 +97,8 @@ function AddDealer(props) {
 
             {activeTab === 'profile' &&
                 <>
-                    <div className="container pointer-none" style={{marginBottom: 0}}>
-                        <div className="styled-form">
+                    <div className="container summary-container" style={{marginBottom: 0}}>
+                        <div className="styled-form pointer-none">
                             <Form.Group className="mb-18">
                                 <Input
                                     name="first_name"
@@ -218,7 +218,7 @@ function AddDealer(props) {
                                         type="text"
                                         value={customer.main_app.no_of_dependents}
                                         label="Number of Dependants"
-                                        defaultText="0"
+                                        defaultText="#"
                                         regex="\b\d{1,2}\b"
                                         className="small-input"
                                     />
@@ -359,7 +359,7 @@ function AddDealer(props) {
                                             type="text"
                                             value={customer.co_app.no_of_dependents}
                                             label="Number of Dependants"
-                                            defaultText="0"
+                                            defaultText="#"
                                             regex="\b\d{1,2}\b"
                                             className="small-input"
                                         />
@@ -381,8 +381,8 @@ function AddDealer(props) {
 
             {activeTab === 'credit_details' &&
                 <>
-                    <div className="container pointer-none" style={{marginBottom: 0}}>
-                        <div className="styled-form">
+                    <div className="container summary-container" style={{marginBottom: 0}}>
+                        <div className="styled-form pointer-none">
 
                             <div className="box center-box">
                                 <label class="form-label" style={{textAlign: "center", width: "100%", padding: 0}}>Do you own or rent your home?</label>
@@ -395,7 +395,7 @@ function AddDealer(props) {
                                             className="radio-width"
                                             inputClass="regular-radio"
                                             defaultValue="own"
-                                            checked={customer.main_app.own_or_rent == 'own' ? true : null}
+                                            checked={customer.main_app.own_or_rent.toLowerCase() == 'own' ? true : null}
                                         />
                                         <label for="own" class="form-label " id="own-label">Own</label>  
                                     </Form.Group>
@@ -407,7 +407,7 @@ function AddDealer(props) {
                                             className="radio-width"
                                             inputClass="regular-radio"
                                             defaultValue="rent"
-                                            checked={customer.main_app.own_or_rent == 'rent' ? true : null}
+                                            checked={customer.main_app.own_or_rent.toLowerCase() == 'rent' ? true : null}
                                         />
                                         <label for="rent" class="form-label " id="rent-label">Rent</label>
                                     </Form.Group>
@@ -435,102 +435,39 @@ function AddDealer(props) {
                                     defaultText="0"
                                     className="single-line-input width-112"
                                 />
-                            </Form.Group>                
-                            
-                            {customer.co_enabled && 
+                            </Form.Group> 
 
-                                <>
-
-                                <span className="divider">
-                                    <span className="title">Co-applicant</span>
-                                </span> 
-
-                                <div className="box center-box">
-                                    <label class="form-label" style={{textAlign: "center", width: "100%", padding: 0}}>Do you own or rent your home?</label>
-                                    <div className="radio-box center">
-                                        <Form.Group className="mb-18 radio-filed">
-                                            <Input 
-                                                id ="co_own"
-                                                name="co_own_or_rent"
-                                                type="radio"
-                                                className="radio-width"
-                                                inputClass="regular-radio"
-                                                defaultValue="own"
-                                                checked={customer.co_app.own_or_rent == 'own' ? true : null}
-                                            />
-                                            <label for="co_own" class="form-label " id="co_own-label">Own</label>  
-                                        </Form.Group>
-                                        <Form.Group className="mb-18 radio-filed">
-                                            <Input 
-                                                id ="co_rent"
-                                                name="co_own_or_rent"
-                                                type="radio"
-                                                className="radio-width"
-                                                inputClass="regular-radio"
-                                                defaultValue="rent"
-                                                checked={customer.co_app.own_or_rent == 'rent' ? true : null}
-                                            />
-                                            <label for="co_rent" class="form-label " id="co_rent-label">Rent</label>
-                                        </Form.Group>
-                                    </div>
+                            <div className="box center-box" style={{width: 290, marginTop: 22}}>
+                                <label class="form-label" style={{textAlign: "center", width: "100%", padding: 0}}>Are you currently employed?</label>
+                                <div className="radio-box center">
+                                    <Form.Group className="mb-18 radio-filed employed-radio-filed">
+                                        <Input 
+                                            id ="employed_status"
+                                            name="employement_status"
+                                            type="radio"
+                                            className="radio-width"
+                                            inputClass="regular-radio"
+                                            defaultValue="employed"
+                                            checked={customer.main_app.employement_status.toLowerCase() == "employed" ? true : null}
+                                        />
+                                        <label for="employed_status" class="form-label" id="employed_status-label">Employed</label>  
+                                    </Form.Group>
+                                    <Form.Group className="mb-18 radio-filed">
+                                        <Input 
+                                            id ="not_employed_status"
+                                            name="employement_status"
+                                            type="radio"
+                                            className="radio-width"
+                                            inputClass="regular-radio regular-radio2"
+                                            defaultValue="not employed"
+                                            checked={customer.main_app.employement_status.toLowerCase() == "not employed" ? true : null}
+                                        />
+                                        <label for="not_employed_status" class="form-label" id="not_employed_status-label">Not Employed</label>
+                                    </Form.Group>
                                 </div>
+                            </div>
 
-                                <Form.Group className="mb-18">
-                                    <Checkbox
-                                        name="have_co_applicant_with_same_answers"
-                                        type="checkbox"
-                                        theme="light-label"
-                                        label="The answers are the same as the answers<br>given by the applicant"
-                                        checked={customer.co_app.have_co_applicant_with_same_answers ? true : null}
-                                    />
-                                </Form.Group>  
-
-                                <Form.Group className="mb-18">
-                                    <Input
-                                        name="co_years_there_first"
-                                        type="text"
-                                        defaultValue={customer.co_app.years_there_first}
-                                        label="How many years did you live there?"
-                                        defaultText="0"
-                                        required={true}
-                                        className="single-line-input"
-                                    />
-                                </Form.Group>
-                                <Form.Group className="mb-18">
-                                    <Input
-                                        name="co_monthly_rent_mortgage_payment"
-                                        type="text"
-                                        defaultValue={customer.co_app.monthly_rent_mortgage_payment}
-                                        label={`${customer.co_app.own_or_rent === 'own' ? "Monthly Mortgage Payment:" : "Monthly Rent Payment:"}`}
-                                        defaultText="0"
-                                        isAmount={true}
-                                        required={true}
-                                        className="single-line-input width-112"
-                                    />
-                                </Form.Group> 
-
-                                </>
-                            }
-
-                        </div>
-                    </div>
-
-
-
-                    <div className="container pointer-none">
-                        <div className="styled-form">
-
-                            <Form.Group className="mb-18">
-                                <Checkbox
-                                    name="employement_status"
-                                    type="checkbox"
-                                    theme="light-label"
-                                    label="Not currently employed"
-                                    checked={customer.main_app.employement_status ? true : null}
-                                />
-                            </Form.Group>
-
-                            {!customer.main_app.employement_status &&
+                            {customer.main_app.employement_status == "employed" &&
 
                                 <>
 
@@ -597,7 +534,7 @@ function AddDealer(props) {
                             }
 
                             <div className="box center-box" style={{width: 290, marginTop: 22}}>
-                                <label class="form-label" style={{textAlign: "center", width: "100%", padding: 0}}>Do you have any other sources of income</label>
+                                <label class="form-label" style={{textAlign: "center", width: "100%", padding: 0}}>Do you have any other sources of income?</label>
                                 <div className="radio-box center">
                                     <Form.Group className="mb-18 radio-filed">
                                         <Input 
@@ -662,18 +599,102 @@ function AddDealer(props) {
                                     <span className="title">Co-applicant</span>
                                 </span>
 
+                                <div className="box center-box">
+                                    <label class="form-label" style={{textAlign: "center", width: "100%", padding: 0}}>Do you own or rent your home?</label>
+                                    <div className="radio-box center">
+                                        <Form.Group className="mb-18 radio-filed">
+                                            <Input 
+                                                id ="co_own"
+                                                name="co_own_or_rent"
+                                                type="radio"
+                                                className="radio-width"
+                                                inputClass="regular-radio"
+                                                defaultValue="own"
+                                                checked={customer.co_app.own_or_rent.toLowerCase() == 'own' ? true : null}
+                                            />
+                                            <label for="co_own" class="form-label " id="co_own-label">Own</label>  
+                                        </Form.Group>
+                                        <Form.Group className="mb-18 radio-filed">
+                                            <Input 
+                                                id ="co_rent"
+                                                name="co_own_or_rent"
+                                                type="radio"
+                                                className="radio-width"
+                                                inputClass="regular-radio"
+                                                defaultValue="rent"
+                                                checked={customer.co_app.own_or_rent.toLowerCase() == 'rent' ? true : null}
+                                            />
+                                            <label for="co_rent" class="form-label " id="co_rent-label">Rent</label>
+                                        </Form.Group>
+                                    </div>
+                                </div>
+
                                 <Form.Group className="mb-18">
                                     <Checkbox
-                                        name="co_employement_status"
+                                        name="have_co_applicant_with_same_answers"
                                         type="checkbox"
                                         theme="light-label"
-                                        label="Not currently employed"
-                                        checked={customer.co_app.employement_status ? true : null}
+                                        label="The answers are the same as the answers<br>given by the applicant"
+                                        checked={customer.co_app.have_co_applicant_with_same_answers ? true : null}
+                                    />
+                                </Form.Group>  
+
+                                <Form.Group className="mb-18">
+                                    <Input
+                                        name="co_years_there_first"
+                                        type="text"
+                                        defaultValue={customer.co_app.years_there_first}
+                                        label="How many years did you live there?"
+                                        defaultText="0"
+                                        required={true}
+                                        className="single-line-input"
                                     />
                                 </Form.Group>
+                                <Form.Group className="mb-18">
+                                    <Input
+                                        name="co_monthly_rent_mortgage_payment"
+                                        type="text"
+                                        defaultValue={customer.co_app.monthly_rent_mortgage_payment}
+                                        label={`${customer.co_app.own_or_rent === 'own' ? "Monthly Mortgage Payment:" : "Monthly Rent Payment:"}`}
+                                        defaultText="0"
+                                        isAmount={true}
+                                        required={true}
+                                        className="single-line-input width-112"
+                                    />
+                                </Form.Group> 
+
+                                <div className="box center-box" style={{width: 290, marginTop: 22}}>
+                                    <label class="form-label" style={{textAlign: "center", width: "100%", padding: 0}}>Are you currently employed?</label>
+                                    <div className="radio-box center">
+                                        <Form.Group className="mb-18 radio-filed employed-radio-filed">
+                                            <Input 
+                                                id ="co_employed_status"
+                                                name="co_employed_status"
+                                                type="radio"
+                                                className="radio-width"
+                                                inputClass="regular-radio"
+                                                defaultValue="employed"
+                                                checked={customer.co_app.employement_status.toLowerCase() == "employed" ? true : null}
+                                            />
+                                            <label for="co_employed_status" class="form-label" id="co_employed_status-label">Employed</label>  
+                                        </Form.Group>
+                                        <Form.Group className="mb-18 radio-filed">
+                                            <Input 
+                                                id ="co_not_employed_status"
+                                                name="co_not_employed_status"
+                                                type="radio"
+                                                className="radio-width"
+                                                inputClass="regular-radio regular-radio2"
+                                                defaultValue="not employed"
+                                                checked={customer.co_app.employement_status.toLowerCase() == "not employed" ? true : null}
+                                            />
+                                            <label for="co_not_employed_status" class="form-label" id="co_not_employed_status-label">Not Employed</label>
+                                        </Form.Group>
+                                    </div>
+                                </div>
 
 
-                                {!customer.co_app.employement_status &&
+                                {customer.co_app.employement_status == "employed" &&
 
                                 <>
 
@@ -739,7 +760,7 @@ function AddDealer(props) {
                                 }
 
                                 <div className="box center-box" style={{width: 290, marginTop: 22}}>
-                                    <label class="form-label" style={{textAlign: "center", width: "100%", padding: 0}}>Do you have any other sources of income</label>
+                                    <label class="form-label" style={{textAlign: "center", width: "100%", padding: 0}}>Do you have any other sources of income?</label>
                                     <div className="radio-box center">
                                         <Form.Group className="mb-18 radio-filed">
                                             <Input 

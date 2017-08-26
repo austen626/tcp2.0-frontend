@@ -88,11 +88,9 @@ const INIT_STATE = {
 
 
 
-    email_customer_search: null,
-    phone_customer_search: null,
+    customer_search_result: [],
     customer: {main_app: {}, co_app: {}, invite_status: null, ssn: null, co_ssn: null},
     isCustomerFound: false,
-    isCustomerEnterManually: false,
     isCustomerSubmitted: false,
     searchCustomerApiInitiate: false,
     actionLoading: false,
@@ -231,8 +229,7 @@ export default function(state = INIT_STATE, action){
                 customer: temp_customer,
                 isCustomerFound: false,
                 searchCustomerApiInitiate: false,
-                email_customer_search: null,
-                phone_customer_search: null,
+                customer_search_result: [],
                 emailValidate: true
             }
         case SET_APP_FILLED_STATUS:
@@ -247,11 +244,7 @@ export default function(state = INIT_STATE, action){
         case SET_SEARCH_CUSTOMER_SEARCH_REQUEST:
             return {
                 ...state,
-                ...(action.search_type == "email" ? {
-                    email_customer_search: null
-                } : {
-                    phone_customer_search: null
-                }),
+                customer_search_result: [],
                 customer: temp_customer,
                 isCustomerFound: false,
                 searchCustomerApiInitiate: false,
@@ -262,54 +255,44 @@ export default function(state = INIT_STATE, action){
             
             return {
                 ...state,
-                ...(action.search_type == "email" ? {
-                    email_customer_search: null
-                } : {
-                    phone_customer_search: null
-                }),
+                customer_search_result: [],
                 actionLoading: true,
                 searchCustomerApiInitiate: true,
             }
         case GET_SEARCH_CUSTOMER_SUCCESS:
 
-            let customer = null;
+            let customer = [];
             
-            if(action.payload.data) {
-                customer = {
-                    ...action.payload.data,
-                    main_app: {
-                        ...action.payload.data.main_app,
-                        ssn: null
-                    },
-                    co_app: {
-                        ...action.payload.data.co_app,
-                        ssn: null
-                    },
-                    ssn: action.payload.data.main_app.ssn, 
-                    co_ssn: action.payload.data.co_app ? action.payload.data.co_app.ssn : null
-                }
-            } else {
-                customer = null
+            if(action.payload.data && action.payload.data.length > 0) {
+
+                action.payload.data.forEach(searchCustomer => {
+                    customer.push({
+                        ...searchCustomer,
+                        main_app: {
+                            ...searchCustomer.main_app,
+                            ssn: null
+                        },
+                        co_app: {
+                            ...searchCustomer.co_app,
+                            ssn: null
+                        },
+                        ssn: searchCustomer.main_app.ssn, 
+                        co_ssn: searchCustomer.co_app ? searchCustomer.co_app.ssn : null
+                    })
+                });
+
             }
 
             return {
                 ...state,
-                ...(action.search_type == "email" ? {
-                    email_customer_search: customer
-                } : {
-                    phone_customer_search: customer
-                }),
+                customer_search_result: customer,
                 actionLoading: false,
                 searchCustomerApiInitiate: true,
             }
         case GET_SEARCH_CUSTOMER_FAILED:
             return {
                 ...state,
-                ...(action.search_type == "email" ? {
-                    email_customer_search: null
-                } : {
-                    phone_customer_search: null
-                }),
+                customer_search_result: [],
                 actionLoading: false,
                 searchCustomerApiInitiate: true,
             }
@@ -328,32 +311,9 @@ export default function(state = INIT_STATE, action){
                 actionLoading: true,
             }
         case GET_CUSTOMER_SUCCESS:
-
-            let search_customer = null;
-            
-            if(action.payload) {
-                search_customer = {
-                    ...action.payload,
-                    main_app: {
-                        ...action.payload.main_app,
-                        ssn: null
-                    },
-                    co_app: {
-                        ...action.payload.co_app,
-                        ssn: null
-                    },
-                    ssn: action.payload.main_app.ssn, 
-                    co_ssn: action.payload.co_app ? action.payload.co_app.ssn : null
-                }
-            } else {
-                search_customer = {
-                    ...temp_customer
-                }
-            }
-
             return {
                 ...state,
-                customer: search_customer,
+                customer: action.payload,
                 isCustomerFound: action.payload ? true : false,
                 searchCustomerApiInitiate: true,
                 actionLoading: false,
@@ -400,9 +360,7 @@ export default function(state = INIT_STATE, action){
             return {
                 ...state,
                 customer: action.payload,
-                email_customer_search: null,
-                phone_customer_search: null,
-                isCustomerEnterManually: true
+                customer_search_result: []
             }
         case SUBMIT_CREDIT_APP_REQUEST:
             return {
