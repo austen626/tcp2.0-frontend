@@ -194,7 +194,7 @@ function AddDealer(props) {
                                     <Input
                                         name="date_of_birth"
                                         type="hidden"
-                                        value={customer.main_app.dobY && customer.main_app.dobM && customer.main_app.dobD ? `${customer.main_app.dobM}/${customer.main_app.dobD}/${customer.main_app.dobY}` : null}
+                                        value={customer.main_app.dobY && customer.main_app.dobM && customer.main_app.dobD && customer.main_app.dobY != 'NONE' ? `${customer.main_app.dobM}/${customer.main_app.dobD}/${customer.main_app.dobY}` : null}
                                             label="Date of Birth"
                                         className="medium-input"
                                         defaultText="MM / DD / YYYY"
@@ -335,7 +335,7 @@ function AddDealer(props) {
                                         <Input
                                             name="co_date_of_birth"
                                             type="hidden"
-                                            value={customer.co_app.dobY && customer.co_app.dobM && customer.co_app.dobD ? `${customer.co_app.dobM}/${customer.co_app.dobD}/${customer.co_app.dobY}` : null}
+                                            value={customer.co_app.dobY && customer.co_app.dobM && customer.co_app.dobD && customer.co_app.dobY != 'NONE' ? `${customer.co_app.dobM}/${customer.co_app.dobD}/${customer.co_app.dobY}` : null}
                                             label="Date of Birth"
                                             className="medium-input"
                                             defaultText="MM / DD / YYYY"
@@ -467,7 +467,7 @@ function AddDealer(props) {
                                 </div>
                             </div>
 
-                            {customer.main_app.employement_status == "employed" &&
+                            {customer.main_app.employement_status.toLowerCase() == "employed" &&
 
                                 <>
 
@@ -694,7 +694,7 @@ function AddDealer(props) {
                                 </div>
 
 
-                                {customer.co_app.employement_status == "employed" &&
+                                {customer.co_app.employement_status.toLowerCase() == "employed" &&
 
                                 <>
 
@@ -831,8 +831,8 @@ function AddDealer(props) {
                         <div className="table-div">
                             <table className="summary-row">
                                 <tr>
-                                    <td><span><b>Name: </b> {customer.main_app.name}</span></td>
-                                    <td><span>{customer.co_enabled ? customer.co_app.name : <span className="hide">text for aligement</span>}</span></td>
+                                    <td><span><b>Name: </b> {customer.main_app.first_name} {customer.main_app.last_name}</span></td>
+                                    <td><span>{customer.co_enabled ? `${customer.co_app.first_name} ${customer.co_app.last_name}` : <span className="hide">text for aligementtext for aligemsdffsdf</span>}</span></td>
                                 </tr>
                                 <tr>
                                     <td><span><b>Address: </b> {customer.main_app.street} {customer.main_app.city} {customer.main_app.state} {customer.main_app.zip}</span></td>
