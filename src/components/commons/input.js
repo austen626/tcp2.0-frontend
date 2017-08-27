@@ -234,7 +234,7 @@ const Input = (props) => {
 
     return (
         <div
-            className={`input-holder ${className} ${type} ${disabled ? 'disabled' : ''} ${showError ? 'has-error' : ''}`}
+            className={`input-holder ${className} ${type} ${disabled ? 'disabled' : ''} ${showError ? 'has-error' : ''} ${isHidden ? "ssn-div" : ""}`}
         >
             <div className='input-container'>
                 {label && (
