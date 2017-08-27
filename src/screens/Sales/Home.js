@@ -134,7 +134,8 @@ function HomeScreen(props) {
                     },
                     "co_app": {
                         ...customer.co_app,
-                    }
+                    },
+                    invite_status: "SENT"
                 }
 
                 validateEmailAddress(applicantEmail);
@@ -145,14 +146,14 @@ function HomeScreen(props) {
 
     }
 
-    const refreshPhoneApiCheck = () => {
-        if(applicantPhone && applicantPhone.indexOf('_') == -1) {
+    const refreshPhoneApiCheck = (e) => {
+        if(e.target.value && e.target.value.indexOf('_') == -1) {
             resetSearchCustomerSearchApiInitiate()
         }
     }
 
-    const refreshEmailApiCheck = () => {
-        if(applicantEmail) {
+    const refreshEmailApiCheck = (e) => {
+        if(e.target.value) {
             resetSearchCustomerSearchApiInitiate()
         }
     }
@@ -199,7 +200,7 @@ function HomeScreen(props) {
                                         autoFocus: true
                                     }}
                                     validationResult={validationResult}
-                                    handleChange={(e) => {refreshEmailApiCheck()}}
+                                    handleChange={(e) => {refreshEmailApiCheck(e)}}
                                     onBlur={(e)=> {setApplicantEmail(e.target.value)}}
                                 />
                             </Form.Group>
@@ -222,7 +223,7 @@ function HomeScreen(props) {
                                         'empty': "Please enter Phone number"
                                     }}
                                     validationResult={validationResult}
-                                    handleChange={() => {refreshPhoneApiCheck()}}
+                                    handleChange={(e) => {refreshPhoneApiCheck(e)}}
                                     onBlur={(e)=> {setApplicantPhone(e.target.value)}}
                                 />
                             </Form.Group>
