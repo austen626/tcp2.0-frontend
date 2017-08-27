@@ -15,7 +15,6 @@ function AddDealer(props) {
     const {
         history,
         customer,
-        isCustomerFound,
         appFillStatus,
         emailValidate,
         actionLoading,
@@ -118,7 +117,7 @@ function AddDealer(props) {
                                 />
                             </Form.Group>
 
-                            {(appFillStatus == "in_app" || isCustomerFound) &&
+                            {(appFillStatus == "in_app") &&
                             <>
                                 <Form.Group className="mb-18">
                                     <Input
@@ -188,7 +187,7 @@ function AddDealer(props) {
                                 />
                             </Form.Group>
 
-                            {(appFillStatus == "in_app" || isCustomerFound) &&
+                            {(appFillStatus == "in_app") &&
                             <>
                                 <Form.Group className="mb-18">
                                     <Input
@@ -838,7 +837,7 @@ function AddDealer(props) {
                                     <td><span><b>Address: </b> {customer.main_app.street} {customer.main_app.city} {customer.main_app.state} {customer.main_app.zip}</span></td>
                                     <td>
                                         {customer.co_enabled ? 
-                                            <span>{customer.co_app.street} {customer.main_app.city} {customer.main_app.state} {customer.main_app.zip}</span> 
+                                            <span>{customer.co_app.street} {customer.co_app.city} {customer.co_app.state} {customer.co_app.zip}</span> 
                                             : 
                                             appFillStatus == "in_app" ?                                      
                                                 // <button className="btn secondary" type="submit" onClick={() => handleAddCoApp()}>Add Co-App</button>
@@ -925,7 +924,6 @@ function AddDealer(props) {
 const mapStateToProps = state => ({
     appFillStatus: state.sales.appFillStatus,
     customer: state.sales.customer,
-    isCustomerFound: state.sales.isCustomerFound,
     actionLoading: state.sales.actionLoading,
     emailValidate: state.sales.emailValidate
 });

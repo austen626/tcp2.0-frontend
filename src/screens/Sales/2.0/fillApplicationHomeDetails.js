@@ -83,7 +83,8 @@ function AddDealer(props) {
                         "years_there_first": customer.co_enabled ? data.co_years_there_first : null,
                         "monthly_rent_mortgage_payment": customer.co_enabled ? data.co_monthly_rent_mortgage_payment : null,
                         "have_co_applicant_with_same_answers": customer.co_enabled ? data.have_co_applicant_with_same_answers : null
-                    }
+                    },
+                    invite_status: "COMPLETED"
                 }
 
                 updateCustomer(history, '/applyApplicationEmployement', temp_customer)
