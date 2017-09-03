@@ -453,6 +453,7 @@ export function submiCreditApplication(history, path, data) {
 export function submiCreditApplicationByMail(history, data) { 
 
     let temp_data = {
+        nortridge_cif_number: data.main_app.nortridge_cif_number ? data.main_app.nortridge_cif_number : null,
         customer_id: data.main_app.id ? data.main_app.id : 0,
         customer_email: data.main_app.email,
         customer_phone: data.main_app.cell_phone,
