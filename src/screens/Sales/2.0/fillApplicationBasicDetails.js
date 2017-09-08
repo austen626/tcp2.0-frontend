@@ -24,203 +24,203 @@ function AddDealer(props) {
 
             {
                 label: "Alabama",
-                value: "Alabama"
+                value: "AL"
             },
             {
                 label: "Alaska",
-                value: "Alaska"
+                value: "AK"
             },
             {
                 label: "Arizona",
-                value: "Arizona"
+                value: "AZ"
             },
             {
                 label: "Arkansas",
-                value: "Arkansas"
+                value: "AR"
             },
             {
                 label: "California",
-                value: "California"
+                value: "CA"
             },
             {
                 label: "Colorado",
-                value: "Colorado"
+                value: "CO"
             },
             {
                 label: "Connecticut",
-                value: "Connecticut"
+                value: "CT"
             },
             {
                 label: "Delaware",
-                value: "Delaware"
+                value: "DE"
             },
             {
                 label: "Florida",
-                value: "Florida"
+                value: "FL"
             },
             {
                 label: "Georgia",
-                value: "Georgia"
+                value: "GA"
             },
             {
                 label: "Idaho",
-                value: "Idaho"
+                value: "ID"
             },
             {
                 label: "Hawaii",
-                value: "Hawaii"
+                value: "HI"
             },
             {
                 label: "Illinois",
-                value: "Illinois"
+                value: "IL"
             },
             {
                 label: "Indiana",
-                value: "Indiana"
+                value: "IN"
             },
             {
                 label: "Iowa",
-                value: "Iowa"
+                value: "IA"
             },
             {
                 label: "Kansas",
-                value: "Kansas"
+                value: "KS"
             },
             {
                 label: "Kentucky",
-                value: "Kentucky"
+                value: "KY"
             },
             {
                 label: "Louisiana",
-                value: "Louisiana"
+                value: "LA"
             },
             {
                 label: "Maine",
-                value: "Maine"
+                value: "ME"
             },
             {
                 label: "Maryland",
-                value: "Maryland"
+                value: "MD"
             },
             {
                 label: "Massachusetts",
-                value: "Massachusetts"
+                value: "MA"
             },
             {
                 label: "Michigan",
-                value: "Michigan"
+                value: "MI"
             },
             {
                 label: "Minnesota",
-                value: "Minnesota"
+                value: "MN"
             },
             {
                 label: "Mississippi",
-                value: "Mississippi"
+                value: "MS"
             },
             {
                 label: "Missouri",
-                value: "Missouri"
+                value: "MO"
             },
             {
                 label: "Montana",
-                value: "Montana"
+                value: "MT"
             },
             {
                 label: "Nebraska",
-                value: "Nebraska"
+                value: "NE"
             },
             {
                 label: "Nevada",
-                value: "Nevada"
+                value: "NV"
             },
             {
                 label: "New Hampshire",
-                value: "New Hampshire"
+                value: "NH"
             },
             {
                 label: "New Jersey",
-                value: "New Jersey"
+                value: "NJ"
             },
             {
                 label: "New Mexico",
-                value: "New Mexico"
+                value: "NM"
             },
             {
                 label: "New York",
-                value: "New York"
+                value: "NY"
             },
             {
                 label: "North Carolina",
-                value: "North Carolina"
+                value: "NC"
             },
             {
                 label: "North Dakota",
-                value: "North Dakota"
+                value: "ND"
             },
             {
                 label: "Ohio",
-                value: "Ohio"
+                value: "OH"
             },
             {
                 label: "Oklahoma",
-                value: "Oklahoma"
+                value: "OK"
             },
             {
                 label: "Oregon",
-                value: "Oregon"
+                value: "OR"
             },
             {
                 label: "Pennsylvania",
-                value: "Pennsylvania"
+                value: "PA"
             },
             {
                 label: "Rhode Island",
-                value: "Rhode Island"
+                value: "RI"
             },
             {
                 label: "South Carolina",
-                value: "South Carolina"
+                value: "SC"
             },
             {
                 label: "South Dakota",
-                value: "South Dakota"
+                value: "SD"
             },
             {
                 label: "Tennessee",
-                value: "Tennessee"
+                value: "TN"
             },
             {
                 label: "Texas",
-                value: "Texas"
+                value: "TX"
             },
             {
                 label: "Utah",
-                value: "Utah"
+                value: "UT"
             },
             {
                 label: "Vermont",
-                value: "Vermont"
+                value: "VT"
             },
             {
                 label: "Virginia",
-                value: "Virginia"
+                value: "VA"
             },
             {
                 label: "Washington",
-                value: "Washington"
+                value: "WA"
             },
             {
                 label: "West Virginia",
-                value: "West Virginia"
+                value: "WV"
             },
             {
                 label: "Wisconsin",
-                value: "Wisconsin"
+                value: "WI"
             },
             {
                 label: "Wyoming",
-                value: "Wyoming"
+                value: "WY"
             }
         ]
     } = props;
