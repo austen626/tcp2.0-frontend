@@ -464,14 +464,15 @@ function AddDealer(props) {
                                     name="zip"
                                     type="text"
                                     defaultValue={tempZip}
-                                    regex="^\d{5}(?:\d{4})?$"
+                                    regex="^\d{5}(?:-\d{4})?$"
                                     label="Zip Code"
                                     defaultText="Zip Code"
                                     required={true}
                                     error={{
-                                        'invalid': " sadsada ",
+                                        'invalid': " ",
                                         'empty': " "
                                     }}
+                                    isZipcode={true}
                                     validationResult={validationResult}
                                     handleChange={(e)=>setTempZip(e.target.value)}
                                 />
@@ -718,7 +719,7 @@ function AddDealer(props) {
                                         } : {
                                             defaultValue: coTempZip
                                         })}
-                                        regex="^\d{5}(?:\d{4})?$"
+                                        regex="^\d{5}(?:-\d{4})?$"
                                         label="Zip Code"
                                         defaultText="Zip Code"
                                         required={haveCoApplicant ? true : false}
@@ -726,6 +727,7 @@ function AddDealer(props) {
                                             'invalid': " ",
                                             'empty': " "
                                         }}
+                                        isZipcode={true}
                                         validationResult={validationResult}
                                     />
                                 </Form.Group>
