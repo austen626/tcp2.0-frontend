@@ -464,12 +464,12 @@ function AddDealer(props) {
                                     name="zip"
                                     type="text"
                                     defaultValue={tempZip}
-                                    regex="^[0-9]{5}$"
+                                    regex="^\d{5}(?:\d{4})?$"
                                     label="Zip Code"
                                     defaultText="Zip Code"
                                     required={true}
                                     error={{
-                                        'invalid': " ",
+                                        'invalid': " sadsada ",
                                         'empty': " "
                                     }}
                                     validationResult={validationResult}
@@ -718,7 +718,7 @@ function AddDealer(props) {
                                         } : {
                                             defaultValue: coTempZip
                                         })}
-                                        regex="^[0-9]{5}$"
+                                        regex="^\d{5}(?:\d{4})?$"
                                         label="Zip Code"
                                         defaultText="Zip Code"
                                         required={haveCoApplicant ? true : false}

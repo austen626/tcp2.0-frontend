@@ -346,7 +346,7 @@ function AddDealer(props) {
                                     <Input
                                         name="zip"
                                         type="text"
-                                        regex="^[0-9]{5}$"
+                                        regex="^\d{5}(?:\d{4})?$"
                                         value={customer.main_app.zip}
                                         label="Zip Code"
                                         defaultText="Zip Code"
@@ -485,7 +485,7 @@ function AddDealer(props) {
                                                 name="co_zip"
                                                 type="text"
                                                 defaultValue={customer.co_app.zip}
-                                                regex="^[0-9]{5}$"
+                                                regex="^\d{5}(?:\d{4})?$"
                                                 label="Zip Code"
                                                 defaultText="Zip Code"
                                             />

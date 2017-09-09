@@ -270,10 +270,28 @@ export default function(state = INIT_STATE, action){
                         ...searchCustomer,
                         main_app: {
                             ...searchCustomer.main_app,
+                            ...(searchCustomer.main_app.dobM && searchCustomer.main_app.dobM !== "" && {
+                                dobM: searchCustomer.main_app.dobM > 10 ? searchCustomer.main_app.dobM : "0"+searchCustomer.main_app.dobM,
+                            }),
+                            ...(searchCustomer.main_app.dobD && searchCustomer.main_app.dobD !== "" && {
+                                dobD: searchCustomer.main_app.dobD > 10 ? searchCustomer.main_app.dobD : "0"+searchCustomer.main_app.dobD,
+                            }),
+                            ...(searchCustomer.main_app.state && searchCustomer.main_app.state !== "" && {
+                                state: searchCustomer.main_app.state.toUpperCase()
+                            }),
                             ssn: null
                         },
                         co_app: {
                             ...searchCustomer.co_app,
+                            ...(searchCustomer.co_app.dobM && searchCustomer.co_app.dobM !== "" && {
+                                dobM: searchCustomer.co_app.dobM > 10 ? searchCustomer.co_app.dobM : "0"+searchCustomer.co_app.dobM,
+                            }),
+                            ...(searchCustomer.co_app.dobD && searchCustomer.co_app.dobD !== "" && {
+                                dobD: searchCustomer.co_app.dobD > 10 ? searchCustomer.co_app.dobD : "0"+searchCustomer.co_app.dobD,
+                            }),
+                            ...(searchCustomer.co_app.state && searchCustomer.co_app.state !== "" && {
+                                state: searchCustomer.co_app.state.toUpperCase()
+                            }),
                             ssn: null
                         },
                         ssn: searchCustomer.main_app.ssn, 
