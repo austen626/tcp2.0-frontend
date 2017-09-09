@@ -67,7 +67,8 @@ const Input = (props) => {
         isAmount = false,
         isDate = false,
         isHidden = false,
-        isMatched = false
+        isMatched = false,
+        isZipcode = false
     } = props;
 
     const [ focussed, setFocussed ] = useState(!!value || !!defaultValue);
@@ -98,7 +99,13 @@ const Input = (props) => {
 
     const handleInputChange = (event) => {
 
-            updateInputValue(event.currentTarget && event.currentTarget.value);
+        let value = event.currentTarget && event.currentTarget.value
+
+        if(isZipcode && value.length > 5 && value.indexOf('-') == -1) {
+            value = value.substring(0, 5) + "-" + value.substring(5);
+        }
+
+        updateInputValue(value);
 
         typeof handleChange === 'function' && handleChange(event);
     };
