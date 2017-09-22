@@ -81,7 +81,8 @@ class TwoFAScreen extends Component {
                 {
                     const loginUserData = await this.props.getMeData();
                     if(loginUserData) {
-                        localStorage.setItem('dealer_name', loginUserData.dealer_name);
+                        localStorage.setItem('dealer_name', loginUserData.dealer_name ? loginUserData.dealer_name : `${loginUserData.first_name} ${loginUserData.last_name}`);
+                        localStorage.setItem('email', loginUserData.email);
                     }
 
                     this.props.history.replace('/');

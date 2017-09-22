@@ -1,5 +1,6 @@
 // TCP 2.0
 import API from '../../api';
+import { addEvent } from '../../firebase/firebase';
 import { pushNotification } from 'utils/notification';
 import { message as notificationMsg } from 'shared/constant';
 
@@ -59,6 +60,7 @@ export function updateStaff(history, data) {
                 type: UPDATE_STAFFS_REQUEST_SUCCESS,
                 payload: ''
             })
+            addEvent('staff_updated', 'Staff data updated', {'staff_id': data.id});
             pushNotification(notificationMsg.REQUEST_SUCCESS, 'success', 'TOP_RIGHT', 3000);
             history && history.push('/dealer/staff');
         } catch (error) {
@@ -82,6 +84,7 @@ export function addStaff(history, data) {
             dispatch({
                 type: ADD_STAFFS_REQUEST_SUCCESS,
             })
+            addEvent('staff_added', 'Staff data Added', {'staff_id': "new"});
             pushNotification(notificationMsg.REQUEST_SUCCESS, 'success', 'TOP_RIGHT', 3000);
             history && history.push('/dealer/staff');
         } catch (error) {
@@ -95,6 +98,7 @@ export function addStaff(history, data) {
 
 
 export function deleteStaff(id) {
+
     return async function(dispatch) {
         dispatch({
             type: DELETE_STAFFS_REQUEST,
@@ -105,6 +109,7 @@ export function deleteStaff(id) {
                 type: DELETE_STAFFS_REQUEST_SUCCESS,
                 payload: id
             })
+            addEvent('staff_deleted', 'Staff data Deleted', {'staff_id': id});
             pushNotification(notificationMsg.REQUEST_SUCCESS, 'success', 'TOP_RIGHT', 3000);
         } catch (error) {
             pushNotification(error.response.data.message, 'error', 'TOP_RIGHT', 3000);

@@ -31,7 +31,7 @@ function HomeScreen(props) {
     const [applicantEmail, setApplicantEmail] = useState(null);
     const [applicantPhone, setApplicantPhone] = useState(null);
 
-    
+
     useEffect(() => {
         resetSearchCustomerSearchApiInitiate()
     }, []);
@@ -40,19 +40,19 @@ function HomeScreen(props) {
     useEffect(() => {
         let temp_phone = null;
         let temp_email = null;
-        
-        if(applicantPhone && applicantPhone != "" && applicantPhone.indexOf('_') == -1) {
+
+        if (applicantPhone && applicantPhone != "" && applicantPhone.indexOf('_') == -1) {
             temp_phone = applicantPhone;
         }
-        
-        if(applicantEmail && applicantEmail != "") {
+
+        if (applicantEmail && applicantEmail != "") {
             temp_email = applicantEmail;
         }
 
-        if(!searchCustomerApiInitiate && (applicantEmail || (applicantPhone && applicantPhone.indexOf('_') == -1))) {
-            searchCustomer({ email: temp_email, phone: temp_phone }).then ( res => {
-                if(!res && customer_search_result.length == 0) {
-                    pushNotification("No match found", 'error', 'TOP_RIGHT', 3000); 
+        if (!searchCustomerApiInitiate && (applicantEmail || (applicantPhone && applicantPhone.indexOf('_') == -1))) {
+            searchCustomer({ email: temp_email, phone: temp_phone }).then(res => {
+                if (!res && customer_search_result.length == 0) {
+                    pushNotification("No match found", 'error', 'TOP_RIGHT', 3000);
                 }
             })
         }
@@ -68,26 +68,24 @@ function HomeScreen(props) {
             ...customer_search,
             id: customer_search.main_app.id,
         }
-        if(customer_search.invite_status == "COMPLETED" || customer_search.invite_status == "SENT") {
+        if (customer_search.invite_status == "COMPLETED" || customer_search.invite_status == "SENT") {
 
             temp_customer = {
                 ...temp_customer,
-                main_app : {
+                main_app: {
                     ...temp_customer.main_app,
                     additional_income_status: temp_customer.main_app.additional_income && temp_customer.main_app.additional_income != '0' ? "yes" : "no"
                 },
-                co_app : {
+                co_app: {
                     ...temp_customer.co_app,
                     additional_income_status: temp_customer.co_enabled && temp_customer.co_app.additional_income && temp_customer.co_app.additional_income != '0' ? "yes" : "no"
                 }
             }
 
-            if(customer_search.invite_status == "COMPLETED") 
-            {
+            if (customer_search.invite_status == "COMPLETED") {
                 updateApplicationFilledStatus('in_app', null, null);
             }
-            else
-            {
+            else {
                 updateApplicationFilledStatus('send_link', null, null);
             }
 
@@ -98,26 +96,26 @@ function HomeScreen(props) {
     }
 
     const handleSubmit = evt => {
-        
+
         evt.preventDefault();
 
         const formData = getFromData(evt);
 
         setValidationResult(formData.validationResult);
 
-        if(!searchCustomerApiInitiate && !formData.validationResult) {
+        if (!searchCustomerApiInitiate && !formData.validationResult) {
 
-            if(applicantEmail || (applicantPhone && applicantPhone.indexOf('_') == -1)) {
-                searchCustomer({email: applicantEmail, phone: (applicantPhone && applicantPhone.indexOf('_') !== -1) ? null : applicantPhone})
+            if (applicantEmail || (applicantPhone && applicantPhone.indexOf('_') == -1)) {
+                searchCustomer({ email: applicantEmail, phone: (applicantPhone && applicantPhone.indexOf('_') !== -1) ? null : applicantPhone })
             }
 
-        } else if((customer_search_result.length > 0) && customer.main_app.id == undefined && !formData.validationResult) {           
-            
+        } else if ((customer_search_result.length > 0) && customer.main_app.id == undefined && !formData.validationResult) {
+
             pushNotification("Please select applicant", 'error', 'TOP_RIGHT', 3000);
 
         } else {
 
-            if(!formData.validationResult) {
+            if (!formData.validationResult) {
 
                 let data = formData.formData
 
@@ -126,7 +124,7 @@ function HomeScreen(props) {
                     id: 0,
                     "main_app": {
                         ...customer.main_app,
-                        "name": data.first_name+" "+customer.main_app.last_name,
+                        "name": data.first_name + " " + customer.main_app.last_name,
                         "email": data.email,
                         "cell_phone": data.cell_phone,
                         "first_name": data.first_name,
@@ -147,13 +145,13 @@ function HomeScreen(props) {
     }
 
     const refreshPhoneApiCheck = (e) => {
-        if(e.target.value && e.target.value.indexOf('_') == -1) {
+        if (e.target.value && e.target.value.indexOf('_') == -1) {
             resetSearchCustomerSearchApiInitiate()
         }
     }
 
     const refreshEmailApiCheck = (e) => {
-        if(e.target.value) {
+        if (e.target.value) {
             resetSearchCustomerSearchApiInitiate()
         }
     }
@@ -164,10 +162,10 @@ function HomeScreen(props) {
 
             <Header isHome={true} history={history} avatar={avatar}>
                 {localStorage.getItem('role') && localStorage.getItem('role').indexOf('dealer') !== -1 &&
-                    <img src={IconHome} alt="home" className="icon-home" onClick={()=>handleHomeClick()} />
+                    <img src={IconHome} alt="home" className="icon-home" onClick={() => handleHomeClick()} />
                 }
             </Header>
-            
+
 
             <form onSubmit={(e) => handleSubmit(e)} noValidate>
 
@@ -175,7 +173,7 @@ function HomeScreen(props) {
                     <p className="title">ENTER CUSTOMER INFORMATION</p>
                     <p className="sub-title">Please begin by entering your customer's email address and/or phone number. If they are already in TCP's database, the customer will appear at the bottom of the screen for you to select. Otherwise, please enter an email address and/or phone number, first name and last name to proceed.</p>
                 </div>
-                
+
                 <div className="container">
                     <div className="styled-form home-form">
                         <div className="box color-box">
@@ -189,8 +187,8 @@ function HomeScreen(props) {
                                     {...(isCustomerFound ? {
                                         value: customer.main_app.email
                                     } : {
-                                        defaultValue: applicantEmail
-                                    })}
+                                            defaultValue: applicantEmail
+                                        })}
                                     required={true}
                                     error={{
                                         'invalid': "Please enter valid Email address",
@@ -200,8 +198,8 @@ function HomeScreen(props) {
                                         autoFocus: true
                                     }}
                                     validationResult={validationResult}
-                                    handleChange={(e) => {refreshEmailApiCheck(e)}}
-                                    onBlur={(e)=> {setApplicantEmail(e.target.value)}}
+                                    handleChange={(e) => { refreshEmailApiCheck(e) }}
+                                    onBlur={(e) => { setApplicantEmail(e.target.value) }}
                                 />
                             </Form.Group>
                             <Form.Group className="home-input mb-18">
@@ -213,8 +211,8 @@ function HomeScreen(props) {
                                     {...(isCustomerFound ? {
                                         value: customer.main_app.cell_phone
                                     } : {
-                                        defaultValue: applicantPhone
-                                    })}
+                                            defaultValue: applicantPhone
+                                        })}
                                     regex="^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$"
                                     mask="(999) 999-9999"
                                     required={true}
@@ -223,8 +221,8 @@ function HomeScreen(props) {
                                         'empty': "Please enter Phone number"
                                     }}
                                     validationResult={validationResult}
-                                    handleChange={(e) => {refreshPhoneApiCheck(e)}}
-                                    onBlur={(e)=> {setApplicantPhone(e.target.value)}}
+                                    handleChange={(e) => { refreshPhoneApiCheck(e) }}
+                                    onBlur={(e) => { setApplicantPhone(e.target.value) }}
                                 />
                             </Form.Group>
                         </div>
@@ -237,8 +235,8 @@ function HomeScreen(props) {
                                 {...(isCustomerFound ? {
                                     value: customer.main_app.first_name
                                 } : {
-                                    defaultValue: null
-                                })}
+                                        defaultValue: null
+                                    })}
                                 required={true}
                                 error={{
                                     'empty': " "
@@ -255,8 +253,8 @@ function HomeScreen(props) {
                                 {...(isCustomerFound ? {
                                     value: customer.main_app.last_name
                                 } : {
-                                    defaultValue: null
-                                })}
+                                        defaultValue: null
+                                    })}
                                 required={true}
                                 error={{
                                     'empty': " "
@@ -264,16 +262,16 @@ function HomeScreen(props) {
                                 validationResult={validationResult}
                             />
                         </Form.Group>
-                        
+
                     </div>
                 </div>
                 <div className="match-found-result">
-                    { customer_search_result && customer_search_result.map((customer_search) => (
+                    {customer_search_result && customer_search_result.map((customer_search) => (
                         <div className="match-found-container">
-                            <div className="title">Match Found <img src={IconRight} style={{marginLeft: 10}} /></div>
-                            <div 
-                                className="details" 
-                                style={{cursor: "pointer"}} 
+                            <div className="title">Match Found <img src={IconRight} style={{ marginLeft: 10 }} /></div>
+                            <div
+                                className="details"
+                                style={{ cursor: "pointer" }}
                                 onClick={() => {
                                     selectCustomer(customer_search)
                                     triggerNextPage(customer_search)
@@ -294,12 +292,12 @@ function HomeScreen(props) {
                                 </div>
                             </div>
                         </div>
-                    ))} 
+                    ))}
                 </div>
                 <div className="footer-container">
                     {actionLoading ?
                         <button className="btn secondary" type="submit" disabled >Searching...</button>
-                    :
+                        :
                         <button className="btn secondary" type="submit" >Next</button>
                     }
                 </div>

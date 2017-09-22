@@ -1,4 +1,5 @@
 import API from '../../api';
+import { addEvent } from '../../firebase/firebase';
 import { pushNotification } from 'utils/notification';
 import { message } from 'shared/constant'
 export const SALES_LIST = "SALES_LIST";
@@ -434,14 +435,11 @@ export function submiCreditApplication(history, path, data) {
                 type: SUBMIT_CREDIT_APP_SUCCESS,
                 payload: ''
             })
-
+            addEvent('creadit_application_submited', 'Credit application submited', {'creadit_app_id': temp_data.id});
             pushNotification("Application Updated Successfully", 'success', 'TOP_RIGHT', 3000);
             history && history.push(path);
-
         } catch (error) {
-
             pushNotification(error.response.data.message, 'error', 'TOP_RIGHT', 3000);
-
             dispatch({
                 type: SUBMIT_CREDIT_APP_FAILED
             })
@@ -473,6 +471,7 @@ export function submiCreditApplicationByMail(history, data) {
             dispatch({
                 type: SEND_APP_LINK_SUCCESS,
             })
+            addEvent('creadit-application', 'credit-application-mail-send', {'customer_id': temp_data.customer_id});
             pushNotification("Application Send Successfully", 'success', 'TOP_RIGHT', 3000);
             history && history.push('/applyApplicationSummary');
         } catch (error) {
@@ -537,18 +536,14 @@ export function customerResponseSubmit(history, data) {
                 type: SUBMIT_CUSTOMER_REPONSE_SUCCESS,
                 payload: ''
             })
-
+            addEvent('creadit_application_submited', 'Credit application submited', {'creadit_app_id': temp_data.id});
             pushNotification("Application Updated Successfully", 'success', 'TOP_RIGHT', 3000);
             history && history.push('/thankyou')
-
         } catch (error) {
-
             pushNotification(error.response.data.message, 'error', 'TOP_RIGHT', 3000);
-
             dispatch({
                 type: SUBMIT_CUSTOMER_REPONSE_FAILED
             })
-
             history && history.push('/basic')
         }       
     }

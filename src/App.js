@@ -3,6 +3,7 @@ import React from 'react';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import history from './history';
 import NetworkDetector from './NetworkDetector';
+
 import LoginScreen from './screens/Auth/Login';
 import RegisterScreen from './screens/Auth/Register';
 import TwoFA from './screens/Auth/TwoFA';
@@ -75,6 +76,8 @@ import './assets/css/index.scss';
 
 
 import { getSearchValue } from 'utils/formUtils';
+
+
 
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
