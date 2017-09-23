@@ -367,7 +367,7 @@ export function validateEmailAddress(email) {
             dispatch({
                 type: VALIDATE_EMAIL_FAILED,
             })
-            // pushNotification("Invalid email address", 'error', 'TOP_RIGHT', 3000);   
+            pushNotification("Invalid email address", 'error', 'TOP_RIGHT', 3000);   
         }    
     }
 }
@@ -435,7 +435,7 @@ export function submiCreditApplication(history, path, data) {
                 type: SUBMIT_CREDIT_APP_SUCCESS,
                 payload: ''
             })
-            addEvent('creadit_application_submited', 'Credit application submited', {'creadit_app_id': temp_data.id});
+            addEvent('credit_application_completed', 'credit-application-completed-success', {'credit_app_id': temp_data.id});
             pushNotification("Application Updated Successfully", 'success', 'TOP_RIGHT', 3000);
             history && history.push(path);
         } catch (error) {
@@ -443,6 +443,7 @@ export function submiCreditApplication(history, path, data) {
             dispatch({
                 type: SUBMIT_CREDIT_APP_FAILED
             })
+            addEvent('credit_application_completed', 'credit-application-completed-failed', {'credit_app_id': temp_data.id});
         }       
     }
 }
@@ -471,7 +472,7 @@ export function submiCreditApplicationByMail(history, data) {
             dispatch({
                 type: SEND_APP_LINK_SUCCESS,
             })
-            addEvent('creadit-application', 'credit-application-mail-send', {'customer_id': temp_data.customer_id});
+            addEvent('credit_application_mail_sent', 'credit-application-mail-sent-success', {'customer_id': temp_data.id});
             pushNotification("Application Send Successfully", 'success', 'TOP_RIGHT', 3000);
             history && history.push('/applyApplicationSummary');
         } catch (error) {
@@ -479,6 +480,7 @@ export function submiCreditApplicationByMail(history, data) {
                 type: SEND_APP_LINK_FAILED,
             })
             pushNotification("Error while sending mail", 'error', 'TOP_RIGHT', 3000);   
+            addEvent('credit_application_mail_sent', 'credit-application-mail-sent-failed', {'customer_id': temp_data.id});
         } 
     }
 }
@@ -494,10 +496,12 @@ export function getCustomerApiInitiate(data) {
                 type: GET_CUSTOMER_SUCCESS,
                 payload: response.data && response.data.data && response.data.data.main_app && response.data.data.main_app.id !== '' ? response.data.data : null 
             })
+            addEvent('credit_application_mail_open', 'credit-application-mail-open-success', {'customer_id': data.id});
         } catch (error) {
             dispatch({
                 type: GET_CUSTOMER_FAILED,
             }) 
+            addEvent('credit_application_mail_open', 'credit-application-mail-open-failed', {'customer_id': data.id});
         }    
     }
 }
@@ -536,7 +540,7 @@ export function customerResponseSubmit(history, data) {
                 type: SUBMIT_CUSTOMER_REPONSE_SUCCESS,
                 payload: ''
             })
-            addEvent('creadit_application_submited', 'Credit application submited', {'creadit_app_id': temp_data.id});
+            addEvent('credit_application_completed_by_customer', 'credit-application-completed-by-customer-success', {'credit_app_id': temp_data.id});
             pushNotification("Application Updated Successfully", 'success', 'TOP_RIGHT', 3000);
             history && history.push('/thankyou')
         } catch (error) {
@@ -544,6 +548,7 @@ export function customerResponseSubmit(history, data) {
             dispatch({
                 type: SUBMIT_CUSTOMER_REPONSE_FAILED
             })
+            addEvent('credit_application_completed_by_customer', 'credit-application-completed-by-customer-failed', {'credit_app_id': temp_data.id});
             history && history.push('/basic')
         }       
     }
