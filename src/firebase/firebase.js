@@ -22,12 +22,9 @@ const addEvent = (event, action, obj) => {
         'timestamp': Date.now(),
         'action': action,
         'ip': publicIp.v4(),
-        'action_by': {
-            'id': "N/A",
-            'role': localStorage.getItem('role'),
-            'name': localStorage.getItem('dealer_name'),
-            'email': localStorage.getItem('email')
-        },
+        'action_by_role': localStorage.getItem('role'),
+        'action_by_name': localStorage.getItem('dealer_name'),
+        'action_by_email': localStorage.getItem('email'),
         ...obj
     });
 }
