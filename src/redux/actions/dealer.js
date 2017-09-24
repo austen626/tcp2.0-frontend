@@ -111,14 +111,14 @@ export function deleteStaff(id) {
                 type: DELETE_STAFFS_REQUEST_SUCCESS,
                 payload: id
             })
-            addEvent('staff_updated', 'staff-data-updated-success', {'staff_id': data.id});
+            addEvent('staff_updated', 'staff-data-updated-success', {'staff_id': id});
             pushNotification(notificationMsg.REQUEST_SUCCESS, 'success', 'TOP_RIGHT', 3000);
         } catch (error) {
             pushNotification(error.response.data.message, 'error', 'TOP_RIGHT', 3000);
             dispatch({
                 type: DELETE_STAFFS_REQUEST_FAILED,
             })
-            addEvent('staff_updated', 'staff-data-updated-failed', {'staff_id': data.id});
+            addEvent('staff_updated', 'staff-data-updated-failed', {'staff_id': id});
         }       
     }
 }
