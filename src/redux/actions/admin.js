@@ -329,14 +329,14 @@ export function deleteDealer(id) {
                 type: DELETE_DEALER_REQUEST_SUCCESS,
                 payload: id
             })
-            addEvent('dealer_deleted', 'dealer-data-deleted-success', {'dealer_id': data.id});
+            addEvent('dealer_deleted', 'dealer-data-deleted-success', {'dealer_id': id});
             pushNotification(notificationMsg.REQUEST_SUCCESS, 'success', 'TOP_RIGHT', 3000);
         } catch (error) {
             pushNotification(error.response.data.message, 'error', 'TOP_RIGHT', 3000);
             dispatch({
                 type: DELETE_DEALER_REQUEST_FAILED,
             })
-            addEvent('dealer_deleted', 'dealer-data-deleted-failed', {'dealer_id': data.id});
+            addEvent('dealer_deleted', 'dealer-data-deleted-failed', {'dealer_id': id});
         }       
     }
 }
