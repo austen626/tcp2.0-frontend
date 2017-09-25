@@ -353,7 +353,7 @@ export default function(state = INIT_STATE, action){
         case VALIDATE_EMAIL_REQUEST:
             return {
                 ...state,
-                emailValidate: false,
+                emailValidate: true,
                 actionLoading: true,
             }
         case VALIDATE_EMAIL_SUCCESS:
@@ -365,7 +365,7 @@ export default function(state = INIT_STATE, action){
         case VALIDATE_EMAIL_FAILED:
             return {
                 ...state,                
-                emailValidate: false,
+                emailValidate: true,
                 actionLoading: false,
             }
 
