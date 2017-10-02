@@ -19,6 +19,8 @@ import {
 
 
     SET_SEARCH_CUSTOMER_SEARCH_REQUEST,
+    RESET_SEARCH_CUSTOMER_FORM_REQUEST,
+    REFRESH_CHECK_PAGE_LOAD,
 
     SET_CUSTOMER_SEARCH_REQUEST,
 
@@ -88,6 +90,7 @@ const INIT_STATE = {
 
 
 
+    refreshCheck: false,
     customer_search_result: [],
     customer: {main_app: {}, co_app: {}, invite_status: null, ssn: null, co_ssn: null},
     isCustomerFound: false,
@@ -250,6 +253,20 @@ export default function(state = INIT_STATE, action){
                 searchCustomerApiInitiate: false,
                 emailValidate: true
             }
+        case RESET_SEARCH_CUSTOMER_FORM_REQUEST:
+            return {
+                ...state,
+                customer_search_result: [],
+                customer: temp_customer,
+                isCustomerFound: false,
+            }
+        case REFRESH_CHECK_PAGE_LOAD:
+            return {
+                ...state,
+                refreshCheck: true
+            }
+
+
         
         case GET_SEARCH_CUSTOMER_REQUEST:
             

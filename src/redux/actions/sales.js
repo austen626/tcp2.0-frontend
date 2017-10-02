@@ -47,6 +47,8 @@ export const SET_INCOMPLETE_REMINDER_ERROR = "SET_INCOMPLETE_REMINDER_ERROR";
 
 
 export const SET_SEARCH_CUSTOMER_SEARCH_REQUEST = "SET_SEARCH_CUSTOMER_SEARCH_REQUEST";
+export const RESET_SEARCH_CUSTOMER_FORM_REQUEST = "RESET_SEARCH_CUSTOMER_FORM_REQUEST";
+export const REFRESH_CHECK_PAGE_LOAD = "REFRESH_CHECK_PAGE_LOAD";
 
 export const SET_CUSTOMER_SEARCH_REQUEST = "SET_CUSTOMER_SEARCH_REQUEST";
 
@@ -324,6 +326,24 @@ export function resetSearchCustomerSearchApiInitiate() {
     return async function(dispatch) {
         dispatch({
             type: SET_SEARCH_CUSTOMER_SEARCH_REQUEST,
+        })       
+    }
+}
+
+
+export function resetSearchCustomerForm() {
+    return async function(dispatch) {
+        dispatch({
+            type: RESET_SEARCH_CUSTOMER_FORM_REQUEST,
+        })       
+    }
+}
+
+
+export function refreshSearchCustomerForm() {
+    return async function(dispatch) {
+        dispatch({
+            type: REFRESH_CHECK_PAGE_LOAD,
         })       
     }
 }
