@@ -7,7 +7,7 @@ import Input from '../../components/commons/input';
 import { IconHome, IconRight } from '../../assets/images';
 
 import { getFromData } from '../../components/commons/utility';
-import { updateApplicationFilledStatus, searchCustomer, updateCustomer, validateEmailAddress, selectCustomer, resetSearchCustomerSearchApiInitiate } from '../../redux/actions/sales';
+import { updateApplicationFilledStatus, searchCustomer, updateCustomer, refreshSearchCustomerForm, validateEmailAddress, resetSearchCustomerForm, selectCustomer, resetSearchCustomerSearchApiInitiate } from '../../redux/actions/sales';
 
 function HomeScreen(props) {
 
@@ -16,6 +16,7 @@ function HomeScreen(props) {
         avatar,
         customer_search_result,
         customer,
+        refreshCheck,
         isCustomerFound,
         actionLoading,
         searchCustomer,
@@ -24,16 +25,27 @@ function HomeScreen(props) {
         validateEmailAddress,
         searchCustomerApiInitiate,
         updateApplicationFilledStatus,
+        resetSearchCustomerForm,
+        refreshSearchCustomerForm,
         resetSearchCustomerSearchApiInitiate
     } = props;
 
     const [validationResult, setValidationResult] = useState(null);
     const [applicantEmail, setApplicantEmail] = useState(null);
     const [applicantPhone, setApplicantPhone] = useState(null);
+    const [clearCheck, setClearCheck] = useState(false);
 
+    console.log(clearCheck)
 
     useEffect(() => {
-        resetSearchCustomerSearchApiInitiate()
+        if (window.performance) {
+            if (performance.navigation.type == 1 && refreshCheck) {
+                resetSearchCustomerSearchApiInitiate()
+            }
+            else {
+                refreshSearchCustomerForm(true)
+            }
+        }
     }, []);
 
 
@@ -156,7 +168,6 @@ function HomeScreen(props) {
         }
     }
 
-
     return (
         <div className="sales">
 
@@ -184,11 +195,13 @@ function HomeScreen(props) {
                                     regex="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$"
                                     label="Applicant Email"
                                     defaultText="Applicant Email"
-                                    {...(isCustomerFound ? {
-                                        value: customer.main_app.email
-                                    } : {
-                                            defaultValue: applicantEmail
-                                        })}
+                                    // {...(isCustomerFound && {
+                                    //     value: customer.main_app.email
+                                    // })}
+                                    value = {customer ? customer.main_app.email : ''}
+                                    {...(clearCheck && {
+                                        value: ''
+                                    })}
                                     required={true}
                                     error={{
                                         'invalid': "Please enter valid Email address",
@@ -198,7 +211,10 @@ function HomeScreen(props) {
                                         autoFocus: true
                                     }}
                                     validationResult={validationResult}
-                                    handleChange={(e) => { refreshEmailApiCheck(e) }}
+                                    handleChange={(e) => { 
+                                        refreshEmailApiCheck(e)
+                                        setClearCheck(false)
+                                    }}
                                     onBlur={(e) => { setApplicantEmail(e.target.value) }}
                                 />
                             </Form.Group>
@@ -208,11 +224,13 @@ function HomeScreen(props) {
                                     type="hidden"
                                     label="Phone"
                                     defaultText="(123) 456-7890"
-                                    {...(isCustomerFound ? {
-                                        value: customer.main_app.cell_phone
-                                    } : {
-                                            defaultValue: applicantPhone
-                                        })}
+                                    // {...(isCustomerFound && {
+                                    //     value: customer.main_app.cell_phone
+                                    // })}
+                                    value = {customer ? customer.main_app.cell_phone : ''}
+                                    {...(clearCheck && {
+                                        value: ''
+                                    })}
                                     regex="^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$"
                                     mask="(999) 999-9999"
                                     required={true}
@@ -221,7 +239,10 @@ function HomeScreen(props) {
                                         'empty': "Please enter Phone number"
                                     }}
                                     validationResult={validationResult}
-                                    handleChange={(e) => { refreshPhoneApiCheck(e) }}
+                                    handleChange={(e) => { 
+                                        refreshPhoneApiCheck(e)
+                                        setClearCheck(false)
+                                    }}
                                     onBlur={(e) => { setApplicantPhone(e.target.value) }}
                                 />
                             </Form.Group>
@@ -232,15 +253,18 @@ function HomeScreen(props) {
                                 type="text"
                                 label="Applicant First Name"
                                 defaultText="Applicant First Name"
-                                {...(isCustomerFound ? {
-                                    value: customer.main_app.first_name
-                                } : {
-                                        defaultValue: null
-                                    })}
+                                // {...(isCustomerFound && {
+                                //     value: customer.main_app.first_name
+                                // })}
+                                value = {customer ? customer.main_app.first_name : ''}
+                                {...(clearCheck && {
+                                    value: ''
+                                })}
                                 required={true}
                                 error={{
                                     'empty': " "
                                 }}
+                                handleChange={() => setClearCheck(false) }
                                 validationResult={validationResult}
                             />
                         </Form.Group>
@@ -250,15 +274,18 @@ function HomeScreen(props) {
                                 type="text"
                                 label="Applicant Last Name"
                                 defaultText="Applicant Last Name"
-                                {...(isCustomerFound ? {
-                                    value: customer.main_app.last_name
-                                } : {
-                                        defaultValue: null
-                                    })}
+                                // {...(isCustomerFound && {
+                                //     value: customer.main_app.last_name
+                                // })}
+                                value = {customer ? customer.main_app.last_name : ''}
+                                {...(clearCheck && {
+                                    value: ''
+                                })}
                                 required={true}
                                 error={{
                                     'empty': " "
                                 }}
+                                handleChange={() => setClearCheck(false) }
                                 validationResult={validationResult}
                             />
                         </Form.Group>
@@ -295,6 +322,10 @@ function HomeScreen(props) {
                     ))}
                 </div>
                 <div className="footer-container">
+                    <button className="btn secondary" type="button" onClick={() => {
+                        resetSearchCustomerForm()
+                        setClearCheck(true)
+                    }} >Clear</button>
                     {actionLoading ?
                         <button className="btn secondary" type="submit" disabled >Searching...</button>
                         :
@@ -309,6 +340,7 @@ function HomeScreen(props) {
 
 const mapStateToProps = state => ({
     avatar: state.auth.avatar,
+    refreshCheck: state.sales.refreshCheck,
     customer_search_result: state.sales.customer_search_result,
     customer: state.sales.customer,
     isCustomerFound: state.sales.isCustomerFound,
@@ -321,6 +353,8 @@ const mapDispatchToProps = dispatch => ({
     selectCustomer: (data) => dispatch(selectCustomer(data)),
     validateEmailAddress: (data) => dispatch(validateEmailAddress(data)),
     resetSearchCustomerSearchApiInitiate: (data) => dispatch(resetSearchCustomerSearchApiInitiate(data)),
+    resetSearchCustomerForm: () => dispatch(resetSearchCustomerForm()),
+    refreshSearchCustomerForm: () => dispatch(refreshSearchCustomerForm()),
     updateCustomer: (history, path, data) => dispatch(updateCustomer(history, path, data)),
     updateApplicationFilledStatus: (data, history, path) => dispatch(updateApplicationFilledStatus(data, history, path))
 });

@@ -574,7 +574,7 @@ function AddDealer(props) {
                                 defaultText="#"
                                 mask="**************"
                                 maskChar=" "
-                                required={true}
+                                // required={true}
                                 error={{
                                     'empty': " "
                                 }}
@@ -828,7 +828,7 @@ function AddDealer(props) {
                                     defaultText="#"
                                     mask="**************"
                                     maskChar=" "
-                                    required={haveCoApplicant ? true : false}
+                                    // required={haveCoApplicant ? true : false}
                                     error={{
                                         'empty': " "
                                     }}
