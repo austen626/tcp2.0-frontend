@@ -66,14 +66,14 @@ function HomeScreen(props) {
 
             <Modal show={showWarning} onHide={() => setShowWarning(false)}>
                 <Modal.Header closeButton></Modal.Header>
-                <Modal.Body> Press Ok to send the application link to the consumer.</Modal.Body>
+                <Modal.Body> If you choose to proceed, your customer will receive an email at the email address you have entered prompting them to press a link that will take them to a secure website where they will be asked to provide information required to submit a credit application. They will also be able to add a co-applicant should they choose to do so.</Modal.Body>
                 <Modal.Footer>
                 <button class="secondary" onClick={() => {
                     setShowWarning(false);
                     updateApplicationFilledStatus('send_link', null, null);
                     submiCreditApplicationByMail(history, customer);
                 }}>
-                    OK
+                    Proceed
                 </button>
                 <button class="secondary" onClick={() => setShowWarning(false)}>
                     Close
