@@ -16,13 +16,13 @@ class PendingApplications extends Component {
         this.props.getSalesList();
     }
 
-    handleArrowBack = () => {
+    handleArrowBack() {
         const { history } = this.props;
         history.push('/')
         //        this.props.history.goBack();
     }
 
-    handleRowClick = (item) => {
+    handleRowClick(item) {
         this.props.setSelectedPendingApplication(item);
         this.props.history.push(`/admin/pendingApplication/${item.id}`);
         // alert("API Pending");
