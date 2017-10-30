@@ -79,8 +79,7 @@
                 fill: white;
             }
 
-            .arrow-icon {
-                height: 12px;
+            .arrow-icon, .expand-icon {
                 float: right;
                 padding: 6px;
                 width: 25px;
@@ -89,18 +88,67 @@
                 cursor: pointer;
                 fill: #B2D8F7;
             }
+
+            .number-badge {
+                display: inline-block;
+                width: 21px;
+                height: 21px;
+                border-radius: 11px;
+                font-size: 12px;
+                line-height: 21px;
+                text-align: center;
+                vertical-align: top;
+                background-color: #3a5b77;
+            }
+
+            .badged-expand {
+                display: inline-block;
+                width: 52px;
+                height: 22px;
+                border-radius: 11px;
+                background-color: #3a5b77;
+
+                .number-badge {
+                    position: relative;
+                    left: -6px;
+                    background-color: #6793b7;
+                }
+
+                .expand-icon {
+                    position: relative;
+                    padding: 6px;
+                    top: -2px;
+                    fill: #b2d8f7;
+                }
+            }
         }
     }
 
-    .single-row:hover .arrow-icon {
-        background: #309e87;
-        padding: 6px;
-        width: 25px;
-        height: 25px;
-        border-radius: 20px;
-        transform: rotate(90deg);
-        transition-duration: .2s;
-        fill: white;
+    .single-row.expanded {
+        .badged-expand {
+            .number-badge {
+                background-color: #009d86;
+            }
+            .expand-icon {
+                transform: rotate(90deg);
+                transition-duration: .2s;
+                fill: white;
+            }
+        }
+    }
+
+    .single-row:hover {
+        .arrow-icon {
+            background: #309e87;
+            transform: rotate(90deg);
+            transition-duration: .2s;
+            fill: white;
+        }
+        .badged-expand {
+            .number-badge {
+                background-color: #009d86;
+            }
+        }
     }
 
     .single-row-details {

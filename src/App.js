@@ -31,7 +31,7 @@ import DealerFix from './screens/Dealer/DealerFix';
 import PreFilled from './screens/Dealer/PreFilled';
 import ApplyPreFilledPage from './screens/Dealer/ApplyPreFilledPage';
 
-import AdminHome from './screens/Admin/2.0/Home';
+import AdminHome from './screens/Admin/2.0/Home/Home';
 import AdminPendingApplications from './screens/Admin/AdminPendingApplications';
 import AdminPendingApplicationItem from './screens/Admin/AdminPendingApplicationItem';
 import AdminPreApprovals from './screens/Admin/AdminPreApprovals';

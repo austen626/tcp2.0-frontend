@@ -70,6 +70,7 @@
     "@storybook/addon-links": "^6.3.7",
     "@storybook/node-logger": "^6.3.7",
     "@storybook/preset-create-react-app": "^3.2.0",
+    "@storybook/preset-scss": "^1.0.3",
     "@storybook/react": "^6.3.7",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.8.0",
@@ -78,6 +79,7 @@
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.24.0",
     "prettier": "2.3.2",
-    "redux-devtools-extension": "^2.13.8"
+    "redux-devtools-extension": "^2.13.8",
+    "resolve-url-loader": "^4.0.0"
   }
 }

@@ -4,7 +4,11 @@ import { connect } from 'react-redux';
 import { Row, Col, Button, Modal } from 'react-bootstrap';
 import InputMask from 'react-input-mask';
 
-import Header, { HeaderLeft, HeaderCenter, HeaderRight } from '../../components/Dealer/Header';
+import Header, {
+    HeaderLeft,
+    HeaderCenter,
+    HeaderRight,
+} from '../../components/Dealer/Header';
 import Footer from '../../components/Dealer/Footer';
 import { IconArrowLeft, IconStatusWaiting } from '../../assets/images';
 import { product_options } from '../../assets/options';

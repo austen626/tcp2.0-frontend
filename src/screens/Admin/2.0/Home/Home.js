@@ -1,26 +1,55 @@
-import React, { useState, useEffect } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Header, {
     HeaderLeft,
     HeaderCenter,
     HeaderRight,
-} from '../../../components/Dealer/Header'
-import { Form, Row, Col } from 'react-bootstrap'
+} from '../../../../components/Dealer/Header';
+import { Form, Row, Col } from 'react-bootstrap';
 import {
     TCPLogo,
     IconMenu,
     IconDeleteNew,
     IconSearchAdmin,
-} from '../../../assets/images'
-import Loader from 'shared/Loader'
+} from '../../../../assets/images';
+import Loader from 'shared/Loader';
 
-import { SliderContainer, SliderItem } from '../style'
-import { getDealers } from '../../../redux/actions/admin'
+import { SliderContainer, SliderItem } from '../../style';
+import { getDealers } from '../../../../redux/actions/admin';
+
+const ExpandIcon = () => {
+    return (
+        <svg
+            className="expand-icon"
+            enableBackground="new 0 0 12 12"
+            height="12px"
+            id="Layer_1"
+            version="1.1"
+            viewBox="0 0 32 32"
+            width="32px"
+        >
+            <path d="M24.291,14.276L14.705,4.69c-0.878-0.878-2.317-0.878-3.195,0l-0.8,0.8c-0.878,0.877-0.878,2.316,0,3.194  L18.024,16l-7.315,7.315c-0.878,0.878-0.878,2.317,0,3.194l0.8,0.8c0.878,0.879,2.317,0.879,3.195,0l9.586-9.587  c0.472-0.471,0.682-1.103,0.647-1.723C24.973,15.38,24.763,14.748,24.291,14.276z" />
+        </svg>
+    );
+};
+
+const BadgedExpand = ({ number }) => {
+    if (number > 0) {
+        return (
+            <span className="badged-expand">
+                <span className="number-badge">{number}</span>
+                <ExpandIcon />
+            </span>
+        );
+    } else {
+        return <span className="number-badge">{number}</span>;
+    }
+};
 
 export function PureAdminHome(props) {
-    const OPTION_FUNDING = 'funding'
-    const OPTION_REVIEW = 'review'
+    const OPTION_FUNDING = 'funding';
+    const OPTION_REVIEW = 'review';
 
     const {
         history,
@@ -29,64 +58,51 @@ export function PureAdminHome(props) {
         setDealer,
         deleteDealer,
         actionLoading,
-    } = props
+    } = props;
 
-    const [openDealerIndex, setOpenDealerIndex] = useState(null)
-    const [search, setSearch] = useState(null)
-    const [filterDealer, setFilterDealer] = useState([])
-    const [activeOption, setActiveOption] = useState(OPTION_FUNDING)
+    const [openDealerIndex, setOpenDealerIndex] = useState(null);
+    const [search, setSearch] = useState('');
+    const [filterDealer, setFilterDealer] = useState([]);
+    const [activeOption, setActiveOption] = useState(OPTION_FUNDING);
 
     useEffect(() => {
-        getDealers()
-    }, [])
+        getDealers();
+    }, []);
 
-    useEffect(() => {}, [activeOption])
+    useEffect(() => {}, [activeOption]);
 
     useEffect(() => {
         if (search != null && search !== '') {
             let temp = dealers.data.filter((d) =>
                 d.company_name.toLowerCase().includes(search.toLowerCase())
-            )
-            setFilterDealer(temp)
+            );
+            setFilterDealer(temp);
         } else {
-            setFilterDealer(dealers.data)
+            setFilterDealer(dealers.data);
         }
-    }, [search])
+    }, [search]);
 
     useEffect(() => {
-        setFilterDealer(dealers.data)
-    }, [dealers])
+        setFilterDealer(dealers.data);
+    }, [dealers]);
 
     const handleArrowBack = () => {
-        history.push('/')
-    }
+        history.push('/');
+    };
 
     const handleOpenDealerAction = (dealer) => {
-        if ('map' + dealer.id === openDealerIndex) setOpenDealerIndex(null)
-        else setOpenDealerIndex('map' + dealer.id)
-    }
-
-    const IconSmallArrowRight = (props) => {
-        return (
-            <svg
-                className={`arrow-icon ${
-                    props.id === openDealerIndex && 'arrow-icon-active'
-                }`}
-                enableBackground="new 0 0 12 12"
-                height="12px"
-                id="Layer_1"
-                version="1.1"
-                viewBox="0 0 32 32"
-                width="32px"
-            >
-                <path d="M24.291,14.276L14.705,4.69c-0.878-0.878-2.317-0.878-3.195,0l-0.8,0.8c-0.878,0.877-0.878,2.316,0,3.194  L18.024,16l-7.315,7.315c-0.878,0.878-0.878,2.317,0,3.194l0.8,0.8c0.878,0.879,2.317,0.879,3.195,0l9.586-9.587  c0.472-0.471,0.682-1.103,0.647-1.723C24.973,15.38,24.763,14.748,24.291,14.276z" />
-            </svg>
-        )
-    }
+        if (toOpenIndex(dealer.id) === openDealerIndex)
+            setOpenDealerIndex(null);
+        else setOpenDealerIndex(toOpenIndex(dealer.id));
+    };
 
     const handleClickOption = (option) => {
-        setActiveOption(option)
-    }
+        setActiveOption(option);
+    };
+
+    const toOpenIndex = (id) => {
+        return 'map' + id;
+    };
 
     return (
         <div className="dealer">
@@ -132,7 +148,10 @@ export function PureAdminHome(props) {
                             <React.Fragment key={item.id}>
                                 <Row
                                     key={item.id}
-                                    className="single-row"
+                                    className={`single-row ${
+                                        openDealerIndex ===
+                                            toOpenIndex(item.id) && 'expanded'
+                                    }`}
                                     onClick={() => handleOpenDealerAction(item)}
                                 >
                                     <div className="dealer-row">
@@ -142,11 +161,9 @@ export function PureAdminHome(props) {
                                             </span>
                                         </Col>
                                         <Col xs={6} className="dealer-action">
-                                            <span>
-                                                <IconSmallArrowRight
-                                                    id={'map' + item.id}
-                                                />
-                                            </span>
+                                            <BadgedExpand
+                                                number={item.num_customers}
+                                            />
                                         </Col>
                                     </div>
                                     {openDealerIndex === 'map' + item.id && (
@@ -197,7 +214,7 @@ export function PureAdminHome(props) {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
 PureAdminHome.propTypes = {
@@ -207,15 +224,15 @@ PureAdminHome.propTypes = {
     getDealers: PropTypes.func.isRequired,
     setDealer: PropTypes.func.isRequired,
     deleteDealer: PropTypes.func.isRequired,
-}
+};
 
 const mapStateToProps = (state) => ({
     dealers: state.admin.dealers,
     actionLoading: state.admin.actionLoading,
-})
+});
 
 const mapDispatchToProps = (dispatch) => ({
     getDealers: () => dispatch(getDealers()),
-})
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(PureAdminHome)
+export default connect(mapStateToProps, mapDispatchToProps)(PureAdminHome);
