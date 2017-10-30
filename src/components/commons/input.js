@@ -9,7 +9,7 @@ import DatePicker from 'react-datepicker';
  * @returns {JSX.Element}
  */
 
-const inputValidation = (inputVal, required, regexString, isMatched) => {
+const inputValidation = (inputVal, required, regexString, isMatched, name) => {
 
     if(inputVal === '') {
         inputVal = null
@@ -17,7 +17,17 @@ const inputValidation = (inputVal, required, regexString, isMatched) => {
 
     const regex = regexString && new RegExp(regexString, 'i');
 
-    const isValid = regex && inputVal ? regex.test(inputVal) : isMatched && regexString !== inputVal ? false : true
+    let isValid = regex && inputVal ? regex.test(inputVal) : isMatched && regexString !== inputVal ? false : true
+
+    if(name === "date_of_birth" || name === "co_date_of_birth") 
+    {
+        let diff_ms = Date.now() - new Date(inputVal).getTime();
+        let age_dt = new Date(diff_ms);
+        
+        if(Math.abs(age_dt.getUTCFullYear() - 1970) < 18 || new Date(inputVal).getFullYear() >= new Date().getFullYear()) {
+            isValid = false
+        }
+    }
 
     return !!required && inputVal === null ? true : !isValid ? true : false;
     
@@ -57,10 +67,12 @@ const Input = (props) => {
         isAmount = false,
         isDate = false,
         isHidden = false,
-        isMatched = false
+        isMatched = false,
+        isZipcode = false
     } = props;
 
     const [ focussed, setFocussed ] = useState(!!value || !!defaultValue);
+    // const [ manualDate, setManualDate ] = useState(!!value || !!defaultValue);
     const [ inputValue, setInputValue ] = useState(value || defaultValue || null);
     const [ inputInvalid, setInputInvalid ] = useState(required && !(defaultValue));
 
@@ -68,7 +80,7 @@ const Input = (props) => {
         
         setInputValue(newVal);
 
-        setInputInvalid(inputValidation(newVal, required, regex, isMatched));
+        setInputInvalid(inputValidation(newVal, required, regex, isMatched, name));
     };
 
     const handleFocus = () => {
@@ -78,23 +90,31 @@ const Input = (props) => {
         typeof onFocus === 'function' && onFocus();
     };
 
-    const handleBlur = () => {
+    const handleBlur = (event) => {
 
         setFocussed(false);
 
-        typeof onBlur === 'function' && onBlur();
+        typeof onBlur === 'function' && onBlur(event);
     };
 
     const handleInputChange = (event) => {
 
-        updateInputValue(event.currentTarget && event.currentTarget.value);
+        let value = event.currentTarget && event.currentTarget.value
+
+        if(isZipcode && value.length > 5 && value.indexOf('-') == -1) {
+            value = value.substring(0, 5) + "-" + value.substring(5);
+        }
+
+        updateInputValue(value);
 
         typeof handleChange === 'function' && handleChange(event);
     };
 
     const handleDateInputChange = (data) => {
-
+        
         if(data !== null) {
+
+            data = new Date(data);
 
             let month = data.getMonth()+1;
             let date = data.getDate();
@@ -119,12 +139,41 @@ const Input = (props) => {
         }
     };
 
+    // const handleDateInputManualChange = (data) => {
+
+    //     console.log(data.currentTarget.value);
+    //     console.log(data.currentTarget.value.indexOf('_'));
+        
+    //     if(data.currentTarget.value !== null && data.currentTarget.value.indexOf('_') == -1  && data.currentTarget.value.indexOf('NaN') == -1) {
+
+    //         data = new Date(data.currentTarget.value);
+
+    //         let month = data.getMonth()+1;
+    //         let date = data.getDate();
+
+    //         if(month < 10) {
+    //             month = '0'+month
+    //         }
+
+    //         if(date < 10) {
+    //             date = '0'+date
+    //         }
+
+    //         let temp_date = data.getFullYear()+'-'+month+'-'+date
+
+    //         console.log(temp_date)
+            
+    //         setManualDate(temp_date)
+    //         handleDateInputChange(temp_date);
+    //     }
+    // };
+
     useEffect(() => {
 
         if ( defaultValue === undefined && value !== undefined && value !== inputValue) {
             updateInputValue(value);
         }
-    });
+    }, [value, defaultValue]);
 
     useEffect(() => {
 
@@ -163,22 +212,36 @@ const Input = (props) => {
         "December"
     ];
 
-    const ExampleCustomInput = React.forwardRef(
-        ({ value, onClick }, ref) => (
-          <button type="button" className={`form-control datepicker-button ${inputValue ? '' : 'empty'}`} onClick={onClick} ref={ref}>
-            {value ? value : 'MM/DD/YYYY'}
-          </button>
-        ),
-      );
+    {/* <button type="button" className={`form-control datepicker-button ${inputValue ? '' : 'empty'}`} onClick={onClick} ref={ref}>
+        {value ? value : 'MM/DD/YYYY'}
+    </button> */}
+
+    // const ExampleCustomInput = React.forwardRef(
+    //     ({ value, onClick }, ref) => (
+    //         <InputMask 
+    //             onClick={onClick} 
+    //             ref={ref} 
+    //             defaultValue={value} 
+    //             placeholder="MM/DD/YYYY" 
+    //             className="form-control" 
+    //             mask="99/99/9999" 
+    //             onChange={handleDateInputManualChange}
+    //         />
+    //     ),
+    //   );
 
     const inputId = id || name,
         ariaLabelledBy = id && `${id}-label`,
         showError = !!errorLabel && inputInvalid,
         transform = inputValue !== null || focussed;
 
+    if(name == "date_of_birth" || name === "co_date_of_birth") {
+        console.log(showError)
+    }
+
     return (
         <div
-            className={`input-holder ${className} ${type} ${disabled ? 'disabled' : ''} ${showError ? 'has-error' : ''}`}
+            className={`input-holder ${className} ${type} ${disabled ? 'disabled' : ''} ${showError ? 'has-error' : ''} ${isHidden ? "ssn-div" : ""}`}
         >
             <div className='input-container'>
                 {label && (
@@ -190,50 +253,70 @@ const Input = (props) => {
                         <span dangerouslySetInnerHTML={{ __html: label }} />
                     </label>
                 )}
-                <div className='input-field'>
-                    {isAmount && <span className="has-amount-sign">$</span>}
-                    <input
-                        className={`form-control ${ inputClass } ${ inputValue !== null ? 'has-input' : 'empty' } ${ showError ? 'invalid' : '' } ${ isAmount ? 'has-amount' : ''}`}
-                        ref={inputRef}
-                        type={type}
-                        id={inputId}
-                        placeholder={defaultText}
-                        maxLength={maxLength}
-                        name={name}
-                        min={min}
-                        max={max}
-                        data-name={dataName}
-                        value={inputValue}
-                        aria-label={ariaLabel}
-                        {...(label && {
-                            'aria-labelledby': ariaLabelledBy
-                        })}
-                        autoComplete='off'
-                        onFocus={handleFocus}
-                        onBlur={handleBlur}
-                        required={required}
-                        onChange={handleInputChange}
-                        data-regex={regex}
-                        data-isMatched={isMatched}
-                        disabled={disabled}
-                        checked={checked}
-                        {...optionalParams}
-                    />
-                    
-                    {mask && <>
-                        <InputMask 
-                            maskChar={maskChar} 
-                            placeholder={defaultText} 
-                            className="form-control" 
-                            mask={mask} 
-                            value={inputValue} 
+                <div className='input-field'>                    
+                    {!mask ?
+                        <input
+                            className={`form-control ${ inputClass } ${ inputValue !== null ? 'has-input' : 'empty' } ${ showError ? 'invalid' : '' } ${ isAmount ? 'has-amount' : ''}`}
+                            ref={inputRef}
+                            type={type}
+                            id={inputId}
+                            placeholder={defaultText}
+                            maxLength={maxLength}
+                            name={name}
+                            min={min}
+                            max={max}
+                            data-name={dataName}
+                            value={inputValue}
+                            aria-label={ariaLabel}
+                            {...(label && {
+                                'aria-labelledby': ariaLabelledBy
+                            })}
+                            autoComplete='off'
                             onFocus={handleFocus}
-                            onBlur={handleBlur} 
-                            onChange={handleInputChange} 
+                            onBlur={handleBlur}
+                            required={required}
+                            onChange={handleInputChange}
+                            data-regex={regex}
+                            data-isMatched={isMatched}
+                            disabled={disabled}
+                            checked={checked}
                             {...optionalParams}
                         />
-                        {isHidden && <span className="ssn-span">{inputValue && inputValue.replace(new RegExp("[0-9]", "g"), "x")}</span>}
-                    </>}
+                    :
+                        <>
+                            <InputMask 
+                                maskChar={maskChar} 
+                                mask={mask} 
+                                className={`form-control ${ inputClass } ${ inputValue !== null ? 'has-input' : 'empty' } ${ showError ? 'invalid' : '' } ${ isAmount ? 'has-amount' : ''}`}
+                                ref={inputRef}
+                                id={inputId}
+                                placeholder={defaultText}
+                                maxLength={maxLength}
+                                name={name}
+                                min={min}
+                                max={max}
+                                data-name={dataName}
+                                value={inputValue}
+                                aria-label={ariaLabel}
+                                {...(label && {
+                                    'aria-labelledby': ariaLabelledBy
+                                })}
+                                autoComplete='off'
+                                onFocus={handleFocus}
+                                onBlur={handleBlur}
+                                required={required}
+                                onChange={handleInputChange}
+                                data-regex={regex}
+                                data-isMatched={isMatched}
+                                disabled={disabled}
+                                checked={checked}
+                                {...optionalParams}
+                            />
+                            {isHidden && <span className="ssn-span">{inputValue && inputValue.replace(new RegExp("[0-9]", "g"), "x")}</span>}
+                        </>
+                    }
+                    
+                    {isAmount && <span className="has-amount-sign">$</span>}
 
                     {isDate && 
                         <DatePicker
@@ -291,7 +374,7 @@ const Input = (props) => {
                             )}
                             selected={inputValue ? new Date(inputValue) : null}
                             onChange={handleDateInputChange}
-                            customInput={<ExampleCustomInput />}
+                            // customInput={<ExampleCustomInput />}
                             />
                     }
 

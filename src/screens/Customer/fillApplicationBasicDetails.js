@@ -24,203 +24,203 @@ function AddDealer(props) {
 
             {
                 label: "Alabama",
-                value: "Alabama"
+                value: "AL"
             },
             {
                 label: "Alaska",
-                value: "Alaska"
+                value: "AK"
             },
             {
                 label: "Arizona",
-                value: "Arizona"
+                value: "AZ"
             },
             {
                 label: "Arkansas",
-                value: "Arkansas"
+                value: "AR"
             },
             {
                 label: "California",
-                value: "California"
+                value: "CA"
             },
             {
                 label: "Colorado",
-                value: "Colorado"
+                value: "CO"
             },
             {
                 label: "Connecticut",
-                value: "Connecticut"
+                value: "CT"
             },
             {
                 label: "Delaware",
-                value: "Delaware"
+                value: "DE"
             },
             {
                 label: "Florida",
-                value: "Florida"
+                value: "FL"
             },
             {
                 label: "Georgia",
-                value: "Georgia"
+                value: "GA"
             },
             {
                 label: "Idaho",
-                value: "Idaho"
+                value: "ID"
             },
             {
                 label: "Hawaii",
-                value: "Hawaii"
+                value: "HI"
             },
             {
                 label: "Illinois",
-                value: "Illinois"
+                value: "IL"
             },
             {
                 label: "Indiana",
-                value: "Indiana"
+                value: "IN"
             },
             {
                 label: "Iowa",
-                value: "Iowa"
+                value: "IA"
             },
             {
                 label: "Kansas",
-                value: "Kansas"
+                value: "KS"
             },
             {
                 label: "Kentucky",
-                value: "Kentucky"
+                value: "KY"
             },
             {
                 label: "Louisiana",
-                value: "Louisiana"
+                value: "LA"
             },
             {
                 label: "Maine",
-                value: "Maine"
+                value: "ME"
             },
             {
                 label: "Maryland",
-                value: "Maryland"
+                value: "MD"
             },
             {
                 label: "Massachusetts",
-                value: "Massachusetts"
+                value: "MA"
             },
             {
                 label: "Michigan",
-                value: "Michigan"
+                value: "MI"
             },
             {
                 label: "Minnesota",
-                value: "Minnesota"
+                value: "MN"
             },
             {
                 label: "Mississippi",
-                value: "Mississippi"
+                value: "MS"
             },
             {
                 label: "Missouri",
-                value: "Missouri"
+                value: "MO"
             },
             {
                 label: "Montana",
-                value: "Montana"
+                value: "MT"
             },
             {
                 label: "Nebraska",
-                value: "Nebraska"
+                value: "NE"
             },
             {
                 label: "Nevada",
-                value: "Nevada"
+                value: "NV"
             },
             {
                 label: "New Hampshire",
-                value: "New Hampshire"
+                value: "NH"
             },
             {
                 label: "New Jersey",
-                value: "New Jersey"
+                value: "NJ"
             },
             {
                 label: "New Mexico",
-                value: "New Mexico"
+                value: "NM"
             },
             {
                 label: "New York",
-                value: "New York"
+                value: "NY"
             },
             {
                 label: "North Carolina",
-                value: "North Carolina"
+                value: "NC"
             },
             {
                 label: "North Dakota",
-                value: "North Dakota"
+                value: "ND"
             },
             {
                 label: "Ohio",
-                value: "Ohio"
+                value: "OH"
             },
             {
                 label: "Oklahoma",
-                value: "Oklahoma"
+                value: "OK"
             },
             {
                 label: "Oregon",
-                value: "Oregon"
+                value: "OR"
             },
             {
                 label: "Pennsylvania",
-                value: "Pennsylvania"
+                value: "PA"
             },
             {
                 label: "Rhode Island",
-                value: "Rhode Island"
+                value: "RI"
             },
             {
                 label: "South Carolina",
-                value: "South Carolina"
+                value: "SC"
             },
             {
                 label: "South Dakota",
-                value: "South Dakota"
+                value: "SD"
             },
             {
                 label: "Tennessee",
-                value: "Tennessee"
+                value: "TN"
             },
             {
                 label: "Texas",
-                value: "Texas"
+                value: "TX"
             },
             {
                 label: "Utah",
-                value: "Utah"
+                value: "UT"
             },
             {
                 label: "Vermont",
-                value: "Vermont"
+                value: "VT"
             },
             {
                 label: "Virginia",
-                value: "Virginia"
+                value: "VA"
             },
             {
                 label: "Washington",
-                value: "Washington"
+                value: "WA"
             },
             {
                 label: "West Virginia",
-                value: "West Virginia"
+                value: "WV"
             },
             {
                 label: "Wisconsin",
-                value: "Wisconsin"
+                value: "WI"
             },
             {
                 label: "Wyoming",
-                value: "Wyoming"
+                value: "WY"
             }
         ]
     } = props;
@@ -284,8 +284,8 @@ function AddDealer(props) {
                     "last_name": data.last_name,
                     "email": data.email,
                     "dobY": new Date(data.date_of_birth).getFullYear(),
-                    "dobM": month > 10 ? month : "0"+month,
-                    "dobD": date > 10 ? date : "0"+date,
+                    "dobM": month > 9 ? month : "0"+month,
+                    "dobD": date > 9 ? date : "0"+date,
                     "ssn": data.ssn,
                     "driver_license": data.driver_license,
                     "no_of_dependents": data.no_of_dependents,
@@ -304,8 +304,8 @@ function AddDealer(props) {
                     "last_name": haveCoApplicant ? data.co_last_name : null,
                     "email": haveCoApplicant ? data.co_email : null,
                     "dobY": haveCoApplicant ? new Date(data.co_date_of_birth).getFullYear() : null,
-                    "dobM": haveCoApplicant ? co_month > 10 ? co_month : "0"+co_month : null,
-                    "dobD": haveCoApplicant ? co_date > 10 ? co_date : "0"+co_date : null,
+                    "dobM": haveCoApplicant ? co_month > 9 ? co_month : "0"+co_month : null,
+                    "dobD": haveCoApplicant ? co_date > 9 ? co_date : "0"+co_date : null,
                     "co_have_co_applicant_same_address": haveCoApplicantSameAddress ? data.co_have_co_applicant_same_address : null,
                     "ssn": haveCoApplicant ? data.co_ssn : null,
                     "driver_license": haveCoApplicant ? data.co_driver_license : null,
@@ -385,6 +385,9 @@ function AddDealer(props) {
                                 error={{
                                     'empty': " "
                                 }}
+                                optionalParams={{
+                                    autoFocus: true
+                                }}
                                 validationResult={validationResult}
                             />
                         </Form.Group>
@@ -402,110 +405,6 @@ function AddDealer(props) {
                                 validationResult={validationResult}
                             />
                         </Form.Group>
-                        <Form.Group className="mb-18">
-                            <Input
-                                name="email"
-                                type="email"
-                                regex="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$"
-                                defaultValue={customer.main_app.email}
-                                label="Email"
-                                defaultText="Email"
-                                required={true}
-                                error={{
-                                    'invalid': "Please enter valid Email address",
-                                    'empty': " "
-                                }}
-                                validationResult={validationResult}
-                            />
-                        </Form.Group>
-                        <Form.Group className="mb-18">
-                            <Input
-                                name="cell_phone"
-                                type="hidden"
-                                defaultValue={customer.main_app.cell_phone ? customer.main_app.cell_phone : null}
-                                label="Phone"
-                                className="medium-input"
-                                defaultText="(123) 456-7890"
-                                regex="^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$"
-                                mask="(999) 999-9999"
-                                required={true}
-                                error={{
-                                    'invalid': "Please enter 10 digit number",
-                                    'empty': " "
-                                }}
-                                validationResult={validationResult}
-                            />
-                        </Form.Group>
-                        <Form.Group className="mb-18">
-                            <Input
-                                name="date_of_birth"
-                                type="hidden"
-                                defaultValue={customer.main_app.dobY && customer.main_app.dobM && customer.main_app.dobD ? `${customer.main_app.dobY}-${customer.main_app.dobM}-${customer.main_app.dobD}` : null}
-                                label="Date of Birth"
-                                className="medium-input"
-                                defaultText="MM / DD / YYYY"
-                                required={true}
-                                isDate={true}
-                                error={{
-                                    'empty': " "
-                                }}
-                                validationResult={validationResult}
-                            />
-                        </Form.Group>
-                        <Form.Group className="mb-18">
-                            <Input
-                                name="ssn"
-                                type="hidden"
-                                label="SSN"
-                                defaultValue={null}
-                                defaultText="#"
-                                regex={customer.main_app.id ? customer.main_app.ssn : '^(?!0{3}|6{3}|9[0-9]{2})[0-9]{3}-(?!0{3})[0-9]{3}-(?!0{4})[0-9]{4}$'}
-                                mask="999-999-9999"
-                                optionalParams = {{style:{color: 'transparent', caretColor: "#ccdbe7"}}}
-                                isHidden={true}
-                                required={true}
-                                isMatched={customer.main_app.id ? true : false}
-                                error={{
-                                    'empty': " ",
-                                    'invalid': "Please enter correct SSN number"
-                                }}
-                                validationResult={validationResult}
-                            />
-                        </Form.Group>
-                        <Form.Group className="mb-18">
-                            <Input
-                                name="driver_license"
-                                type="hidden"
-                                defaultValue={customer.main_app.driver_license ? customer.main_app.driver_license : null}
-                                label="Driver License Number"
-                                defaultText="#"
-                                mask="**************"
-                                maskChar=" "
-                                required={true}
-                                error={{
-                                    'empty': " "
-                                }}
-                                validationResult={validationResult}
-                            />
-                        </Form.Group>
-                        <Form.Group className="mb-18">
-                            <Input
-                                name="no_of_dependents"
-                                type="text"
-                                defaultValue={customer.main_app.no_of_dependents}
-                                label="Number of Dependants"
-                                defaultText="0"
-                                regex="^[0-9]{1,2}$"
-                                className="small-input"
-                                required={true}
-                                error={{
-                                    'empty': " ",
-                                    'invalid': "Please enter valid number"
-                                }}
-                                validationResult={validationResult}
-                            />
-                        </Form.Group>
-
                         <Form.Group className="mb-18">
                             <Input
                                 name="street"
@@ -558,7 +457,7 @@ function AddDealer(props) {
                                     name="zip"
                                     type="text"
                                     defaultValue={tempZip}
-                                    regex="^[0-9]{5}$"
+                                    regex="^\d{5}(?:-\d{4})?$"
                                     label="Zip Code"
                                     defaultText="Zip Code"
                                     required={true}
@@ -567,10 +466,131 @@ function AddDealer(props) {
                                         'empty': " "
                                     }}
                                     validationResult={validationResult}
+                                    isZipcode={true}
                                     handleChange={(e)=>setTempZip(e.target.value)}
                                 />
                             </Form.Group>
                         </div>
+                        <Form.Group className="mb-18">
+                            <Input
+                                name="email"
+                                type="email"
+                                regex="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$"
+                                defaultValue={customer.main_app.email}
+                                label="Email"
+                                defaultText="Email"
+                                required={true}
+                                error={{
+                                    'invalid': "Please enter valid Email address",
+                                    'empty': " "
+                                }}
+                                validationResult={validationResult}
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-18">
+                            <Input
+                                name="cell_phone"
+                                type="hidden"
+                                defaultValue={customer.main_app.cell_phone ? customer.main_app.cell_phone : null}
+                                label="Phone"
+                                className="medium-input"
+                                defaultText="(123) 456-7890"
+                                regex="^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$"
+                                mask="(999) 999-9999"
+                                required={true}
+                                error={{
+                                    'invalid': "Please enter 10 digit number",
+                                    'empty': " "
+                                }}
+                                validationResult={validationResult}
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-18">
+                        {/* <Input
+                                name="date_of_birth"
+                                type="hidden"
+                                defaultValue={customer.main_app.dobY && customer.main_app.dobM && customer.main_app.dobD ? `${customer.main_app.dobY}-${customer.main_app.dobM}-${customer.main_app.dobD}` : null}
+                                label="Date of Birth"
+                                className="medium-input"
+                                defaultText="MM / DD / YYYY"
+                                required={true}
+                                isDate={true}
+                                error={{
+                                    'empty': " "
+                                }}
+                                validationResult={validationResult}
+                            /> */}
+                            <Input
+                                name="date_of_birth"
+                                type="hidden"
+                                defaultValue={customer.main_app.dobY && customer.main_app.dobM && customer.main_app.dobD ? `${customer.main_app.dobM}/${customer.main_app.dobD}/${customer.main_app.dobY}` : null}
+                                label="Date of Birth"
+                                className="medium-input"
+                                defaultText="MM / DD / YYYY"
+                                required={true}
+                                regex="^(?:(?:(?:0?[13578]|1[02])(\/|-|\.)31)\1|(?:(?:0?[1,3-9]|1[0-2])(\/|-|\.)(?:29|30)\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:0?2(\/|-|\.)29\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:(?:0?[1-9])|(?:1[0-2]))(\/|-|\.)(?:0?[1-9]|1\d|2[0-8])\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$"
+                                mask="99/99/9999"
+                                error={{
+                                    'empty': " ",
+                                    'invalid': "Please enter valid date",
+                                    'ageError': "The applicant should be 18 years old or above"
+                                }}
+                                validationResult={validationResult}
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-18">
+                            <Input
+                                name="ssn"
+                                type="hidden"
+                                label="SSN"
+                                defaultValue={customer.main_app.ssn ? customer.main_app.ssn : null}
+                                defaultText="#"
+                                regex={customer.main_app.id ? customer.ssn : '^(?!0{3}|6{3}|9[0-9]{2})[0-9]{3}-(?!0{2})[0-9]{2}-(?!0{4})[0-9]{4}$'}
+                                mask="999-99-9999"
+                                optionalParams = {{style:{color: 'transparent', caretColor: "#ccdbe7"}}}
+                                isHidden={true}
+                                required={true}
+                                isMatched={customer.main_app.id ? true : false}
+                                error={{
+                                    'empty': " ",
+                                    'invalid': "Please enter correct SSN number"
+                                }}
+                                validationResult={validationResult}
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-18">
+                            <Input
+                                name="driver_license"
+                                type="hidden"
+                                defaultValue={customer.main_app.driver_license ? customer.main_app.driver_license : null}
+                                label="Driver License Number"
+                                defaultText="#"
+                                mask="**************"
+                                maskChar=" "
+                                // required={true}
+                                error={{
+                                    'empty': " "
+                                }}
+                                validationResult={validationResult}
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-18">
+                            <Input
+                                name="no_of_dependents"
+                                type="text"
+                                defaultValue={customer.main_app.no_of_dependents}
+                                label="Number of Dependants"
+                                defaultText="#"
+                                regex="^[0-9]{1,2}$"
+                                className="small-input"
+                                required={true}
+                                error={{
+                                    'empty': " ",
+                                    'invalid': "Please enter valid number"
+                                }}
+                                validationResult={validationResult}
+                            />
+                        </Form.Group>
                         <Form.Group className="mb-18">
                             <Checkbox
                                 name="have_co_applicant"
@@ -616,114 +636,12 @@ function AddDealer(props) {
                                     }}
                                     validationResult={validationResult}
                                 />
-                            </Form.Group>
-                            <Form.Group className="mb-18">
-                                <Input
-                                    name="co_email"
-                                    type="email"
-                                    regex="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$"
-                                    defaultValue={customer.co_app.email}
-                                    label="Email"
-                                    defaultText="Email"
-                                    required={haveCoApplicant ? true : false}
-                                    error={{
-                                        'invalid': "Please enter valid Email address",
-                                        'empty': " "
-                                    }}
-                                    validationResult={validationResult}
-                                />
-                            </Form.Group>
-                            <Form.Group className="mb-18">
-                                <Input
-                                    name="co_cell_phone"
-                                    type="hidden"
-                                    defaultValue={customer.co_app.cell_phone ? customer.co_app.cell_phone : null}
-                                    label="Phone"
-                                    className="medium-input"
-                                    defaultText="(123) 456-7890"
-                                    regex="^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$"
-                                    mask="(999) 999-9999"
-                                    required={haveCoApplicant ? true : false}
-                                    error={{
-                                        'invalid': "Please enter 10 digit number",
-                                        'empty': " "
-                                    }}
-                                    validationResult={validationResult}
-                                />
-                            </Form.Group>
-                            <Form.Group className="mb-18">
-                                <Input
-                                    name="co_date_of_birth"
-                                    type="hidden"
-                                    defaultValue={customer.co_app.dobY && customer.co_app.dobM && customer.co_app.dobD ? `${customer.co_app.dobY}-${customer.co_app.dobM}-${customer.co_app.dobD}` : null}
-                                    label="Date of Birth"
-                                    className="medium-input"
-                                    defaultText="MM / DD / YYYY"
-                                    isDate={true}
-                                    required={haveCoApplicant ? true : false}
-                                    error={{
-                                        'empty': " "
-                                    }}
-                                    validationResult={validationResult}
-                                />
-                            </Form.Group>
-                            <Form.Group className="mb-18">
-                                <Input
-                                    name="co_ssn"
-                                    type="hidden"
-                                    label="SSN"
-                                    defaultText="#"
-                                    regex={customer.main_app.id && haveCoApplicant ? customer.co_app.ssn : '^(?!0{3}|6{3}|9[0-9]{2})[0-9]{3}-(?!0{3})[0-9]{3}-(?!0{4})[0-9]{4}$'}
-                                    mask="999-999-9999"
-                                    optionalParams = {{style:{color: 'transparent', caretColor: "#ccdbe7"}}}
-                                    isHidden={true}
-                                    required={haveCoApplicant ? true : false}
-                                    isMatched={customer.main_app.id && haveCoApplicant ? true : false}
-                                    error={{
-                                        'empty': " ",
-                                        'invalid': "Please enter correct SSN number"
-                                    }}
-                                    validationResult={validationResult}
-                                />
-                            </Form.Group>
-                            <Form.Group className="mb-18">
-                                <Input
-                                    name="co_driver_license"
-                                    type="hidden"
-                                    defaultValue={customer.co_app.driver_license}
-                                    label="Driver License Number"
-                                    defaultText="#"
-                                    mask="**************"
-                                    maskChar=" "
-                                    required={haveCoApplicant ? true : false}
-                                    error={{
-                                        'empty': " "
-                                    }}
-                                    validationResult={validationResult}
-                                />
-                            </Form.Group>
-                            <Form.Group className="mb-18">
-                                <Input
-                                    name="co_no_of_dependents"
-                                    type="text"
-                                    defaultValue={customer.co_app.no_of_dependents}
-                                    label="Number of Dependants"
-                                    defaultText="0"
-                                    regex="^[0-9]{1,2}$"
-                                    className="small-input"
-                                    required={haveCoApplicant ? true : false}
-                                    error={{
-                                        'empty': " ",
-                                        'invalid': "Please enter valid number"
-                                    }}
-                                    validationResult={validationResult}
-                                />
                             </Form.Group>                       
-                            <Form.Group className="mb-18">
+                            <Form.Group className="mb-18" style={{marginTop:35}}>
                                 <Checkbox
                                     name="co_have_co_applicant_same_address"
                                     type="checkbox"
-                                    label="Same as Applicant"
+                                    label="Same as Applicant Address"
                                     checked={haveCoApplicantSameAddress ? true : null}
                                     handleChange={(e)=>updateCoApplicantAddress(e.target.checked)}
                                 />
@@ -794,7 +712,7 @@ function AddDealer(props) {
                                         } : {
                                             defaultValue: coTempZip
                                         })}
-                                        regex="^[0-9]{5}$"
+                                        regex="^\d{5}(?:-\d{4})?$"
                                         label="Zip Code"
                                         defaultText="Zip Code"
                                         required={haveCoApplicant ? true : false}
@@ -802,10 +720,131 @@ function AddDealer(props) {
                                             'invalid': " ",
                                             'empty': " "
                                         }}
+                                        isZipcode={true}
                                         validationResult={validationResult}
                                     />
                                 </Form.Group>
                             </div>
+                            <Form.Group className="mb-18">
+                                <Input
+                                    name="co_email"
+                                    type="email"
+                                    regex="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$"
+                                    defaultValue={customer.co_app.email}
+                                    label="Email"
+                                    defaultText="Email"
+                                    required={haveCoApplicant ? true : false}
+                                    error={{
+                                        'invalid': "Please enter valid Email address",
+                                        'empty': " "
+                                    }}
+                                    validationResult={validationResult}
+                                />
+                            </Form.Group>
+                            <Form.Group className="mb-18">
+                                <Input
+                                    name="co_cell_phone"
+                                    type="hidden"
+                                    defaultValue={customer.co_app.cell_phone ? customer.co_app.cell_phone : null}
+                                    label="Phone"
+                                    className="medium-input"
+                                    defaultText="(123) 456-7890"
+                                    regex="^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$"
+                                    mask="(999) 999-9999"
+                                    required={haveCoApplicant ? true : false}
+                                    error={{
+                                        'invalid': "Please enter 10 digit number",
+                                        'empty': " "
+                                    }}
+                                    validationResult={validationResult}
+                                />
+                            </Form.Group>
+                            <Form.Group className="mb-18">
+                                {/* <Input
+                                    name="co_date_of_birth"
+                                    type="hidden"
+                                    defaultValue={customer.co_app.dobY && customer.co_app.dobM && customer.co_app.dobD ? `${customer.co_app.dobY}-${customer.co_app.dobM}-${customer.co_app.dobD}` : null}
+                                    label="Date of Birth"
+                                    className="medium-input"
+                                    defaultText="MM / DD / YYYY"
+                                    isDate={true}
+                                    required={haveCoApplicant ? true : false}
+                                    error={{
+                                        'empty': " "
+                                    }}
+                                    validationResult={validationResult}
+                                /> */}
+                                <Input
+                                    name="co_date_of_birth"
+                                    type="hidden"
+                                    defaultValue={customer.co_app.dobY && customer.co_app.dobM && customer.co_app.dobD ? `${customer.co_app.dobM}/${customer.co_app.dobD}/${customer.co_app.dobY}` : null}
+                                    label="Date of Birth"
+                                    className="medium-input"
+                                    defaultText="MM / DD / YYYY"
+                                    required={true}
+                                    regex="^(?:(?:(?:0?[13578]|1[02])(\/|-|\.)31)\1|(?:(?:0?[1,3-9]|1[0-2])(\/|-|\.)(?:29|30)\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:0?2(\/|-|\.)29\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:(?:0?[1-9])|(?:1[0-2]))(\/|-|\.)(?:0?[1-9]|1\d|2[0-8])\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$"
+                                    mask="99/99/9999"
+                                    error={{
+                                        'empty': " ",
+                                        'invalid': "Please enter valid date",
+                                        'ageError': "The applicant should be 18 years old or above"
+                                    }}
+                                    validationResult={validationResult}
+                                />
+                            </Form.Group>
+                            <Form.Group className="mb-18">
+                                <Input
+                                    name="co_ssn"
+                                    type="hidden"
+                                    label="SSN"
+                                    defaultText="#"
+                                    defaultValue={customer.co_app.ssn && haveCoApplicant ? customer.co_app.ssn : null}
+                                    regex={customer.main_app.id && haveCoApplicant ? customer.ssn : '^(?!0{3}|6{3}|9[0-9]{2})[0-9]{3}-(?!0{2})[0-9]{2}-(?!0{4})[0-9]{4}$'}
+                                    mask="999-99-9999"
+                                    optionalParams = {{style:{color: 'transparent', caretColor: "#ccdbe7"}}}
+                                    isHidden={true}
+                                    required={haveCoApplicant ? true : false}
+                                    isMatched={customer.main_app.id && haveCoApplicant ? true : false}
+                                    error={{
+                                        'empty': " ",
+                                        'invalid': "Please enter correct SSN number"
+                                    }}
+                                    validationResult={validationResult}
+                                />
+                            </Form.Group>
+                            <Form.Group className="mb-18">
+                                <Input
+                                    name="co_driver_license"
+                                    type="hidden"
+                                    defaultValue={customer.co_app.driver_license}
+                                    label="Driver License Number"
+                                    defaultText="#"
+                                    mask="**************"
+                                    maskChar=" "
+                                    // required={haveCoApplicant ? true : false}
+                                    error={{
+                                        'empty': " "
+                                    }}
+                                    validationResult={validationResult}
+                                />
+                            </Form.Group>
+                            <Form.Group className="mb-18">
+                                <Input
+                                    name="co_no_of_dependents"
+                                    type="text"
+                                    defaultValue={customer.co_app.no_of_dependents}
+                                    label="Number of Dependants"
+                                    defaultText="#"
+                                    regex="^[0-9]{1,2}$"
+                                    className="small-input"
+                                    required={haveCoApplicant ? true : false}
+                                    error={{
+                                        'empty': " ",
+                                        'invalid': "Please enter valid number"
+                                    }}
+                                    validationResult={validationResult}
+                                />
+                            </Form.Group>
 
                             </>
                         }
@@ -814,7 +853,7 @@ function AddDealer(props) {
                     </div>
                 </div>
                 <div className="footer-container">
-                    <button className="secondary" type="submit">Next</button>
+                    <input className="btn secondary" type="submit" value="Next"/>
                 </div>
             </form>
 

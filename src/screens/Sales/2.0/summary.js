@@ -8,20 +8,220 @@ import Input from '../../../components/commons/input';
 import Dropdown from '../../../components/commons/dropdown';
 import Checkbox from '../../../components/commons/checkbox';
 
-import { submiCreditApplication, submiCreditApplicationByMain, updateCustomer, resetCustomerSearchApiInitiate } from '../../../redux/actions/sales';
+import { updateCustomer, resetCustomerSearchApiInitiate } from '../../../redux/actions/sales';
 
 function AddDealer(props) {
 
     const {
         history,
         customer,
-        isCustomerFound,
         appFillStatus,
-        submiCreditApplication,
-        submiCreditApplicationByMain,
+        emailValidate,
         actionLoading,
         updateCustomer,
-        resetCustomerSearchApiInitiate
+        resetCustomerSearchApiInitiate,
+        dropdownList = [
+            {
+                label: "Alabama",
+                value: "AL"
+            },
+            {
+                label: "Alaska",
+                value: "AK"
+            },
+            {
+                label: "Arizona",
+                value: "AZ"
+            },
+            {
+                label: "Arkansas",
+                value: "AR"
+            },
+            {
+                label: "California",
+                value: "CA"
+            },
+            {
+                label: "Colorado",
+                value: "CO"
+            },
+            {
+                label: "Connecticut",
+                value: "CT"
+            },
+            {
+                label: "Delaware",
+                value: "DE"
+            },
+            {
+                label: "Florida",
+                value: "FL"
+            },
+            {
+                label: "Georgia",
+                value: "GA"
+            },
+            {
+                label: "Idaho",
+                value: "ID"
+            },
+            {
+                label: "Hawaii",
+                value: "HI"
+            },
+            {
+                label: "Illinois",
+                value: "IL"
+            },
+            {
+                label: "Indiana",
+                value: "IN"
+            },
+            {
+                label: "Iowa",
+                value: "IA"
+            },
+            {
+                label: "Kansas",
+                value: "KS"
+            },
+            {
+                label: "Kentucky",
+                value: "KY"
+            },
+            {
+                label: "Louisiana",
+                value: "LA"
+            },
+            {
+                label: "Maine",
+                value: "ME"
+            },
+            {
+                label: "Maryland",
+                value: "MD"
+            },
+            {
+                label: "Massachusetts",
+                value: "MA"
+            },
+            {
+                label: "Michigan",
+                value: "MI"
+            },
+            {
+                label: "Minnesota",
+                value: "MN"
+            },
+            {
+                label: "Mississippi",
+                value: "MS"
+            },
+            {
+                label: "Missouri",
+                value: "MO"
+            },
+            {
+                label: "Montana",
+                value: "MT"
+            },
+            {
+                label: "Nebraska",
+                value: "NE"
+            },
+            {
+                label: "Nevada",
+                value: "NV"
+            },
+            {
+                label: "New Hampshire",
+                value: "NH"
+            },
+            {
+                label: "New Jersey",
+                value: "NJ"
+            },
+            {
+                label: "New Mexico",
+                value: "NM"
+            },
+            {
+                label: "New York",
+                value: "NY"
+            },
+            {
+                label: "North Carolina",
+                value: "NC"
+            },
+            {
+                label: "North Dakota",
+                value: "ND"
+            },
+            {
+                label: "Ohio",
+                value: "OH"
+            },
+            {
+                label: "Oklahoma",
+                value: "OK"
+            },
+            {
+                label: "Oregon",
+                value: "OR"
+            },
+            {
+                label: "Pennsylvania",
+                value: "PA"
+            },
+            {
+                label: "Rhode Island",
+                value: "RI"
+            },
+            {
+                label: "South Carolina",
+                value: "SC"
+            },
+            {
+                label: "South Dakota",
+                value: "SD"
+            },
+            {
+                label: "Tennessee",
+                value: "TN"
+            },
+            {
+                label: "Texas",
+                value: "TX"
+            },
+            {
+                label: "Utah",
+                value: "UT"
+            },
+            {
+                label: "Vermont",
+                value: "VT"
+            },
+            {
+                label: "Virginia",
+                value: "VA"
+            },
+            {
+                label: "Washington",
+                value: "WA"
+            },
+            {
+                label: "West Virginia",
+                value: "WV"
+            },
+            {
+                label: "Wisconsin",
+                value: "WI"
+            },
+            {
+                label: "Wyoming",
+                value: "WY"
+            }
+        ]
     } = props;
 
     const [activeTab, setActiveTab] = useState('summary_list');
@@ -37,11 +237,8 @@ function AddDealer(props) {
 
     const handleSubmit = evt => {
         evt.preventDefault();
-        if(appFillStatus == "in_app") {
-            submiCreditApplication(history, customer);
-        } else {
-            submiCreditApplicationByMain(history, customer);
-        }
+        resetCustomerSearchApiInitiate(false)
+        history.replace('/applyHome');  
     }
 
     const handleHomeScreen = () => {
@@ -72,22 +269,22 @@ function AddDealer(props) {
 
             <div className="sub-header">
                 
-                <button className={`${activeTab === 'profile' ? 'active' : ''}`} onClick={()=>handleTabChange('profile')}>
+                <button className={`btn ${activeTab === 'profile' ? 'active' : ''}`} onClick={()=>handleTabChange('profile')}>
                     <img src={IconContactAcitve} alt=""/> 
                     {activeTab === 'profile' && <span className='arrow-down'></span>}
                 </button>
 
+                <button style={{minWidth: 238}} className={`btn ${activeTab === 'summary_list' ? 'active' : ''}`} onClick={()=>handleTabChange('summary_list')}>
+                    <span>Summary</span>
+                    {activeTab === 'summary_list' && <span className='arrow-down'></span>}
+                </button>
+
                 {appFillStatus == "in_app" &&
-                    <button style={{minWidth: 238}} className={`${activeTab === 'credit_details' ? 'active' : ''}`} onClick={()=>handleTabChange('credit_details')}>
-                        <span>Summary</span>
+                    <button className={`btn ${activeTab === 'credit_details' ? 'active' : ''}`} onClick={()=>handleTabChange('credit_details')}>
+                        <img src={IconListWhite} alt=""/> 
                         {activeTab === 'credit_details' && <span className='arrow-down'></span>}
                     </button>
                 }
-
-                <button className={`${activeTab === 'summary_list' ? 'active' : ''}`} onClick={()=>handleTabChange('summary_list')}>
-                    <img src={IconListWhite} alt=""/> 
-                    {activeTab === 'summary_list' && <span className='arrow-down'></span>}
-                </button>
 
             </div>
 
@@ -101,8 +298,8 @@ function AddDealer(props) {
 
             {activeTab === 'profile' &&
                 <>
-                    <div className="container pointer-none" style={{marginBottom: 0}}>
-                        <div className="styled-form">
+                    <div className="container summary-container" style={{marginBottom: 0}}>
+                        <div className="styled-form pointer-none">
                             <Form.Group className="mb-18">
                                 <Input
                                     name="first_name"
@@ -110,7 +307,6 @@ function AddDealer(props) {
                                     value={customer.main_app.first_name}
                                     label="Applicant First Name"
                                     defaultText="Applicant First Name"
-                                    disabled={true}
                                 />
                             </Form.Group>
                             <Form.Group className="mb-18">
@@ -120,9 +316,52 @@ function AddDealer(props) {
                                     value={customer.main_app.last_name}
                                     label="Applicant Last Name"
                                     defaultText="Applicant Last Name"
-                                    disabled={true}
                                 />
                             </Form.Group>
+
+                            {(appFillStatus == "in_app") &&
+                            <>
+                                <Form.Group className="mb-18">
+                                    <Input
+                                        name="street"
+                                        type="text"
+                                        value={customer.main_app.street}
+                                        label="Street"
+                                        defaultText="Street"
+                                    />
+                                </Form.Group>
+                                <Form.Group className="mb-18">
+                                    <Input
+                                        name="city"
+                                        type="text"
+                                        value={customer.main_app.city}
+                                        label="City"
+                                        defaultText="City"
+                                    />
+                                </Form.Group>
+                                <div className="styled-row">
+                                    <Form.Group className="styled-column mb-18">
+                                        <Dropdown
+                                            name="state"
+                                            type="dropdown"
+                                            label="State"
+                                            defaultText="State"
+                                            defaultValue={customer.main_app.state}
+                                            options={dropdownList}
+                                        />
+                                    </Form.Group>
+                                    <Form.Group className="styled-column mb-18">
+                                        <Input
+                                            name="zip"
+                                            type="text"
+                                            value={customer.main_app.zip}
+                                            label="Zip Code"
+                                            defaultText="Zip Code"
+                                        />
+                                    </Form.Group>
+                                </div>
+                            </>
+                            }
                             <Form.Group className="mb-18">
                                 <Input
                                     name="email"
@@ -131,7 +370,6 @@ function AddDealer(props) {
                                     value={customer.main_app.email}
                                     label="Email"
                                     defaultText="Email"
-                                    disabled={true}
                                 />
                             </Form.Group>
                             <Form.Group className="mb-18">
@@ -144,21 +382,19 @@ function AddDealer(props) {
                                     defaultText="(123) 456-7890"
                                     regex="^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$"
                                     mask="(999) 999-9999"
-                                    disabled={true}
                                 />
                             </Form.Group>
 
-                            {(appFillStatus == "in_app" || isCustomerFound) &&
+                            {(appFillStatus == "in_app") &&
                             <>
                                 <Form.Group className="mb-18">
                                     <Input
                                         name="date_of_birth"
                                         type="hidden"
-                                        value={customer.main_app.dobY && customer.main_app.dobM && customer.main_app.dobD ? `${customer.main_app.dobY}-${customer.main_app.dobM}-${customer.main_app.dobD}` : null}
+                                        value={customer.main_app.dobY && customer.main_app.dobM && customer.main_app.dobD && customer.main_app.dobY != 'NONE' ? `${customer.main_app.dobM}/${customer.main_app.dobD}/${customer.main_app.dobY}` : null}
                                             label="Date of Birth"
                                         className="medium-input"
                                         defaultText="MM / DD / YYYY"
-                                        disabled={true}
                                         isDate={true}
                                     />
                                 </Form.Group>
@@ -179,59 +415,11 @@ function AddDealer(props) {
                                         type="text"
                                         value={customer.main_app.no_of_dependents}
                                         label="Number of Dependants"
-                                        defaultText="0"
+                                        defaultText="#"
                                         regex="\b\d{1,2}\b"
                                         className="small-input"
-                                        disabled={true}
                                     />
                                 </Form.Group>
-                                <Form.Group className="mb-18">
-                                    <Input
-                                        name="street"
-                                        type="text"
-                                        value={customer.main_app.street}
-                                        label="Street"
-                                        defaultText="Street"
-                                        disabled={true}
-                                    />
-                                </Form.Group>
-                                <Form.Group className="mb-18">
-                                    <Input
-                                        name="city"
-                                        type="text"
-                                        value={customer.main_app.city}
-                                        label="City"
-                                        defaultText="City"
-                                        disabled={true}
-                                    />
-                                </Form.Group>
-                                <div className="styled-row">
-                                    <Form.Group className="styled-column mb-18">
-                                        <Dropdown
-                                            name="state"
-                                            type="dropdown"
-                                            label="State"
-                                            defaultText="State"
-                                            defaultValue={customer.main_app.state}
-                                            disabled={true}
-                                            options={[{
-                                                label: customer.main_app.state,
-                                                value: customer.main_app.state
-                                            }]}
-                                        />
-                                    </Form.Group>
-                                    <Form.Group className="styled-column mb-18">
-                                        <Input
-                                            name="zip"
-                                            type="text"
-                                            regex="^[0-9]{5}$"
-                                            value={customer.main_app.zip}
-                                            label="Zip Code"
-                                            defaultText="Zip Code"
-                                            disabled={true}
-                                        />
-                                    </Form.Group>
-                                </div>
                                 <Form.Group className="mb-18">
                                     <Checkbox
                                         name="have_co_applicant"
@@ -266,7 +454,54 @@ function AddDealer(props) {
                                             label="Co-applicant Last Name"
                                             defaultText="Co-applicant Last Name"
                                         />
+                                    </Form.Group>                       
+                                    <Form.Group className="mb-18"  style={{marginTop:35}}>
+                                        <Checkbox
+                                            name="co_have_co_applicant_same_address"
+                                            type="checkbox"
+                                            label="Same as Applicant Address"
+                                            checked={customer.co_app.co_have_co_applicant_same_address ? true : null}
+                                        />
                                     </Form.Group>
+                                    <Form.Group className="mb-18">
+                                        <Input
+                                            name="co_street"
+                                            type="text"
+                                            label="Street"
+                                            defaultText="Street"
+                                            defaultValue={customer.co_app.street}
+                                        />
+                                    </Form.Group>
+                                    <Form.Group className="mb-18">
+                                        <Input
+                                            name="co_city"
+                                            type="text"
+                                            label="City"
+                                            defaultValue={customer.co_app.city}
+                                            defaultText="City"
+                                        />
+                                    </Form.Group>
+                                    <div className="styled-row">
+                                        <Form.Group className="styled-column mb-18">
+                                            <Dropdown
+                                                name="co_state"
+                                                type="dropdown"
+                                                label="State"
+                                                defaultText="State"
+                                                defaultValue={customer.co_app.state}
+                                                options={dropdownList}
+                                            />
+                                        </Form.Group>
+                                        <Form.Group className="styled-column mb-18">
+                                            <Input
+                                                name="co_zip"
+                                                type="text"
+                                                defaultValue={customer.co_app.zip}
+                                                label="Zip Code"
+                                                defaultText="Zip Code"
+                                            />
+                                        </Form.Group>
+                                    </div>
                                     <Form.Group className="mb-18">
                                         <Input
                                             name="co_email"
@@ -293,7 +528,7 @@ function AddDealer(props) {
                                         <Input
                                             name="co_date_of_birth"
                                             type="hidden"
-                                            value={customer.co_app.dobY && customer.co_app.dobM && customer.co_app.dobD ? `${customer.co_app.dobY}-${customer.co_app.dobM}-${customer.co_app.dobD}` : null}
+                                            value={customer.co_app.dobY && customer.co_app.dobM && customer.co_app.dobD && customer.co_app.dobY != 'NONE' ? `${customer.co_app.dobM}/${customer.co_app.dobD}/${customer.co_app.dobY}` : null}
                                             label="Date of Birth"
                                             className="medium-input"
                                             defaultText="MM / DD / YYYY"
@@ -317,64 +552,11 @@ function AddDealer(props) {
                                             type="text"
                                             value={customer.co_app.no_of_dependents}
                                             label="Number of Dependants"
-                                            defaultText="0"
+                                            defaultText="#"
                                             regex="\b\d{1,2}\b"
                                             className="small-input"
                                         />
-                                    </Form.Group>                       
-                                    <Form.Group className="mb-18">
-                                        <Checkbox
-                                            name="co_have_co_applicant_same_address"
-                                            type="checkbox"
-                                            label="Same as Applicant"
-                                            checked={customer.co_app.co_have_co_applicant_same_address ? true : null}
-                                        />
                                     </Form.Group>
-                                    <Form.Group className="mb-18">
-                                        <Input
-                                            name="co_street"
-                                            type="text"
-                                            label="Street"
-                                            defaultText="Street"
-                                            defaultValue={customer.co_app.street}
-                                            disabled={customer.co_enabled ? true : false}
-                                        />
-                                    </Form.Group>
-                                    <Form.Group className="mb-18">
-                                        <Input
-                                            name="co_city"
-                                            type="text"
-                                            label="City"
-                                            defaultValue={customer.co_app.city}
-                                            defaultText="City"
-                                        />
-                                    </Form.Group>
-                                    <div className="styled-row">
-                                        <Form.Group className="styled-column mb-18">
-                                            <Dropdown
-                                                name="co_state"
-                                                type="dropdown"
-                                                label="State"
-                                                defaultText="State"
-                                                defaultValue={customer.co_app.state}
-                                                options={[{
-                                                    label: customer.co_app.state,
-                                                    value: customer.co_app.state
-                                                }]}
-                                            />
-                                        </Form.Group>
-                                        <Form.Group className="styled-column mb-18">
-                                            <Input
-                                                name="co_zip"
-                                                type="text"
-                                                defaultValue={customer.co_app.zip}
-                                                regex="^[0-9]{5}$"
-                                                label="Zip Code"
-                                                defaultText="Zip Code"
-                                            />
-                                        </Form.Group>
-                                    </div>
-
                                     </>
                                 }
                             </>
@@ -392,8 +574,8 @@ function AddDealer(props) {
 
             {activeTab === 'credit_details' &&
                 <>
-                    <div className="container pointer-none" style={{marginBottom: 0}}>
-                        <div className="styled-form">
+                    <div className="container summary-container" style={{marginBottom: 0}}>
+                        <div className="styled-form pointer-none">
 
                             <div className="box center-box">
                                 <label class="form-label" style={{textAlign: "center", width: "100%", padding: 0}}>Do you own or rent your home?</label>
@@ -406,7 +588,7 @@ function AddDealer(props) {
                                             className="radio-width"
                                             inputClass="regular-radio"
                                             defaultValue="own"
-                                            checked={customer.main_app.own_or_rent == 'own' ? true : null}
+                                            checked={customer.main_app.own_or_rent.toLowerCase() == 'own' ? true : null}
                                         />
                                         <label for="own" class="form-label " id="own-label">Own</label>  
                                     </Form.Group>
@@ -418,7 +600,7 @@ function AddDealer(props) {
                                             className="radio-width"
                                             inputClass="regular-radio"
                                             defaultValue="rent"
-                                            checked={customer.main_app.own_or_rent == 'rent' ? true : null}
+                                            checked={customer.main_app.own_or_rent.toLowerCase() == 'rent' ? true : null}
                                         />
                                         <label for="rent" class="form-label " id="rent-label">Rent</label>
                                     </Form.Group>
@@ -446,102 +628,39 @@ function AddDealer(props) {
                                     defaultText="0"
                                     className="single-line-input width-112"
                                 />
-                            </Form.Group>                
-                            
-                            {customer.co_enabled && 
+                            </Form.Group> 
 
-                                <>
-
-                                <span className="divider">
-                                    <span className="title">Co-applicant</span>
-                                </span> 
-
-                                <div className="box center-box">
-                                    <label class="form-label" style={{textAlign: "center", width: "100%", padding: 0}}>Do you own or rent your home?</label>
-                                    <div className="radio-box center">
-                                        <Form.Group className="mb-18 radio-filed">
-                                            <Input 
-                                                id ="co_own"
-                                                name="co_own_or_rent"
-                                                type="radio"
-                                                className="radio-width"
-                                                inputClass="regular-radio"
-                                                defaultValue="own"
-                                                checked={customer.co_app.own_or_rent == 'own' ? true : null}
-                                            />
-                                            <label for="co_own" class="form-label " id="co_own-label">Own</label>  
-                                        </Form.Group>
-                                        <Form.Group className="mb-18 radio-filed">
-                                            <Input 
-                                                id ="co_rent"
-                                                name="co_own_or_rent"
-                                                type="radio"
-                                                className="radio-width"
-                                                inputClass="regular-radio"
-                                                defaultValue="rent"
-                                                checked={customer.co_app.own_or_rent == 'rent' ? true : null}
-                                            />
-                                            <label for="co_rent" class="form-label " id="co_rent-label">Rent</label>
-                                        </Form.Group>
-                                    </div>
+                            <div className="box center-box" style={{width: 290, marginTop: 22}}>
+                                <label class="form-label" style={{textAlign: "center", width: "100%", padding: 0}}>Are you currently employed?</label>
+                                <div className="radio-box center">
+                                    <Form.Group className="mb-18 radio-filed employed-radio-filed">
+                                        <Input 
+                                            id ="employed_status"
+                                            name="employement_status"
+                                            type="radio"
+                                            className="radio-width"
+                                            inputClass="regular-radio"
+                                            defaultValue="employed"
+                                            checked={customer.main_app.employement_status.toLowerCase() == "employed" ? true : null}
+                                        />
+                                        <label for="employed_status" class="form-label" id="employed_status-label">Employed</label>  
+                                    </Form.Group>
+                                    <Form.Group className="mb-18 radio-filed">
+                                        <Input 
+                                            id ="not_employed_status"
+                                            name="employement_status"
+                                            type="radio"
+                                            className="radio-width"
+                                            inputClass="regular-radio regular-radio2"
+                                            defaultValue="not employed"
+                                            checked={customer.main_app.employement_status.toLowerCase() == "not employed" ? true : null}
+                                        />
+                                        <label for="not_employed_status" class="form-label" id="not_employed_status-label">Not Employed</label>
+                                    </Form.Group>
                                 </div>
+                            </div>
 
-                                <Form.Group className="mb-18">
-                                    <Checkbox
-                                        name="have_co_applicant_with_same_answers"
-                                        type="checkbox"
-                                        theme="light-label"
-                                        label="The answes are the same as the answers<br>given by the applicant"
-                                        checked={customer.co_app.have_co_applicant_with_same_answers ? true : null}
-                                    />
-                                </Form.Group>  
-
-                                <Form.Group className="mb-18">
-                                    <Input
-                                        name="co_years_there_first"
-                                        type="text"
-                                        defaultValue={customer.co_app.years_there_first}
-                                        label="How many years did you live there?"
-                                        defaultText="0"
-                                        required={true}
-                                        className="single-line-input"
-                                    />
-                                </Form.Group>
-                                <Form.Group className="mb-18">
-                                    <Input
-                                        name="co_monthly_rent_mortgage_payment"
-                                        type="text"
-                                        defaultValue={customer.co_app.monthly_rent_mortgage_payment}
-                                        label={`${customer.co_app.own_or_rent === 'own' ? "Monthly Mortgage Payment:" : "Monthly Rent Payment:"}`}
-                                        defaultText="0"
-                                        isAmount={true}
-                                        required={true}
-                                        className="single-line-input width-112"
-                                    />
-                                </Form.Group> 
-
-                                </>
-                            }
-
-                        </div>
-                    </div>
-
-
-
-                    <div className="container">
-                        <div className="styled-form">
-
-                            <Form.Group className="mb-18">
-                                <Checkbox
-                                    name="employement_status"
-                                    type="checkbox"
-                                    theme="light-label"
-                                    label="Not currently employed"
-                                    checked={customer.main_app.employement_status ? true : null}
-                                />
-                            </Form.Group>
-
-                            {!customer.main_app.employement_status &&
+                            {customer.main_app.employement_status.toLowerCase() == "employed" &&
 
                                 <>
 
@@ -604,64 +723,64 @@ function AddDealer(props) {
                                     </Form.Group>
                                 </div>
 
-                                <div className="box center-box" style={{width: 290, marginTop: 22}}>
-                                    <label class="form-label" style={{textAlign: "center", width: "100%", padding: 0}}>Do you have any other sources of income</label>
-                                    <div className="radio-box center">
-                                        <Form.Group className="mb-18 radio-filed">
-                                            <Input 
-                                                id ="yes"
-                                                name="additional_income_status"
-                                                type="radio"
-                                                className="radio-width"
-                                                inputClass="regular-radio"
-                                                defaultValue="yes"
-                                                checked={customer.main_app.additional_income_status === "yes" ? true : null}
-                                            />
-                                            <label for="yes" class="form-label " id="yes-label">Yes</label>  
-                                        </Form.Group>
-                                        <Form.Group className="mb-18 radio-filed">
-                                            <Input 
-                                                id ="no"
-                                                name="additional_income_status"
-                                                type="radio"
-                                                className="radio-width"
-                                                inputClass="regular-radio regular-radio2"
-                                                defaultValue="no"
-                                                checked={customer.main_app.additional_income_status === "no" ? true : null}
-                                            />
-                                            <label for="no" class="form-label " id="no-label">No</label>
-                                        </Form.Group>
-                                    </div>
-                                </div>
-
-                                {customer.main_app.additional_income_status === "yes" &&
-
-                                    <div className="styled-row">
-                                        <Form.Group className="styled-column mb-18">
-                                            <Input
-                                                name="source"
-                                                type="text"
-                                                defaultValue={customer.main_app.source}
-                                                label="Source"
-                                                defaultText="Source"
-                                                optionalParams = {{style:{width: 166}}}
-                                            />
-                                        </Form.Group>
-                                        <Form.Group className="styled-column mb-18">
-                                            <Input
-                                                name="additional_income"
-                                                type="text"
-                                                defaultValue={customer.main_app.additional_income}
-                                                label="Monthly Income"
-                                                defaultText="0"
-                                                isAmount={true}
-                                                optionalParams = {{style:{width: 118}}}
-                                            />
-                                        </Form.Group>
-                                    </div>
-                                }
-
                                 </>
+                            }
+
+                            <div className="box center-box" style={{width: 290, marginTop: 22}}>
+                                <label class="form-label" style={{textAlign: "center", width: "100%", padding: 0}}>Do you have any other sources of income?</label>
+                                <div className="radio-box center">
+                                    <Form.Group className="mb-18 radio-filed">
+                                        <Input 
+                                            id ="yes"
+                                            name="additional_income_status"
+                                            type="radio"
+                                            className="radio-width"
+                                            inputClass="regular-radio"
+                                            defaultValue="yes"
+                                            checked={customer.main_app.additional_income_status === "yes" ? true : null}
+                                        />
+                                        <label for="yes" class="form-label " id="yes-label">Yes</label>  
+                                    </Form.Group>
+                                    <Form.Group className="mb-18 radio-filed">
+                                        <Input 
+                                            id ="no"
+                                            name="additional_income_status"
+                                            type="radio"
+                                            className="radio-width"
+                                            inputClass="regular-radio regular-radio2"
+                                            defaultValue="no"
+                                            checked={customer.main_app.additional_income_status === "no" ? true : null}
+                                        />
+                                        <label for="no" class="form-label " id="no-label">No</label>
+                                    </Form.Group>
+                                </div>
+                            </div>
+
+                            {customer.main_app.additional_income_status === "yes" &&
+
+                                <div className="styled-row">
+                                    <Form.Group className="styled-column mb-18">
+                                        <Input
+                                            name="source"
+                                            type="text"
+                                            defaultValue={customer.main_app.source}
+                                            label="Source"
+                                            defaultText="Source"
+                                            optionalParams = {{style:{width: 166}}}
+                                        />
+                                    </Form.Group>
+                                    <Form.Group className="styled-column mb-18">
+                                        <Input
+                                            name="additional_income"
+                                            type="text"
+                                            defaultValue={customer.main_app.additional_income}
+                                            label="Monthly Income"
+                                            defaultText="0"
+                                            isAmount={true}
+                                            optionalParams = {{style:{width: 118}}}
+                                        />
+                                    </Form.Group>
+                                </div>
                             }
                             
 
@@ -673,18 +792,102 @@ function AddDealer(props) {
                                     <span className="title">Co-applicant</span>
                                 </span>
 
+                                <div className="box center-box">
+                                    <label class="form-label" style={{textAlign: "center", width: "100%", padding: 0}}>Do you own or rent your home?</label>
+                                    <div className="radio-box center">
+                                        <Form.Group className="mb-18 radio-filed">
+                                            <Input 
+                                                id ="co_own"
+                                                name="co_own_or_rent"
+                                                type="radio"
+                                                className="radio-width"
+                                                inputClass="regular-radio"
+                                                defaultValue="own"
+                                                checked={customer.co_app.own_or_rent.toLowerCase() == 'own' ? true : null}
+                                            />
+                                            <label for="co_own" class="form-label " id="co_own-label">Own</label>  
+                                        </Form.Group>
+                                        <Form.Group className="mb-18 radio-filed">
+                                            <Input 
+                                                id ="co_rent"
+                                                name="co_own_or_rent"
+                                                type="radio"
+                                                className="radio-width"
+                                                inputClass="regular-radio"
+                                                defaultValue="rent"
+                                                checked={customer.co_app.own_or_rent.toLowerCase() == 'rent' ? true : null}
+                                            />
+                                            <label for="co_rent" class="form-label " id="co_rent-label">Rent</label>
+                                        </Form.Group>
+                                    </div>
+                                </div>
+
                                 <Form.Group className="mb-18">
                                     <Checkbox
-                                        name="co_employement_status"
+                                        name="have_co_applicant_with_same_answers"
                                         type="checkbox"
                                         theme="light-label"
-                                        label="Not currently employed"
-                                        checked={customer.co_app.employement_status ? true : null}
+                                        label="The answers are the same as the answers<br>given by the applicant"
+                                        checked={customer.co_app.have_co_applicant_with_same_answers ? true : null}
+                                    />
+                                </Form.Group>  
+
+                                <Form.Group className="mb-18">
+                                    <Input
+                                        name="co_years_there_first"
+                                        type="text"
+                                        defaultValue={customer.co_app.years_there_first}
+                                        label="How many years did you live there?"
+                                        defaultText="0"
+                                        required={true}
+                                        className="single-line-input"
                                     />
                                 </Form.Group>
+                                <Form.Group className="mb-18">
+                                    <Input
+                                        name="co_monthly_rent_mortgage_payment"
+                                        type="text"
+                                        defaultValue={customer.co_app.monthly_rent_mortgage_payment}
+                                        label={`${customer.co_app.own_or_rent === 'own' ? "Monthly Mortgage Payment:" : "Monthly Rent Payment:"}`}
+                                        defaultText="0"
+                                        isAmount={true}
+                                        required={true}
+                                        className="single-line-input width-112"
+                                    />
+                                </Form.Group> 
+
+                                <div className="box center-box" style={{width: 290, marginTop: 22}}>
+                                    <label class="form-label" style={{textAlign: "center", width: "100%", padding: 0}}>Are you currently employed?</label>
+                                    <div className="radio-box center">
+                                        <Form.Group className="mb-18 radio-filed employed-radio-filed">
+                                            <Input 
+                                                id ="co_employed_status"
+                                                name="co_employed_status"
+                                                type="radio"
+                                                className="radio-width"
+                                                inputClass="regular-radio"
+                                                defaultValue="employed"
+                                                checked={customer.co_app.employement_status.toLowerCase() == "employed" ? true : null}
+                                            />
+                                            <label for="co_employed_status" class="form-label" id="co_employed_status-label">Employed</label>  
+                                        </Form.Group>
+                                        <Form.Group className="mb-18 radio-filed">
+                                            <Input 
+                                                id ="co_not_employed_status"
+                                                name="co_not_employed_status"
+                                                type="radio"
+                                                className="radio-width"
+                                                inputClass="regular-radio regular-radio2"
+                                                defaultValue="not employed"
+                                                checked={customer.co_app.employement_status.toLowerCase() == "not employed" ? true : null}
+                                            />
+                                            <label for="co_not_employed_status" class="form-label" id="co_not_employed_status-label">Not Employed</label>
+                                        </Form.Group>
+                                    </div>
+                                </div>
 
 
-                                {!customer.co_app.employement_status &&
+                                {customer.co_app.employement_status.toLowerCase() == "employed" &&
 
                                 <>
 
@@ -745,63 +948,64 @@ function AddDealer(props) {
                                             />
                                         </Form.Group>
                                     </div>
-
-                                    <div className="box center-box" style={{width: 290, marginTop: 22}}>
-                                        <label class="form-label" style={{textAlign: "center", width: "100%", padding: 0}}>Do you have any other sources of income</label>
-                                        <div className="radio-box center">
-                                            <Form.Group className="mb-18 radio-filed">
-                                                <Input 
-                                                    id ="co_yes"
-                                                    name="co_additional_income_status"
-                                                    type="radio"
-                                                    className="radio-width"
-                                                    inputClass="regular-radio"
-                                                    defaultValue="yes"
-                                                    checked={customer.co_app.additional_income_status === "yes" ? true : null}
-                                                />
-                                                <label for="co_yes" class="form-label " id="co_yes-label">Yes</label>  
-                                            </Form.Group>
-                                            <Form.Group className="mb-18 radio-filed">
-                                                <Input 
-                                                    id ="co_no"
-                                                    name="co_additional_income_status"
-                                                    type="radio"
-                                                    className="radio-width"
-                                                    inputClass="regular-radio regular-radio2"
-                                                    defaultValue="no"
-                                                    checked={customer.co_app.additional_income_status === "no" ? true : null}
-                                                />
-                                                <label for="co_no" class="form-label " id="co_no-label">No</label>
-                                            </Form.Group>
-                                        </div>
-                                    </div>
-
-                                    {customer.co_app.additional_income_status === "yes" && 
-
-                                        <div className="styled-row">
-                                            <Form.Group className="styled-column mb-18">
-                                                <Input
-                                                    name="co_source"
-                                                    type="text"
-                                                    defaultValue={customer.co_app.source}
-                                                    label="Source"
-                                                    defaultText="Source"
-                                                    optionalParams = {{style:{width: 166}}}
-                                                />
-                                            </Form.Group>
-                                            <Form.Group className="styled-column mb-18">
-                                                <Input
-                                                    name="co_additional_income"
-                                                    type="text"
-                                                    defaultValue={customer.co_app.additional_income}
-                                                    label="Monthly Income"
-                                                    defaultText="0"
-                                                    optionalParams = {{style:{width: 118}}}
-                                                />
-                                            </Form.Group>
-                                        </div>
-                                    }
                                 </>
+
+                                }
+
+                                <div className="box center-box" style={{width: 290, marginTop: 22}}>
+                                    <label class="form-label" style={{textAlign: "center", width: "100%", padding: 0}}>Do you have any other sources of income?</label>
+                                    <div className="radio-box center">
+                                        <Form.Group className="mb-18 radio-filed">
+                                            <Input 
+                                                id ="co_yes"
+                                                name="co_additional_income_status"
+                                                type="radio"
+                                                className="radio-width"
+                                                inputClass="regular-radio"
+                                                defaultValue="yes"
+                                                checked={customer.co_app.additional_income_status === "yes" ? true : null}
+                                            />
+                                            <label for="co_yes" class="form-label " id="co_yes-label">Yes</label>  
+                                        </Form.Group>
+                                        <Form.Group className="mb-18 radio-filed">
+                                            <Input 
+                                                id ="co_no"
+                                                name="co_additional_income_status"
+                                                type="radio"
+                                                className="radio-width"
+                                                inputClass="regular-radio regular-radio2"
+                                                defaultValue="no"
+                                                checked={customer.co_app.additional_income_status === "no" ? true : null}
+                                            />
+                                            <label for="co_no" class="form-label " id="co_no-label">No</label>
+                                        </Form.Group>
+                                    </div>
+                                </div>
+
+                                {customer.co_app.additional_income_status === "yes" && 
+
+                                    <div className="styled-row">
+                                        <Form.Group className="styled-column mb-18">
+                                            <Input
+                                                name="co_source"
+                                                type="text"
+                                                defaultValue={customer.co_app.source}
+                                                label="Source"
+                                                defaultText="Source"
+                                                optionalParams = {{style:{width: 166}}}
+                                            />
+                                        </Form.Group>
+                                        <Form.Group className="styled-column mb-18">
+                                            <Input
+                                                name="co_additional_income"
+                                                type="text"
+                                                defaultValue={customer.co_app.additional_income}
+                                                label="Monthly Income"
+                                                defaultText="0"
+                                                optionalParams = {{style:{width: 118}}}
+                                            />
+                                        </Form.Group>
+                                    </div>
                                 }
                             </>
                             }
@@ -815,22 +1019,23 @@ function AddDealer(props) {
 
 
             {activeTab === 'summary_list' &&
-                <form action="javascript:void(0)" onSubmit={(e) => handleSubmit(e)} noValidate>
+                <form action="javascript:void(0)" onSubmit={(e) => emailValidate ? handleSubmit(e) : ''} noValidate>
                     <div className="container black-box">
                         <div className="table-div">
                             <table className="summary-row">
                                 <tr>
-                                    <td><span><b>Name: </b> {customer.main_app.name}</span></td>
-                                    <td><span>{customer.co_enabled ? customer.co_app.name : <span className="hide">text for aligement</span>}</span></td>
+                                    <td><span><b>Name: </b> {customer.main_app.first_name} {customer.main_app.last_name}</span></td>
+                                    <td><span>{customer.co_enabled ? `${customer.co_app.first_name} ${customer.co_app.last_name}` : <span className="hide">text for aligementtext for aligemsdffsdf</span>}</span></td>
                                 </tr>
                                 <tr>
                                     <td><span><b>Address: </b> {customer.main_app.street} {customer.main_app.city} {customer.main_app.state} {customer.main_app.zip}</span></td>
                                     <td>
                                         {customer.co_enabled ? 
-                                            <span>{customer.co_app.street} {customer.main_app.city} {customer.main_app.state} {customer.main_app.zip}</span> 
+                                            <span>{customer.co_app.street} {customer.co_app.city} {customer.co_app.state} {customer.co_app.zip}</span> 
                                             : 
                                             appFillStatus == "in_app" ?                                      
-                                                <button className="secondary" type="submit" onClick={() => handleAddCoApp()}>Add Co-App</button>
+                                                // <button className="btn secondary" type="submit" onClick={() => handleAddCoApp()}>Add Co-App</button>
+                                                ""
                                             : null
                                         }
                                     </td>
@@ -845,46 +1050,63 @@ function AddDealer(props) {
                                 </tr>
                             </table>
                         </div>
-                        <div className="table-div status">
-                            <div className="row other-details summary-row">
-                                <div className="col">
-                                    <span className="status">Credit application</span>
-                                    {appFillStatus == "in_app" ?                                             
-                                        <span className="status-icon status-icon-2">
-                                            <img src={IconStatusComplete}/>
-                                            completed 
-                                        </span>
-                                        :                                                
-                                        <span className="status-icon">
-                                            <img src={IconStatusSent}/>
-                                            sent 
-                                        </span>
-                                    }
-                                </div>
-                                <div className={`col ${!customer.co_enabled ? 'button-col' : null}`}>
 
-                                    {customer.co_enabled &&
-                                        <>
-                                            <span className="status">Credit application</span>
-                                            {appFillStatus == "in_app" ?                                             
-                                                <span className="status-icon status-icon-2">
-                                                    <img src={IconStatusComplete}/>
-                                                    completed 
-                                                </span>
-                                                :                                                
+                        { !actionLoading &&
+                            <div className="table-div status">
+                                <div className="row other-details summary-row">
+                                    <div className="col">
+                                        <span className="status">Credit application</span>
+                                        {appFillStatus == "in_app" ?                                             
+                                            <span className="status-icon status-icon-2">
+                                                <img src={IconStatusComplete}/>
+                                                completed 
+                                            </span>
+                                            : 
+                                            customer.invite_status == "SENT" ?                                               
                                                 <span className="status-icon">
                                                     <img src={IconStatusSent}/>
                                                     sent 
                                                 </span>
-                                            }
-                                        </>                                        
-                                    }
+                                                :
+                                                <span className="status-icon status-icon-2">
+                                                    <img src={IconStatusComplete}/>
+                                                    completed 
+                                                </span>
+
+                                        }
+                                    </div>
+                                    <div className={`col ${!customer.co_enabled ? 'button-col' : null}`}>
+
+                                        {customer.co_enabled &&
+                                            <>
+                                                <span className="status">Credit application</span>
+                                                {appFillStatus == "in_app" ?                                             
+                                                    <span className="status-icon status-icon-2">
+                                                        <img src={IconStatusComplete}/>
+                                                        completed 
+                                                    </span>
+                                                    :
+                                                    customer.invite_status == "SENT" ?                                               
+                                                        <span className="status-icon">
+                                                            <img src={IconStatusSent}/>
+                                                            sent 
+                                                        </span>
+                                                        :
+                                                        <span className="status-icon status-icon-2">
+                                                            <img src={IconStatusComplete}/>
+                                                            completed 
+                                                        </span>
+                                                }
+                                            </>                                        
+                                        }
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        }
+
                     </div>
                     <div className="footer-container">
-                        <button className="secondary" type="submit">{appFillStatus == "in_app" ? 'Submit' : 'Submit'}</button>
+                        <button className="btn secondary" type="submit">Close</button>
                     </div>
                 </form>
             }
@@ -896,13 +1118,11 @@ function AddDealer(props) {
 const mapStateToProps = state => ({
     appFillStatus: state.sales.appFillStatus,
     customer: state.sales.customer,
-    isCustomerFound: state.sales.isCustomerFound,
     actionLoading: state.sales.actionLoading,
+    emailValidate: state.sales.emailValidate
 });
 
 const mapDispatchToProps = dispatch => ({
-    submiCreditApplication: (history, data) => dispatch(submiCreditApplication(history, data)),
-    submiCreditApplicationByMain: (history, data) => dispatch(submiCreditApplicationByMain(history, data)),
     updateCustomer: (history, path, data) => dispatch(updateCustomer(history, path, data)),
     resetCustomerSearchApiInitiate: () => dispatch(resetCustomerSearchApiInitiate()),
 });

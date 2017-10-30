@@ -96,8 +96,11 @@
     -moz-appearance: none;
     appearance: none;
     background: url(../images/dropdown.png) 99% / 20% no-repeat #1E2C35 !important;
-    box-shadow: none !important;
     outline: none !important;
+}
+
+.dropdown select:focus {
+    box-shadow: 0 0 10px #719ECE !important;
 }
   
 /* CAUTION: IE hackery ahead */

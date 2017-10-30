@@ -1,4 +1,5 @@
 import API from '../../api';
+import { addEvent } from '../../firebase/firebase';
 import { pushNotification } from 'utils/notification';
 import { message } from 'shared/constant'
 export const SALES_LIST = "SALES_LIST";
@@ -45,11 +46,19 @@ export const SET_INCOMPLETE_REMINDER_ERROR = "SET_INCOMPLETE_REMINDER_ERROR";
 
 
 
+export const SET_SEARCH_CUSTOMER_SEARCH_REQUEST = "SET_SEARCH_CUSTOMER_SEARCH_REQUEST";
+export const RESET_SEARCH_CUSTOMER_FORM_REQUEST = "RESET_SEARCH_CUSTOMER_FORM_REQUEST";
+export const REFRESH_CHECK_PAGE_LOAD = "REFRESH_CHECK_PAGE_LOAD";
+
 export const SET_CUSTOMER_SEARCH_REQUEST = "SET_CUSTOMER_SEARCH_REQUEST";
 
 export const GET_CUSTOMER_REQUEST = "GET_CUSTOMER_REQUEST";
 export const GET_CUSTOMER_SUCCESS = "GET_CUSTOMER_SUCCESS";
 export const GET_CUSTOMER_FAILED = "GET_CUSTOMER_FAILED";
+
+export const GET_SEARCH_CUSTOMER_REQUEST = "GET_SEARCH_CUSTOMER_REQUEST";
+export const GET_SEARCH_CUSTOMER_SUCCESS = "GET_SEARCH_CUSTOMER_SUCCESS";
+export const GET_SEARCH_CUSTOMER_FAILED = "GET_SEARCH_CUSTOMER_FAILED";
 
 export const UPDATE_CUSTOMER_SEARCH_REQUEST = "UPDATE_CUSTOMER_SEARCH_REQUEST";
 
@@ -66,6 +75,12 @@ export const SUBMIT_CUSTOMER_REPONSE_FAILED = "SUBMIT_CUSTOMER_REPONSE_FAILED";
 export const SEND_APP_LINK_REQUEST = "SEND_APP_LINK_REQUEST";
 export const SEND_APP_LINK_SUCCESS = "SEND_APP_LINK_SUCCESS";
 export const SEND_APP_LINK_FAILED = "SEND_APP_LINK_FAILED";
+
+export const VALIDATE_EMAIL_REQUEST = "VALIDATE_EMAIL_REQUEST";
+export const VALIDATE_EMAIL_SUCCESS = "VALIDATE_EMAIL_SUCCESS";
+export const VALIDATE_EMAIL_FAILED = "VALIDATE_EMAIL_FAILED";
+
+export const SUBMIT_CUSTOMER_REPONSE_TO_THANKYOU = "SUBMIT_CUSTOMER_REPONSE_TO_THANKYOU";
 
 
 
@@ -281,21 +296,98 @@ export function reminderIncompleteRequest(action) {
 
 
 export function searchCustomer(data) {
+
+    return async function(dispatch) {
+        dispatch({
+            type: GET_SEARCH_CUSTOMER_REQUEST,
+        })
+        try {
+            const response = await API.post(`/sales/search-customer`, { ...data });
+            dispatch({
+                type: GET_SEARCH_CUSTOMER_SUCCESS,
+                payload: response.data 
+            })
+            if(response.data.data.length == 0) {
+                return false 
+            } else {
+                return true
+            }
+        } catch (error) {
+            dispatch({
+                type: GET_SEARCH_CUSTOMER_FAILED,
+            })
+            return false
+        }    
+    }
+}
+
+
+export function resetSearchCustomerSearchApiInitiate() {
+    return async function(dispatch) {
+        dispatch({
+            type: SET_SEARCH_CUSTOMER_SEARCH_REQUEST,
+        })       
+    }
+}
+
+
+export function resetSearchCustomerForm() {
+    return async function(dispatch) {
+        dispatch({
+            type: RESET_SEARCH_CUSTOMER_FORM_REQUEST,
+        })       
+    }
+}
+
+
+export function refreshSearchCustomerForm() {
+    return async function(dispatch) {
+        dispatch({
+            type: REFRESH_CHECK_PAGE_LOAD,
+        })       
+    }
+}
+
+
+export function selectCustomer(data) {
     return async function(dispatch) {
         dispatch({
             type: GET_CUSTOMER_REQUEST,
         })
         try {
-            const response = await API.post(`/sales/search-customer`, { ...data });
             dispatch({
                 type: GET_CUSTOMER_SUCCESS,
-                payload: response.data && response.data.data && response.data.data.main_app && response.data.data.main_app.id !== '' ? response.data : null 
+                payload: data 
             })
+            return true
         } catch (error) {
             dispatch({
                 type: GET_CUSTOMER_FAILED,
             })
-            pushNotification("No Match Found", 'error', 'TOP_RIGHT', 3000);   
+            return false
+        }    
+    }
+}
+
+
+export function validateEmailAddress(email) {
+
+    let temp_data = {"email":email}
+
+    return async function(dispatch) {
+        dispatch({
+            type: VALIDATE_EMAIL_REQUEST,
+        })
+        try {
+            await API.post(`/accounts/validate-email`, temp_data);
+            dispatch({
+                type: VALIDATE_EMAIL_SUCCESS,
+            })
+        } catch (error) {
+            dispatch({
+                type: VALIDATE_EMAIL_FAILED,
+            })
+            pushNotification("Invalid email address", 'error', 'TOP_RIGHT', 3000);   
         }    
     }
 }
@@ -316,7 +408,7 @@ export function updateApplicationFilledStatus(data, history, path) {
             type: SET_APP_FILLED_STATUS,
             payload: data
         })       
-        history && history.push(path);   
+        history && path && history.push(path);   
     }
 }
 
@@ -327,12 +419,12 @@ export function updateCustomer(history, path, data) {
             type: UPDATE_CUSTOMER_SEARCH_REQUEST,
             payload: data
         })    
-        history && history.push(path);   
+        history && path && history.push(path);   
     }
 }
 
 
-export function submiCreditApplication(history, data) {
+export function submiCreditApplication(history, path, data) {
 
     let temp_data = {
         contact : {
@@ -363,26 +455,24 @@ export function submiCreditApplication(history, data) {
                 type: SUBMIT_CREDIT_APP_SUCCESS,
                 payload: ''
             })
-
+            addEvent('credit_application_completed', 'credit-application-completed-success', {'credit_app_id': temp_data.id});
             pushNotification("Application Updated Successfully", 'success', 'TOP_RIGHT', 3000);
-
-            history && history.push('/applyHome');
-
+            history && history.push(path);
         } catch (error) {
-
             pushNotification(error.response.data.message, 'error', 'TOP_RIGHT', 3000);
-
             dispatch({
                 type: SUBMIT_CREDIT_APP_FAILED
             })
+            addEvent('credit_application_completed', 'credit-application-completed-failed', {'credit_app_id': temp_data.id});
         }       
     }
 }
 
 
-export function submiCreditApplicationByMain(history, data) { 
+export function submiCreditApplicationByMail(history, data) { 
 
     let temp_data = {
+        nortridge_cif_number: data.main_app.nortridge_cif_number ? data.main_app.nortridge_cif_number : null,
         customer_id: data.main_app.id ? data.main_app.id : 0,
         customer_email: data.main_app.email,
         customer_phone: data.main_app.cell_phone,
@@ -402,13 +492,15 @@ export function submiCreditApplicationByMain(history, data) {
             dispatch({
                 type: SEND_APP_LINK_SUCCESS,
             })
+            addEvent('credit_application_mail_sent', 'credit-application-mail-sent-success', {'customer_id': temp_data.id});
             pushNotification("Application Send Successfully", 'success', 'TOP_RIGHT', 3000);
-            history && history.push('/applyHome'); 
+            history && history.push('/applyApplicationSummary');
         } catch (error) {
             dispatch({
                 type: SEND_APP_LINK_FAILED,
             })
-            pushNotification("No Match Found", 'error', 'TOP_RIGHT', 3000);   
+            pushNotification("Error while sending mail", 'error', 'TOP_RIGHT', 3000);   
+            addEvent('credit_application_mail_sent', 'credit-application-mail-sent-failed', {'customer_id': temp_data.id});
         } 
     }
 }
@@ -422,12 +514,14 @@ export function getCustomerApiInitiate(data) {
             const response = await API.post(`/sales/search-customer-id`, { id: data, token: localStorage.getItem('customerToken') });
             dispatch({
                 type: GET_CUSTOMER_SUCCESS,
-                payload: response.data && response.data.data && response.data.data.main_app && response.data.data.main_app.id !== '' ? response.data : null 
+                payload: response.data && response.data.data && response.data.data.main_app && response.data.data.main_app.id !== '' ? response.data.data : null 
             })
+            addEvent('credit_application_mail_open', 'credit-application-mail-open-success', {'customer_id': data.id});
         } catch (error) {
             dispatch({
                 type: GET_CUSTOMER_FAILED,
             }) 
+            addEvent('credit_application_mail_open', 'credit-application-mail-open-failed', {'customer_id': data.id});
         }    
     }
 }
@@ -466,18 +560,24 @@ export function customerResponseSubmit(history, data) {
                 type: SUBMIT_CUSTOMER_REPONSE_SUCCESS,
                 payload: ''
             })
-
+            addEvent('credit_application_completed_by_customer', 'credit-application-completed-by-customer-success', {'credit_app_id': temp_data.id});
             pushNotification("Application Updated Successfully", 'success', 'TOP_RIGHT', 3000);
-
+            history && history.push('/thankyou')
         } catch (error) {
-
             pushNotification(error.response.data.message, 'error', 'TOP_RIGHT', 3000);
-
             dispatch({
                 type: SUBMIT_CUSTOMER_REPONSE_FAILED
             })
-
+            addEvent('credit_application_completed_by_customer', 'credit-application-completed-by-customer-failed', {'credit_app_id': temp_data.id});
             history && history.push('/basic')
         }       
+    }
+}
+
+export function getCustomerToThankYouPage() {
+    return async function(dispatch) {
+        dispatch({
+            type: SUBMIT_CUSTOMER_REPONSE_TO_THANKYOU,
+        })    
     }
 }

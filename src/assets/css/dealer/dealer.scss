@@ -32,9 +32,10 @@ input:focus {
 }
 
 .container {
-    margin-bottom: 100px;
-    // height: calc(100vh - 145px);
-    // overflow: auto;
+    // margin-bottom: 100px;
+    height: calc(100vh - 145.5px);
+    overflow: auto;
+    max-width: 100%;
 
     .styled-form {
         width: 380px;
@@ -224,6 +225,10 @@ input:focus {
     }
 }
 
+.summary-container {
+    height: calc(100vh - 85.5px);
+}
+
 .black-box {
     background-color: #20313e;
     max-width: 100%;
@@ -266,9 +271,14 @@ input:focus {
     }
 }
 
-.match-found-container {
+.match-found-result {
+    // margin-bottom: 60.5px;
     position: fixed;
     bottom: 60.5px;
+    width: 100%;
+}
+
+.match-found-container {
     width: 100%;
 
     .title {
@@ -326,7 +336,7 @@ input:focus {
     align-items: center;
 }
 
-button.secondary {
+.secondary {
     border: none;
     min-width: 120px;
     height: 35px;
@@ -379,6 +389,10 @@ button.secondary {
     margin-right: 0;
 }
 
+.employed-radio-filed {
+    margin-right: 25px; 
+}
+
 .hide {
     display: none;
     opacity: 0;
@@ -400,6 +414,8 @@ button.secondary {
         background-color: #009d86;
         height: 59px;
         margin-bottom: 28px;
+        padding: 0;
+        border: 0;
 
         .icon {    
             width: 58px;
@@ -480,7 +496,7 @@ button.secondary {
         }
 
         input {
-            width: 103px;
+            width: 115px;
         }
     }
 }
@@ -536,7 +552,7 @@ button.secondary {
 
         img {
             float: left;
-            background: #009D86;
+            background: #6793b7;
             padding: 6px 6px;
             border-radius: 12px;
             margin: -3px;
@@ -582,7 +598,7 @@ button.secondary {
     }
 
     b {
-        display: block;
+        // display: block;
         font-size: 14.5px;
         font-weight: bold;
         line-height: 1.2;
@@ -596,8 +612,9 @@ button.secondary {
 }
 
 .has-amount-sign {
-    position: absolute;
+    position: relative;
     margin: 7px 0px 7px 16px;
+    top: -31px;
 }
 
 .pointer-none {
@@ -637,7 +654,7 @@ table.summary-row {
 .table-div {
     padding: 62px 0;    
     padding-bottom: 5px;
-    max-width: 430px;
+    max-width: 470px;
     margin: auto;
     width: 100%;
     overflow: auto;  
@@ -649,12 +666,19 @@ table.summary-row {
 
 .ssn-span {
     color: white;
-    position: absolute;
-    margin-top: -32px;
+    margin-top: -22px;
     margin-left: 14px;
     display: block;
     cursor: text;
     letter-spacing: 1px;
+    height: 8px;
+    line-height: 1px;
+    width: 100px;
+    margin-bottom: 14px;
+}
+
+.ssn-div {
+    min-height: 65px;
 }
 
 @media (max-width: 570px) {

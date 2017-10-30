@@ -1,117 +1,154 @@
-import React, { useState, useEffect, createRef, useRef } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useEffect } from 'react';
 import { pushNotification } from 'utils/notification';
+import { connect } from 'react-redux';
 import Header from '../../components/Sales/Header';
 import { Form } from 'react-bootstrap';
 import Input from '../../components/commons/input';
-import Loader from 'shared/Loader';
 import { IconHome, IconRight } from '../../assets/images';
 
 import { getFromData } from '../../components/commons/utility';
-import { searchCustomer, resetCustomerSearchApiInitiate, updateCustomer } from '../../redux/actions/sales';
+import { updateApplicationFilledStatus, searchCustomer, updateCustomer, refreshSearchCustomerForm, validateEmailAddress, resetSearchCustomerForm, selectCustomer, resetSearchCustomerSearchApiInitiate } from '../../redux/actions/sales';
 
 function HomeScreen(props) {
 
     const {
         history,
         avatar,
+        customer_search_result,
         customer,
+        refreshCheck,
         isCustomerFound,
         actionLoading,
         searchCustomer,
+        selectCustomer,
         updateCustomer,
+        validateEmailAddress,
         searchCustomerApiInitiate,
-        resetCustomerSearchApiInitiate
+        updateApplicationFilledStatus,
+        resetSearchCustomerForm,
+        refreshSearchCustomerForm,
+        resetSearchCustomerSearchApiInitiate
     } = props;
 
-    const [hitSearchApi, setHitSearchApi] = useState(false);
     const [validationResult, setValidationResult] = useState(null);
-    const [applicantEmail, setApplicantEmail] = useState(isCustomerFound ? customer.main_app.email : null);
-    const [applicantPhone, setApplicantPhone] = useState(isCustomerFound ? customer.main_app.cell_phone : null);
+    const [applicantEmail, setApplicantEmail] = useState(null);
+    const [applicantPhone, setApplicantPhone] = useState(null);
+    const [clearCheck, setClearCheck] = useState(false);
 
-    const submitButton = createRef();
-
-    const timer = useRef(0);
-    let interval = null;
-
-    useEffect(() => {  
-        resetCustomerSearchApiInitiate(false)
-    }, [])
+    console.log(clearCheck)
 
     useEffect(() => {
-        interval = setInterval(function(){
-            timer.current = timer.current+500;   
-            console.log(timer.current, !searchCustomerApiInitiate)   
-            if(applicantEmail && applicantPhone && !searchCustomerApiInitiate && timer.current === 2000) {
-                setHitSearchApi(!hitSearchApi);
+        if (window.performance) {
+            if (performance.navigation.type == 1 && refreshCheck) {
+                resetSearchCustomerSearchApiInitiate()
             }
-            if(timer.current > 5000) {
-                timer.current = 0;
-                clearInterval(interval);
+            else {
+                refreshSearchCustomerForm(true)
             }
-        }, 500)
-    })
-
-    useEffect(() => {
-        if(applicantEmail && applicantPhone && !searchCustomerApiInitiate) {
-            submitButton.current.click();
         }
-    }, [hitSearchApi])
+    }, []);
+
+
+    useEffect(() => {
+        let temp_phone = null;
+        let temp_email = null;
+
+        if (applicantPhone && applicantPhone != "" && applicantPhone.indexOf('_') == -1) {
+            temp_phone = applicantPhone;
+        }
+
+        if (applicantEmail && applicantEmail != "") {
+            temp_email = applicantEmail;
+        }
+
+        if (!searchCustomerApiInitiate && (applicantEmail || (applicantPhone && applicantPhone.indexOf('_') == -1))) {
+            searchCustomer({ email: temp_email, phone: temp_phone }).then(res => {
+                if (!res && customer_search_result.length == 0) {
+                    pushNotification("No match found", 'error', 'TOP_RIGHT', 3000);
+                }
+            })
+        }
+    }, [applicantEmail, applicantPhone]);
+
 
     const handleHomeClick = () => {
         history.replace('/');
     }
 
+    const triggerNextPage = (customer_search) => {
+        let temp_customer = {
+            ...customer_search,
+            id: customer_search.main_app.id,
+        }
+        if (customer_search.invite_status == "COMPLETED" || customer_search.invite_status == "SENT") {
+
+            temp_customer = {
+                ...temp_customer,
+                main_app: {
+                    ...temp_customer.main_app,
+                    additional_income_status: temp_customer.main_app.additional_income && temp_customer.main_app.additional_income != '0' ? "yes" : "no"
+                },
+                co_app: {
+                    ...temp_customer.co_app,
+                    additional_income_status: temp_customer.co_enabled && temp_customer.co_app.additional_income && temp_customer.co_app.additional_income != '0' ? "yes" : "no"
+                }
+            }
+
+            if (customer_search.invite_status == "COMPLETED") {
+                updateApplicationFilledStatus('in_app', null, null);
+            }
+            else {
+                updateApplicationFilledStatus('send_link', null, null);
+            }
+
+            updateCustomer(history, '/applyApplicationSummary', temp_customer);
+        } else {
+            updateCustomer(history, '/applyApplication', temp_customer);
+        }
+    }
+
     const handleSubmit = evt => {
-        
+
         evt.preventDefault();
+
         const formData = getFromData(evt);
 
-        if(!searchCustomerApiInitiate) {
+        setValidationResult(formData.validationResult);
 
-            setValidationResult(formData.validationResult);
-            if(!formData.validationResult) {
-                
-                let data = formData.formData
-                searchCustomer({...data, phone: data.cell_phone})
-            }           
+        if (!searchCustomerApiInitiate && !formData.validationResult) {
+
+            if (applicantEmail || (applicantPhone && applicantPhone.indexOf('_') == -1)) {
+                searchCustomer({ email: applicantEmail, phone: (applicantPhone && applicantPhone.indexOf('_') !== -1) ? null : applicantPhone })
+            }
+
+        } else if ((customer_search_result.length > 0) && customer.main_app.id == undefined && !formData.validationResult) {
+
+            pushNotification("Please select applicant", 'error', 'TOP_RIGHT', 3000);
 
         } else {
 
-            setValidationResult(formData.validationResult);
-            if(!formData.validationResult) {
+            if (!formData.validationResult) {
 
                 let data = formData.formData
 
                 let temp_customer = {
                     ...customer,
+                    id: 0,
                     "main_app": {
                         ...customer.main_app,
-                        "name": data.first_name+" "+data.last_name,
+                        "name": data.first_name + " " + customer.main_app.last_name,
                         "email": data.email,
                         "cell_phone": data.cell_phone,
+                        "first_name": data.first_name,
+                        "last_name": data.last_name
                     },
                     "co_app": {
                         ...customer.co_app,
-                    }
+                    },
+                    invite_status: "SENT"
                 }
 
-                if(!isCustomerFound) {
-                    temp_customer = {
-                        id: 0,
-                        ...temp_customer,
-                        "main_app": {
-                            ...temp_customer.main_app,
-                            "first_name": data.first_name,
-                            "last_name": data.last_name
-                        },
-                    }
-                } else {
-                    temp_customer = {
-                        id: customer.main_app.id,
-                        ...temp_customer
-                    }
-                }
+                validateEmailAddress(applicantEmail);
 
                 updateCustomer(history, '/applyApplication', temp_customer);
             }
@@ -119,17 +156,27 @@ function HomeScreen(props) {
 
     }
 
+    const refreshPhoneApiCheck = (e) => {
+        if (e.target.value && e.target.value.indexOf('_') == -1) {
+            resetSearchCustomerSearchApiInitiate()
+        }
+    }
+
+    const refreshEmailApiCheck = (e) => {
+        if (e.target.value) {
+            resetSearchCustomerSearchApiInitiate()
+        }
+    }
+
     return (
         <div className="sales">
 
-            { actionLoading && <Loader />}
-
             <Header isHome={true} history={history} avatar={avatar}>
                 {localStorage.getItem('role') && localStorage.getItem('role').indexOf('dealer') !== -1 &&
-                    <img src={IconHome} alt="home" className="icon-home" onClick={()=>handleHomeClick()} />
+                    <img src={IconHome} alt="home" className="icon-home" onClick={() => handleHomeClick()} />
                 }
             </Header>
-            
+
 
             <form onSubmit={(e) => handleSubmit(e)} noValidate>
 
@@ -137,7 +184,7 @@ function HomeScreen(props) {
                     <p className="title">ENTER CUSTOMER INFORMATION</p>
                     <p className="sub-title">Please begin by entering your customer's email address and/or phone number. If they are already in TCP's database, the customer will appear at the bottom of the screen for you to select. Otherwise, please enter an email address and/or phone number, first name and last name to proceed.</p>
                 </div>
-                
+
                 <div className="container">
                     <div className="styled-form home-form">
                         <div className="box color-box">
@@ -148,19 +195,27 @@ function HomeScreen(props) {
                                     regex="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$"
                                     label="Applicant Email"
                                     defaultText="Applicant Email"
-                                    defaultValue={applicantEmail} 
+                                    // {...(isCustomerFound && {
+                                    //     value: customer.main_app.email
+                                    // })}
+                                    value = {customer ? customer.main_app.email : ''}
+                                    {...(clearCheck && {
+                                        value: ''
+                                    })}
                                     required={true}
                                     error={{
                                         'invalid': "Please enter valid Email address",
                                         'empty': "Please enter Applicant Email"
                                     }}
+                                    optionalParams={{
+                                        autoFocus: true
+                                    }}
                                     validationResult={validationResult}
                                     handleChange={(e) => { 
-                                        setApplicantEmail(e.target.value)
-                                        resetCustomerSearchApiInitiate(false) 
-                                        timer.current = 0;
-                                        clearInterval(interval);
+                                        refreshEmailApiCheck(e)
+                                        setClearCheck(false)
                                     }}
+                                    onBlur={(e) => { setApplicantEmail(e.target.value) }}
                                 />
                             </Form.Group>
                             <Form.Group className="home-input mb-18">
@@ -169,7 +224,13 @@ function HomeScreen(props) {
                                     type="hidden"
                                     label="Phone"
                                     defaultText="(123) 456-7890"
-                                    defaultValue={applicantPhone} 
+                                    // {...(isCustomerFound && {
+                                    //     value: customer.main_app.cell_phone
+                                    // })}
+                                    value = {customer ? customer.main_app.cell_phone : ''}
+                                    {...(clearCheck && {
+                                        value: ''
+                                    })}
                                     regex="^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$"
                                     mask="(999) 999-9999"
                                     required={true}
@@ -179,11 +240,10 @@ function HomeScreen(props) {
                                     }}
                                     validationResult={validationResult}
                                     handleChange={(e) => { 
-                                        setApplicantPhone(e.target.value)
-                                        resetCustomerSearchApiInitiate(false) 
-                                        timer.current = 0;
-                                        clearInterval(interval);
+                                        refreshPhoneApiCheck(e)
+                                        setClearCheck(false)
                                     }}
+                                    onBlur={(e) => { setApplicantPhone(e.target.value) }}
                                 />
                             </Form.Group>
                         </div>
@@ -193,11 +253,18 @@ function HomeScreen(props) {
                                 type="text"
                                 label="Applicant First Name"
                                 defaultText="Applicant First Name"
-                                // defaultValue={isCustomerFound ? customer.main_app.first_name : null} 
-                                required={searchCustomerApiInitiate && !isCustomerFound ? true : false}
+                                // {...(isCustomerFound && {
+                                //     value: customer.main_app.first_name
+                                // })}
+                                value = {customer ? customer.main_app.first_name : ''}
+                                {...(clearCheck && {
+                                    value: ''
+                                })}
+                                required={true}
                                 error={{
                                     'empty': " "
                                 }}
+                                handleChange={() => setClearCheck(false) }
                                 validationResult={validationResult}
                             />
                         </Form.Group>
@@ -207,39 +274,65 @@ function HomeScreen(props) {
                                 type="text"
                                 label="Applicant Last Name"
                                 defaultText="Applicant Last Name"
-                                // defaultValue={isCustomerFound ? customer.main_app.last_name : null} 
-                                required={searchCustomerApiInitiate && !isCustomerFound ? true : false}
+                                // {...(isCustomerFound && {
+                                //     value: customer.main_app.last_name
+                                // })}
+                                value = {customer ? customer.main_app.last_name : ''}
+                                {...(clearCheck && {
+                                    value: ''
+                                })}
+                                required={true}
                                 error={{
                                     'empty': " "
                                 }}
+                                handleChange={() => setClearCheck(false) }
                                 validationResult={validationResult}
                             />
                         </Form.Group>
+
                     </div>
                 </div>
-                {isCustomerFound &&
-                    <div className="match-found-container">
-                        <div className="title">Match Found <img src={IconRight} style={{marginLeft: 10}} /></div>
-                        <div className="details">
-                            <p className="name-details">{customer.main_app.name} {customer.co_enabled ? ` & ${customer.co_app.name}` : null}</p>
-                            <div className="row other-details">
-                                <div className="col">
-                                    <span>{customer.main_app.street}</span>
-                                    <br></br>
-                                    <span>{customer.main_app.city} {customer.main_app.state} {customer.main_app.zip}.</span>
-                                </div>
-                                <div className="col">
-                                    <span>{customer.main_app.email}</span>
-                                    <br></br>
-                                    <span>{customer.main_app.cell_phone}</span>
+                <div className="match-found-result">
+                    {customer_search_result && customer_search_result.map((customer_search) => (
+                        <div className="match-found-container">
+                            <div className="title">Match Found <img src={IconRight} style={{ marginLeft: 10 }} /></div>
+                            <div
+                                className="details"
+                                style={{ cursor: "pointer" }}
+                                onClick={() => {
+                                    selectCustomer(customer_search)
+                                    triggerNextPage(customer_search)
+                                }}
+                            >
+                                <p className="name-details">{customer_search.main_app.name} {customer_search.co_enabled ? ` & ${customer_search.co_app.name}` : null}</p>
+                                <div className="row other-details">
+                                    <div className="col">
+                                        <span>{customer_search.main_app.street}</span>
+                                        <br></br>
+                                        <span>{customer_search.main_app.city} {customer_search.main_app.state} {customer_search.main_app.zip}.</span>
+                                    </div>
+                                    <div className="col">
+                                        <span>{customer_search.main_app.email}</span>
+                                        <br></br>
+                                        <span>{customer_search.main_app.cell_phone}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                }
-                <div className="footer-container">
-                    <button ref={submitButton} className="secondary" type="submit">Next</button>
+                    ))}
                 </div>
+                <div className="footer-container">
+                    <button className="btn secondary" type="button" onClick={() => {
+                        resetSearchCustomerForm()
+                        setClearCheck(true)
+                    }} >Clear</button>
+                    {actionLoading ?
+                        <button className="btn secondary" type="submit" disabled >Searching...</button>
+                        :
+                        <button className="btn secondary" type="submit" >Next</button>
+                    }
+                </div>
+
             </form>
         </div>
     )
@@ -247,16 +340,23 @@ function HomeScreen(props) {
 
 const mapStateToProps = state => ({
     avatar: state.auth.avatar,
+    refreshCheck: state.sales.refreshCheck,
+    customer_search_result: state.sales.customer_search_result,
     customer: state.sales.customer,
     isCustomerFound: state.sales.isCustomerFound,
     actionLoading: state.sales.actionLoading,
-    searchCustomerApiInitiate: state.sales.searchCustomerApiInitiate
+    searchCustomerApiInitiate: state.sales.searchCustomerApiInitiate,
 });
 
 const mapDispatchToProps = dispatch => ({
     searchCustomer: (data) => dispatch(searchCustomer(data)),
-    resetCustomerSearchApiInitiate: () => dispatch(resetCustomerSearchApiInitiate()),
-    updateCustomer: (history, path, data) => dispatch(updateCustomer(history, path, data))
+    selectCustomer: (data) => dispatch(selectCustomer(data)),
+    validateEmailAddress: (data) => dispatch(validateEmailAddress(data)),
+    resetSearchCustomerSearchApiInitiate: (data) => dispatch(resetSearchCustomerSearchApiInitiate(data)),
+    resetSearchCustomerForm: () => dispatch(resetSearchCustomerForm()),
+    refreshSearchCustomerForm: () => dispatch(refreshSearchCustomerForm()),
+    updateCustomer: (history, path, data) => dispatch(updateCustomer(history, path, data)),
+    updateApplicationFilledStatus: (data, history, path) => dispatch(updateApplicationFilledStatus(data, history, path))
 });
 
 export default connect(

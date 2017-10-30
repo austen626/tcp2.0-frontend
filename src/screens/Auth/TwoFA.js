@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Form, Button } from 'react-bootstrap';
-import { codeVerify, sendAgain, forgotCodeVerify } from '../../redux/actions/auth';
+import { codeVerify, sendAgain, forgotCodeVerify,getMeData } from '../../redux/actions/auth';
+import { resetCustomerSearchApiInitiate } from '../../redux/actions/sales';
 
 import AuthContainer from '../../components/AuthContainer';
 import { AuthCheckbox } from '../../components/Checkbox';
@@ -62,8 +63,10 @@ class TwoFAScreen extends Component {
             });
     
             if (result.ok) {
+
                 localStorage.setItem('token', result.token);
                 localStorage.setItem('role', result.role);
+                
                 if(checkAskAgain) {
                     localStorage.setItem('isDonotAskAgain', true);
                 } else {
@@ -76,8 +79,17 @@ class TwoFAScreen extends Component {
                 } 
                 else 
                 {
+                    const loginUserData = await this.props.getMeData();
+                    if(loginUserData) {
+                        localStorage.setItem('dealer_name', loginUserData.dealer_name ? loginUserData.dealer_name : `${loginUserData.first_name} ${loginUserData.last_name}`);
+                        localStorage.setItem('email', loginUserData.email);
+                    }
+
                     this.props.history.replace('/');
                 }
+
+                this.props.resetCustomerSearchApiInitiate();
+
             } else {
                 this.setState({ error: result.error });
             }
@@ -92,7 +104,7 @@ class TwoFAScreen extends Component {
                 <div className="twofa-page">
                     <div className="wrapper">
                         <div className="tip">
-                            A text message with your code has been sent to a number ending {endCode}
+                            A text message with your code has been sent to a number ending with {endCode}
                         </div>
                         <form action="javascript:void(0)" method="post" onSubmit={this.onVerify} >
                             <div className="inputs">
@@ -139,6 +151,8 @@ export default connect(
     {
         codeVerify,
         sendAgain,
-        forgotCodeVerify
+        forgotCodeVerify,
+        getMeData,
+        resetCustomerSearchApiInitiate
     }
 )(TwoFAScreen);

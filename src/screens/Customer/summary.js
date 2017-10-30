@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Form } from 'react-bootstrap';
 import Header, { HeaderLeft, HeaderCenter, HeaderRight } from '../../components/Dealer/Header';
-import { TCPLogo, IconArrowLeft, IconListWhite, IconStatusSent,IconContactAcitve } from '../../assets/images';
+import { TCPLogo, IconArrowLeft, IconListWhite, IconStatusComplete, IconContactAcitve } from '../../assets/images';
 import Loader from 'shared/Loader';
 import Input from '../../components/commons/input';
 import Dropdown from '../../components/commons/dropdown';
 import Checkbox from '../../components/commons/checkbox';
 
-import { updateCustomer } from '../../redux/actions/sales';
+import { updateCustomer,getCustomerToThankYouPage } from '../../redux/actions/sales';
 
 function AddDealer(props) {
 
@@ -17,7 +17,210 @@ function AddDealer(props) {
         customer,
         actionLoading,
         updateCustomer,
-        isCustomerSubmitted
+        isCustomerSubmitted,
+        getCustomerToThankYouPage,
+        dropdownList = [
+            {
+                label: "Alabama",
+                value: "AL"
+            },
+            {
+                label: "Alaska",
+                value: "AK"
+            },
+            {
+                label: "Arizona",
+                value: "AZ"
+            },
+            {
+                label: "Arkansas",
+                value: "AR"
+            },
+            {
+                label: "California",
+                value: "CA"
+            },
+            {
+                label: "Colorado",
+                value: "CO"
+            },
+            {
+                label: "Connecticut",
+                value: "CT"
+            },
+            {
+                label: "Delaware",
+                value: "DE"
+            },
+            {
+                label: "Florida",
+                value: "FL"
+            },
+            {
+                label: "Georgia",
+                value: "GA"
+            },
+            {
+                label: "Idaho",
+                value: "ID"
+            },
+            {
+                label: "Hawaii",
+                value: "HI"
+            },
+            {
+                label: "Illinois",
+                value: "IL"
+            },
+            {
+                label: "Indiana",
+                value: "IN"
+            },
+            {
+                label: "Iowa",
+                value: "IA"
+            },
+            {
+                label: "Kansas",
+                value: "KS"
+            },
+            {
+                label: "Kentucky",
+                value: "KY"
+            },
+            {
+                label: "Louisiana",
+                value: "LA"
+            },
+            {
+                label: "Maine",
+                value: "ME"
+            },
+            {
+                label: "Maryland",
+                value: "MD"
+            },
+            {
+                label: "Massachusetts",
+                value: "MA"
+            },
+            {
+                label: "Michigan",
+                value: "MI"
+            },
+            {
+                label: "Minnesota",
+                value: "MN"
+            },
+            {
+                label: "Mississippi",
+                value: "MS"
+            },
+            {
+                label: "Missouri",
+                value: "MO"
+            },
+            {
+                label: "Montana",
+                value: "MT"
+            },
+            {
+                label: "Nebraska",
+                value: "NE"
+            },
+            {
+                label: "Nevada",
+                value: "NV"
+            },
+            {
+                label: "New Hampshire",
+                value: "NH"
+            },
+            {
+                label: "New Jersey",
+                value: "NJ"
+            },
+            {
+                label: "New Mexico",
+                value: "NM"
+            },
+            {
+                label: "New York",
+                value: "NY"
+            },
+            {
+                label: "North Carolina",
+                value: "NC"
+            },
+            {
+                label: "North Dakota",
+                value: "ND"
+            },
+            {
+                label: "Ohio",
+                value: "OH"
+            },
+            {
+                label: "Oklahoma",
+                value: "OK"
+            },
+            {
+                label: "Oregon",
+                value: "OR"
+            },
+            {
+                label: "Pennsylvania",
+                value: "PA"
+            },
+            {
+                label: "Rhode Island",
+                value: "RI"
+            },
+            {
+                label: "South Carolina",
+                value: "SC"
+            },
+            {
+                label: "South Dakota",
+                value: "SD"
+            },
+            {
+                label: "Tennessee",
+                value: "TN"
+            },
+            {
+                label: "Texas",
+                value: "TX"
+            },
+            {
+                label: "Utah",
+                value: "UT"
+            },
+            {
+                label: "Vermont",
+                value: "VT"
+            },
+            {
+                label: "Virginia",
+                value: "VA"
+            },
+            {
+                label: "Washington",
+                value: "WA"
+            },
+            {
+                label: "West Virginia",
+                value: "WV"
+            },
+            {
+                label: "Wisconsin",
+                value: "WI"
+            },
+            {
+                label: "Wyoming",
+                value: "WY"
+            }
+        ]
     } = props;
 
     const [activeTab, setActiveTab] = useState(!isCustomerSubmitted ? 'summary_list' : 'profile');
@@ -32,6 +235,7 @@ function AddDealer(props) {
 
     const handleSubmit = evt => {
         evt.preventDefault();
+        getCustomerToThankYouPage()
         history.replace('/thankyou');
     }
 
@@ -63,19 +267,19 @@ function AddDealer(props) {
 
             <div className="sub-header">
 
-                <button className={`${activeTab === 'profile' ? 'active' : ''}`} onClick={() => handleTabChange('profile')}>
+                <button className={`btn ${activeTab === 'profile' ? 'active' : ''}`} onClick={() => handleTabChange('profile')}>
                     <img src={IconContactAcitve} alt="" />
                     {activeTab === 'profile' && <span className='arrow-down'></span>}
                 </button>
 
-                <button style={{ minWidth: 238 }} className={`${activeTab === 'credit_details' ? 'active' : ''}`} onClick={() => handleTabChange('credit_details')}>
+                <button style={{ minWidth: 238 }} className={`btn ${activeTab === 'credit_details' ? 'active' : ''}`} onClick={() => handleTabChange('credit_details')}>
                     <span>Summary</span>
                     {activeTab === 'credit_details' && <span className='arrow-down'></span>}
                 </button>
 
                 {!isCustomerSubmitted &&
 
-                <button className={`${activeTab === 'summary_list' ? 'active' : ''}`} onClick={() => handleTabChange('summary_list')}>
+                <button className={`btn ${activeTab === 'summary_list' ? 'active' : ''}`} onClick={() => handleTabChange('summary_list')}>
                     <img src={IconListWhite} alt="" />
                     {activeTab === 'summary_list' && <span className='arrow-down'></span>}
                 </button>
@@ -83,11 +287,6 @@ function AddDealer(props) {
                 }
 
             </div>
-
-
-
-
-
 
 
 
@@ -103,7 +302,6 @@ function AddDealer(props) {
                                     value={customer.main_app.first_name}
                                     label="Applicant First Name"
                                     defaultText="Applicant First Name"
-                                    disabled={true}
                                 />
                             </Form.Group>
                             <Form.Group className="mb-18">
@@ -113,9 +311,47 @@ function AddDealer(props) {
                                     value={customer.main_app.last_name}
                                     label="Applicant Last Name"
                                     defaultText="Applicant Last Name"
-                                    disabled={true}
                                 />
                             </Form.Group>
+                            <Form.Group className="mb-18">
+                                <Input
+                                    name="street"
+                                    type="text"
+                                    value={customer.main_app.street}
+                                    label="Street"
+                                    defaultText="Street"
+                                />
+                            </Form.Group>
+                            <Form.Group className="mb-18">
+                                <Input
+                                    name="city"
+                                    type="text"
+                                    value={customer.main_app.city}
+                                    label="City"
+                                    defaultText="City"
+                                />
+                            </Form.Group>
+                            <div className="styled-row">
+                                <Form.Group className="styled-column mb-18">
+                                    <Dropdown
+                                        name="state"
+                                        type="dropdown"
+                                        label="State"
+                                        defaultText="State"
+                                        defaultValue={customer.main_app.state}
+                                        options={dropdownList}
+                                    />
+                                </Form.Group>
+                                <Form.Group className="styled-column mb-18">
+                                    <Input
+                                        name="zip"
+                                        type="text"
+                                        value={customer.main_app.zip}
+                                        label="Zip Code"
+                                        defaultText="Zip Code"
+                                    />
+                                </Form.Group>
+                            </div>
                             <Form.Group className="mb-18">
                                 <Input
                                     name="email"
@@ -124,7 +360,6 @@ function AddDealer(props) {
                                     value={customer.main_app.email}
                                     label="Email"
                                     defaultText="Email"
-                                    disabled={true}
                                 />
                             </Form.Group>
                             <Form.Group className="mb-18">
@@ -137,18 +372,16 @@ function AddDealer(props) {
                                     defaultText="(123) 456-7890"
                                     regex="^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$"
                                     mask="(999) 999-9999"
-                                    disabled={true}
                                 />
                             </Form.Group>
                             <Form.Group className="mb-18">
                                 <Input
                                     name="date_of_birth"
                                     type="hidden"
-                                    value={customer.main_app.dobY && customer.main_app.dobM && customer.main_app.dobD ? `${customer.main_app.dobY}-${customer.main_app.dobM}-${customer.main_app.dobD}` : null}
+                                    value={customer.main_app.dobY && customer.main_app.dobM && customer.main_app.dobD ? `${customer.main_app.dobM}/${customer.main_app.dobD}/${customer.main_app.dobY}` : null}
                                     label="Date of Birth"
                                     className="medium-input"
                                     defaultText="MM / DD / YYYY"
-                                    disabled={true}
                                     isDate={true}
                                 />
                             </Form.Group>
@@ -169,59 +402,11 @@ function AddDealer(props) {
                                     type="text"
                                     value={customer.main_app.no_of_dependents}
                                     label="Number of Dependants"
-                                    defaultText="0"
+                                    defaultText="#"
                                     regex="\b\d{1,2}\b"
                                     className="small-input"
-                                    disabled={true}
                                 />
                             </Form.Group>
-                            <Form.Group className="mb-18">
-                                <Input
-                                    name="street"
-                                    type="text"
-                                    value={customer.main_app.street}
-                                    label="Street"
-                                    defaultText="Street"
-                                    disabled={true}
-                                />
-                            </Form.Group>
-                            <Form.Group className="mb-18">
-                                <Input
-                                    name="city"
-                                    type="text"
-                                    value={customer.main_app.city}
-                                    label="City"
-                                    defaultText="City"
-                                    disabled={true}
-                                />
-                            </Form.Group>
-                            <div className="styled-row">
-                                <Form.Group className="styled-column mb-18">
-                                    <Dropdown
-                                        name="state"
-                                        type="dropdown"
-                                        label="State"
-                                        defaultText="State"
-                                        defaultValue={customer.main_app.state}
-                                        disabled={true}
-                                        options={[{
-                                            label: customer.main_app.state,
-                                            value: customer.main_app.state
-                                        }]}
-                                    />
-                                </Form.Group>
-                                <Form.Group className="styled-column mb-18">
-                                    <Input
-                                        name="zip"
-                                        type="text"
-                                        regex="^[0-9]{5}$"
-                                        value={customer.main_app.zip}
-                                        label="Zip Code"
-                                        defaultText="Zip Code"
-                                        disabled={true}
-                                    />
-                                </Form.Group>
-                            </div>
                             <Form.Group className="mb-18">
                                 <Checkbox
                                     name="have_co_applicant"
@@ -257,6 +442,53 @@ function AddDealer(props) {
                                             defaultText="Co-applicant Last Name"
                                         />
                                     </Form.Group>
+                                    <Form.Group className="mb-18" style={{marginTop:35}}>
+                                        <Checkbox
+                                            name="co_have_co_applicant_same_address"
+                                            type="checkbox"
+                                            label="Same as Applicant Address"
+                                            checked={customer.co_app.co_have_co_applicant_same_address ? true : null}
+                                        />
+                                    </Form.Group>
+                                    <Form.Group className="mb-18">
+                                        <Input
+                                            name="co_street"
+                                            type="text"
+                                            label="Street"
+                                            defaultText="Street"
+                                            defaultValue={customer.co_app.street}
+                                        />
+                                    </Form.Group>
+                                    <Form.Group className="mb-18">
+                                        <Input
+                                            name="co_city"
+                                            type="text"
+                                            label="City"
+                                            defaultValue={customer.co_app.city}
+                                            defaultText="City"
+                                        />
+                                    </Form.Group>
+                                    <div className="styled-row">
+                                        <Form.Group className="styled-column mb-18">
+                                            <Dropdown
+                                                name="co_state"
+                                                type="dropdown"
+                                                label="State"
+                                                defaultText="State"
+                                                defaultValue={customer.co_app.state}
+                                                options={dropdownList}
+                                            />
+                                        </Form.Group>
+                                        <Form.Group className="styled-column mb-18">
+                                            <Input
+                                                name="co_zip"
+                                                type="text"
+                                                defaultValue={customer.co_app.zip}
+                                                label="Zip Code"
+                                                defaultText="Zip Code"
+                                            />
+                                        </Form.Group>
+                                    </div>
                                     <Form.Group className="mb-18">
                                         <Input
                                             name="co_email"
@@ -283,7 +515,7 @@ function AddDealer(props) {
                                         <Input
                                             name="co_date_of_birth"
                                             type="hidden"
-                                            value={customer.co_app.dobY && customer.co_app.dobM && customer.co_app.dobD ? `${customer.co_app.dobY}-${customer.co_app.dobM}-${customer.co_app.dobD}` : null}
+                                            value={customer.co_app.dobY && customer.co_app.dobM && customer.co_app.dobD ? `${customer.co_app.dobM}/${customer.co_app.dobD}/${customer.co_app.dobY}` : null}
                                             label="Date of Birth"
                                             className="medium-input"
                                             defaultText="MM / DD / YYYY"
@@ -307,64 +539,11 @@ function AddDealer(props) {
                                             type="text"
                                             value={customer.co_app.no_of_dependents}
                                             label="Number of Dependants"
-                                            defaultText="0"
+                                            defaultText="#"
                                             regex="\b\d{1,2}\b"
                                             className="small-input"
                                         />
                                     </Form.Group>
-                                    <Form.Group className="mb-18">
-                                        <Checkbox
-                                            name="co_have_co_applicant_same_address"
-                                            type="checkbox"
-                                            label="Same as Applicant"
-                                            checked={customer.co_app.co_have_co_applicant_same_address ? true : null}
-                                        />
-                                    </Form.Group>
-                                    <Form.Group className="mb-18">
-                                        <Input
-                                            name="co_street"
-                                            type="text"
-                                            label="Street"
-                                            defaultText="Street"
-                                            defaultValue={customer.co_app.street}
-                                            disabled={customer.co_enabled ? true : false}
-                                        />
-                                    </Form.Group>
-                                    <Form.Group className="mb-18">
-                                        <Input
-                                            name="co_city"
-                                            type="text"
-                                            label="City"
-                                            defaultValue={customer.co_app.city}
-                                            defaultText="City"
-                                        />
-                                    </Form.Group>
-                                    <div className="styled-row">
-                                        <Form.Group className="styled-column mb-18">
-                                            <Dropdown
-                                                name="co_state"
-                                                type="dropdown"
-                                                label="State"
-                                                defaultText="State"
-                                                defaultValue={customer.co_app.state}
-                                                options={[{
-                                                    label: customer.co_app.state,
-                                                    value: customer.co_app.state
-                                                }]}
-                                            />
-                                        </Form.Group>
-                                        <Form.Group className="styled-column mb-18">
-                                            <Input
-                                                name="co_zip"
-                                                type="text"
-                                                defaultValue={customer.co_app.zip}
-                                                regex="^[0-9]{5}$"
-                                                label="Zip Code"
-                                                defaultText="Zip Code"
-                                            />
-                                        </Form.Group>
-                                    </div>
-
                                 </>
                             }
 
@@ -479,7 +658,7 @@ function AddDealer(props) {
                                             name="have_co_applicant_with_same_answers"
                                             type="checkbox"
                                             theme="light-label"
-                                            label="The answes are the same as the answers<br>given by the applicant"
+                                            label="The answers are the same as the answers<br>given by the applicant"
                                             checked={customer.co_app.have_co_applicant_with_same_answers ? true : null}
                                         />
                                     </Form.Group>
@@ -516,7 +695,7 @@ function AddDealer(props) {
 
 
 
-                    <div className="container">
+                    <div className="container pointer-none">
                         <div className="styled-form">
 
                             <Form.Group className="mb-18">
@@ -592,64 +771,64 @@ function AddDealer(props) {
                                         </Form.Group>
                                     </div>
 
-                                    <div className="box center-box" style={{ width: 290, marginTop: 22 }}>
-                                        <label class="form-label" style={{ textAlign: "center", width: "100%", padding: 0 }}>Do you have any other sources of income</label>
-                                        <div className="radio-box center">
-                                            <Form.Group className="mb-18 radio-filed">
-                                                <Input
-                                                    id="yes"
-                                                    name="additional_income_status"
-                                                    type="radio"
-                                                    className="radio-width"
-                                                    inputClass="regular-radio"
-                                                    defaultValue="yes"
-                                                    checked={customer.main_app.additional_income_status === "yes" ? true : null}
-                                                />
-                                                <label for="yes" class="form-label " id="yes-label">Yes</label>
-                                            </Form.Group>
-                                            <Form.Group className="mb-18 radio-filed">
-                                                <Input
-                                                    id="no"
-                                                    name="additional_income_status"
-                                                    type="radio"
-                                                    className="radio-width"
-                                                    inputClass="regular-radio regular-radio2"
-                                                    defaultValue="no"
-                                                    checked={customer.main_app.additional_income_status === "no" ? true : null}
-                                                />
-                                                <label for="no" class="form-label " id="no-label">No</label>
-                                            </Form.Group>
-                                        </div>
-                                    </div>
-
-                                    {customer.main_app.additional_income_status === "yes" &&
-
-                                        <div className="styled-row">
-                                            <Form.Group className="styled-column mb-18">
-                                                <Input
-                                                    name="source"
-                                                    type="text"
-                                                    defaultValue={customer.main_app.source}
-                                                    label="Source"
-                                                    defaultText="Source"
-                                                    optionalParams={{ style: { width: 166 } }}
-                                                />
-                                            </Form.Group>
-                                            <Form.Group className="styled-column mb-18">
-                                                <Input
-                                                    name="additional_income"
-                                                    type="text"
-                                                    defaultValue={customer.main_app.additional_income}
-                                                    label="Monthly Income"
-                                                    defaultText="0"
-                                                    isAmount={true}
-                                                    optionalParams={{ style: { width: 118 } }}
-                                                />
-                                            </Form.Group>
-                                        </div>
-                                    }
-
                                 </>
+                            }
+
+                            <div className="box center-box" style={{ width: 290, marginTop: 22 }}>
+                                <label class="form-label" style={{ textAlign: "center", width: "100%", padding: 0 }}>Do you have any other sources of income?</label>
+                                <div className="radio-box center">
+                                    <Form.Group className="mb-18 radio-filed">
+                                        <Input
+                                            id="yes"
+                                            name="additional_income_status"
+                                            type="radio"
+                                            className="radio-width"
+                                            inputClass="regular-radio"
+                                            defaultValue="yes"
+                                            checked={customer.main_app.additional_income_status === "yes" ? true : null}
+                                        />
+                                        <label for="yes" class="form-label " id="yes-label">Yes</label>
+                                    </Form.Group>
+                                    <Form.Group className="mb-18 radio-filed">
+                                        <Input
+                                            id="no"
+                                            name="additional_income_status"
+                                            type="radio"
+                                            className="radio-width"
+                                            inputClass="regular-radio regular-radio2"
+                                            defaultValue="no"
+                                            checked={customer.main_app.additional_income_status === "no" ? true : null}
+                                        />
+                                        <label for="no" class="form-label " id="no-label">No</label>
+                                    </Form.Group>
+                                </div>
+                            </div>
+
+                            {customer.main_app.additional_income_status === "yes" &&
+
+                                <div className="styled-row">
+                                    <Form.Group className="styled-column mb-18">
+                                        <Input
+                                            name="source"
+                                            type="text"
+                                            defaultValue={customer.main_app.source}
+                                            label="Source"
+                                            defaultText="Source"
+                                            optionalParams={{ style: { width: 166 } }}
+                                        />
+                                    </Form.Group>
+                                    <Form.Group className="styled-column mb-18">
+                                        <Input
+                                            name="additional_income"
+                                            type="text"
+                                            defaultValue={customer.main_app.additional_income}
+                                            label="Monthly Income"
+                                            defaultText="0"
+                                            isAmount={true}
+                                            optionalParams={{ style: { width: 118 } }}
+                                        />
+                                    </Form.Group>
+                                </div>
                             }
 
 
@@ -733,63 +912,63 @@ function AddDealer(props) {
                                                     />
                                                 </Form.Group>
                                             </div>
-
-                                            <div className="box center-box" style={{ width: 290, marginTop: 22 }}>
-                                                <label class="form-label" style={{ textAlign: "center", width: "100%", padding: 0 }}>Do you have any other sources of income</label>
-                                                <div className="radio-box center">
-                                                    <Form.Group className="mb-18 radio-filed">
-                                                        <Input
-                                                            id="co_yes"
-                                                            name="co_additional_income_status"
-                                                            type="radio"
-                                                            className="radio-width"
-                                                            inputClass="regular-radio"
-                                                            defaultValue="yes"
-                                                            checked={customer.co_app.additional_income_status === "yes" ? true : null}
-                                                        />
-                                                        <label for="co_yes" class="form-label " id="co_yes-label">Yes</label>
-                                                    </Form.Group>
-                                                    <Form.Group className="mb-18 radio-filed">
-                                                        <Input
-                                                            id="co_no"
-                                                            name="co_additional_income_status"
-                                                            type="radio"
-                                                            className="radio-width"
-                                                            inputClass="regular-radio regular-radio2"
-                                                            defaultValue="no"
-                                                            checked={customer.co_app.additional_income_status === "no" ? true : null}
-                                                        />
-                                                        <label for="co_no" class="form-label " id="co_no-label">No</label>
-                                                    </Form.Group>
-                                                </div>
-                                            </div>
-
-                                            {customer.co_app.additional_income_status === "yes" &&
-
-                                                <div className="styled-row">
-                                                    <Form.Group className="styled-column mb-18">
-                                                        <Input
-                                                            name="co_source"
-                                                            type="text"
-                                                            defaultValue={customer.co_app.source}
-                                                            label="Source"
-                                                            defaultText="Source"
-                                                            optionalParams={{ style: { width: 166 } }}
-                                                        />
-                                                    </Form.Group>
-                                                    <Form.Group className="styled-column mb-18">
-                                                        <Input
-                                                            name="co_additional_income"
-                                                            type="text"
-                                                            defaultValue={customer.co_app.additional_income}
-                                                            label="Monthly Income"
-                                                            defaultText="0"
-                                                            optionalParams={{ style: { width: 118 } }}
-                                                        />
-                                                    </Form.Group>
-                                                </div>
-                                            }
                                         </>
+                                    }
+
+                                    <div className="box center-box" style={{ width: 290, marginTop: 22 }}>
+                                        <label class="form-label" style={{ textAlign: "center", width: "100%", padding: 0 }}>Do you have any other sources of income?</label>
+                                        <div className="radio-box center">
+                                            <Form.Group className="mb-18 radio-filed">
+                                                <Input
+                                                    id="co_yes"
+                                                    name="co_additional_income_status"
+                                                    type="radio"
+                                                    className="radio-width"
+                                                    inputClass="regular-radio"
+                                                    defaultValue="yes"
+                                                    checked={customer.co_app.additional_income_status === "yes" ? true : null}
+                                                />
+                                                <label for="co_yes" class="form-label " id="co_yes-label">Yes</label>
+                                            </Form.Group>
+                                            <Form.Group className="mb-18 radio-filed">
+                                                <Input
+                                                    id="co_no"
+                                                    name="co_additional_income_status"
+                                                    type="radio"
+                                                    className="radio-width"
+                                                    inputClass="regular-radio regular-radio2"
+                                                    defaultValue="no"
+                                                    checked={customer.co_app.additional_income_status === "no" ? true : null}
+                                                />
+                                                <label for="co_no" class="form-label " id="co_no-label">No</label>
+                                            </Form.Group>
+                                        </div>
+                                    </div>
+
+                                    {customer.co_app.additional_income_status === "yes" &&
+
+                                        <div className="styled-row">
+                                            <Form.Group className="styled-column mb-18">
+                                                <Input
+                                                    name="co_source"
+                                                    type="text"
+                                                    defaultValue={customer.co_app.source}
+                                                    label="Source"
+                                                    defaultText="Source"
+                                                    optionalParams={{ style: { width: 166 } }}
+                                                />
+                                            </Form.Group>
+                                            <Form.Group className="styled-column mb-18">
+                                                <Input
+                                                    name="co_additional_income"
+                                                    type="text"
+                                                    defaultValue={customer.co_app.additional_income}
+                                                    label="Monthly Income"
+                                                    defaultText="0"
+                                                    optionalParams={{ style: { width: 118 } }}
+                                                />
+                                            </Form.Group>
+                                        </div>
                                     }
                                 </>
                             }
@@ -822,7 +1001,8 @@ function AddDealer(props) {
                                         {customer.co_enabled ? 
                                             <span>{customer.co_app.street} {customer.main_app.city} {customer.main_app.state} {customer.main_app.zip}</span> 
                                             :                                     
-                                            <button className="secondary" type="submit" onClick={() => handleAddCoApp()}>Add Co-App</button>
+                                            // <button className="btn secondary" type="submit" onClick={() => handleAddCoApp()}>Add Co-App</button>
+                                            ""
                                         }
                                     </td>
                                 </tr>
@@ -840,9 +1020,9 @@ function AddDealer(props) {
                             <div className="row other-details summary-row">
                                 <div className="col">
                                     <span className="status">Credit application</span>
-                                    <span className="status-icon">
-                                        <img src={IconStatusSent} />
-                                            sent
+                                    <span className="status-icon status-icon-2">
+                                        <img src={IconStatusComplete} />
+                                            completed
                                         </span>
                                 </div>
                                 <div className={`col ${!customer.co_enabled ? 'button-col' : null}`}>
@@ -850,9 +1030,9 @@ function AddDealer(props) {
                                     {customer.co_enabled &&
                                         <>
                                             <span className="status">Credit application</span>
-                                            <span className="status-icon">
-                                                <img src={IconStatusSent} />
-                                                    sent
+                                            <span className="status-icon status-icon-2">
+                                                <img src={IconStatusComplete} />
+                                                    completed
                                                 </span>
                                         </>
                                     }
@@ -861,7 +1041,7 @@ function AddDealer(props) {
                         </div>
                     </div>
                     <div className="footer-container">
-                        <button className="secondary" type="submit">Submit</button>
+                        <button className="btn secondary" type="submit">Close</button>
                     </div>
                 </form>
             }
@@ -879,6 +1059,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     updateCustomer: (history, path, data) => dispatch(updateCustomer(history, path, data)),
+    getCustomerToThankYouPage: () => dispatch(getCustomerToThankYouPage())
 });
 
 export default connect(

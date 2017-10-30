@@ -1,5 +1,6 @@
 // TCP 2.0
 import API from '../../api';
+import { addEvent } from '../../firebase/firebase';
 import { pushNotification } from 'utils/notification';
 import { message as notificationMsg } from 'shared/constant';
 
@@ -59,6 +60,7 @@ export function updateStaff(history, data) {
                 type: UPDATE_STAFFS_REQUEST_SUCCESS,
                 payload: ''
             })
+            addEvent('staff_updated', 'staff-data-updated-success', {'staff_id': data.id});
             pushNotification(notificationMsg.REQUEST_SUCCESS, 'success', 'TOP_RIGHT', 3000);
             history && history.push('/dealer/staff');
         } catch (error) {
@@ -66,6 +68,7 @@ export function updateStaff(history, data) {
             dispatch({
                 type: UPDATE_STAFFS_REQUEST_FAILED,
             })
+            addEvent('staff_updated', 'staff-data-updated-failed', {'staff_id': data.id});
         }
        
     }
@@ -82,6 +85,7 @@ export function addStaff(history, data) {
             dispatch({
                 type: ADD_STAFFS_REQUEST_SUCCESS,
             })
+            addEvent('staff_added', 'staff-data-added-success', {'staff_role': data.role, 'staff_email': data.email});
             pushNotification(notificationMsg.REQUEST_SUCCESS, 'success', 'TOP_RIGHT', 3000);
             history && history.push('/dealer/staff');
         } catch (error) {
@@ -89,12 +93,14 @@ export function addStaff(history, data) {
             dispatch({
                 type: ADD_STAFFS_REQUEST_FAILED,
             })
+            addEvent('staff_added', 'staff-data-added-failed', {'staff_role': data.role, 'staff_email': data.email});
         }       
     }
 }
 
 
 export function deleteStaff(id) {
+
     return async function(dispatch) {
         dispatch({
             type: DELETE_STAFFS_REQUEST,
@@ -105,12 +111,14 @@ export function deleteStaff(id) {
                 type: DELETE_STAFFS_REQUEST_SUCCESS,
                 payload: id
             })
+            addEvent('staff_updated', 'staff-data-updated-success', {'staff_id': id});
             pushNotification(notificationMsg.REQUEST_SUCCESS, 'success', 'TOP_RIGHT', 3000);
         } catch (error) {
             pushNotification(error.response.data.message, 'error', 'TOP_RIGHT', 3000);
             dispatch({
                 type: DELETE_STAFFS_REQUEST_FAILED,
             })
+            addEvent('staff_updated', 'staff-data-updated-failed', {'staff_id': id});
         }       
     }
 }

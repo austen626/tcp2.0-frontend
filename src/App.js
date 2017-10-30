@@ -3,6 +3,7 @@ import React from 'react';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import history from './history';
 import NetworkDetector from './NetworkDetector';
+
 import LoginScreen from './screens/Auth/Login';
 import RegisterScreen from './screens/Auth/Register';
 import TwoFA from './screens/Auth/TwoFA';
@@ -78,6 +79,8 @@ import { getSearchValue } from 'utils/formUtils';
 import { ThemeProvider } from 'styled-components';
 import { theme } from './theme';
 
+
+
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={(props) => {
     const token = localStorage.getItem('token');
@@ -147,10 +150,14 @@ const AuthAppRoute = ({ component: Component, ...rest }) => (
       customerToken = getSearchValue("token");
       const customerId = getSearchValue("customerId");
       const salesperson_email = getSearchValue("salesperson_email");
+      const dealer_company_name = getSearchValue("dealer_company_name");
+      const dealer_company_number = getSearchValue("dealer_company_number");
 
       localStorage.setItem('customerToken', customerToken);
       localStorage.setItem('customerId', customerId);
       localStorage.setItem('salesperson_email', salesperson_email);
+      localStorage.setItem('dealer_name', dealer_company_name);
+      localStorage.setItem('dealer_number', dealer_company_number);
     }
     else
     {

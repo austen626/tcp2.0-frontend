@@ -1,4 +1,5 @@
 import API from '../../api';
+import { addEvent } from '../../firebase/firebase';
 import { pushNotification } from 'utils/notification';
 import { message as notificationMsg } from 'shared/constant';
 export const GET_PREAPPROVALS = "GET_PREAPPROVALS";
@@ -278,6 +279,7 @@ export function updateDealer(history, data) {
                 type: UPDATE_DEALER_REQUEST_SUCCESS,
                 payload: ''
             })
+            addEvent('dealer_updated', 'dealer-data-updated-success', {'dealer_id': data.id});
             pushNotification(notificationMsg.REQUEST_SUCCESS, 'success', 'TOP_RIGHT', 3000);
             history && history.push('/admin/dealers');
         } catch (error) {
@@ -285,6 +287,7 @@ export function updateDealer(history, data) {
             dispatch({
                 type: UPDATE_DEALER_REQUEST_FAILED,
             })
+            addEvent('dealer_updated', 'dealer-data-updated-failed', {'dealer_id': data.id});
         }
        
     }
@@ -301,6 +304,7 @@ export function addDealer(history, data) {
             dispatch({
                 type: ADD_DEALER_REQUEST_SUCCESS,
             })
+            addEvent('dealer_added', 'dealer-data-added-success', {'dealer_phone': data.phone, 'dealer_email': data.email});
             pushNotification(notificationMsg.REQUEST_SUCCESS, 'success', 'TOP_RIGHT', 3000);
             history && history.push('/admin/dealers');
         } catch (error) {
@@ -308,6 +312,7 @@ export function addDealer(history, data) {
             dispatch({
                 type: ADD_DEALER_REQUEST_FAILED,
             })
+            addEvent('dealer_added', 'dealer-data-added-failed', {'dealer_phone': data.phone, 'dealer_email': data.email});
         }       
     }
 }
@@ -324,12 +329,14 @@ export function deleteDealer(id) {
                 type: DELETE_DEALER_REQUEST_SUCCESS,
                 payload: id
             })
+            addEvent('dealer_deleted', 'dealer-data-deleted-success', {'dealer_id': id});
             pushNotification(notificationMsg.REQUEST_SUCCESS, 'success', 'TOP_RIGHT', 3000);
         } catch (error) {
             pushNotification(error.response.data.message, 'error', 'TOP_RIGHT', 3000);
             dispatch({
                 type: DELETE_DEALER_REQUEST_FAILED,
             })
+            addEvent('dealer_deleted', 'dealer-data-deleted-failed', {'dealer_id': id});
         }       
     }
 }

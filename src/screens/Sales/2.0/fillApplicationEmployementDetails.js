@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { Form, Modal } from 'react-bootstrap';
 import { pushNotification } from 'utils/notification';
@@ -9,7 +9,7 @@ import Checkbox from '../../../components/commons/checkbox';
 import Loader from 'shared/Loader';
 
 import { getFromData } from '../../../components/commons/utility';
-import { updateCustomer } from '../../../redux/actions/sales';
+import { submiCreditApplication, updateCustomer } from '../../../redux/actions/sales';
 
 function AddDealer(props) {
 
@@ -18,14 +18,16 @@ function AddDealer(props) {
         customer,
         updateCustomer,
         actionLoading,
+        submiCreditApplication
     } = props;
+
+    const modalAgreebtn = useRef();
 
     const [validationResult, setValidationResult] = useState(null);
     const [showWarning, setShowWarning] = useState(false);
-    const [isAgree, setIsAgree] = useState(false);
 
-    const [employementStatusCheck, setEmployementStatusCheck] = useState(customer.main_app.employement_status ? customer.main_app.employement_status : null);
-    const [coEmployementStatusCheck, setCoEmployementStatusCheck] = useState(customer.co_enabled ? customer.co_app.employement_status : true);
+    const [employementStatusCheck, setEmployementStatusCheck] = useState(customer.main_app.employement_status && customer.main_app.employement_status == "not employed" ? "not employed" : "employed");
+    const [coEmployementStatusCheck, setCoEmployementStatusCheck] = useState(customer.co_enabled && customer.co_app.employement_status && customer.co_app.employement_status == "not employed" ? "not employed" : "employed");
 
     const [ownOtherSourceError, setOtherSourceError] = useState(false);
     const [ownOtherSourceStatus, setOtherSourceStatus] = useState(customer.main_app.additional_income && customer.main_app.additional_income != '0' ? "yes" : "no");
@@ -72,7 +74,7 @@ function AddDealer(props) {
 
         if (!formData.validationResult) {
 
-            if( !employementStatusCheck && formData.formData.additional_income_status === undefined)
+            if( employementStatusCheck == "employed" && formData.formData.additional_income_status === undefined)
             {
                 setOtherSourceError(true);
             }
@@ -88,31 +90,35 @@ function AddDealer(props) {
                     ...customer,
                     "main_app": {
                         ...customer.main_app,
-                        "additional_income_status": !employementStatusCheck ? data.additional_income_status : null,
-                        "employement_status": !employementStatusCheck ? data.employement_status : false,
-                        "employer_phone": !employementStatusCheck ? data.employer_phone : null,
-                        "job_title": !employementStatusCheck ? data.job_title : null,
-                        "monthly_income": !employementStatusCheck ? data.monthly_income : null,
-                        "present_employer": !employementStatusCheck ? data.present_employer : null,
-                        "source": !employementStatusCheck ? data.additional_income_status == "yes" ? data.source : null : null,
-                        "additional_income": !employementStatusCheck ? data.additional_income_status == "yes" ? data.additional_income : null : null,
-                        "years_there_second": !employementStatusCheck ? data.years_there_second : null,
+                        "additional_income_status": data.additional_income_status,
+                        "employement_status": employementStatusCheck == "employed" ? "employed" : "not employed",
+                        "employer_phone": employementStatusCheck == "employed" ? data.employer_phone : null,
+                        "job_title": employementStatusCheck == "employed" ? data.job_title : null,
+                        "monthly_income": employementStatusCheck == "employed" ? data.monthly_income : null,
+                        "present_employer": employementStatusCheck == "employed" ? data.present_employer : null,
+                        "source": data.additional_income_status == "yes" ? data.source : null,
+                        "additional_income": data.additional_income_status == "yes" ? data.additional_income : null,
+                        "years_there_second": employementStatusCheck == "employed" ? data.years_there_second : null,
                     },
                     "co_app": {
                         ...customer.co_app,
-                        "additional_income_status": customer.co_enabled && !coEmployementStatusCheck ? data.co_additional_income_status : null,
-                        "employement_status": customer.co_enabled ? data.co_employement_status : false,
-                        "employer_phone": customer.co_enabled && !coEmployementStatusCheck ? data.co_employer_phone : null,
-                        "job_title": customer.co_enabled && !coEmployementStatusCheck ? data.co_job_title : null,
-                        "monthly_income": customer.co_enabled && !coEmployementStatusCheck ? data.co_monthly_income : null,
-                        "present_employer": customer.co_enabled && !coEmployementStatusCheck ? data.co_present_employer : null,
-                        "source": customer.co_enabled && !coEmployementStatusCheck ? data.co_additional_income_status == "yes" ? data.co_source : null : null,
-                        "additional_income": customer.co_enabled && !coEmployementStatusCheck ? data.co_additional_income_status == "yes" ? data.co_additional_income : null : null,
-                        "years_there_second": customer.co_enabled && !coEmployementStatusCheck ? data.co_years_there_second : null,
+                        "additional_income_status": customer.co_enabled ? data.co_additional_income_status : null,
+                        "employement_status": customer.co_enabled && coEmployementStatusCheck == "employed" ? "employed" : "not employed",
+                        "employer_phone": customer.co_enabled && coEmployementStatusCheck == "employed" ? data.co_employer_phone : null,
+                        "job_title": customer.co_enabled && coEmployementStatusCheck == "employed" ? data.co_job_title : null,
+                        "monthly_income": customer.co_enabled && coEmployementStatusCheck == "employed" ? data.co_monthly_income : null,
+                        "present_employer": customer.co_enabled && coEmployementStatusCheck == "employed" ? data.co_present_employer : null,
+                        "source": customer.co_enabled ? data.co_additional_income_status == "yes" ? data.co_source : null : null,
+                        "additional_income": customer.co_enabled ? data.co_additional_income_status == "yes" ? data.co_additional_income : null : null,
+                        "years_there_second": customer.co_enabled && coEmployementStatusCheck == "employed" ? data.co_years_there_second : null,
                     }
                 }
 
-                updateCustomer(history, '/applyApplicationSummary', temp_customer)
+                updateCustomer(history, null, temp_customer);
+                setShowWarning(true);  
+                setTimeout(function() {
+                    modalAgreebtn.current.focus(); 
+                }.bind(this), 0);          
             }
         } 
         else 
@@ -146,17 +152,20 @@ function AddDealer(props) {
                 </button>
             </div>
 
-            <Modal show={showWarning} onHide={() => setShowWarning(false)}>
+            <Modal show={showWarning} onHide={() => setShowWarning(false)} autoFocus={false}>
                 <Modal.Header closeButton></Modal.Header>
-                <Modal.Body>Submitting the application and authorizing TCP to do a credit check from Equifax.</Modal.Body>
+                <Modal.Body className="fixed-height">
+                    By selecting “I agree,” below, you attest that you have read the following to the customer and they have indicated that they agree:<br></br>
+                    If you agree to the following, you will be giving <b>{localStorage.getItem('dealer_name').replace("%20", " ")}</b> and its assigns, including Travis Capital Partners, LLC, the right to investigate your credit capacity and credit history. Seller or its assigns, agents, and any other company seeking to grant me/us the requested credit (the “potential creditor”), including Travis Capital Partners, LLC, may request a credit report for any legitimate purpose associated with your application for credit, extending credit, modifying the terms of your credit agreement, or a collection on your account. You hereby authorize Seller or its assigns, agents, and any other company seeking to grant me/us the requested credit (the “potential creditor”) to make whatever credit inquiries they deem necessary in connection with my credit application or in the course of review or collection of any credit extended in reliance on this application. You authorize and instruct any person or consumer reporting agency to complete and furnish Seller, or its assigns and agents, any information they may have or obtain in response to such credit inquiries and agree that the same shall remain the property of the potential creditor whether or not credit is extended. You certify that you have read the above information and the information is true and correct. You certify that You have read the information above and You agree to the terms of this Credit Application. Do you agree?
+                </Modal.Body>
                 <Modal.Footer>
-                <button class="secondary" onClick={() => {
-                    setIsAgree(true)
+                <button ref={modalAgreebtn} class="btn secondary" onClick={() => {
                     setShowWarning(false)
+                    submiCreditApplication(history, '/applyApplicationSummary', customer);  
                 }}>
-                    Agree
+                    I Agree
                 </button>
-                <button class="secondary" onClick={() => setShowWarning(false)}>
+                <button class="btn secondary" onClick={() => setShowWarning(false)}>
                     Close
                 </button>
                 </Modal.Footer>
@@ -166,18 +175,42 @@ function AddDealer(props) {
                 <div className="container">
                     <div className="styled-form">
 
-                        <Form.Group className="mb-18">
-                            <Checkbox
-                                name="employement_status"
-                                type="checkbox"
-                                theme="light-label"
-                                label="Not currently employed"
-                                checked={employementStatusCheck ? true : null}
-                                handleChange={(e)=>setEmployementStatusCheck(e.target.checked)}
-                            />
-                        </Form.Group>
+                        <div className="box center-box" style={{width: 290, marginTop: 22}}>
+                            <label class="form-label" style={{textAlign: "center", width: "100%", padding: 0}}>Are you currently employed?</label>
+                            <div className="radio-box center">
+                                <Form.Group className="mb-18 radio-filed employed-radio-filed">
+                                    <Input 
+                                        id ="employed_status"
+                                        name="employement_status"
+                                        type="radio"
+                                        className="radio-width"
+                                        inputClass="regular-radio"
+                                        defaultValue="employed"
+                                        optionalParams={{
+                                            autoFocus: true
+                                        }}
+                                        checked={employementStatusCheck == "employed" ? true : null}
+                                        handleChange={(e) => setEmployementStatusCheck(e.target.value)}
+                                    />
+                                    <label for="employed_status" class="form-label" id="employed_status-label">Employed</label>  
+                                </Form.Group>
+                                <Form.Group className="mb-18 radio-filed">
+                                    <Input 
+                                        id ="not_employed_status"
+                                        name="employement_status"
+                                        type="radio"
+                                        className="radio-width"
+                                        inputClass="regular-radio regular-radio2"
+                                        defaultValue="not employed"
+                                        checked={employementStatusCheck == "not employed" ? true : null}
+                                        handleChange={(e) => setEmployementStatusCheck(e.target.value)}
+                                    />
+                                    <label for="not_employed_status" class="form-label" id="not_employed_status-label">Not Employed</label>
+                                </Form.Group>
+                            </div>
+                        </div>
 
-                        {!employementStatusCheck &&
+                        {employementStatusCheck == "employed" &&
 
                             <>
 
@@ -204,7 +237,7 @@ function AddDealer(props) {
                                         defaultValue={customer.main_app.years_there_second}
                                         label="Years There"
                                         defaultText="0"
-                                        regex="^[0-9]{1,2}$"
+                                        regex="^[0-9][\w\.\d]{0,5}$"
                                         required={true}
                                         error={{
                                             'empty': " ",
@@ -258,7 +291,7 @@ function AddDealer(props) {
                                         label="Monthly Income"
                                         isAmount={true}
                                         defaultText="0"
-                                        regex="^[0-9]{1,20}$"
+                                        regex="^[0-9][\w\.\d]{0,20}$"
                                         required={true}
                                         error={{
                                             'empty': " ",
@@ -270,85 +303,83 @@ function AddDealer(props) {
                                 </Form.Group>
                             </div>
 
-                            <div className="box center-box" style={{width: 290, marginTop: 22}}>
-                                <label class="form-label" style={{textAlign: "center", width: "100%", padding: 0}}>Do you have any other sources of income</label>
-                                <div className="radio-box center">
-                                    <Form.Group className="mb-18 radio-filed">
-                                        <Input 
-                                            id ="yes"
-                                            name="additional_income_status"
-                                            type="radio"
-                                            className="radio-width"
-                                            inputClass="regular-radio"
-                                            defaultValue="yes"
-                                            checked={ownOtherSourceStatus === "yes" ? true : null}
-                                            handleChange={(e) => hideMainAppError(e.target.value)}
-                                        />
-                                        <label for="yes" class="form-label " id="yes-label">Yes</label>  
-                                    </Form.Group>
-                                    <Form.Group className="mb-18 radio-filed">
-                                        <Input 
-                                            id ="no"
-                                            name="additional_income_status"
-                                            type="radio"
-                                            className="radio-width"
-                                            inputClass="regular-radio regular-radio2"
-                                            defaultValue="no"
-                                            checked={ownOtherSourceStatus === "no" ? true : null}
-                                            handleChange={(e) => hideMainAppError(e.target.value)}
-                                        />
-                                        <label for="no" class="form-label " id="no-label">No</label>
-                                    </Form.Group>
-                                </div>
-                                <div class={`error-label ${ownOtherSourceError ? "show" : "hide"}`}>Please select details</div>
-                            </div>
-
-                            {ownOtherSourceStatus === "yes" &&
-
-                                <div className="styled-row">
-                                    <Form.Group className="styled-column mb-18">
-                                        <Input
-                                            name="source"
-                                            type="text"
-                                            defaultValue={customerAdditionalIncomeSource}
-                                            label="Source"
-                                            defaultText="Source"
-                                            required={ownOtherSourceStatus === "no" ? false : true}
-                                            disabled={ownOtherSourceStatus === "no" ? true : false}
-                                            error={{
-                                                'empty': " "
-                                            }}
-                                            validationResult={validationResult}
-                                            optionalParams = {{style:{width: 166}}}
-                                        />
-                                    </Form.Group>
-                                    <Form.Group className="styled-column mb-18">
-                                        <Input
-                                            name="additional_income"
-                                            type="text"
-                                            defaultValue={customerAdditionalIncome}
-                                            label="Monthly Income"
-                                            defaultText="0"
-                                            regex="^[0-9]{1,20}$"
-                                            isAmount={true}
-                                            required={ownOtherSourceStatus === "no" ? false : true}
-                                            disabled={ownOtherSourceStatus === "no" ? true : false}
-                                            error={{
-                                                'empty': " ",
-                                                'invalid': " "
-                                            }}
-                                            validationResult={validationResult}
-                                            optionalParams = {{style:{width: 118}}}
-                                        />
-                                    </Form.Group>
-                                </div>
-                            }
-
                             </>
                         }
                         
 
+                        <div className="box center-box" style={{width: 290, marginTop: 22}}>
+                            <label class="form-label" style={{textAlign: "center", width: "100%", padding: 0}}>Do you have any other sources of income?</label>
+                            <div className="radio-box center">
+                                <Form.Group className="mb-18 radio-filed">
+                                    <Input 
+                                        id ="yes"
+                                        name="additional_income_status"
+                                        type="radio"
+                                        className="radio-width"
+                                        inputClass="regular-radio"
+                                        defaultValue="yes"
+                                        checked={ownOtherSourceStatus === "yes" ? true : null}
+                                        handleChange={(e) => hideMainAppError(e.target.value)}
+                                    />
+                                    <label for="yes" class="form-label " id="yes-label">Yes</label>  
+                                </Form.Group>
+                                <Form.Group className="mb-18 radio-filed">
+                                    <Input 
+                                        id ="no"
+                                        name="additional_income_status"
+                                        type="radio"
+                                        className="radio-width"
+                                        inputClass="regular-radio regular-radio2"
+                                        defaultValue="no"
+                                        checked={ownOtherSourceStatus === "no" ? true : null}
+                                        handleChange={(e) => hideMainAppError(e.target.value)}
+                                    />
+                                    <label for="no" class="form-label " id="no-label">No</label>
+                                </Form.Group>
+                            </div>
+                            <div class={`error-label ${ownOtherSourceError ? "show" : "hide"}`}>Please select details</div>
+                        </div>
 
+                        {ownOtherSourceStatus === "yes" &&
+
+                            <div className="styled-row">
+                                <Form.Group className="styled-column mb-18">
+                                    <Input
+                                        name="source"
+                                        type="text"
+                                        defaultValue={customerAdditionalIncomeSource}
+                                        label="Source"
+                                        defaultText="Source"
+                                        required={ownOtherSourceStatus === "no" ? false : true}
+                                        disabled={ownOtherSourceStatus === "no" ? true : false}
+                                        error={{
+                                            'empty': " "
+                                        }}
+                                        validationResult={validationResult}
+                                        optionalParams = {{style:{width: 166}}}
+                                    />
+                                </Form.Group>
+                                <Form.Group className="styled-column mb-18">
+                                    <Input
+                                        name="additional_income"
+                                        type="text"
+                                        defaultValue={customerAdditionalIncome}
+                                        label="Monthly Income"
+                                        defaultText="0"
+                                        regex="^[0-9][\w\.\d]{0,20}$"
+                                        isAmount={true}
+                                        required={ownOtherSourceStatus === "no" ? false : true}
+                                        disabled={ownOtherSourceStatus === "no" ? true : false}
+                                        error={{
+                                            'empty': " ",
+                                            'invalid': " "
+                                        }}
+                                        validationResult={validationResult}
+                                        optionalParams = {{style:{width: 118}}}
+                                    />
+                                </Form.Group>
+                            </div>
+                        }
 
 
 
@@ -364,19 +395,41 @@ function AddDealer(props) {
                                 <span className="title">Co-applicant</span>
                             </span>
 
-                            <Form.Group className="mb-18">
-                                <Checkbox
-                                    name="co_employement_status"
-                                    type="checkbox"
-                                    theme="light-label"
-                                    label="Not currently employed"
-                                    checked={coEmployementStatusCheck ? true : null}
-                                    handleChange={(e)=>setCoEmployementStatusCheck(e.target.checked)}
-                                />
-                            </Form.Group>
+
+                            <div className="box center-box" style={{width: 290, marginTop: 22}}>
+                                <label class="form-label" style={{textAlign: "center", width: "100%", padding: 0}}>Are you currently employed?</label>
+                                <div className="radio-box center">
+                                    <Form.Group className="mb-18 radio-filed employed-radio-filed">
+                                        <Input 
+                                            id ="co_employed_status"
+                                            name="co_employement_status"
+                                            type="radio"
+                                            className="radio-width"
+                                            inputClass="regular-radio"
+                                            defaultValue="employed"
+                                            checked={coEmployementStatusCheck == "employed" ? true : null}
+                                            handleChange={(e) => setCoEmployementStatusCheck(e.target.value)}
+                                        />
+                                        <label for="co_employed_status" class="form-label" id="co_employed_status-label">Employed</label>  
+                                    </Form.Group>
+                                    <Form.Group className="mb-18 radio-filed">
+                                        <Input 
+                                            id ="co_not_employed_status"
+                                            name="co_employement_status"
+                                            type="radio"
+                                            className="radio-width"
+                                            inputClass="regular-radio regular-radio2"
+                                            defaultValue="not employed"
+                                            checked={coEmployementStatusCheck == "not employed" ? true : null}
+                                            handleChange={(e) => setCoEmployementStatusCheck(e.target.value)}
+                                        />
+                                        <label for="co_not_employed_status" class="form-label" id="co_not_employed_status-label">Not Employed</label>
+                                    </Form.Group>
+                                </div>
+                            </div>
 
 
-                            {!coEmployementStatusCheck &&
+                            {coEmployementStatusCheck == "employed" &&
 
                             <>
 
@@ -403,7 +456,7 @@ function AddDealer(props) {
                                             defaultValue={customer.co_app.years_there_second}
                                             label="Years There"
                                             defaultText="0"
-                                            regex="^[0-9]{1,2}$"
+                                            regex="^[0-9][\w\.\d]{0,5}$"
                                             required={true}
                                             error={{
                                                 'empty': " ",
@@ -456,7 +509,7 @@ function AddDealer(props) {
                                             defaultValue={customer.co_app.monthly_income}
                                             label="Monthly Income"
                                             defaultText="0"
-                                            regex="^[0-9]{1,20}$"
+                                            regex="^[0-9][\w\.\d]{0,20}$"
                                             isAmount={true}
                                             required={true}
                                             error={{
@@ -468,84 +521,85 @@ function AddDealer(props) {
                                         />
                                     </Form.Group>
                                 </div>
-
-                                <div className="box center-box" style={{width: 290, marginTop: 22}}>
-                                    <label class="form-label" style={{textAlign: "center", width: "100%", padding: 0}}>Do you have any other sources of income</label>
-                                    <div className="radio-box center">
-                                        <Form.Group className="mb-18 radio-filed">
-                                            <Input 
-                                                id ="co_yes"
-                                                name="co_additional_income_status"
-                                                type="radio"
-                                                className="radio-width"
-                                                inputClass="regular-radio"
-                                                defaultValue="yes"
-                                                checked={coOtherSourceStatus === "yes" ? true : null}
-                                                handleChange={(e) => hideCoAppError(e.target.value)}
-                                            />
-                                            <label for="co_yes" class="form-label " id="co_yes-label">Yes</label>  
-                                        </Form.Group>
-                                        <Form.Group className="mb-18 radio-filed">
-                                            <Input 
-                                                id ="co_no"
-                                                name="co_additional_income_status"
-                                                type="radio"
-                                                className="radio-width"
-                                                inputClass="regular-radio regular-radio2"
-                                                defaultValue="no"
-                                                checked={coOtherSourceStatus === "no" ? true : null}
-                                                handleChange={(e) => hideCoAppError(e.target.value)}
-                                            />
-                                            <label for="co_no" class="form-label " id="co_no-label">No</label>
-                                        </Form.Group>
-                                    </div>
-                                    <div class={`error-label ${coOtherSourceError ? "show" : "hide"}`}>Please select details</div>
-                                </div>
-
-                                {coOtherSourceStatus === "yes" && 
-
-                                    <div className="styled-row">
-                                        <Form.Group className="styled-column mb-18">
-                                            <Input
-                                                name="co_source"
-                                                type="text"
-                                                defaultValue={coCustomerAdditionalIncomeSource}
-                                                label="Source"
-                                                defaultText="Source"
-                                                required={coOtherSourceStatus === "no" ? false : true}
-                                                disabled={coOtherSourceStatus === "no" ? true : false}
-                                                error={{
-                                                    'empty': " "
-                                                }}
-                                                validationResult={validationResult}
-                                                optionalParams = {{style:{width: 166}}}
-                                            />
-                                        </Form.Group>
-                                        <Form.Group className="styled-column mb-18">
-                                            <Input
-                                                name="co_additional_income"
-                                                type="text"
-                                                defaultValue={coCustomerAdditionalIncome}
-                                                label="Monthly Income"
-                                                defaultText="0"
-                                                regex="^[0-9]{1,20}$"
-                                                isAmount={true}
-                                                required={coOtherSourceStatus === "no" ? false : true}
-                                                disabled={coOtherSourceStatus === "no" ? true : false}
-                                                error={{
-                                                    'empty': " ",
-                                                    'invalid': " "
-                                                }}
-                                                validationResult={validationResult}
-                                                optionalParams = {{style:{width: 118}}}
-                                            />
-                                        </Form.Group>
-                                    </div>
-
-                                }
                             
                             </>
                             
+                            }
+
+
+
+                            <div className="box center-box" style={{width: 290, marginTop: 22}}>
+                                <label class="form-label" style={{textAlign: "center", width: "100%", padding: 0}}>Do you have any other sources of income?</label>
+                                <div className="radio-box center">
+                                    <Form.Group className="mb-18 radio-filed">
+                                        <Input 
+                                            id ="co_yes"
+                                            name="co_additional_income_status"
+                                            type="radio"
+                                            className="radio-width"
+                                            inputClass="regular-radio"
+                                            defaultValue="yes"
+                                            checked={coOtherSourceStatus === "yes" ? true : null}
+                                            handleChange={(e) => hideCoAppError(e.target.value)}
+                                        />
+                                        <label for="co_yes" class="form-label " id="co_yes-label">Yes</label>  
+                                    </Form.Group>
+                                    <Form.Group className="mb-18 radio-filed">
+                                        <Input 
+                                            id ="co_no"
+                                            name="co_additional_income_status"
+                                            type="radio"
+                                            className="radio-width"
+                                            inputClass="regular-radio regular-radio2"
+                                            defaultValue="no"
+                                            checked={coOtherSourceStatus === "no" ? true : null}
+                                            handleChange={(e) => hideCoAppError(e.target.value)}
+                                        />
+                                        <label for="co_no" class="form-label " id="co_no-label">No</label>
+                                    </Form.Group>
+                                </div>
+                                <div class={`error-label ${coOtherSourceError ? "show" : "hide"}`}>Please select details</div>
+                            </div>
+
+                            {coOtherSourceStatus === "yes" && 
+
+                                <div className="styled-row">
+                                    <Form.Group className="styled-column mb-18">
+                                        <Input
+                                            name="co_source"
+                                            type="text"
+                                            defaultValue={coCustomerAdditionalIncomeSource}
+                                            label="Source"
+                                            defaultText="Source"
+                                            required={coOtherSourceStatus === "no" ? false : true}
+                                            disabled={coOtherSourceStatus === "no" ? true : false}
+                                            error={{
+                                                'empty': " "
+                                            }}
+                                            validationResult={validationResult}
+                                            optionalParams = {{style:{width: 166}}}
+                                        />
+                                    </Form.Group>
+                                    <Form.Group className="styled-column mb-18">
+                                        <Input
+                                            name="co_additional_income"
+                                            type="text"
+                                            defaultValue={coCustomerAdditionalIncome}
+                                            label="Monthly Income"
+                                            defaultText="0"
+                                            regex="^[0-9][\w\.\d]{0,20}$"
+                                            isAmount={true}
+                                            required={coOtherSourceStatus === "no" ? false : true}
+                                            disabled={coOtherSourceStatus === "no" ? true : false}
+                                            error={{
+                                                'empty': " ",
+                                                'invalid': " "
+                                            }}
+                                            validationResult={validationResult}
+                                            optionalParams = {{style:{width: 118}}}
+                                        />
+                                    </Form.Group>
+                                </div>
                             }
 
                         </>
@@ -559,11 +613,12 @@ function AddDealer(props) {
                     </div>
                 </div>
                 <div className="footer-container">
-                    {isAgree ?
-                        <button className="secondary" type="submit">Save & Submit</button>
+                    {/* {isAgree ?
+                        <input className="btn secondary" type="submit" value="Save & Submit"/>
                         :
-                        <button className="secondary" type="button" onClick={() => setShowWarning(true)}>Next</button>
-                    }
+                        <input className="btn secondary" type="button" value="Finish" onClick={() => setShowWarning(true)}/>
+                    } */}
+                    <input className="btn secondary" type="submit" value="Finish"/>
                 </div>
             </form>
 
@@ -578,7 +633,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    updateCustomer: (history, path, data) => dispatch(updateCustomer(history, path, data))
+    updateCustomer: (history, path, data) => dispatch(updateCustomer(history, path, data)),
+    submiCreditApplication: (history, path, data) => dispatch(submiCreditApplication(history, path, data)),
 });
 
 export default connect(

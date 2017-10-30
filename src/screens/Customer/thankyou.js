@@ -16,7 +16,7 @@ function AddDealer(props) {
     } = props;
 
     useEffect(() => { 
-        customerResponseSubmit(history, customer) 
+        // customerResponseSubmit(history, customer) 
     }, [])
 
     const handleSubmit = evt => {
@@ -33,7 +33,7 @@ function AddDealer(props) {
 
             <Header>
                 <HeaderLeft>
-                    <img src={IconArrowLeft} onClick={() => handleBackScreen()} alt="" />
+                    {/* <img src={IconArrowLeft} onClick={() => handleBackScreen()} alt="" /> */}
                 </HeaderLeft>
                 <HeaderCenter>
                     <div className="header-main">
@@ -49,7 +49,7 @@ function AddDealer(props) {
                 <div className="container">
                     <div className="styled-form">
                         <div className="welcome-text">
-                            <p><b>THANK YOU</b><br></br>for your application. Someone will be in touch with you. You can close the browser.</p>
+                            <p><b>THANK YOU </b><br></br>for your application! A representative of <b>{localStorage.getItem('dealer_name').replace("%20", " ")}</b> will contact you with next steps. Please feel free to contact <b>{localStorage.getItem('dealer_name').replace("%20", " ")}</b> at <b>{localStorage.getItem('dealer_number').replace("%20", " ")}</b> or Travis Capital Partners at (800) 832-2806 or by email at info@traviscapitalpartners.com. You may close your browser or press the TCP logo at the top of your screen to return home.</p>
                         </div>
                     </div>
                 </div>

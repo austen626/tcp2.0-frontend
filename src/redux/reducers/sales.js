@@ -18,14 +18,19 @@ import {
 
 
 
-
-
+    SET_SEARCH_CUSTOMER_SEARCH_REQUEST,
+    RESET_SEARCH_CUSTOMER_FORM_REQUEST,
+    REFRESH_CHECK_PAGE_LOAD,
 
     SET_CUSTOMER_SEARCH_REQUEST,
 
     GET_CUSTOMER_REQUEST,
     GET_CUSTOMER_SUCCESS,
     GET_CUSTOMER_FAILED,
+
+    GET_SEARCH_CUSTOMER_REQUEST,
+    GET_SEARCH_CUSTOMER_SUCCESS,
+    GET_SEARCH_CUSTOMER_FAILED,
 
     UPDATE_CUSTOMER_SEARCH_REQUEST,
 
@@ -42,6 +47,12 @@ import {
     SEND_APP_LINK_REQUEST,
     SEND_APP_LINK_SUCCESS,
     SEND_APP_LINK_FAILED,
+
+    VALIDATE_EMAIL_REQUEST,
+    VALIDATE_EMAIL_SUCCESS,
+    VALIDATE_EMAIL_FAILED,
+
+    SUBMIT_CUSTOMER_REPONSE_TO_THANKYOU
 
 
 
@@ -79,14 +90,15 @@ const INIT_STATE = {
 
 
 
-
-
-    customer: {main_app: {}, co_app: {}},
+    refreshCheck: false,
+    customer_search_result: [],
+    customer: {main_app: {}, co_app: {}, invite_status: null, ssn: null, co_ssn: null},
     isCustomerFound: false,
     isCustomerSubmitted: false,
     searchCustomerApiInitiate: false,
     actionLoading: false,
     appFillStatus: 'in_app',
+    emailValidate: true
     
 
 
@@ -219,13 +231,112 @@ export default function(state = INIT_STATE, action){
                 ...state,
                 customer: temp_customer,
                 isCustomerFound: false,
-                searchCustomerApiInitiate: false
+                searchCustomerApiInitiate: false,
+                customer_search_result: [],
+                emailValidate: true
             }
         case SET_APP_FILLED_STATUS:
             return {
                 ...state,
                 appFillStatus: action.payload,
             }
+
+
+        
+
+        case SET_SEARCH_CUSTOMER_SEARCH_REQUEST:
+            return {
+                ...state,
+                customer_search_result: [],
+                customer: temp_customer,
+                isCustomerFound: false,
+                searchCustomerApiInitiate: false,
+                emailValidate: true
+            }
+        case RESET_SEARCH_CUSTOMER_FORM_REQUEST:
+            return {
+                ...state,
+                customer_search_result: [],
+                customer: temp_customer,
+                isCustomerFound: false,
+            }
+        case REFRESH_CHECK_PAGE_LOAD:
+            return {
+                ...state,
+                refreshCheck: true
+            }
+
+
+        
+        case GET_SEARCH_CUSTOMER_REQUEST:
+            
+            return {
+                ...state,
+                customer_search_result: [],
+                actionLoading: true,
+                searchCustomerApiInitiate: true,
+            }
+        case GET_SEARCH_CUSTOMER_SUCCESS:
+
+            let customer = [];
+            
+            if(action.payload.data && action.payload.data.length > 0) {
+
+                action.payload.data.forEach(searchCustomer => {
+                    customer.push({
+                        ...searchCustomer,
+                        main_app: {
+                            ...searchCustomer.main_app,
+                            ...(searchCustomer.main_app.dobM && searchCustomer.main_app.dobM !== "" && {
+                                dobM: searchCustomer.main_app.dobM > 9 ? searchCustomer.main_app.dobM : "0"+searchCustomer.main_app.dobM,
+                            }),
+                            ...(searchCustomer.main_app.dobD && searchCustomer.main_app.dobD !== "" && {
+                                dobD: searchCustomer.main_app.dobD > 9 ? searchCustomer.main_app.dobD : "0"+searchCustomer.main_app.dobD,
+                            }),
+                            ...(searchCustomer.main_app.state && searchCustomer.main_app.state !== "" && {
+                                state: searchCustomer.main_app.state.toUpperCase()
+                            }),
+                            ssn: null
+                        },
+                        co_app: {
+                            ...searchCustomer.co_app,
+                            ...(searchCustomer.co_app.dobM && searchCustomer.co_app.dobM !== "" && {
+                                dobM: searchCustomer.co_app.dobM > 9 ? searchCustomer.co_app.dobM : "0"+searchCustomer.co_app.dobM,
+                            }),
+                            ...(searchCustomer.co_app.dobD && searchCustomer.co_app.dobD !== "" && {
+                                dobD: searchCustomer.co_app.dobD > 9 ? searchCustomer.co_app.dobD : "0"+searchCustomer.co_app.dobD,
+                            }),
+                            ...(searchCustomer.co_app.state && searchCustomer.co_app.state !== "" && {
+                                state: searchCustomer.co_app.state.toUpperCase()
+                            }),
+                            ssn: null
+                        },
+                        ssn: searchCustomer.main_app.ssn, 
+                        co_ssn: searchCustomer.co_app ? searchCustomer.co_app.ssn : null
+                    })
+                });
+
+            }
+
+            return {
+                ...state,
+                customer_search_result: customer,
+                actionLoading: false,
+                searchCustomerApiInitiate: true,
+            }
+        case GET_SEARCH_CUSTOMER_FAILED:
+            return {
+                ...state,
+                customer_search_result: [],
+                actionLoading: false,
+                searchCustomerApiInitiate: true,
+            }
+
+
+
+
+
+
         case GET_CUSTOMER_REQUEST:
             return {
                 ...state,
@@ -237,11 +348,12 @@ export default function(state = INIT_STATE, action){
         case GET_CUSTOMER_SUCCESS:
             return {
                 ...state,
-                customer: action.payload.data ? action.payload.data : temp_customer,
-                isCustomerFound: action.payload.data ? true : false,
+                customer: action.payload,
+                isCustomerFound: action.payload ? true : false,
                 searchCustomerApiInitiate: true,
                 actionLoading: false,
                 isCustomerSubmitted: false,
+                emailValidate: true
             }
         case GET_CUSTOMER_FAILED:
             return {
@@ -251,10 +363,39 @@ export default function(state = INIT_STATE, action){
                 searchCustomerApiInitiate: true,
                 actionLoading: false,
             }
+
+
+
+        
+        case VALIDATE_EMAIL_REQUEST:
+            return {
+                ...state,
+                emailValidate: true,
+                actionLoading: true,
+            }
+        case VALIDATE_EMAIL_SUCCESS:
+            return {
+                ...state,                
+                emailValidate: true,
+                actionLoading: false,
+            }
+        case VALIDATE_EMAIL_FAILED:
+            return {
+                ...state,                
+                emailValidate: true,
+                actionLoading: false,
+            }
+
+
+
+
+
+
         case UPDATE_CUSTOMER_SEARCH_REQUEST:
             return {
                 ...state,
                 customer: action.payload,
+                customer_search_result: []
             }
         case SUBMIT_CREDIT_APP_REQUEST:
             return {
@@ -264,15 +405,11 @@ export default function(state = INIT_STATE, action){
         case SUBMIT_CREDIT_APP_SUCCESS:
             return {
                 ...state,
-                customer: temp_customer,
-                isCustomerFound: false,
                 actionLoading: false,
             }
         case SUBMIT_CREDIT_APP_FAILED:
             return {
                 ...state,
-                customer: temp_customer,
-                isCustomerFound: false,
                 actionLoading: false,
             }
         case SUBMIT_CUSTOMER_REPONSE_REQUEST:
@@ -284,7 +421,6 @@ export default function(state = INIT_STATE, action){
             return {
                 ...state,
                 actionLoading: false,
-                isCustomerSubmitted: true,
             }
         case SUBMIT_CUSTOMER_REPONSE_FAILED:
             return {
@@ -299,13 +435,18 @@ export default function(state = INIT_STATE, action){
         case SEND_APP_LINK_SUCCESS:
             return {
                 ...state,
-                customer: temp_customer,
                 actionLoading: false,
             }
         case SEND_APP_LINK_FAILED:
             return {
                 ...state,
                 actionLoading: false,
+            }        
+        case SUBMIT_CUSTOMER_REPONSE_TO_THANKYOU:
+            return {
+                ...state,
+                actionLoading: false,
+                isCustomerSubmitted: true,
             }
 
 
