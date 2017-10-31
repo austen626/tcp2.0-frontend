@@ -1,38 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Header, {
-    HeaderLeft,
-    HeaderCenter,
-    HeaderRight,
-} from '../../../../components/Dealer/Header';
 import { Form, Row, Col } from 'react-bootstrap';
+import Loader from 'shared/Loader';
 import {
     TCPLogo,
     IconMenu,
     IconDeleteNew,
     IconSearchAdmin,
 } from '../../../../assets/images';
-import Loader from 'shared/Loader';
 
+import Header, {
+    HeaderLeft,
+    HeaderCenter,
+    HeaderRight,
+} from '../../../../components/Dealer/Header';
 import { SliderContainer, SliderItem } from '../../style';
 import { getDealers } from '../../../../redux/actions/admin';
-
-const ExpandIcon = () => {
-    return (
-        <svg
-            className="expand-icon"
-            enableBackground="new 0 0 12 12"
-            height="12px"
-            id="Layer_1"
-            version="1.1"
-            viewBox="0 0 32 32"
-            width="32px"
-        >
-            <path d="M24.291,14.276L14.705,4.69c-0.878-0.878-2.317-0.878-3.195,0l-0.8,0.8c-0.878,0.877-0.878,2.316,0,3.194  L18.024,16l-7.315,7.315c-0.878,0.878-0.878,2.317,0,3.194l0.8,0.8c0.878,0.879,2.317,0.879,3.195,0l9.586-9.587  c0.472-0.471,0.682-1.103,0.647-1.723C24.973,15.38,24.763,14.748,24.291,14.276z" />
-        </svg>
-    );
-};
+import { ExpandIcon } from './ExpandIcon';
 
 const BadgedExpand = ({ number }) => {
     if (number > 0) {

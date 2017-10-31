@@ -5,23 +5,44 @@ import Header, {
     HeaderLeft,
     HeaderCenter,
     HeaderRight,
-} from '../../../components/Dealer/Header';
+} from '../../../../components/Dealer/Header';
 import { Form, Row, Col } from 'react-bootstrap';
 import {
     TCPLogo,
     IconAdd,
     IconArrowLeft,
     IconDeleteNew,
-} from '../../../assets/images';
+} from '../../../../assets/images';
 import Loader from 'shared/Loader';
 
 import {
     setDealer,
     getDealers,
     deleteDealer,
-} from '../../../redux/actions/admin';
+} from '../../../../redux/actions/admin';
+import PropTypes from 'prop-types';
 
-function DealerManagements(props) {
+const IconSmallArrowRight = ({ active }) => {
+    return (
+        <svg
+            className={`arrow-icon ${active && 'arrow-icon-active'}`}
+            enableBackground="new 0 0 12 12"
+            height="12px"
+            id="Layer_1"
+            version="1.1"
+            viewBox="0 0 32 32"
+            width="32px"
+        >
+            <path d="M24.291,14.276L14.705,4.69c-0.878-0.878-2.317-0.878-3.195,0l-0.8,0.8c-0.878,0.877-0.878,2.316,0,3.194  L18.024,16l-7.315,7.315c-0.878,0.878-0.878,2.317,0,3.194l0.8,0.8c0.878,0.879,2.317,0.879,3.195,0l9.586-9.587  c0.472-0.471,0.682-1.103,0.647-1.723C24.973,15.38,24.763,14.748,24.291,14.276z" />
+        </svg>
+    );
+};
+
+IconSmallArrowRight.propTypes = {
+    active: PropTypes.bool.isRequired,
+};
+
+export function PureDealerManagement(props) {
     const {
         history,
         dealers,
@@ -84,22 +105,8 @@ function DealerManagements(props) {
         else setOpenDealerIndex('map' + dealer.id);
     };
 
-    const IconSmallArrowRight = (props) => {
-        return (
-            <svg
-                className={`arrow-icon ${
-                    props.id === openDealerIndex && 'arrow-icon-active'
-                }`}
-                enableBackground="new 0 0 12 12"
-                height="12px"
-                id="Layer_1"
-                version="1.1"
-                viewBox="0 0 32 32"
-                width="32px"
-            >
-                <path d="M24.291,14.276L14.705,4.69c-0.878-0.878-2.317-0.878-3.195,0l-0.8,0.8c-0.878,0.877-0.878,2.316,0,3.194  L18.024,16l-7.315,7.315c-0.878,0.878-0.878,2.317,0,3.194l0.8,0.8c0.878,0.879,2.317,0.879,3.195,0l9.586-9.587  c0.472-0.471,0.682-1.103,0.647-1.723C24.973,15.38,24.763,14.748,24.291,14.276z" />
-            </svg>
-        );
+    const toOpenIndex = (id) => {
+        return 'map' + id;
     };
 
     return (
@@ -161,7 +168,7 @@ function DealerManagements(props) {
                                         <Col xs={6} className="dealer-action">
                                             <span>
                                                 <IconSmallArrowRight
-                                                    id={'map' + item.id}
+                                                    active={toOpenIndex(item.id) === openDealerIndex}
                                                 />
                                             </span>
                                         </Col>
@@ -203,6 +210,15 @@ function DealerManagements(props) {
     );
 }
 
+PureDealerManagement.propTypes = {
+    history: PropTypes.object,
+    dealers: PropTypes.array,
+    actionLoading: PropTypes.bool.isRequired,
+    getDealers: PropTypes.func.isRequired,
+    setDealer: PropTypes.func.isRequired,
+    deleteDealer: PropTypes.func.isRequired,
+};
+
 const mapStateToProps = (state) => ({
     dealers: state.admin.dealers,
     actionLoading: state.admin.actionLoading,
@@ -214,4 +230,7 @@ const mapDispatchToProps = (dispatch) => ({
     deleteDealer: (id) => dispatch(deleteDealer(id)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(DealerManagements);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(PureDealerManagement);

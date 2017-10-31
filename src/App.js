@@ -46,7 +46,7 @@ import StaffHomeScreen from './screens/Staff/Home';
 
 
 // TCP 2.0 screens
-import AdminDealerManagement from './screens/Admin/2.0/DealerManagement';
+import AdminDealerManagement from './screens/Admin/2.0/DealerManagement/DealerManagement';
 import AdminAddDealer from './screens/Admin/2.0/AddDealer';
 
 
