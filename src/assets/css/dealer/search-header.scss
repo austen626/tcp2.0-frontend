@@ -79,7 +79,7 @@
                 fill: white;
             }
 
-            .arrow-icon, .expand-icon {
+            .arrow-icon {
                 float: right;
                 padding: 6px;
                 width: 25px;
@@ -87,52 +87,6 @@
                 border-radius: 20px;
                 cursor: pointer;
                 fill: #B2D8F7;
-            }
-
-            .number-badge {
-                display: inline-block;
-                width: 21px;
-                height: 21px;
-                border-radius: 11px;
-                font-size: 12px;
-                line-height: 21px;
-                text-align: center;
-                vertical-align: top;
-                background-color: #3a5b77;
-            }
-
-            .badged-expand {
-                display: inline-block;
-                width: 52px;
-                height: 22px;
-                border-radius: 11px;
-                background-color: #3a5b77;
-
-                .number-badge {
-                    position: relative;
-                    left: -6px;
-                    background-color: #6793b7;
-                }
-
-                .expand-icon {
-                    position: relative;
-                    padding: 6px;
-                    top: -2px;
-                    fill: #b2d8f7;
-                }
-            }
-        }
-    }
-
-    .single-row.expanded {
-        .badged-expand {
-            .number-badge {
-                background-color: #009d86;
-            }
-            .expand-icon {
-                transform: rotate(90deg);
-                transition-duration: .2s;
-                fill: white;
             }
         }
     }
@@ -143,11 +97,6 @@
             transform: rotate(90deg);
             transition-duration: .2s;
             fill: white;
-        }
-        .badged-expand {
-            .number-badge {
-                background-color: #009d86;
-            }
         }
     }
 

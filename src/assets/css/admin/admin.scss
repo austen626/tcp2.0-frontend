@@ -1,5 +1,160 @@
 .admin {
   .main {
+    color: white;
+  }
 
+  .list {
+    .single-row {
+      .customer-row {
+        width: 100%;
+        display: flex;
+        margin-left: 20px;
+        margin-right: 20px;
+      }
+      .dealer-row {
+        width: 100%;
+        margin-left: 40px;
+        margin-right: 40px;
+
+        @media (max-width: 570px) {
+          margin-left: 18px;
+          margin-right: 18px;
+        }
+      }
+      .dealer-action {
+        .expand-icon {
+          float: right;
+          padding: 6px;
+          width: 25px;
+          height: 25px;
+          border-radius: 20px;
+          cursor: pointer;
+          fill: #B2D8F7;
+        }
+
+        .number-badge {
+          display: inline-block;
+          width: 21px;
+          height: 21px;
+          border-radius: 11px;
+          font-size: 12px;
+          line-height: 21px;
+          text-align: center;
+          vertical-align: top;
+          background-color: #3a5b77;
+        }
+
+        .badged-expand {
+          display: inline-block;
+          width: 52px;
+          height: 22px;
+          border-radius: 11px;
+          background-color: #3a5b77;
+
+          .number-badge {
+            position: relative;
+            left: -6px;
+            background-color: #6793b7;
+          }
+
+          .expand-icon {
+            position: relative;
+            padding: 6px;
+            top: -2px;
+            fill: #b2d8f7;
+          }
+        }
+      }
+    }
+
+    .single-row.expanded {
+      border-bottom: 2px solid #009D86;
+      padding-bottom: 0;
+      .dealer-row {
+        border: none;
+      }
+
+      .badged-expand {
+        .number-badge {
+          background-color: #009d86;
+        }
+        .expand-icon {
+          transform: rotate(90deg);
+          transition-duration: .2s;
+          fill: white;
+        }
+      }
+    }
+
+    .single-row:hover {
+      .arrow-icon {
+        background: #309e87;
+        transform: rotate(90deg);
+        transition-duration: .2s;
+        fill: white;
+      }
+      .badged-expand {
+        .number-badge {
+          background-color: #009d86;
+        }
+      }
+    }
+  }
+}
+
+
+
+.customer-row {
+  .customer-name {
+    display: inline-block;
+    font-size: 14px;
+    line-height: 1.37;
+    letter-spacing: 0.07px;
+    color: #b2d8f7;
+    font-family: Lato;
+    padding: 2.2px 11px 3px 12.2px;
+    border-radius: 11px;
+    background-color: #2d4a5f;
+  }
+
+  .customer-location {
+    font-size: 11px;
+    line-height: 1.27;
+    letter-spacing: 0.06px;
+    color: #6792b6;
+  }
+
+  .customer-food-date {
+    margin-left: 8px;
+    font-family: Lato;
+    font-size: 11px;
+    line-height: 1.27;
+    letter-spacing: 0.06px;
+    color: #6792b6;
+  }
+
+  .customer-purchase-item {
+    font-size: 11px;
+    color: #a9c3d8;
+    line-height: 1.45;
+    letter-spacing: 0.06px;
+    text-align: left;
+  }
+
+  .expand-icon {
+    padding: 6px;
+    width: 25px;
+    height: 25px;
+    border-radius: 20px;
+    cursor: pointer;
+    fill: #fff;
+  }
+
+  .content-col {
+    padding: 20px 5px;
+  }
+
+  .action-col {
+    padding: 20px 5px;
   }
 }

@@ -18,19 +18,7 @@ import Header, {
 import { SliderContainer, SliderItem } from '../../style';
 import { getDealers } from '../../../../redux/actions/admin';
 import { ExpandIcon } from './ExpandIcon';
-
-const BadgedExpand = ({ number }) => {
-    if (number > 0) {
-        return (
-            <span className="badged-expand">
-                <span className="number-badge">{number}</span>
-                <ExpandIcon />
-            </span>
-        );
-    } else {
-        return <span className="number-badge">{number}</span>;
-    }
-};
+import { DealerRow } from './DealerRow';
 
 export function PureAdminHome(props) {
     const OPTION_FUNDING = 'funding';
@@ -85,12 +73,23 @@ export function PureAdminHome(props) {
         setActiveOption(option);
     };
 
+    const renderDealers = (dealers) => {
+        return dealers.map((item) => (
+            <DealerRow
+                key={item.id}
+                expanded={openDealerIndex === toOpenIndex(item.id)}
+                data={item}
+                onClick={handleOpenDealerAction}
+            />
+        ));
+    };
+
     const toOpenIndex = (id) => {
         return 'map' + id;
     };
 
     return (
-        <div className="dealer">
+        <div className="admin">
             {dealers.loading && <Loader />}
 
             {actionLoading && <Loader />}
@@ -128,50 +127,7 @@ export function PureAdminHome(props) {
 
             <div className="main">
                 <div className="list with-footer">
-                    {filterDealer &&
-                        filterDealer.map((item) => (
-                            <React.Fragment key={item.id}>
-                                <Row
-                                    key={item.id}
-                                    className={`single-row ${
-                                        openDealerIndex ===
-                                            toOpenIndex(item.id) && 'expanded'
-                                    }`}
-                                    onClick={() => handleOpenDealerAction(item)}
-                                >
-                                    <div className="dealer-row">
-                                        <Col xs={6}>
-                                            <span className="dealer-name">
-                                                {item.company_name}
-                                            </span>
-                                        </Col>
-                                        <Col xs={6} className="dealer-action">
-                                            <BadgedExpand
-                                                number={item.num_customers}
-                                            />
-                                        </Col>
-                                    </div>
-                                    {openDealerIndex === 'map' + item.id && (
-                                        <Col
-                                            key={item.id}
-                                            xs={12}
-                                            className="single-row-details"
-                                        >
-                                            <button className="delete">
-                                                <img
-                                                    src={IconDeleteNew}
-                                                    alt=""
-                                                />{' '}
-                                                Delete
-                                            </button>
-                                            <button className="edit">
-                                                Edit
-                                            </button>
-                                        </Col>
-                                    )}
-                                </Row>
-                            </React.Fragment>
-                        ))}
+                    {filterDealer && renderDealers(filterDealer)}
                 </div>
                 <div className="footer-container padding-40px">
                     <SliderContainer>

@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
-export const ApproveSubmitContainer = styled.div`
-`;
+export const ApproveSubmitContainer = styled.div``;
 
 export const ApproveSubmitInnerContainer = styled.div`
     display: flex;
@@ -17,7 +16,7 @@ export const ApproveSubmitInnerContainer = styled.div`
     }
     //width: 50%;
     .react-datepicker-wrapper {
-        width: 100%
+        width: 100%;
     }
 `;
 
@@ -27,19 +26,23 @@ export const CalendarContainer = styled.div`
         height: 41px !important;
         border: 1px solid rgb(58, 91, 119);
         border-radius: 3px;
-        height: calc(1.5em + .75rem + 2px);
+        height: calc(1.5em + 0.75rem + 2px);
 
-        ::-webkit-input-placeholder { /* WebKit browsers */
-            padding-left: 10px
+        ::-webkit-input-placeholder {
+            /* WebKit browsers */
+            padding-left: 10px;
         }
-        :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-            padding-left: 10px
+        :-moz-placeholder {
+            /* Mozilla Firefox 4 to 18 */
+            padding-left: 10px;
         }
-        ::-moz-placeholder { /* Mozilla Firefox 19+ */
-            padding-left: 10px
+        ::-moz-placeholder {
+            /* Mozilla Firefox 19+ */
+            padding-left: 10px;
         }
-        :-ms-input-placeholder { /* Internet Explorer 10+ */
-            padding-left: 10px
+        :-ms-input-placeholder {
+            /* Internet Explorer 10+ */
+            padding-left: 10px;
         }
     }
 `;
@@ -92,83 +95,87 @@ export const AdminProductCheckBlock = styled.div`
 `;
 
 export const SliderContainer = styled.div`
-  display: flex;
-  background-color: black;
-  width: 100%;
-  border-radius: 25px;
-`
+    display: flex;
+    background-color: #273947;
+    width: 100%;
+    border-radius: 25px;
+    max-width: 340px;
+`;
 
 export const SliderItem = styled.div`
-  position: relative;
-  border-radius: 25px;
-  text-align: center;
-  padding: 5px;
-  
-  .slider-item--left {
-    position: absolute;
-    top: 3px;
-    left: 3px;
-  }
-  
-  .slider-item--right {
-    position: absolute;
-    top: 3px;
-    right: 3px;
-  }
-  
-  .badge-icon {
+    position: relative;
     border-radius: 25px;
     text-align: center;
-    background-color: #6793b7;
-    color: white;
-    display: inline-block;
-    line-height: 28px;
-    width: 28px;
-    height: 28px;
-  }
-  
-  ${({active}) => active && `
+    padding: 5px;
+
+    .slider-item--left {
+        position: absolute;
+        top: 3px;
+        left: 3px;
+    }
+
+    .slider-item--right {
+        position: absolute;
+        top: 3px;
+        right: 3px;
+    }
+
+    .badge-icon {
+        border-radius: 25px;
+        text-align: center;
+        background-color: #6793b7;
+        color: white;
+        display: inline-block;
+        line-height: 28px;
+        width: 28px;
+        height: 28px;
+    }
+
+    ${({ active }) =>
+        active &&
+        `
     background: #009e87;
     
     .badge-icon {
+        background: #008770;
     }
   `}
-`
+`;
 
 export const StyledMenu = styled.nav`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background: ${({ theme }) => theme.primaryLight};
-  height: 100vh;
-  text-align: left;
-  padding: 2rem;
-  position: absolute;
-  top: 0;
-  left: 0;
-  transition: transform 0.3s ease-in-out;
-  
-  @media (max-width: ${({ theme }) => theme.mobile}) {
-    width: 100%;
-  }
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: ${({ theme }) => theme.primaryLight};
+    height: 100vh;
+    text-align: left;
+    padding: 2rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: transform 0.3s ease-in-out;
 
-  a {
-    font-size: 2rem;
-    text-transform: uppercase;
-    padding: 2rem 0;
-    font-weight: bold;
-    letter-spacing: 0.5rem;
-    color: ${({ theme }) => theme.primaryDark};
-    text-decoration: none;
-    transition: color 0.3s linear;
-    
     @media (max-width: ${({ theme }) => theme.mobile}) {
-      font-size: 1.5rem;
-      text-align: center;
+        width: 100%;
     }
 
-    &:hover {
-      color: ${({ theme }) => theme.primaryHover};
+    a {
+        font-size: 2rem;
+        text-transform: uppercase;
+        padding: 2rem 0;
+        font-weight: bold;
+        letter-spacing: 0.5rem;
+        color: ${({ theme }) => theme.primaryDark};
+        text-decoration: none;
+        transition: color 0.3s linear;
+
+        @media (max-width: ${({ theme }) => theme.mobile}) {
+            font-size: 1.5rem;
+            text-align: center;
+        }
+
+        &:hover {
+            color: ${({ theme }) => theme.primaryHover};
+        }
     }
-  }
-`
+`;
