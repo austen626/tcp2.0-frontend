@@ -3,13 +3,84 @@
     color: white;
   }
 
+  .nav-menu-overlay {
+    background-color: rgba(0, 0, 0, 0.4);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 99;
+  }
+
+  .nav-menu {
+    background-color: #273947;
+    border-right: 3px solid #b2d8f7;
+    width: 250px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: -100%;
+    transition: 850ms;
+    z-index: 100;
+    &.active {
+      left: 0;
+      transition: 350ms;
+    }
+
+    .nav-menu-items {
+      list-style: none;
+    }
+    .nav-menu-header {
+      background: #3a5c77;
+      position: relative;
+      color: #b2d8f7;
+      width: 100%;
+      padding: 30px;
+      text-align: center;
+
+      .menu-close {
+        position: absolute;
+        top: 5px;
+        left: 10px;
+        border: none;
+        color: #b2d8f7;
+        font-size: 25px;
+        padding:0;
+        line-height: 1;
+        background-color: transparent;
+      }
+    }
+    .nav-menu-content {
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+    }
+
+    ul.nav-menu-items {
+      list-style: none;
+      padding-left: 56px;
+      li {
+        cursor: pointer;
+        font-size: 14px;
+        user-select: none;
+      }
+      li + li {
+        margin-top: 23px;
+      }
+    }
+  }
+
   .list {
     .single-row {
       .customer-row {
         width: 100%;
         display: flex;
-        margin-left: 20px;
-        margin-right: 20px;
+        margin-left: 28px;
+        margin-right: 28px;
+        padding: 5px 0;
       }
       .dealer-row {
         width: 100%;
@@ -70,8 +141,13 @@
     .single-row.expanded {
       border-bottom: 2px solid #009D86;
       padding-bottom: 0;
+
       .dealer-row {
         border: none;
+
+        .dealer-name {
+          background-color: #009d86;
+        }
       }
 
       .badged-expand {

@@ -19,6 +19,7 @@ import { SliderContainer, SliderItem } from '../../style';
 import { getDealers } from '../../../../redux/actions/admin';
 import { ExpandIcon } from './ExpandIcon';
 import { DealerRow } from './DealerRow';
+import { SideMenu } from './SideMenu';
 
 export function PureAdminHome(props) {
     const OPTION_FUNDING = 'funding';
@@ -33,10 +34,10 @@ export function PureAdminHome(props) {
         actionLoading,
     } = props;
 
-    const [openDealerIndex, setOpenDealerIndex] = useState(null);
     const [search, setSearch] = useState('');
     const [filterDealer, setFilterDealer] = useState([]);
     const [activeOption, setActiveOption] = useState(OPTION_FUNDING);
+    const [expandedDealers, setExpandedDealers] = useState({});
 
     useEffect(() => {
         getDealers();
@@ -56,6 +57,7 @@ export function PureAdminHome(props) {
     }, [search]);
 
     useEffect(() => {
+        setExpandedDealers({});
         setFilterDealer(dealers.data);
     }, [dealers]);
 
@@ -63,22 +65,27 @@ export function PureAdminHome(props) {
         history.push('/');
     };
 
-    const handleOpenDealerAction = (dealer) => {
-        if (toOpenIndex(dealer.id) === openDealerIndex)
-            setOpenDealerIndex(null);
-        else setOpenDealerIndex(toOpenIndex(dealer.id));
-    };
-
     const handleClickOption = (option) => {
         setActiveOption(option);
+    };
+
+    const handleOpenDealerAction = (dealer) => {
+        if (dealer.num_customers > 0) {
+            const key = toOpenIndex(dealer.id);
+            const currentValue = expandedDealers[key];
+            setExpandedDealers({
+                ...expandedDealers,
+                [key]: !currentValue,
+            });
+        }
     };
 
     const renderDealers = (dealers) => {
         return dealers.map((item) => (
             <DealerRow
                 key={item.id}
-                expanded={openDealerIndex === toOpenIndex(item.id)}
                 data={item}
+                expanded={expandedDealers[toOpenIndex(item.id)]}
                 onClick={handleOpenDealerAction}
             />
         ));
@@ -96,12 +103,7 @@ export function PureAdminHome(props) {
 
             <Header>
                 <HeaderLeft>
-                    <img
-                        className="icon-menu"
-                        src={IconMenu}
-                        onClick={() => handleArrowBack()}
-                        alt=""
-                    />
+                    <SideMenu />
                 </HeaderLeft>
                 <HeaderCenter>
                     <div className="header-main">
