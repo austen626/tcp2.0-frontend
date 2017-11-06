@@ -15,6 +15,7 @@ import {
     IconEnvelopeOpen,
 } from '../../../../assets/images';
 import Dropdown from '../../../../components/commons/dropdown';
+import { StatusChoice, TierSelect } from '../../style';
 
 export function CustomerDetailCard({ data }) {
     const options = [
@@ -61,26 +62,26 @@ export function CustomerDetailCard({ data }) {
                 <ul className="customer-sale-documents">
                     {renderSaleItems(data.purchased_items)}
                 </ul>
-                <Row className="customer-sale-tiers">
-                    <Col>
-                        Food Tier &nbsp;&nbsp; <Dropdown options={options} />
-                    </Col>
-                    <Col>
-                        Other Tier &nbsp;&nbsp; <Dropdown options={options} />
-                    </Col>
-                </Row>
-                <Row className="customer-sale-status">
-                    <Col>
+                <div className="customer-sale-tiers">
+                    <TierSelect className="tier-input">
+                        <label>Food Tier</label> <Dropdown options={options} />
+                    </TierSelect>
+                    <TierSelect className="tier-input ml-1 ml-sm-5">
+                        <label>Other Tier</label> <Dropdown options={options} />
+                    </TierSelect>
+                </div>
+                <div className="customer-sale-status">
+                    <StatusChoice>
                         <CircleStatusIcon symbol="S" fill={false} /> Approve
-                    </Col>
-                    <Col>
+                    </StatusChoice>
+                    <StatusChoice className="ml-4 ml-sm-5">
                         <TriangleStatusIcon symbol="S" fill={false} />{' '}
                         Req.Review
-                    </Col>
-                    <Col>
+                    </StatusChoice>
+                    <StatusChoice className="ml-4 ml-sm-5">
                         <HexagonStatusIcon symbol="S" fill={false} /> Reject
-                    </Col>
-                </Row>
+                    </StatusChoice>
+                </div>
             </Col>
         </Row>
     );

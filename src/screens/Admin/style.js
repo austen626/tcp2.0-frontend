@@ -1,15 +1,5 @@
 import styled from 'styled-components';
 
-export const CircledImageButton = styled.span`
-    display: inline-block;
-    padding: 3px 6px;
-    border-radius: 20px;
-    ${({ active }) =>
-        active &&
-        `
-    background: #009d86;
-    `}
-`;
 export const ApproveSubmitContainer = styled.div``;
 
 export const ApproveSubmitInnerContainer = styled.div`
@@ -189,4 +179,36 @@ export const StyledMenu = styled.nav`
             color: ${({ theme }) => theme.primaryHover};
         }
     }
+`;
+
+export const CircledImageButton = styled.span`
+    display: inline-block;
+    padding: 3px 6px;
+    border-radius: 20px;
+    ${({ active }) =>
+        active &&
+        `
+    background: #009d86;
+    `}
+`;
+
+export const TierSelect = styled.span`
+    label {
+        line-height: 12px;
+    }
+    .input-holder {
+        margin-left: 8px;
+        display: inline-block;
+    }
+    .dropdown select {
+        background-size: 28px !important;
+        height: 30px !important;
+        font-size: 14px;
+        padding: 2px 15px;
+        width: 70px;
+    }
+`;
+
+export const StatusChoice = styled.span`
+    line-height: 22px;
 `;

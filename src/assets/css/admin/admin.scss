@@ -251,20 +251,13 @@
     color: #6793b7;
     font-size: 12px;
     padding: 10px 0;
-
-    .input-holder {
-      display: inline-block;
-    }
-    .dropdown select {
-      background-size: 28px !important;
-      height: 30px !important;
-      font-size: 14px;
-      padding: 2px 15px;
-      width: 70px;
-    }
+    white-space: nowrap;
+    text-align: center;
   }
+
   .customer-sale-status {
     padding: 10px 0;
     font-size: 10px;
+    text-align: center;
   }
 }
