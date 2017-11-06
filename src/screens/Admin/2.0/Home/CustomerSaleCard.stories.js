@@ -1,9 +1,9 @@
-import { CustomerRow } from './CustomerRow';
+import { CustomerDetailCard } from './CustomerRow';
 import React from 'react';
 
 export default {
-    component: CustomerRow,
-    title: 'Admin/Home/CustomerRow',
+    component: CustomerDetailCard,
+    title: 'Admin/Home/CustomerDetailCard',
     parameters: {
         layout: 'fullscreen',
     },
@@ -13,31 +13,13 @@ const Template = (args) => (
     <div className="admin">
         <div className="main">
             <div className="list">
-                <CustomerRow {...args} />
+                <CustomerDetailCard {...args} />
             </div>
         </div>
     </div>
 );
 export const Primary = Template.bind({});
 Primary.args = {
-    data: {
-        name: 'C.Santos',
-        location: 'Green Mountain Falls, Colorado',
-        sale_slip: false,
-        food_date: new Date(),
-        food_stage: 'PreApproval',
-        food_mode: 'auto',
-        food_status: 'approval',
-        other_stage: 'Sales',
-        other_mode: 'auto',
-        other_status: 'in-process',
-    },
-    expanded: false,
-    onClick: () => {},
-};
-
-export const Secondary = Template.bind({});
-Secondary.args = {
     data: {
         name: 'C.Santos',
         location: 'Green Mountain Falls, Colorado',

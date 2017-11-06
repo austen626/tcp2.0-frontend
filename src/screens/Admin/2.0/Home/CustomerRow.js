@@ -8,6 +8,87 @@ import {
     TriangleStatusIcon,
 } from './StatusIcons';
 import { ExpandIcon } from './ExpandIcon';
+import {
+    IconAwesomePenFancy,
+    IconAwesomePenFancyRight,
+    IconEnvelopeClosed,
+    IconEnvelopeOpen,
+} from '../../../../assets/images';
+import Dropdown from '../../../../components/commons/dropdown';
+
+export function CustomerDetailCard({ data }) {
+    const options = [
+        { label: 1, value: 1 },
+        { label: 2, value: 2 },
+        { label: 3, value: 3 },
+        { label: 4, value: 4 },
+        { label: 5, value: 5 },
+        { label: 6, value: 6 },
+        { label: 7, value: 7 },
+        { label: 8, value: 8 },
+        { label: 9, value: 9 },
+        { label: 10, value: 10 },
+    ];
+
+    const renderSaleItems = (items) => {
+        return items.map((item) => (
+            <li key={item.id}>
+                <Row>
+                    <Col>
+                        {item.name} - ${item.price}
+                    </Col>
+                    <Col className="text-right">
+                        {item.document_signed ? (
+                            <img src={IconAwesomePenFancyRight} />
+                        ) : (
+                            <img src={IconAwesomePenFancy} />
+                        )}
+                        |
+                        {item.document_delivered ? (
+                            <img src={IconEnvelopeOpen} />
+                        ) : (
+                            <img src={IconEnvelopeClosed} />
+                        )}
+                    </Col>
+                </Row>
+            </li>
+        ));
+    };
+
+    return (
+        <Row>
+            <Col className="customer-sale-summary">
+                <ul className="customer-sale-documents">
+                    {renderSaleItems(data.purchased_items)}
+                </ul>
+                <Row className="customer-sale-tiers">
+                    <Col>
+                        Food Tier &nbsp;&nbsp; <Dropdown options={options} />
+                    </Col>
+                    <Col>
+                        Other Tier &nbsp;&nbsp; <Dropdown options={options} />
+                    </Col>
+                </Row>
+                <Row className="customer-sale-status">
+                    <Col>
+                        <CircleStatusIcon symbol="S" fill={false} /> Approve
+                    </Col>
+                    <Col>
+                        <TriangleStatusIcon symbol="S" fill={false} />{' '}
+                        Req.Review
+                    </Col>
+                    <Col>
+                        <HexagonStatusIcon symbol="S" fill={false} /> Reject
+                    </Col>
+                </Row>
+            </Col>
+        </Row>
+    );
+}
+
+CustomerDetailCard.propTypes = {
+    data: PropTypes.object.isRequired,
+};
 
 export function CustomerRow({ data, expanded, onClick }) {
     const {

@@ -233,3 +233,38 @@
     padding: 20px 5px;
   }
 }
+
+.customer-sale-summary {
+  background: #274254;
+  padding: 1em 22px;
+
+  .customer-sale-documents {
+    background: #3a5b77;
+    color: #a9c3d8;
+    list-style: none;
+    margin: 1em 0;
+    font-size: 11px;
+    line-height: 2.55;
+    letter-spacing: 0.06px;
+  }
+  .customer-sale-tiers {
+    color: #6793b7;
+    font-size: 12px;
+    padding: 10px 0;
+
+    .input-holder {
+      display: inline-block;
+    }
+    .dropdown select {
+      background-size: 28px !important;
+      height: 30px !important;
+      font-size: 14px;
+      padding: 2px 15px;
+      width: 70px;
+    }
+  }
+  .customer-sale-status {
+    padding: 10px 0;
+    font-size: 10px;
+  }
+}
