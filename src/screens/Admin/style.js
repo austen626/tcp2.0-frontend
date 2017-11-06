@@ -1,5 +1,15 @@
 import styled from 'styled-components';
 
+export const CircledImageButton = styled.span`
+    display: inline-block;
+    padding: 3px 6px;
+    border-radius: 20px;
+    ${({ active }) =>
+        active &&
+        `
+    background: #009d86;
+    `}
+`;
 export const ApproveSubmitContainer = styled.div``;
 
 export const ApproveSubmitInnerContainer = styled.div`
@@ -105,9 +115,10 @@ export const SliderContainer = styled.div`
 export const SliderItem = styled.div`
     position: relative;
     border-radius: 25px;
+    cursor: pointer;
     text-align: center;
     padding: 5px;
-
+    user-select: none;
     .slider-item--left {
         position: absolute;
         top: 3px;

@@ -21,7 +21,10 @@ export function SideMenu() {
             )}
             <nav className={isMenuOpen ? 'nav-menu active' : 'nav-menu'}>
                 <div className="nav-menu-header">
-                    <button className="menu-close" onClick={handleMenuClick}>
+                    <button
+                        className="btn-menu-close"
+                        onClick={handleMenuClick}
+                    >
                         x
                     </button>
                     Admin Name

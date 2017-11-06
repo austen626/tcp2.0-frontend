@@ -103,7 +103,7 @@ function StaffManagements(props) {
             </Header>
 
             <div className="search-header">
-                <form action="javascript:void(0)">     
+                <form action="javascript:void(0)">
                     <Form.Group>
                         <Form.Control value={search} placeholder="Search" onChange={(e) => setSearch(e.target.value)}></Form.Control>
                     </Form.Group>

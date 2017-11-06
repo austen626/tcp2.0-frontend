@@ -15,7 +15,7 @@ import Header, {
     HeaderCenter,
     HeaderRight,
 } from '../../../../components/Dealer/Header';
-import { SliderContainer, SliderItem } from '../../style';
+import { CircledImageButton, SliderContainer, SliderItem } from '../../style';
 import { getDealers } from '../../../../redux/actions/admin';
 import { ExpandIcon } from './ExpandIcon';
 import { DealerRow } from './DealerRow';
@@ -34,6 +34,7 @@ export function PureAdminHome(props) {
         actionLoading,
     } = props;
 
+    const [isSearchBarVisible, setIsSearchBarVisible] = useState(false);
     const [search, setSearch] = useState('');
     const [filterDealer, setFilterDealer] = useState([]);
     const [activeOption, setActiveOption] = useState(OPTION_FUNDING);
@@ -61,11 +62,24 @@ export function PureAdminHome(props) {
         setFilterDealer(dealers.data);
     }, [dealers]);
 
-    const handleArrowBack = () => {
-        history.push('/');
-    };
-
     const handleClickOption = (option) => {
+        if (option === OPTION_FUNDING) {
+            const activeIndex = filterDealer.findIndex(
+                (dealer) => expandedDealers[toOpenIndex(dealer.id)]
+            );
+            if (activeIndex > -1) {
+                filterDealer.forEach((dealer) => {
+                    expandedDealers[toOpenIndex(dealer.id)] = false;
+                });
+            } else {
+                filterDealer.forEach((dealer) => {
+                    if (dealer.num_customers === 0) return;
+                    expandedDealers[toOpenIndex(dealer.id)] = true;
+                });
+            }
+
+            setExpandedDealers({ ...expandedDealers });
+        }
         setActiveOption(option);
     };
 
@@ -78,6 +92,10 @@ export function PureAdminHome(props) {
                 [key]: !currentValue,
             });
         }
+    };
+
+    const handleClickSearch = () => {
+        setIsSearchBarVisible(!isSearchBarVisible);
     };
 
     const renderDealers = (dealers) => {
@@ -111,27 +129,33 @@ export function PureAdminHome(props) {
                     </div>
                 </HeaderCenter>
                 <HeaderRight>
-                    <img src={IconSearchAdmin} alt="" />
+                    <CircledImageButton active={isSearchBarVisible}>
+                        <img
+                            src={IconSearchAdmin}
+                            alt=""
+                            onClick={handleClickSearch}
+                        />
+                    </CircledImageButton>
                 </HeaderRight>
             </Header>
-
-            <div className="search-header">
-                <form action="javascript:void(0)">
-                    <Form.Group>
-                        <Form.Control
-                            value={search}
-                            placeholder="Search"
-                            onChange={(e) => setSearch(e.target.value)}
-                        ></Form.Control>
-                    </Form.Group>
-                </form>
-            </div>
-
+            {isSearchBarVisible && (
+                <div className="search-header">
+                    <form action="javascript:void(0)">
+                        <Form.Group>
+                            <Form.Control
+                                value={search}
+                                placeholder="Search"
+                                onChange={(e) => setSearch(e.target.value)}
+                            ></Form.Control>
+                        </Form.Group>
+                    </form>
+                </div>
+            )}
             <div className="main">
                 <div className="list with-footer">
                     {filterDealer && renderDealers(filterDealer)}
                 </div>
-                <div className="footer-container padding-40px">
+                <div className="footer-container p-3 p-sm-5">
                     <SliderContainer>
                         <SliderItem
                             className="col-6"
