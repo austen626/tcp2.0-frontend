@@ -55,19 +55,29 @@ export function CustomerDetailCard({ data }) {
             </li>
         ));
     };
-
+    console.log(data);
     return (
-        <Row>
+        <Row key={data.id}>
             <Col className="customer-sale-summary">
                 <ul className="customer-sale-documents">
                     {renderSaleItems(data.purchased_items)}
                 </ul>
                 <div className="customer-sale-tiers">
                     <TierSelect className="tier-input">
-                        <label>Food Tier</label> <Dropdown options={options} />
+                        <label>Food Tier</label>
+                        <Dropdown
+                            value={data.food_tier}
+                            defaultValue={data.food_tier}
+                            options={options}
+                        />
                     </TierSelect>
                     <TierSelect className="tier-input ml-1 ml-sm-5">
-                        <label>Other Tier</label> <Dropdown options={options} />
+                        <label>Other Tier</label>
+                        <Dropdown
+                            value={data.other_tier}
+                            defaultValue={data.other_tier}
+                            options={options}
+                        />
                     </TierSelect>
                 </div>
                 <div className="customer-sale-status">
@@ -155,9 +165,7 @@ export function CustomerRow({ data, expanded, onClick }) {
                         <span className="customer-name">{name}</span>
                     </div>
                     <div>
-                        <span className="customer-location">
-                            {location}
-                        </span>
+                        <span className="customer-location">{location}</span>
                     </div>
                 </Col>
                 <Col xs={5} className="content-col text-right">

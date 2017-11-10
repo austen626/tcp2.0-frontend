@@ -65,8 +65,6 @@ Secondary.args = {
                 document_signed: true,
             },
         ],
-        food_tier: 2,
-        other_tier: 2,
     },
     expanded: false,
     onClick: () => {},

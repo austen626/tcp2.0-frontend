@@ -47,7 +47,7 @@ export function DealerRow({ data, expanded, onClick }) {
     };
 
     return (
-        <>
+        <React.Fragment key={data.id}>
             <Row
                 className={`single-row ${expanded ? 'expanded' : ''}`}
                 onClick={() => onClick && onClick(data)}
@@ -62,7 +62,7 @@ export function DealerRow({ data, expanded, onClick }) {
                 </div>
             </Row>
             {expanded && renderCustomerRows(data.customers)}
-        </>
+        </React.Fragment>
     );
 }
 

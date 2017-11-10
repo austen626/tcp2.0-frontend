@@ -27,6 +27,8 @@ const customers = [
             { name: 'Full Service Program' },
             { name: 'Appliance' },
         ],
+        food_tier: 2,
+        other_tier: 2,
     },
     {
         id: 124,
@@ -44,6 +46,8 @@ const customers = [
             { name: 'Full Service Program' },
             { name: 'Appliance' },
         ],
+        food_tier: 2,
+        other_tier: 2,
     },
 ];
 

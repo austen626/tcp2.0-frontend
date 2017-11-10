@@ -157,11 +157,12 @@
         .number-badge {
           background-color: #009d86;
         }
-        .expand-icon {
-          transform: rotate(90deg);
-          transition-duration: .2s;
-          fill: white;
-        }
+      }
+
+      .expand-icon {
+        transform: rotate(90deg);
+        transition-duration: .2s;
+        fill: white;
       }
     }
 
