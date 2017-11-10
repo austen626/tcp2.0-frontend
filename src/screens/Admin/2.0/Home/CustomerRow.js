@@ -38,7 +38,7 @@ export function CustomerDetailCard({ data }) {
                     <Col>
                         {item.name} - ${item.price}
                     </Col>
-                    <Col className="text-right">
+                    <Col className="text-right document-status">
                         {item.document_signed ? (
                             <img src={IconAwesomePenFancyRight} />
                         ) : (

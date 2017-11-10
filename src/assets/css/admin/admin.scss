@@ -251,6 +251,13 @@
     font-size: 11px;
     line-height: 2.55;
     letter-spacing: 0.06px;
+
+    .document-status {
+      img {
+        width: 12px;
+        margin: 0 12px;
+      }
+    }
   }
   .customer-sale-tiers {
     color: #6793b7;
