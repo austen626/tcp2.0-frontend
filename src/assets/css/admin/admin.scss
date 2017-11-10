@@ -80,6 +80,10 @@
         display: flex;
         margin-left: 28px;
         padding: 5px 0;
+        @media (min-width: 570px) {
+          max-width: 400px;
+          margin: auto;
+        }
       }
       .dealer-row {
         width: 100%;

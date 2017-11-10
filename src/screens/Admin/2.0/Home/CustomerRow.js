@@ -72,14 +72,16 @@ export function CustomerDetailCard({ data }) {
                 </div>
                 <div className="customer-sale-status">
                     <StatusChoice>
-                        <CircleStatusIcon symbol="S" fill={false} /> Approve
+                        <CircleStatusIcon symbol="S" fill={false} />
+                        <span className="status-text">Approve</span>
                     </StatusChoice>
                     <StatusChoice className="ml-4 ml-sm-5">
-                        <TriangleStatusIcon symbol="S" fill={false} />{' '}
-                        Req.Review
+                        <TriangleStatusIcon symbol="S" fill={false} />
+                        <span className="status-text">Req.Review</span>
                     </StatusChoice>
                     <StatusChoice className="ml-4 ml-sm-5">
-                        <HexagonStatusIcon symbol="S" fill={false} /> Reject
+                        <HexagonStatusIcon symbol="S" fill={false} />
+                        <span className="status-text">Reject</span>
                     </StatusChoice>
                 </div>
             </Col>
@@ -143,14 +145,19 @@ export function CustomerRow({ data, expanded, onClick }) {
     };
 
     return (
-        <Row className={`single-row ${expanded ? 'expanded' : ''}`}>
+        <Row
+            className={`single-row ${expanded ? 'expanded' : ''}`}
+            onClick={onClick}
+        >
             <div className="customer-row">
                 <Col>
                     <div>
                         <span className="customer-name">{name}</span>
                     </div>
                     <div>
-                        <span className="customer-location">{location}</span>
+                        <span className="customer-location">
+                            {location}
+                        </span>
                     </div>
                 </Col>
                 <Col xs={5} className="content-col text-right">

@@ -1,9 +1,8 @@
 import { Col, Row } from 'react-bootstrap';
-import { IconDeleteNew } from '../../../../assets/images';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 import { ExpandIcon } from './ExpandIcon';
-import { CustomerRow } from './CustomerRow';
+import { CustomerDetailCard, CustomerRow } from './CustomerRow';
 
 const BadgedExpand = ({ number }) => {
     if (number > 0) {
@@ -19,9 +18,31 @@ const BadgedExpand = ({ number }) => {
 };
 
 export function DealerRow({ data, expanded, onClick }) {
+    const [activeCustomer, setActiveCustomer] = useState(null);
+
+    const handleClickCustomer = (item) => {
+        if (item.id === activeCustomer) {
+            setActiveCustomer(null);
+        } else {
+            setActiveCustomer(item.id);
+        }
+    };
+
     const renderCustomerRows = (customers) => {
         return customers.map((item) => (
-            <CustomerRow data={item} key={item.id} />
+            <>
+                <CustomerRow
+                    expanded={item.id === activeCustomer}
+                    data={item}
+                    key={item.id}
+                    onClick={() => {
+                        handleClickCustomer(item);
+                    }}
+                />
+                {item.id === activeCustomer && (
+                    <CustomerDetailCard data={item} />
+                )}
+            </>
         ));
     };
 
