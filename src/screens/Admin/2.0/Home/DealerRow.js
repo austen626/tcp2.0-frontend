@@ -2,7 +2,8 @@ import { Col, Row } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { ExpandIcon } from './ExpandIcon';
-import { CustomerDetailCard, CustomerRow } from './CustomerRow';
+import { CustomerRow } from './CustomerRow';
+import { CustomerDetailCard } from './CustomerDetailCard';
 
 const BadgedExpand = ({ number }) => {
     if (number > 0) {

@@ -1,4 +1,4 @@
-import { CustomerDetailCard } from './CustomerRow';
+import { CustomerDetailCard } from './CustomerDetailCard';
 import React from 'react';
 
 export default {
