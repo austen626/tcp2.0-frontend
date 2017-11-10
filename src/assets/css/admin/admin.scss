@@ -142,8 +142,12 @@
     }
 
     .single-row.expanded {
-      border-bottom: 2px solid #009D86;
       padding-bottom: 0;
+
+      .dealer-row-border {
+        width: 100%;
+        border-bottom: 2px solid #009D86;
+      }
 
       .dealer-row {
         border: none;

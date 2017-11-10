@@ -55,12 +55,15 @@ export function DealerRow({ data, expanded, onClick }) {
             >
                 <div className="dealer-row">
                     <Col xs={6}>
-                        <span className="dealer-name">{data.company_name}</span>
+                        <span className="dealer-name">
+                            {data.company_name}
+                        </span>
                     </Col>
                     <Col xs={6} className="dealer-action">
                         <BadgedExpand number={data.num_customers} />
                     </Col>
                 </div>
+                <div className="dealer-row-border" />
             </Row>
             {expanded && renderCustomerRows(data.customers)}
         </React.Fragment>

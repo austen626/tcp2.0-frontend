@@ -92,7 +92,7 @@ export function CustomerDetailCard({ data }) {
                         <span className="status-text">Reject</span>
                     </StatusChoice>
                 </div>
-                <button className="btn btn-comments">Comments {2}</button>
+                <button className="btn btn-comments">Comments ({2})</button>
             </Col>
         </Row>
     );
