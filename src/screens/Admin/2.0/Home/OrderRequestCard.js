@@ -5,7 +5,7 @@ import {
     IconEnvelopeClosed,
     IconEnvelopeOpen,
 } from '../../../../assets/images';
-import { StatusChoice, TierSelect } from '../../style';
+import { StatusChoice, StatusText, TierSelect } from '../../style';
 import Dropdown from '../../../../components/commons/dropdown';
 import {
     CircleStatusIcon,
@@ -15,8 +15,19 @@ import {
 import PropTypes from 'prop-types';
 import React from 'react';
 
-export function OrderDetailCard({ customer }) {
-    const options = [
+export function OrderRequestCard({ customer }) {
+    const {
+        id,
+        items,
+        name,
+        price,
+        food_tier: foodTier,
+        other_tier: otherTier,
+        status,
+        review_mode: reviewMode,
+    } = customer;
+
+    const tierOptions = [
         { label: 1, value: 1 },
         { label: 2, value: 2 },
         { label: 3, value: 3 },
@@ -55,41 +66,51 @@ export function OrderDetailCard({ customer }) {
     };
 
     return (
-        <Row key={customer.id}>
-            <Col className="customer-sale-summary">
-                <ul className="customer-sale-documents">
-                    {renderSaleItems(customer.items)}
-                </ul>
-                <div className="customer-sale-tiers">
+        <Row key={id}>
+            <Col className="order-summary">
+                <ul className="order-documents">{renderSaleItems(items)}</ul>
+                <div className="order-tiers">
                     <TierSelect className="tier-input">
                         <label>Food Tier</label>
                         <Dropdown
-                            value={customer.food_tier}
-                            defaultValue={customer.food_tier}
-                            options={options}
+                            value={foodTier}
+                            defaultValue={foodTier}
+                            options={tierOptions}
                         />
                     </TierSelect>
                     <TierSelect className="tier-input ml-1 ml-sm-5">
                         <label>Other Tier</label>
                         <Dropdown
-                            value={customer.other_tier}
-                            defaultValue={customer.other_tier}
-                            options={options}
+                            value={otherTier}
+                            defaultValue={otherTier}
+                            options={tierOptions}
                         />
                     </TierSelect>
                 </div>
-                <div className="customer-sale-status">
+                <div className="order-status">
                     <StatusChoice>
-                        <CircleStatusIcon symbol="S" fill={false} />
-                        <span className="status-text">Approve</span>
+                        <CircleStatusIcon
+                            symbol="S"
+                            fill={reviewMode === 'auto'}
+                            disabled={status !== 'approval'}
+                        />
+                        <StatusText>Approve</StatusText>
                     </StatusChoice>
                     <StatusChoice className="ml-4 ml-sm-5">
-                        <TriangleStatusIcon symbol="S" fill={false} />
-                        <span className="status-text">Req.Review</span>
+                        <TriangleStatusIcon
+                            symbol="S"
+                            fill={reviewMode === 'auto'}
+                            disabled={status !== 'in_process'}
+                        />
+                        <StatusText>Req.Review</StatusText>
                     </StatusChoice>
                     <StatusChoice className="ml-4 ml-sm-5">
-                        <HexagonStatusIcon symbol="S" fill={false} />
-                        <span className="status-text">Reject</span>
+                        <HexagonStatusIcon
+                            symbol="S"
+                            fill={reviewMode === 'auto'}
+                            disabled={status !== 'rejection'}
+                        />
+                        <StatusText>Reject</StatusText>
                     </StatusChoice>
                 </div>
                 <button className="btn btn-comments">Comments ({2})</button>
@@ -98,6 +119,6 @@ export function OrderDetailCard({ customer }) {
     );
 }
 
-OrderDetailCard.propTypes = {
+OrderRequestCard.propTypes = {
     customer: PropTypes.object.isRequired,
 };

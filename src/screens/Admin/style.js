@@ -209,9 +209,12 @@ export const TierSelect = styled.span`
     }
 `;
 
+export const StatusText = styled.span`
+    color: #b2d8f7;
+`;
 export const StatusChoice = styled.span`
     line-height: 22px;
-    .status-text {
+    ${StatusText} {
         margin-left: 8px;
     }
 `;

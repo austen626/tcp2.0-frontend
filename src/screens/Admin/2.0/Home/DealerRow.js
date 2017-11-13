@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { ExpandIcon } from './ExpandIcon';
 import { CustomerRow } from './CustomerRow';
-import { OrderDetailCard } from './OrderDetailCard';
+import { OrderRequestCard } from './OrderRequestCard';
 
 const BadgedExpand = ({ number }) => {
     if (number > 0) {
@@ -41,7 +41,7 @@ export function DealerRow({ data, expanded, onClick }) {
                     }}
                 />
                 {item.id === activeCustomer && (
-                    <OrderDetailCard customer={item} />
+                    <OrderRequestCard customer={item} />
                 )}
             </>
         ));

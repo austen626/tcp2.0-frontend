@@ -1,10 +1,10 @@
-import { OrderDetailCard } from './OrderDetailCard';
+import { OrderRequestCard } from './OrderRequestCard';
 import React from 'react';
 import { fixtureOrder } from '../../../../models/customer.fixture';
 
 export default {
-    component: OrderDetailCard,
-    title: 'Admin/Home/OrderDetailCard',
+    component: OrderRequestCard,
+    title: 'Admin/Home/OrderRequestCard',
     parameters: {
         layout: 'fullscreen',
     },
@@ -14,7 +14,7 @@ const Template = (args) => (
     <div className="admin">
         <div className="main">
             <div className="list">
-                <OrderDetailCard {...args} />
+                <OrderRequestCard {...args} />
             </div>
         </div>
     </div>
