@@ -1,5 +1,6 @@
 import React from 'react';
 import { PureAdminHome } from './Home.js';
+import { fixture1, fixture2 } from '../../../../models/customer.fixture';
 
 export default {
     component: PureAdminHome,
@@ -10,46 +11,7 @@ export default {
 };
 
 const Template = (args) => <PureAdminHome {...args} />;
-const customers = [
-    {
-        id: 123,
-        name: 'C.Santos',
-        location: 'Green Mountain Falls, Colorado',
-        sale_slip: false,
-        food_date: new Date(),
-        food_stage: 'PreApproval',
-        food_mode: 'auto',
-        food_status: 'approval',
-        other_stage: 'Sales',
-        other_mode: 'auto',
-        other_status: 'in-process',
-        purchased_items: [
-            { name: 'Full Service Program' },
-            { name: 'Appliance' },
-        ],
-        food_tier: 2,
-        other_tier: 2,
-    },
-    {
-        id: 124,
-        name: 'T.Williams',
-        location: 'Green Mountain Falls, Colorado',
-        sale_slip: true,
-        food_date: new Date(),
-        food_stage: 'PreApproval',
-        food_mode: 'manual',
-        food_status: 'approval',
-        other_stage: 'PreApproval',
-        other_mode: 'manual',
-        other_status: 'in-process',
-        purchased_items: [
-            { name: 'Full Service Program' },
-            { name: 'Appliance' },
-        ],
-        food_tier: 2,
-        other_tier: 2,
-    },
-];
+const customers = [fixture1, fixture2];
 
 export const Primary = Template.bind({});
 Primary.args = {

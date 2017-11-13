@@ -15,7 +15,7 @@ import {
 import PropTypes from 'prop-types';
 import React from 'react';
 
-export function CustomerDetailCard({ data }) {
+export function OrderDetailCard({ customer }) {
     const options = [
         { label: 1, value: 1 },
         { label: 2, value: 2 },
@@ -55,25 +55,25 @@ export function CustomerDetailCard({ data }) {
     };
 
     return (
-        <Row key={data.id}>
+        <Row key={customer.id}>
             <Col className="customer-sale-summary">
                 <ul className="customer-sale-documents">
-                    {renderSaleItems(data.purchased_items)}
+                    {renderSaleItems(customer.items)}
                 </ul>
                 <div className="customer-sale-tiers">
                     <TierSelect className="tier-input">
                         <label>Food Tier</label>
                         <Dropdown
-                            value={data.food_tier}
-                            defaultValue={data.food_tier}
+                            value={customer.food_tier}
+                            defaultValue={customer.food_tier}
                             options={options}
                         />
                     </TierSelect>
                     <TierSelect className="tier-input ml-1 ml-sm-5">
                         <label>Other Tier</label>
                         <Dropdown
-                            value={data.other_tier}
-                            defaultValue={data.other_tier}
+                            value={customer.other_tier}
+                            defaultValue={customer.other_tier}
                             options={options}
                         />
                     </TierSelect>
@@ -98,6 +98,6 @@ export function CustomerDetailCard({ data }) {
     );
 }
 
-CustomerDetailCard.propTypes = {
-    data: PropTypes.object.isRequired,
+OrderDetailCard.propTypes = {
+    customer: PropTypes.object.isRequired,
 };

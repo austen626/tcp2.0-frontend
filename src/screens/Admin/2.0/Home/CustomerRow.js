@@ -9,25 +9,29 @@ import {
 } from './StatusIcons';
 import { ExpandIcon } from './ExpandIcon';
 
-export function CustomerRow({ data, expanded, onClick }) {
+export function CustomerRow({ customer, expanded, onClick }) {
     const {
-        name: name,
-        location: location,
-        sale_slip: saleSlip,
+        applicant: applicant,
+        co_applicant: coApplicant,
+        request_type: requestType,
         food_date: foodDate,
-        food_stage: foodStage,
-        food_mode: foodMode,
         food_status: foodStatus,
-        other_stage: otherStage,
-        other_mode: otherMode,
         other_status: otherStatus,
-        purchased_items: purchasedItems,
-    } = data;
+        items: items,
+        status: status,
+        review_mode: reviewMode,
+        food_review_mode: foodReviewMode,
+        other_review_mode: otherReviewMode,
+    } = customer;
 
-    const renderStatus = (stage, mode, status) => {
-        const symbol = stage === 'PreApproval' ? 'P' : 'S';
+    const formatDate = (date) => {
+        return moment(date).format('MM/DD/YY');
+    };
+
+    const handleClickCustomer = () => {};
+
+    const renderStatus = (symbol, mode, status) => {
         const fill = mode === 'auto';
-
         if (status === 'approval') {
             return <CircleStatusIcon symbol={symbol} fill={fill} />;
         } else if (status === 'in-process') {
@@ -37,17 +41,17 @@ export function CustomerRow({ data, expanded, onClick }) {
         }
     };
 
-    const renderFood = (stage, mode, status, date) => {
+    const renderFood = (mode, status, date) => {
         return (
             <div>
-                {renderStatus(stage, mode, status)}
+                {renderStatus('P', mode, status)}
                 <span className="customer-food-date">{formatDate(date)}</span>
             </div>
         );
     };
 
-    const formatDate = (date) => {
-        return moment(date).format('MM/DD/YY');
+    const renderOther = (mode, status) => {
+        return renderStatus('P', mode, status);
     };
 
     const renderPurchasedItems = (items) => {
@@ -68,19 +72,29 @@ export function CustomerRow({ data, expanded, onClick }) {
             <div className="customer-row">
                 <Col>
                     <div>
-                        <span className="customer-name">{name}</span>
+                        <span
+                            className="customer-name"
+                            onClick={handleClickCustomer}
+                        >
+                            {applicant.first_name[0].toUpperCase()}.
+                            {applicant.last_name}
+                        </span>
                     </div>
                     <div>
-                        <span className="customer-location">{location}</span>
+                        <span className="customer-location">
+                            {applicant.address}
+                        </span>
                     </div>
                 </Col>
                 <Col xs={5} className="content-col text-right">
-                    {saleSlip
-                        ? renderPurchasedItems(purchasedItems)
-                        : renderFood(foodStage, foodMode, foodStatus, foodDate)}
+                    {requestType === 'order'
+                        ? renderPurchasedItems(items)
+                        : renderFood(foodReviewMode, foodStatus, foodDate)}
                 </Col>
                 <Col xs={3} className="action-col text-right">
-                    {renderStatus(otherStage, otherMode, otherStatus)}
+                    {requestType === 'order'
+                        ? renderStatus('S', reviewMode, status)
+                        : renderOther(otherReviewMode, otherStatus)}
                     <ExpandIcon />
                 </Col>
             </div>
@@ -89,7 +103,7 @@ export function CustomerRow({ data, expanded, onClick }) {
 }
 
 CustomerRow.propTypes = {
-    data: PropTypes.object.isRequired,
+    customer: PropTypes.object.isRequired,
     expanded: PropTypes.bool,
     onClick: PropTypes.func,
 };
