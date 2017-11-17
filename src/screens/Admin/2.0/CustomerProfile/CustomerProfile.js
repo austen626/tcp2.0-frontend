@@ -142,14 +142,14 @@ OrderBalanceSummary.propTypes = {
     finalFoodPmtExpected: PropTypes.object.isRequired,
 };
 
-export function OrderSummaryInProcess({ applications }) {
+export function OrderInProcessSummary({ applications }) {
     const renderApplication = (application) => {
         return (
-            <div className="">
+            <div className="application">
                 <div>{application.name}</div>
                 <Row>
                     <Col>${application.value}</Col>
-                    <Col className="text-right">
+                    <Col className="document-status text-right">
                         {application.document_signed ? (
                             <img src={IconAwesomePenFancyRight} />
                         ) : (
@@ -168,13 +168,13 @@ export function OrderSummaryInProcess({ applications }) {
     };
 
     return (
-        <div className="order-summary-in-process">
+        <div className="order-in-process-summary color-text">
             {applications.map((application) => renderApplication(application))}
         </div>
     );
 }
 
-OrderSummaryInProcess.propTypes = {
+OrderInProcessSummary.propTypes = {
     applications: PropTypes.array.isRequired,
 };
 
@@ -281,7 +281,7 @@ export function CustomerProfile({
                             />
                         </Col>
                         <Col>
-                            <OrderSummaryInProcess
+                            <OrderInProcessSummary
                                 applications={inProcessOrder.applications}
                             />
                         </Col>

@@ -3,10 +3,6 @@
     color: white;
   }
 
-  .btn-round {
-
-  }
-
   .nav-menu-overlay {
     background-color: rgba(0, 0, 0, 0.4);
     position: fixed;
@@ -224,6 +220,14 @@
       }
     }
 
+    .order-in-process-summary {
+      background-color: #2f4455;
+      padding: 12px 16px;
+      .application + .application {
+        margin-top: 15px;
+      }
+    }
+
     .order-balance-summary {
       padding: 0 3px;
 
@@ -239,6 +243,10 @@
       color: #fff;
       font-size: 14px;
       padding: 7px 15px;
+
+      @media(max-width: 350px) {
+        font-size: 12px;
+      }
     }
 
     .btn-chat {
@@ -254,6 +262,12 @@
     }
   }
 
+  .document-status {
+    img {
+      width: 12px;
+      margin: 0 12px;
+    }
+  }
 }
 
 .customer-row {
@@ -371,13 +385,6 @@
       font-size: 11px;
       line-height: 2.55;
       letter-spacing: 0.06px;
-
-      .document-status {
-        img {
-          width: 12px;
-          margin: 0 12px;
-        }
-      }
     }
     .order-tiers {
       color: #6793b7;
