@@ -66,7 +66,7 @@ export function OrderRequestCard({ customer }) {
     };
 
     return (
-        <Row key={id}>
+        <Row key={id} className="order-summary-row">
             <Col className="order-summary">
                 <ul className="order-documents">{renderSaleItems(items)}</ul>
                 <div className="order-tiers">

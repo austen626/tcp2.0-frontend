@@ -3,6 +3,10 @@
     color: white;
   }
 
+  .btn-round {
+
+  }
+
   .nav-menu-overlay {
     background-color: rgba(0, 0, 0, 0.4);
     position: fixed;
@@ -184,9 +188,73 @@
       }
     }
   }
+
+  .customer-profile-main {
+    max-width: 400px;
+    margin: auto;
+    padding: 11px 16px;
+
+    .color-name {
+      color: #b2d8f7;
+    }
+    .color-text {
+      color: #a9c3d8;
+    }
+
+    .profile-right-col {
+      padding: 3px 0 3px 60px;
+      font-size: 11px;
+    }
+
+    .order-history-table {
+      font-size: 11px;
+      margin-top: 19px;
+
+      .table-header {
+        border-top: 2px solid #3a5c77;
+        border-bottom: 2px solid #3a5c77;
+        color: #a9c3d8;
+
+        .col {
+          padding: 6px;
+        }
+      }
+      .table-body {
+        padding: 13px 0;
+      }
+    }
+
+    .order-balance-summary {
+      padding: 0 3px;
+
+      .balance-field + .balance-field {
+        margin-top: 22px;
+      }
+    }
+
+    .btn-action {
+      border: none;
+      border-radius: 17.5px;
+      background-color: #6793b7;
+      color: #fff;
+      font-size: 14px;
+      padding: 7px 15px;
+    }
+
+    .btn-chat {
+      background-color: #2f4455;
+      color: #c8e0ed;
+      border-radius: 5px;
+      border: none;
+      padding: 8px;
+
+      img {
+        margin-right: 10px;
+      }
+    }
+  }
+
 }
-
-
 
 .customer-row {
   .customer-name {
@@ -243,54 +311,103 @@
   }
 }
 
-.order-summary {
+.applicant {
+  color: #b2d8f7;
+  font-size: 14px;
+  letter-spacing: 0.07px;
+  line-height: 1.37;
+  padding: 3px;
+
+  .applicant-name {
+    font-size: 14px;
+    line-height: 1.37;
+    letter-spacing: 0.07px;
+    color: #b2d8f7;
+  }
+
+  .applicant-date {
+    font-size: 11px;
+    line-height: 1.27;
+    letter-spacing: 0.06px;
+    color: #6792b6;
+  }
+
+  .applicant-field-list {
+    padding: 0 3px;
+    margin-top: 16px;
+  }
+
+  .applicant-field {
+    font-size: 11px;
+    line-height: 1.45;
+    letter-spacing: 0.06px;
+  }
+
+  .applicant-field + .applicant-field {
+    margin-top: 9px;
+  }
+}
+
+.applicant + .applicant {
+  border-top: 2px solid #3a5c77;
+  margin-top: 16px;
+  padding-top: 8px;
+}
+
+.order-summary-row {
   background: #274254;
-  padding: 1em 22px 40px;
   margin-bottom: 20px;
 
-  .order-documents {
-    background: #3a5b77;
-    color: #a9c3d8;
-    list-style: none;
-    margin: 1em 0;
-    font-size: 11px;
-    line-height: 2.55;
-    letter-spacing: 0.06px;
+  .order-summary {
+    margin: auto;
+    max-width: 600px;
+    padding: 1em 22px 40px;
 
-    .document-status {
-      img {
-        width: 12px;
-        margin: 0 12px;
+    .order-documents {
+      background: #3a5b77;
+      color: #a9c3d8;
+      list-style: none;
+      margin: 1em 0;
+      font-size: 11px;
+      line-height: 2.55;
+      letter-spacing: 0.06px;
+
+      .document-status {
+        img {
+          width: 12px;
+          margin: 0 12px;
+        }
       }
     }
-  }
-  .order-tiers {
-    color: #6793b7;
-    font-size: 12px;
-    padding: 10px 0;
-    white-space: nowrap;
-    text-align: center;
+    .order-tiers {
+      color: #6793b7;
+      font-size: 12px;
+      padding: 10px 0;
+      white-space: nowrap;
+      text-align: center;
+    }
+
+    .order-status {
+      padding: 10px 0;
+      font-size: 10px;
+      text-align: center;
+    }
+
+    .btn-comments {
+      position: absolute;
+      left: calc(50% - 50px);
+      bottom: -17px;
+      border-radius: 17.5px;
+      background-color: #6793b7;
+      color: #fff;
+      font-size: 12px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.17;
+      letter-spacing: 0.18px;
+      padding: 9.4px 30.6px 10.4px 14.3px;
+    }
   }
 
-  .order-status {
-    padding: 10px 0;
-    font-size: 10px;
-    text-align: center;
-  }
-
-  .btn-comments {
-    position: absolute;
-    left: calc(50% - 50px);
-    bottom: -17px;
-    border-radius: 17.5px;
-    background-color: #6793b7;
-    color: #fff;
-    font-size: 12px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.17;
-    letter-spacing: 0.18px;
-    padding: 9.4px 30.6px 10.4px 14.3px;
-  }
 }

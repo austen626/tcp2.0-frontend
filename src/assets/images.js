@@ -65,23 +65,6 @@ export const IconTrash = require('./images/icons8-trash.svg');
 
 export const UnderConstruction = require('./images/underconst.svg')
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 export const IconAdd = require('./images/add.svg');
 export const IconDeleteNew = require('./images/delete.svg');
 export const IconDownArrow = require('./images/downArrow.svg');
@@ -95,3 +78,4 @@ export const IconStatusSend = require('./images/status-send.svg');
 export const IconStatusSent = require('./images/status-sent.svg');
 export const IconMenu = require('./images/icon-menu.svg');
 export const IconHome = require('./images/home.svg');
+export const IconChatBubble = require('./images/chat_bubble.svg');

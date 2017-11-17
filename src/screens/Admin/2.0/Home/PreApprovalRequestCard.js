@@ -2,12 +2,18 @@ import { Row, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import React from 'react';
 import Dropdown from '../../../../components/commons/dropdown';
-import { StatusChoice, StatusText, TierSelect } from '../../style';
+import {
+    CalendarContainer,
+    StatusChoice,
+    StatusText,
+    TierSelect,
+} from '../../style';
 import {
     CircleStatusIcon,
     HexagonStatusIcon,
     TriangleStatusIcon,
 } from './StatusIcons';
+import DatePicker from 'react-datepicker';
 
 export function PreApprovalRequestCard({ customer }) {
     const tierOptions = [
@@ -27,7 +33,10 @@ export function PreApprovalRequestCard({ customer }) {
         food_tier: foodTier,
         food_review_mode: foodReviewMode,
         food_status: foodStatus,
+        food_date: foodDate,
     } = customer;
+
+    const handleFoodDateChange = (date) => {};
 
     return (
         <div className="preapproval-request-card">
@@ -49,38 +58,44 @@ export function PreApprovalRequestCard({ customer }) {
                     </Col>
                     <Col>
                         <label>Earliest delivery date: </label>
+                        <CalendarContainer>
+                            <DatePicker
+                                selected={foodDate}
+                                onChange={handleFoodDateChange}
+                                minDate={new Date()}
+                                className="calendar-approve"
+                                dateFormat="MM/dd/yyyy"
+                                placeholderText="MM/DD/YYYY"
+                            />
+                        </CalendarContainer>
                     </Col>
                 </Row>
-                <Row>
-                    <Col>
-                        <StatusChoice>
-                            <CircleStatusIcon
-                                symbol="S"
-                                fill={foodReviewMode === 'auto'}
-                                disabled={foodStatus !== 'approval'}
-                            />
-                            <StatusText>Approve</StatusText>
-                        </StatusChoice>
-                        <StatusChoice className="ml-4 ml-sm-5">
-                            <TriangleStatusIcon
-                                symbol="S"
-                                fill={foodReviewMode === 'auto'}
-                                disabled={foodStatus !== 'in_process'}
-                            />
-                            <StatusText>Req.Review</StatusText>
-                        </StatusChoice>
-                        <StatusChoice className="ml-4 ml-sm-5">
-                            <HexagonStatusIcon
-                                symbol="S"
-                                fill={foodReviewMode === 'auto'}
-                                disabled={foodStatus !== 'rejection'}
-                            />
-                            <StatusText>Decline</StatusText>
-                        </StatusChoice>
-                    </Col>
-                    <Col></Col>
-                    <Col></Col>
-                </Row>
+                <div className="text-center">
+                    <StatusChoice>
+                        <CircleStatusIcon
+                            symbol="P"
+                            fill={foodReviewMode === 'auto'}
+                            disabled={foodStatus !== 'approval'}
+                        />
+                        <StatusText>Approve</StatusText>
+                    </StatusChoice>
+                    <StatusChoice className="ml-4 ml-sm-5">
+                        <TriangleStatusIcon
+                            symbol="P"
+                            fill={foodReviewMode === 'auto'}
+                            disabled={foodStatus !== 'in_process'}
+                        />
+                        <StatusText>Req.Review</StatusText>
+                    </StatusChoice>
+                    <StatusChoice className="ml-4 ml-sm-5">
+                        <HexagonStatusIcon
+                            symbol="P"
+                            fill={foodReviewMode === 'auto'}
+                            disabled={foodStatus !== 'rejection'}
+                        />
+                        <StatusText>Decline</StatusText>
+                    </StatusChoice>
+                </div>
             </div>
             <div className="product-request">
                 <div className="product-title">
@@ -97,12 +112,6 @@ export function PreApprovalRequestCard({ customer }) {
                                 options={tierOptions}
                             />
                         </TierSelect>
-                    </Col>
-                    <Col>
-
-                    </Col>
-                    <Col>
-
                     </Col>
                 </Row>
             </div>

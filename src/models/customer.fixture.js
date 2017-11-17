@@ -17,6 +17,7 @@ export const fixtureOrder = {
         email: 'john@myemail.com',
         phone: '(123) 456-7890',
     },
+    credit_app_on_file: true,
     items: [
         {
             id: 125,
