@@ -155,7 +155,7 @@ export function PureAdminHome(props) {
                 <div className="list with-footer">
                     {filterDealer && renderDealers(filterDealer)}
                 </div>
-                <div className="footer-container p-3 p-sm-5">
+                <div className="footer-container p-3">
                     <SliderContainer>
                         <SliderItem
                             className="col-6"

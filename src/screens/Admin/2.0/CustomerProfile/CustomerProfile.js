@@ -6,14 +6,17 @@ import Header, {
 import {
     IconArrowLeft,
     IconAwesomePenFancy,
-    IconAwesomePenFancyRight, IconChatBubble,
+    IconAwesomePenFancyRight,
+    IconChatBubble,
     IconEnvelopeClosed,
-    IconEnvelopeOpen
+    IconEnvelopeOpen,
 } from '../../../../assets/images';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'react-bootstrap';
 import moment from 'moment';
+import { TriangleStatusIcon } from '../Home/StatusIcons';
+import { SliderContainer, SliderItem } from '../../style';
 
 function ApplicantList({ applicant, coApplicant }) {
     return (
@@ -142,7 +145,7 @@ OrderBalanceSummary.propTypes = {
     finalFoodPmtExpected: PropTypes.object.isRequired,
 };
 
-export function OrderInProcessSummary({ applications }) {
+export function OrderInProcessSummary({ order }) {
     const renderApplication = (application) => {
         return (
             <div className="application">
@@ -169,13 +172,22 @@ export function OrderInProcessSummary({ applications }) {
 
     return (
         <div className="order-in-process-summary color-text">
-            {applications.map((application) => renderApplication(application))}
+            <div className="order-in-process-summary--status-wrapper">
+                <TriangleStatusIcon
+                    symbol="S"
+                    fill={order.review_mode === 'auto'}
+                    disabled={false}
+                />
+            </div>
+            {order.applications.map((application) =>
+                renderApplication(application)
+            )}
         </div>
     );
 }
 
 OrderInProcessSummary.propTypes = {
-    applications: PropTypes.array.isRequired,
+    order: PropTypes.object.isRequired,
 };
 
 export function CustomerProfile({
@@ -211,95 +223,113 @@ export function CustomerProfile({
                 </HeaderCenter>
                 <HeaderRight />
             </Header>
-            <div className="main customer-profile-main">
-                <Row>
-                    <Col className="">
-                        <ApplicantList
-                            applicant={applicant}
-                            coApplicant={coApplicant}
-                        />
-                    </Col>
-                    <Col className="profile-right-col">
-                        <div>
-                            <span className="dealer-name color-text">
-                                {dealer.name}
-                            </span>
-                            <br />
-                            <span className="dealer-number color-name">
-                                {dealer.tcp_number}
-                            </span>
-                        </div>
-                        <div className="mt-4">
-                            <button className="btn-chat">
-                                <img src={IconChatBubble} />
-                                Comments [{numComments}]
-                            </button>
-                        </div>
-                        <div className="mt-4">
-                            <span className="color-name">
-                                Credit App on File:
-                            </span>
-                            <br />
-                            <span className="color-text">
-                                {creditAppOnFile ? 'Yes' : 'No'}
-                            </span>
-                        </div>
-                        <div className="mt-3">
-                            <Row>
-                                <Col>
-                                    <span className="color-name">Food:</span>
-                                    <br />
-                                    <span className="color-text">
-                                        Tier {foodTier}
-                                    </span>
-                                </Col>
-                                <Col>
-                                    <span className="color-name">
-                                        Appliance:
-                                    </span>
-                                    <br />
-                                    <span className="color-text">
-                                        Tier {applianceTier}
-                                    </span>
-                                </Col>
-                            </Row>
-                        </div>
-                    </Col>
-                </Row>
-                <div className="order-history-table">
-                    <Row className="table-header">
-                        <Col className="text-center">Latest Order</Col>
-                        <Col className="text-center">In Process</Col>
-                    </Row>
-                    <Row className="table-body">
-                        <Col>
-                            <OrderBalanceSummary
-                                foodBalance={foodBalance}
-                                applianceBalance={applianceBalance}
-                                totalPastDueBalance={totalPastDueBalance}
-                                finalFoodPmtExpected={finalFoodPmtDueExpected}
+            <div className="main">
+                <div className="customer-profile-wrapper">
+                    <Row>
+                        <Col className="">
+                            <ApplicantList
+                                applicant={applicant}
+                                coApplicant={coApplicant}
                             />
                         </Col>
+                        <Col className="profile-right-col">
+                            <div>
+                                <span className="dealer-name color-text">
+                                    {dealer.name}
+                                </span>
+                                <br />
+                                <span className="dealer-number color-name">
+                                    {dealer.tcp_number}
+                                </span>
+                            </div>
+                            <div className="mt-4">
+                                <button className="btn-chat">
+                                    <img src={IconChatBubble} />
+                                    Comments [{numComments}]
+                                </button>
+                            </div>
+                            <div className="mt-4">
+                                <span className="color-name">
+                                    Credit App on File:
+                                </span>
+                                <br />
+                                <span className="color-text">
+                                    {creditAppOnFile ? 'Yes' : 'No'}
+                                </span>
+                            </div>
+                            <div className="mt-3">
+                                <Row>
+                                    <Col>
+                                        <span className="color-name">Food:</span>
+                                        <br />
+                                        <span className="color-text">
+                                            Tier {foodTier}
+                                        </span>
+                                    </Col>
+                                    <Col>
+                                        <span className="color-name">
+                                            Appliance:
+                                        </span>
+                                        <br />
+                                        <span className="color-text">
+                                            Tier {applianceTier}
+                                        </span>
+                                    </Col>
+                                </Row>
+                            </div>
+                        </Col>
+                    </Row>
+                    <div className="order-history-table">
+                        <Row className="table-header">
+                            <Col className="text-center">Latest Order</Col>
+                            <Col className="text-center">In Process</Col>
+                        </Row>
+                        <Row className="table-body">
+                            <Col>
+                                <OrderBalanceSummary
+                                    foodBalance={foodBalance}
+                                    applianceBalance={applianceBalance}
+                                    totalPastDueBalance={totalPastDueBalance}
+                                    finalFoodPmtExpected={
+                                        finalFoodPmtDueExpected
+                                    }
+                                />
+                            </Col>
+                            <Col>
+                                <OrderInProcessSummary order={inProcessOrder} />
+                            </Col>
+                        </Row>
+                    </div>
+
+                    <Row>
                         <Col>
-                            <OrderInProcessSummary
-                                applications={inProcessOrder.applications}
-                            />
+                            <button className="btn-action">
+                                Request Preapproval
+                            </button>
+                        </Col>
+                        <Col className="text-right">
+                            <button className="btn-action">
+                                Generate an Order
+                            </button>
                         </Col>
                     </Row>
                 </div>
-
-                <Row>
-                    <Col>
-                        <button className="btn-action">
-                            Request Preapproval
-                        </button>
-                    </Col>
-                    <Col className="text-right">
-                        <button className="btn-action">
-                            Generate an Order
-                        </button>
-                    </Col>
-                </Row>
+                <div className="footer-container p-3">
+                    <SliderContainer>
+                        <SliderItem className="col-3" active={false}>
+                            Profile
+                        </SliderItem>
+                        <SliderItem className="col-3" active={false}>
+                            Credit
+                        </SliderItem>
+                        <SliderItem className="col-3" active={false}>
+                            History
+                        </SliderItem>
+                        <SliderItem className="col-3" active={false}>
+                            Paperwork
+                        </SliderItem>
+                    </SliderContainer>
+                </div>
             </div>
         </div>
     );

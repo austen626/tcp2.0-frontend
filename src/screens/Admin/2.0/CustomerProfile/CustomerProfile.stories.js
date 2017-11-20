@@ -23,6 +23,9 @@ Primary.args = {
         final_food_pmt_expected: new Date(),
     },
     inProcessOrder: {
+        request_type: 'order',
+        review_mode: 'auto',
+        status: 'approval',
         applications: [
             {
                 name: 'Credit Application',
