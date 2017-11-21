@@ -1,6 +1,6 @@
 import { PreApprovalRequestCard } from './PreApprovalRequestCard';
 import { OrderRequestCard } from './OrderRequestCard';
-import { fixtureOrder, fixturePreApproval } from '../../../../models/customer.fixture';
+import { fixtureOrder, fixturePreApproval } from '../../../../../models/customer.fixture';
 import React from 'react';
 
 export default {

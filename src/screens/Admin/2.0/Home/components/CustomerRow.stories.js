@@ -3,7 +3,7 @@ import React from 'react';
 import {
     fixtureOrder,
     fixturePreApproval,
-} from '../../../../models/customer.fixture';
+} from '../../../../../models/customer.fixture';
 
 export default {
     component: CustomerRow,

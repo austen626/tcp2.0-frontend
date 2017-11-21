@@ -15,7 +15,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'react-bootstrap';
 import moment from 'moment';
-import { TriangleStatusIcon } from '../Home/StatusIcons';
+import { TriangleStatusIcon } from '../Home/components/StatusIcons';
 import { SliderContainer, SliderItem } from '../../style';
 
 function ApplicantList({ applicant, coApplicant }) {

@@ -4,9 +4,9 @@ import {
     IconAwesomePenFancyRight,
     IconEnvelopeClosed,
     IconEnvelopeOpen,
-} from '../../../../assets/images';
-import { StatusChoice, StatusText, TierSelect } from '../../style';
-import Dropdown from '../../../../components/commons/dropdown';
+} from '../../../../../assets/images';
+import { StatusChoice, StatusText, TierSelect } from '../../../style';
+import Dropdown from '../../../../../components/commons/dropdown';
 import {
     CircleStatusIcon,
     HexagonStatusIcon,
@@ -47,7 +47,7 @@ export function OrderRequestCard({ customer }) {
                     <Col>
                         {item.name} - ${item.price}
                     </Col>
-                    <Col className="text-right document-status">
+                    <Col xs="auto" className="text-right document-status">
                         {item.document_signed ? (
                             <img src={IconAwesomePenFancyRight} />
                         ) : (

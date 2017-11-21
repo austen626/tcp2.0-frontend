@@ -3,6 +3,10 @@
     color: white;
   }
 
+  .footer-container {
+    color: white;
+  }
+
   .nav-menu-overlay {
     background-color: rgba(0, 0, 0, 0.4);
     position: fixed;
@@ -401,6 +405,7 @@
       color: #a9c3d8;
       list-style: none;
       margin: 1em 0;
+      padding: 0 12px;
       font-size: 11px;
       line-height: 2.55;
       letter-spacing: 0.06px;

@@ -1,13 +1,13 @@
 import { Row, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import React from 'react';
-import Dropdown from '../../../../components/commons/dropdown';
+import Dropdown from '../../../../../components/commons/dropdown';
 import {
     CalendarContainer,
     StatusChoice,
     StatusText,
     TierSelect,
-} from '../../style';
+} from '../../../style';
 import {
     CircleStatusIcon,
     HexagonStatusIcon,

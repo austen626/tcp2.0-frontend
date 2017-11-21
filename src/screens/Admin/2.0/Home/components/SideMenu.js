@@ -1,4 +1,4 @@
-import { IconMenu } from '../../../../assets/images';
+import { IconMenu } from '../../../../../assets/images';
 import React, { useState } from 'react';
 
 export function SideMenu() {

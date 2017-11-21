@@ -1,6 +1,6 @@
 import { Col, Row } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { ExpandIcon } from './ExpandIcon';
 import { CustomerRow } from './CustomerRow';
 import { OrderRequestCard } from './OrderRequestCard';
@@ -31,11 +31,10 @@ export function DealerRow({ data, expanded, onClick }) {
 
     const renderCustomerRows = (customers) => {
         return customers.map((item) => (
-            <>
+            <Fragment key={item.id}>
                 <CustomerRow
                     expanded={item.id === activeCustomer}
                     customer={item}
-                    key={item.id}
                     onClick={() => {
                         handleClickCustomer(item);
                     }}
@@ -43,7 +42,7 @@ export function DealerRow({ data, expanded, onClick }) {
                 {item.id === activeCustomer && (
                     <OrderRequestCard customer={item} />
                 )}
-            </>
+            </Fragment>
         ));
     };
 

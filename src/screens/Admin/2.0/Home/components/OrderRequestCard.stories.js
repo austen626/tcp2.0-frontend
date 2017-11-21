@@ -1,6 +1,6 @@
 import { OrderRequestCard } from './OrderRequestCard';
 import React from 'react';
-import { fixtureOrder } from '../../../../models/customer.fixture';
+import { fixtureOrder } from '../../../../../models/customer.fixture';
 
 export default {
     component: OrderRequestCard,
