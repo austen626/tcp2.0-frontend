@@ -1,6 +1,5 @@
 import React from 'react';
 import { Customer } from './Customer';
-import { fixtureOrder } from '../../../../models/customer.fixture';
 
 export default {
     component: Customer,

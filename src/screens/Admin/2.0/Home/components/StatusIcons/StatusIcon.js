@@ -1,7 +1,8 @@
+import React from 'react';
+import PropTypes from 'prop-types';
 import { CircleStatusIcon } from './CircleStatusIcon';
 import { TriangleStatusIcon } from './TriangleStatusIcon';
 import { HexagonStatusIcon } from './HexagonStatusIcon';
-import React from 'react';
 
 export default function StatusIcon({ symbol, mode, status }) {
     const fill = mode === 'auto';
@@ -15,3 +16,9 @@ export default function StatusIcon({ symbol, mode, status }) {
         return <></>;
     }
 }
+
+StatusIcon.propTypes = {
+    symbol: PropTypes.string.isRequired,
+    mode: PropTypes.string.isRequired,
+    status: PropTypes.string.isRequired,
+};

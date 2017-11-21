@@ -1,22 +1,15 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Row, Col } from 'react-bootstrap';
+import moment from 'moment';
 import Header, {
     HeaderCenter,
     HeaderLeft,
     HeaderRight,
 } from '../../../../components/Dealer/Header';
-import {
-    IconArrowLeft,
-    IconAwesomePenFancy,
-    IconAwesomePenFancyRight,
-    IconChatBubble,
-    IconEnvelopeClosed,
-    IconEnvelopeOpen,
-} from '../../../../assets/images';
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Row, Col } from 'react-bootstrap';
-import moment from 'moment';
-import { SliderContainer, SliderItem } from '../../style';
-import StatusIcon from '../Home/components/StatusIcons/StatusIcon';
+import { IconArrowLeft, IconChatBubble } from '../../../../assets/images';
+import { OrderRequestSummary } from './components/OrderRequestSummary';
+import { PreapprovalRequestSummary } from './components/PreapprovalRequestSummary';
 
 function ApplicantList({ applicant, coApplicant }) {
     return (
@@ -145,49 +138,6 @@ OrderBalanceSummary.propTypes = {
     finalFoodPmtExpected: PropTypes.object.isRequired,
 };
 
-export function OrderInProcessSummary({ order }) {
-    const renderApplication = (application) => {
-        return (
-            <div className="application">
-                <div>{application.name}</div>
-                <Row>
-                    <Col>${application.price}</Col>
-                    <Col className="document-status text-right">
-                        {application.document_signed ? (
-                            <img src={IconAwesomePenFancyRight} />
-                        ) : (
-                            <img src={IconAwesomePenFancy} />
-                        )}
-                        |
-                        {application.document_delivered ? (
-                            <img src={IconEnvelopeOpen} />
-                        ) : (
-                            <img src={IconEnvelopeClosed} />
-                        )}
-                    </Col>
-                </Row>
-            </div>
-        );
-    };
-
-    return (
-        <div className="order-in-process-summary color-text">
-            <div className="order-in-process-summary--status-wrapper">
-                <StatusIcon
-                    symbol="S"
-                    mode={order.review_mode}
-                    status={order.status}
-                />
-            </div>
-            {order.items.map((application) => renderApplication(application))}
-        </div>
-    );
-}
-
-OrderInProcessSummary.propTypes = {
-    order: PropTypes.object.isRequired,
-};
-
 export function CustomerProfile({
     customer,
     dealer,
@@ -296,7 +246,13 @@ export function CustomerProfile({
                                 />
                             </Col>
                             <Col>
-                                <OrderInProcessSummary order={customer} />
+                                {customer.request_type === 'order' ? (
+                                    <OrderRequestSummary order={customer} />
+                                ) : (
+                                    <PreapprovalRequestSummary
+                                        order={customer}
+                                    />
+                                )}
                             </Col>
                         </Row>
                     </div>
