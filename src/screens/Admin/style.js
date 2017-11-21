@@ -99,7 +99,7 @@ export const SliderContainer = styled.div`
     background-color: #273947;
     width: 100%;
     border-radius: 25px;
-    max-width: 340px;
+    max-width: 350px;
 `;
 
 export const SliderItem = styled.div`
