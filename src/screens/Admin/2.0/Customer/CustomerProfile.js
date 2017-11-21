@@ -15,8 +15,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'react-bootstrap';
 import moment from 'moment';
-import { TriangleStatusIcon } from '../Home/components/StatusIcons';
 import { SliderContainer, SliderItem } from '../../style';
+import StatusIcon from '../Home/components/StatusIcons/StatusIcon';
 
 function ApplicantList({ applicant, coApplicant }) {
     return (
@@ -151,7 +151,7 @@ export function OrderInProcessSummary({ order }) {
             <div className="application">
                 <div>{application.name}</div>
                 <Row>
-                    <Col>${application.value}</Col>
+                    <Col>${application.price}</Col>
                     <Col className="document-status text-right">
                         {application.document_signed ? (
                             <img src={IconAwesomePenFancyRight} />
@@ -173,15 +173,13 @@ export function OrderInProcessSummary({ order }) {
     return (
         <div className="order-in-process-summary color-text">
             <div className="order-in-process-summary--status-wrapper">
-                <TriangleStatusIcon
+                <StatusIcon
                     symbol="S"
-                    fill={order.review_mode === 'auto'}
-                    disabled={false}
+                    mode={order.review_mode}
+                    status={order.status}
                 />
             </div>
-            {order.applications.map((application) =>
-                renderApplication(application)
-            )}
+            {order.items.map((application) => renderApplication(application))}
         </div>
     );
 }
@@ -194,13 +192,13 @@ export function CustomerProfile({
     customer,
     dealer,
     latestOrder,
-    inProcessOrder,
     numComments,
-    creditAppOnFile,
-    foodTier,
-    applianceTier,
 }) {
-    const { applicant, co_applicant: coApplicant } = customer;
+    const {
+        applicant,
+        co_applicant: coApplicant,
+        credit_app_on_file: creditAppOnFile,
+    } = customer;
     const {
         food_balance: foodBalance,
         appliance_balance: applianceBalance,
@@ -260,10 +258,12 @@ export function CustomerProfile({
                             <div className="mt-3">
                                 <Row>
                                     <Col>
-                                        <span className="color-name">Food:</span>
+                                        <span className="color-name">
+                                            Food:
+                                        </span>
                                         <br />
                                         <span className="color-text">
-                                            Tier {foodTier}
+                                            Tier {customer.food_tier}
                                         </span>
                                     </Col>
                                     <Col>
@@ -272,7 +272,7 @@ export function CustomerProfile({
                                         </span>
                                         <br />
                                         <span className="color-text">
-                                            Tier {applianceTier}
+                                            Tier {customer.other_tier}
                                         </span>
                                     </Col>
                                 </Row>
@@ -296,7 +296,7 @@ export function CustomerProfile({
                                 />
                             </Col>
                             <Col>
-                                <OrderInProcessSummary order={inProcessOrder} />
+                                <OrderInProcessSummary order={customer} />
                             </Col>
                         </Row>
                     </div>
@@ -314,22 +314,6 @@ export function CustomerProfile({
                         </Col>
                     </Row>
                 </div>
-                <div className="footer-container p-3">
-                    <SliderContainer>
-                        <SliderItem className="col-3" active={false}>
-                            Profile
-                        </SliderItem>
-                        <SliderItem className="col-3" active={false}>
-                            Credit
-                        </SliderItem>
-                        <SliderItem className="col-3" active={false}>
-                            History
-                        </SliderItem>
-                        <SliderItem className="col-3" active={false}>
-                            Paperwork
-                        </SliderItem>
-                    </SliderContainer>
-                </div>
             </div>
         </div>
     );
@@ -339,9 +323,5 @@ CustomerProfile.propTypes = {
     customer: PropTypes.object.isRequired,
     dealer: PropTypes.object,
     latestOrder: PropTypes.object,
-    inProcessOrder: PropTypes.object,
     numComments: PropTypes.number.isRequired,
-    creditAppOnFile: PropTypes.bool.isRequired,
-    foodTier: PropTypes.number.isRequired,
-    applianceTier: PropTypes.number.isRequired,
 };

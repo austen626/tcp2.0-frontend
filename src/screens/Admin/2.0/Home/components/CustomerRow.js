@@ -2,12 +2,8 @@ import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import {
-    CircleStatusIcon,
-    HexagonStatusIcon,
-    TriangleStatusIcon,
-} from './StatusIcons';
 import { ExpandIcon } from './ExpandIcon';
+import StatusIcon from './StatusIcons/StatusIcon';
 
 export function CustomerRow({ customer, expanded, onClick }) {
     const {
@@ -30,28 +26,13 @@ export function CustomerRow({ customer, expanded, onClick }) {
 
     const handleClickCustomer = () => {};
 
-    const renderStatus = (symbol, mode, status) => {
-        const fill = mode === 'auto';
-        if (status === 'approval') {
-            return <CircleStatusIcon symbol={symbol} fill={fill} />;
-        } else if (status === 'in-process') {
-            return <TriangleStatusIcon symbol={symbol} fill={fill} />;
-        } else if (status === 'rejection') {
-            return <HexagonStatusIcon symbol={symbol} fill={fill} />;
-        }
-    };
-
     const renderFood = (mode, status, date) => {
         return (
             <div>
-                {renderStatus('P', mode, status)}
+                {<StatusIcon symbol="P" mode={mode} status={status} />}
                 <span className="customer-food-date">{formatDate(date)}</span>
             </div>
         );
-    };
-
-    const renderOther = (mode, status) => {
-        return renderStatus('P', mode, status);
     };
 
     const renderPurchasedItems = (items) => {
@@ -92,9 +73,19 @@ export function CustomerRow({ customer, expanded, onClick }) {
                         : renderFood(foodReviewMode, foodStatus, foodDate)}
                 </Col>
                 <Col xs={3} className="action-col text-right">
-                    {requestType === 'order'
-                        ? renderStatus('S', reviewMode, status)
-                        : renderOther(otherReviewMode, otherStatus)}
+                    {requestType === 'order' ? (
+                        <StatusIcon
+                            symbol="S"
+                            mode={reviewMode}
+                            status={status}
+                        />
+                    ) : (
+                        <StatusIcon
+                            symbol="P"
+                            mode={otherReviewMode}
+                            status={otherStatus}
+                        />
+                    )}
                     <ExpandIcon />
                 </Col>
             </div>
