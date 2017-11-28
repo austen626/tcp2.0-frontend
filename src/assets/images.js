@@ -22,7 +22,7 @@ export const IconEnvelops = require('./images/icon-envelopes.svg');
 
 export const IconStatusWaiting = require('./images/icon-status-waiting.svg');
 export const IconStatusConfirmed = require('./images/icon-status-confirmed.svg');
-
+export const IconAwesomeCheckCircle = require('./images/icon-awesome-check-circle.svg');
 export const iconPaid = require('./images/icon-paid.svg');
 export const iconNotify = require('./images/icon-notify.svg');
 export const IconSmallArrowRight = require('./images/icon-small-right-arrow.svg');

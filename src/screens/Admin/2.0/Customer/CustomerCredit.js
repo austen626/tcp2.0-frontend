@@ -2,6 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import { Col, Row } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import { IconAwesomeCheckCircle } from '../../../../assets/images';
 
 function ApplicantCredit({ applicant }) {
     const credit_date = moment(applicant.date).format('MM/DD/YYYY');
@@ -15,7 +16,10 @@ function ApplicantCredit({ applicant }) {
             <div className="text-white">
                 FICO: ${applicant.fico} / VAN: ${applicant.van}
             </div>
-            <div className="text-white">Credit Shop: </div>
+            <div className="text-white">
+                Credit Shop: &nbsp;
+                {applicant.credit_shop && <img src={IconAwesomeCheckCircle} />}
+            </div>
             <div className="text-white font-italic">{credit_date}</div>
         </div>
     );
@@ -29,6 +33,7 @@ ApplicantCredit.propTypes = {
         income: PropTypes.number,
         fico: PropTypes.number,
         van: PropTypes.number,
+        credit_shop: PropTypes.bool,
     }),
 };
 
@@ -65,7 +70,21 @@ CombinedCreditStats.propTypes = {
 };
 
 function BalanceStatsTable({ stats }) {
-    const { revolving, mortgage, installment, total } = stats;
+    const { revolving, mortgage, installment } = stats;
+    const totalBalance =
+        revolving.total_balance +
+        mortgage.total_balance +
+        installment.total_balance;
+
+    const totalMonthlyPayments =
+        revolving.total_monthly_payments +
+        mortgage.total_monthly_payments +
+        installment.total_monthly_payments;
+
+    const pastDueAmounts =
+        revolving.past_due_amounts +
+        mortgage.past_due_amounts +
+        installment.past_due_amounts;
 
     return (
         <>
@@ -95,9 +114,9 @@ function BalanceStatsTable({ stats }) {
             </Row>
             <Row>
                 <Col>TOTAL</Col>
-                <Col>$ {total.total_balance}</Col>
-                <Col>$ {total.total_monthly_payments}</Col>
-                <Col>$ {total.past_due_amounts}</Col>
+                <Col>$ {totalBalance}</Col>
+                <Col>$ {totalMonthlyPayments}</Col>
+                <Col>$ {pastDueAmounts}</Col>
             </Row>
         </>
     );
@@ -114,7 +133,6 @@ BalanceStatsTable.propTypes = {
         revolving: BalanceStatsPropShape,
         mortgage: BalanceStatsPropShape,
         installment: BalanceStatsPropShape,
-        total: BalanceStatsPropShape,
     }),
 };
 
@@ -176,4 +194,4 @@ CustomerCredit.propTypes = {
         balance_stats: PropTypes.object,
         comment: PropTypes.string,
     }),
-}
+};

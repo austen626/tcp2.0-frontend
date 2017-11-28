@@ -159,119 +159,104 @@ export function CustomerProfile({
     const handleArrowBack = () => {};
 
     return (
-        <div className="admin">
-            <Header>
-                <HeaderLeft>
-                    <img src={IconArrowLeft} onClick={handleArrowBack} alt="" />
-                </HeaderLeft>
-                <HeaderCenter>
-                    <div className="header-main">
-                        {applicant.first_name} {applicant.last_name}
+        <div className="customer-profile-wrapper">
+            <Row>
+                <Col className="">
+                    <ApplicantList
+                        applicant={applicant}
+                        coApplicant={coApplicant}
+                    />
+                </Col>
+                <Col className="profile-right-col">
+                    <div>
+                        <span className="dealer-name color-text">
+                            {dealer.name}
+                        </span>
+                        <br />
+                        <span className="dealer-number color-name">
+                            {dealer.tcp_number}
+                        </span>
                     </div>
-                </HeaderCenter>
-                <HeaderRight />
-            </Header>
-            <div className="main">
-                <div className="customer-profile-wrapper">
-                    <Row>
-                        <Col className="">
-                            <ApplicantList
-                                applicant={applicant}
-                                coApplicant={coApplicant}
-                            />
-                        </Col>
-                        <Col className="profile-right-col">
-                            <div>
-                                <span className="dealer-name color-text">
-                                    {dealer.name}
-                                </span>
-                                <br />
-                                <span className="dealer-number color-name">
-                                    {dealer.tcp_number}
-                                </span>
-                            </div>
-                            <div className="mt-4">
-                                <button className="btn-chat">
-                                    <img src={IconChatBubble} />
-                                    Comments [{numComments}]
-                                </button>
-                            </div>
-                            <div className="mt-4">
+                    <div className="mt-4">
+                        <button className="btn-chat">
+                            <img src={IconChatBubble} />
+                            Comments [{numComments}]
+                        </button>
+                    </div>
+                    <div className="mt-4">
+                        <span className="color-name">
+                            Credit App on File:
+                        </span>
+                        <br />
+                        <span className="color-text">
+                            {creditAppOnFile ? 'Yes' : 'No'}
+                        </span>
+                    </div>
+                    <div className="mt-3">
+                        <Row>
+                            <Col>
                                 <span className="color-name">
-                                    Credit App on File:
+                                    Food:
                                 </span>
                                 <br />
                                 <span className="color-text">
-                                    {creditAppOnFile ? 'Yes' : 'No'}
+                                    Tier {customer.food_tier}
                                 </span>
-                            </div>
-                            <div className="mt-3">
-                                <Row>
-                                    <Col>
-                                        <span className="color-name">
-                                            Food:
-                                        </span>
-                                        <br />
-                                        <span className="color-text">
-                                            Tier {customer.food_tier}
-                                        </span>
-                                    </Col>
-                                    <Col>
-                                        <span className="color-name">
-                                            Appliance:
-                                        </span>
-                                        <br />
-                                        <span className="color-text">
-                                            Tier {customer.other_tier}
-                                        </span>
-                                    </Col>
-                                </Row>
-                            </div>
-                        </Col>
-                    </Row>
-                    <div className="order-history-table">
-                        <Row className="table-header">
-                            <Col className="text-center">Latest Order</Col>
-                            <Col className="text-center">In Process</Col>
-                        </Row>
-                        <Row className="table-body">
-                            <Col>
-                                <OrderBalanceSummary
-                                    foodBalance={foodBalance}
-                                    applianceBalance={applianceBalance}
-                                    totalPastDueBalance={totalPastDueBalance}
-                                    finalFoodPmtExpected={
-                                        finalFoodPmtDueExpected
-                                    }
-                                />
                             </Col>
                             <Col>
-                                {customer.request_type === 'order' ? (
-                                    <OrderRequestSummary order={customer} />
-                                ) : (
-                                    <PreapprovalRequestSummary
-                                        order={customer}
-                                    />
-                                )}
+                                <span className="color-name">
+                                    Appliance:
+                                </span>
+                                <br />
+                                <span className="color-text">
+                                    Tier {customer.other_tier}
+                                </span>
                             </Col>
                         </Row>
                     </div>
-                    {customer.request_type === 'order' && (
-                        <Row>
-                            <Col>
-                                <button className="btn-action">
-                                    Request Preapproval
-                                </button>
-                            </Col>
-                            <Col className="text-right">
-                                <button className="btn-action">
-                                    Generate an Order
-                                </button>
-                            </Col>
-                        </Row>
-                    )}
-                </div>
+                </Col>
+            </Row>
+            <div className="order-history-table">
+                <Row className="table-header">
+                    <Col className="text-center">Latest Order</Col>
+                    <Col className="text-center">In Process</Col>
+                </Row>
+                <Row className="table-body">
+                    <Col>
+                        <OrderBalanceSummary
+                            foodBalance={foodBalance}
+                            applianceBalance={applianceBalance}
+                            totalPastDueBalance={totalPastDueBalance}
+                            finalFoodPmtExpected={
+                                finalFoodPmtDueExpected
+                            }
+                        />
+                    </Col>
+                    <Col>
+                        {customer.request_type === 'order' ? (
+                            <OrderRequestSummary order={customer} />
+                        ) : (
+                            <PreapprovalRequestSummary
+                                order={customer}
+                            />
+                        )}
+                    </Col>
+                </Row>
             </div>
+            {customer.request_type === 'order' && (
+                <Row>
+                    <Col>
+                        <button className="btn-action">
+                            Request Preapproval
+                        </button>
+                    </Col>
+                    <Col className="text-right">
+                        <button className="btn-action">
+                            Generate an Order
+                        </button>
+                    </Col>
+                </Row>
+            )}
         </div>
     );
 }
