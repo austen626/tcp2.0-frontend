@@ -27,30 +27,30 @@ function ApplicantList({ applicant, coApplicant }) {
                 <div className="applicant-field-list">
                     <div className="applicant-field">
                         <Row>
-                            <Col className="color-name" xs={4}>
+                            <Col className="color-light-blue" xs={4}>
                                 Address:
                             </Col>
-                            <Col className="color-text" xs={8}>
+                            <Col className="color-dim-blue" xs={8}>
                                 {applicant.address}
                             </Col>
                         </Row>
                     </div>
                     <div className="applicant-field">
                         <Row>
-                            <Col className="color-name" xs={4}>
+                            <Col className="color-light-blue" xs={4}>
                                 Email:
                             </Col>
-                            <Col className="color-text" xs={8}>
+                            <Col className="color-dim-blue" xs={8}>
                                 {applicant.email}
                             </Col>
                         </Row>
                     </div>
                     <div className="applicant-field">
                         <Row>
-                            <Col className="color-name" xs={4}>
+                            <Col className="color-light-blue" xs={4}>
                                 Phone:
                             </Col>
-                            <Col className="color-text" xs={8}>
+                            <Col className="color-dim-blue" xs={8}>
                                 {applicant.phone}
                             </Col>
                         </Row>
@@ -60,27 +60,27 @@ function ApplicantList({ applicant, coApplicant }) {
             {coApplicant && (
                 <div className="applicant">
                     <div>
-                        <span className="color-name">
+                        <span className="color-light-blue">
                             {applicant.first_name[0]}.{applicant.last_name}
                         </span>
                     </div>
                     <div className="applicant-field-list">
                         <div className="applicant-field">
                             <Row>
-                                <Col className="color-name" xs={4}>
+                                <Col className="color-light-blue" xs={4}>
                                     Email:
                                 </Col>
-                                <Col className="color-text" xs={8}>
+                                <Col className="color-dim-blue" xs={8}>
                                     {coApplicant.email}
                                 </Col>
                             </Row>
                         </div>
                         <div className="applicant-field">
                             <Row>
-                                <Col className="color-name" xs={4}>
+                                <Col className="color-light-blue" xs={4}>
                                     Phone:
                                 </Col>
-                                <Col className="color-text" xs={8}>
+                                <Col className="color-dim-blue" xs={8}>
                                     {coApplicant.phone}
                                 </Col>
                             </Row>
@@ -106,24 +106,24 @@ export function OrderBalanceSummary({
     return (
         <div className="order-balance-summary">
             <div className="balance-field">
-                <span className="color-name">Food Balance:</span>
+                <span className="color-light-blue">Food Balance:</span>
                 <br />
-                <span className="color-text">$ {foodBalance}</span>
+                <span className="color-dim-blue">$ {foodBalance}</span>
             </div>
             <div className="balance-field">
-                <span className="color-name">Appliance Balance:</span>
+                <span className="color-light-blue">Appliance Balance:</span>
                 <br />
-                <span className="color-text">$ {applianceBalance}</span>
+                <span className="color-dim-blue">$ {applianceBalance}</span>
             </div>
             <div className="balance-field">
-                <span className="color-name">Total Past Due Balance:</span>
+                <span className="color-light-blue">Total Past Due Balance:</span>
                 <br />
-                <span className="color-text">$ {totalPastDueBalance}</span>
+                <span className="color-dim-blue">$ {totalPastDueBalance}</span>
             </div>
             <div className="balance-field">
-                <span className="color-name">Final Food Pmt Expected:</span>
+                <span className="color-light-blue">Final Food Pmt Expected:</span>
                 <br />
-                <span className="color-text">
+                <span className="color-dim-blue">
                     {moment(finalFoodPmtExpected).format('MM/DD/YY')}
                 </span>
             </div>
@@ -159,7 +159,7 @@ export function CustomerProfile({
     const handleArrowBack = () => {};
 
     return (
-        <div className="customer-profile-wrapper">
+        <div className="customer-profile-wrapper mobile-container with-footer">
             <Row>
                 <Col className="">
                     <ApplicantList
@@ -169,11 +169,11 @@ export function CustomerProfile({
                 </Col>
                 <Col className="profile-right-col">
                     <div>
-                        <span className="dealer-name color-text">
+                        <span className="dealer-name color-dim-blue">
                             {dealer.name}
                         </span>
                         <br />
-                        <span className="dealer-number color-name">
+                        <span className="dealer-number color-light-blue">
                             {dealer.tcp_number}
                         </span>
                     </div>
@@ -184,31 +184,31 @@ export function CustomerProfile({
                         </button>
                     </div>
                     <div className="mt-4">
-                        <span className="color-name">
+                        <span className="color-light-blue">
                             Credit App on File:
                         </span>
                         <br />
-                        <span className="color-text">
+                        <span className="color-dim-blue">
                             {creditAppOnFile ? 'Yes' : 'No'}
                         </span>
                     </div>
                     <div className="mt-3">
                         <Row>
                             <Col>
-                                <span className="color-name">
+                                <span className="color-light-blue">
                                     Food:
                                 </span>
                                 <br />
-                                <span className="color-text">
+                                <span className="color-dim-blue">
                                     Tier {customer.food_tier}
                                 </span>
                             </Col>
                             <Col>
-                                <span className="color-name">
+                                <span className="color-light-blue">
                                     Appliance:
                                 </span>
                                 <br />
-                                <span className="color-text">
+                                <span className="color-dim-blue">
                                     Tier {customer.other_tier}
                                 </span>
                             </Col>

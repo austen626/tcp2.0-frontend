@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { Col, Row } from 'react-bootstrap';
+import { Col, Row, Form } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { IconAwesomeCheckCircle } from '../../../../assets/images';
 
@@ -9,18 +9,18 @@ function ApplicantCredit({ applicant }) {
 
     return (
         <div className="applicant-credit">
-            <div className="color-text">
+            <p className="color-dim-blue">
                 {applicant.first_name} {applicant.last_name}
-            </div>
-            <div className="text-white">Income ${applicant.income}</div>
-            <div className="text-white">
+            </p>
+            <p className="text-white">Income ${applicant.income}</p>
+            <p className="text-white">
                 FICO: ${applicant.fico} / VAN: ${applicant.van}
-            </div>
-            <div className="text-white">
+            </p>
+            <p className="text-white">
                 Credit Shop: &nbsp;
                 {applicant.credit_shop && <img src={IconAwesomeCheckCircle} />}
-            </div>
-            <div className="text-white font-italic">{credit_date}</div>
+            </p>
+            <p className="text-white font-italic">{credit_date}</p>
         </div>
     );
 }
@@ -41,20 +41,20 @@ function CombinedCreditStats({ stats }) {
     return (
         <div className="combined-credit-stats">
             <Row>
-                <Col>Combined Past Due:</Col>
-                <Col>{stats.past_due}</Col>
+                <Col className="color-grey-blue">Combined Past Due:</Col>
+                <Col className="color-light-blue">{stats.past_due}</Col>
             </Row>
             <Row>
-                <Col>Combined Income:</Col>
-                <Col>{stats.income}</Col>
+                <Col className="color-grey-blue">Combined Income:</Col>
+                <Col className="color-light-blue">{stats.income}</Col>
             </Row>
             <Row>
-                <Col>Combined Payments:</Col>
-                <Col>{stats.payments}</Col>
+                <Col className="color-grey-blue">Combined Payments:</Col>
+                <Col className="color-light-blue">{stats.payments}</Col>
             </Row>
             <Row>
-                <Col>Combined DTI:</Col>
-                <Col>{stats.dti}</Col>
+                <Col className="color-grey-blue">Combined DTI:</Col>
+                <Col className="color-light-blue">{stats.dti}</Col>
             </Row>
         </div>
     );
@@ -151,32 +151,42 @@ export default function CustomerCredit({ credit }) {
     } = credit;
 
     return (
-        <div className="custom-credit">
-            <Row>
-                <Col>
-                    <ApplicantCredit applicant={applicant} />
-                </Col>
-                <Col>
-                    <ApplicantCredit applicant={coApplicant} />
-                </Col>
-            </Row>
-            <CombinedCreditStats stats={combinedStats} />
-            <Row>
-                <Col>Delinquency 30/60/90:</Col>
-                <Col>
-                    {delinquency30}/{delinquency60}/{delinquency90}
-                </Col>
-            </Row>
-            <Row>
-                <Col>Inquiries during last 6 months:</Col>
-                <Col>{inquiries}</Col>
-            </Row>
-            <Row>
-                <Col>Revolving Available Percentage:</Col>
-                <Col>{revolvingPercentage}%</Col>
-            </Row>
+        <div className="customer-credit-wrapper with-footer">
+            <div className="credit-section mobile-container">
+                <Row className="applicant-credit-row">
+                    <Col xs={6}>
+                        <ApplicantCredit applicant={applicant} />
+                    </Col>
+                    <Col className="separator" />
+                    <Col xs={6}>
+                        <ApplicantCredit applicant={coApplicant} />
+                    </Col>
+                </Row>
+                <CombinedCreditStats stats={combinedStats} />
+                <Row>
+                    <Col>Delinquency 30/60/90:</Col>
+                    <Col>
+                        {delinquency30}/{delinquency60}/{delinquency90}
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>Inquiries during last 6 months:</Col>
+                    <Col>{inquiries}</Col>
+                </Row>
+                <Row>
+                    <Col>Revolving Available Percentage:</Col>
+                    <Col>{revolvingPercentage}%</Col>
+                </Row>
+            </div>
             <BalanceStatsTable stats={balanceStats} />
-            <div>{comment}</div>
+            <div className="mobile-container">
+                <Form.Control
+                    as="textarea"
+                    placeholder="Leave a comment here"
+                    value={comment}
+                    style={{ height: '71px' }}
+                />
+            </div>
         </div>
     );
 }

@@ -1,4 +1,15 @@
 .admin {
+  .color-light-blue {
+    color: #b2d8f7;
+  }
+  .color-dim-blue {
+    color: #a9c3d8;
+  }
+
+  .color-grey-blue {
+    color: #6792b6;
+  }
+
   .main {
     color: white;
   }
@@ -188,17 +199,49 @@
       }
     }
   }
-  .customer-profile-wrapper {
-    max-width: 400px;
-    margin: auto;
-    padding: 11px 16px;
 
-    .color-name {
-      color: #b2d8f7;
+  .mobile-container {
+    max-width: 400px;
+    margin: auto
+  }
+
+  .customer-credit-wrapper {
+    font-size: 11px;
+    line-height: 16px;
+
+    .credit-section {
+      padding: 18px 30px;
     }
-    .color-text {
-      color: #a9c3d8;
+
+    .combined-credit-stats {
+      background-color: #2f4455;
+      padding: 13px 15px;
+      border-right: 5px;
     }
+
+    .applicant-credit {
+      padding-left: 10px;
+      p {
+        margin: 0;
+      }
+
+      p + p {
+        margin: 4px 0;
+      }
+    }
+
+    .applicant-credit-row {
+      .separator {
+        width: 2px;
+        max-width: 2px;
+        margin: 0 30px;
+        background-color: #3a5c77;
+      }
+    }
+  }
+
+  .customer-profile-wrapper {
+    padding: 11px 16px;
 
     .profile-right-col {
       padding: 3px 0 3px 60px;

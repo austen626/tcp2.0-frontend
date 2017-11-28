@@ -35,7 +35,7 @@ export function OrderRequestSummary({ order }) {
     };
 
     return (
-        <div className="order-request-summary color-text">
+        <div className="order-request-summary color-dim-blue">
             <div className="order-request-summary--status-wrapper">
                 <StatusIcon
                     symbol="S"

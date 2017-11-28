@@ -19,7 +19,21 @@ export function Customer() {
         last_name: 'Miller',
     };
 
-    const customer = fixtureOrder;
+    const profile = {
+        customer: fixtureOrder,
+        numComments: 2,
+        dealer: {
+            name: 'Dealer Name',
+            tcp_number: '1550109',
+        },
+        latestOrder: {
+            food_balance: 5000,
+            appliance_balance: 500,
+            total_past_due_balance: 5000,
+            final_food_pmt_expected: new Date(),
+        },
+    };
+
     const credit = {
         applicant: {
             first_name: 'Brant',
@@ -70,18 +84,6 @@ export function Customer() {
         comment: 'He is trustable',
     };
 
-    const latestOrder = {
-        food_balance: 5000,
-        appliance_balance: 500,
-        total_past_due_balance: 5000,
-        final_food_pmt_expected: new Date(),
-    };
-    const dealer = {
-        name: 'Dealer Name',
-        tcp_number: '1550109',
-    };
-    const numComments = 2;
-
     const handleArrowBack = () => {};
 
     return (
@@ -98,14 +100,7 @@ export function Customer() {
                 <HeaderRight />
             </Header>
             <div className="main">
-                {activeTab === 0 && (
-                    <CustomerProfile
-                        customer={customer}
-                        numComments={numComments}
-                        dealer={dealer}
-                        latestOrder={latestOrder}
-                    />
-                )}
+                {activeTab === 0 && <CustomerProfile {...profile} />}
                 {activeTab === 1 && <CustomerCredit credit={credit} />}
                 {activeTab === 2 && <CustomerHistory />}
                 {activeTab === 3 && <CustomerPaperwork />}

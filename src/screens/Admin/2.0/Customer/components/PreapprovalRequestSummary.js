@@ -5,9 +5,9 @@ import moment from 'moment';
 
 export function PreapprovalRequestSummary({ order }) {
     return (
-        <div className="preapproval-request-summary color-text">
+        <div className="preapproval-request-summary color-dim-blue">
             <div className="preapproval-item">
-                <p className="color-name">Food:</p>
+                <p className="color-light-blue">Food:</p>
                 <p>
                     <StatusIcon
                         symbol="P"
@@ -16,7 +16,7 @@ export function PreapprovalRequestSummary({ order }) {
                     />
                 </p>
                 <p>
-                    <span className="color-name">Earliest delivery date</span>
+                    <span className="color-light-blue">Earliest delivery date</span>
                     <br />
                     <span className="text-white">
                         {moment(order.food_date).format('MM/DD/YY')}
@@ -24,7 +24,7 @@ export function PreapprovalRequestSummary({ order }) {
                 </p>
             </div>
             <div className="preapproval-item">
-                <p className="color-name">Appliance</p>
+                <p className="color-light-blue">Appliance</p>
                 <p>
                     <StatusIcon
                         symbol="P"
