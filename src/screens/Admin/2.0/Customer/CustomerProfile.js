@@ -256,19 +256,20 @@ export function CustomerProfile({
                             </Col>
                         </Row>
                     </div>
-
-                    <Row>
-                        <Col>
-                            <button className="btn-action">
-                                Request Preapproval
-                            </button>
-                        </Col>
-                        <Col className="text-right">
-                            <button className="btn-action">
-                                Generate an Order
-                            </button>
-                        </Col>
-                    </Row>
+                    {customer.request_type === 'order' && (
+                        <Row>
+                            <Col>
+                                <button className="btn-action">
+                                    Request Preapproval
+                                </button>
+                            </Col>
+                            <Col className="text-right">
+                                <button className="btn-action">
+                                    Generate an Order
+                                </button>
+                            </Col>
+                        </Row>
+                    )}
                 </div>
             </div>
         </div>

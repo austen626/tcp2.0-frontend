@@ -1,6 +1,9 @@
 import React from 'react';
 import { CustomerProfile } from './CustomerProfile';
-import { fixtureOrder, fixturePreApproval } from '../../../../models/customer.fixture';
+import {
+    fixtureOrder,
+    fixturePreApproval,
+} from '../../../../models/customer.fixture';
 
 export default {
     component: CustomerProfile,

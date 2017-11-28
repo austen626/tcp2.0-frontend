@@ -188,7 +188,6 @@
       }
     }
   }
-
   .customer-profile-wrapper {
     max-width: 400px;
     margin: auto;
@@ -242,6 +241,19 @@
         background-color: #2f4455;
         padding: 7px 14px;
         z-index: -1;
+      }
+    }
+
+    .preapproval-request-summary {
+      .preapproval-item {
+        border-radius: 5px;
+        background-color: #2f4455;
+        text-align: center;
+        padding: 1px 8px;
+      }
+
+      .preapproval-item + .preapproval-item {
+        margin-top: 7px;
       }
     }
 
