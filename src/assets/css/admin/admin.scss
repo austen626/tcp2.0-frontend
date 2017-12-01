@@ -200,7 +200,7 @@
     }
   }
 
-  .mobile-container {
+  .mobile-sized-container {
     max-width: 400px;
     margin: auto
   }
@@ -208,19 +208,56 @@
   .customer-credit-wrapper {
     font-size: 11px;
     line-height: 16px;
+    padding: 25px 0;
 
-    .credit-section {
-      padding: 18px 30px;
+    .mobile-sized-container {
+      padding: 0 30px;
+    }
+
+    textarea {
+      border-radius: 3px;
+      border: solid 1.5px #3a5c77;
+      background-color: #1e2c35;
+      resize: none;
+      color: white;
+      font-size: 11px;
+    }
+
+    .row {
+      .col-left {
+        padding-right: 40px;
+      }
+
+      .col-right {
+        padding-left: 40px;
+      }
+
+      @media(max-width: 350px) {
+        .col-left {
+          padding-right: 20px;
+        }
+        .col-right {
+          padding-left: 20px;
+        }
+      }
     }
 
     .combined-credit-stats {
       background-color: #2f4455;
       padding: 13px 15px;
       border-right: 5px;
+      margin-top: 20px;
+
+      .col-right {
+        border-left: 2px solid transparent;
+      }
+
+      .row + .row {
+        margin-top: 9px;
+      }
     }
 
     .applicant-credit {
-      padding-left: 10px;
       p {
         margin: 0;
       }
@@ -230,12 +267,32 @@
       }
     }
 
-    .applicant-credit-row {
-      .separator {
-        width: 2px;
-        max-width: 2px;
-        margin: 0 30px;
-        background-color: #3a5c77;
+    .applicant-credit-list {
+      display: flex;
+      flex-wrap: nowrap;
+      padding: 0 10px;
+      .col-right {
+        border-left: 2px solid #3a5c77;
+      }
+    }
+
+    .balance-stats-table {
+      padding-top: 10px;
+      background-color: #2f4455;
+
+      .row {
+        max-width: 500px;
+        margin: auto;
+        padding: 8px 23px;
+      }
+
+      .total-row {
+        background-color: #6792b6;
+
+        .row {
+          padding-top: 12px;
+          padding-bottom: 12px;
+        }
       }
     }
   }

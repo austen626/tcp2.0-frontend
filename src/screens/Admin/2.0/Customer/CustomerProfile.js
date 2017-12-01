@@ -159,7 +159,7 @@ export function CustomerProfile({
     const handleArrowBack = () => {};
 
     return (
-        <div className="customer-profile-wrapper mobile-container with-footer">
+        <div className="customer-profile-wrapper mobile-sized-container with-footer">
             <Row>
                 <Col className="">
                     <ApplicantList

@@ -9,7 +9,11 @@ export default {
     },
 };
 
-const Template = (args) => <CustomerCredit {...args} />;
+const Template = (args) => (
+    <div className="admin">
+        <CustomerCredit {...args} />
+    </div>
+);
 
 export const Primary = Template.bind({});
 Primary.args = {
