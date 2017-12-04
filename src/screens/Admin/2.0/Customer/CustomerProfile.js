@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import moment from 'moment';
 import Header, {
     HeaderCenter,
@@ -116,12 +116,16 @@ export function OrderBalanceSummary({
                 <span className="color-dim-blue">$ {applianceBalance}</span>
             </div>
             <div className="balance-field">
-                <span className="color-light-blue">Total Past Due Balance:</span>
+                <span className="color-light-blue">
+                    Total Past Due Balance:
+                </span>
                 <br />
                 <span className="color-dim-blue">$ {totalPastDueBalance}</span>
             </div>
             <div className="balance-field">
-                <span className="color-light-blue">Final Food Pmt Expected:</span>
+                <span className="color-light-blue">
+                    Final Food Pmt Expected:
+                </span>
                 <br />
                 <span className="color-dim-blue">
                     {moment(finalFoodPmtExpected).format('MM/DD/YY')}
@@ -159,104 +163,100 @@ export function CustomerProfile({
     const handleArrowBack = () => {};
 
     return (
-        <div className="customer-profile-wrapper mobile-sized-container with-footer">
-            <Row>
-                <Col className="">
-                    <ApplicantList
-                        applicant={applicant}
-                        coApplicant={coApplicant}
-                    />
-                </Col>
-                <Col className="profile-right-col">
-                    <div>
+        <div className="customer-profile-wrapper list">
+            <div className="mobile-sized-container">
+                <Row>
+                    <Col>
+                        <ApplicantList
+                            applicant={applicant}
+                            coApplicant={coApplicant}
+                        />
+                    </Col>
+                    <Col className="profile-right-col">
+                        <div>
                         <span className="dealer-name color-dim-blue">
                             {dealer.name}
                         </span>
-                        <br />
-                        <span className="dealer-number color-light-blue">
+                            <br />
+                            <span className="dealer-number color-light-blue">
                             {dealer.tcp_number}
                         </span>
-                    </div>
-                    <div className="mt-4">
-                        <button className="btn-chat">
-                            <img src={IconChatBubble} />
-                            Comments [{numComments}]
-                        </button>
-                    </div>
-                    <div className="mt-4">
+                        </div>
+                        <div className="mt-4">
+                            <button className="btn-chat">
+                                <img src={IconChatBubble} />
+                                Comments [{numComments}]
+                            </button>
+                        </div>
+                        <div className="mt-4">
                         <span className="color-light-blue">
                             Credit App on File:
                         </span>
-                        <br />
-                        <span className="color-dim-blue">
+                            <br />
+                            <span className="color-dim-blue">
                             {creditAppOnFile ? 'Yes' : 'No'}
                         </span>
-                    </div>
-                    <div className="mt-3">
-                        <Row>
-                            <Col>
-                                <span className="color-light-blue">
-                                    Food:
-                                </span>
-                                <br />
-                                <span className="color-dim-blue">
+                        </div>
+                        <div className="mt-3">
+                            <Row>
+                                <Col>
+                                    <span className="color-light-blue">Food:</span>
+                                    <br />
+                                    <span className="color-dim-blue">
                                     Tier {customer.food_tier}
                                 </span>
-                            </Col>
-                            <Col>
+                                </Col>
+                                <Col>
                                 <span className="color-light-blue">
                                     Appliance:
                                 </span>
-                                <br />
-                                <span className="color-dim-blue">
+                                    <br />
+                                    <span className="color-dim-blue">
                                     Tier {customer.other_tier}
                                 </span>
-                            </Col>
-                        </Row>
-                    </div>
-                </Col>
-            </Row>
-            <div className="order-history-table">
-                <Row className="table-header">
-                    <Col className="text-center">Latest Order</Col>
-                    <Col className="text-center">In Process</Col>
-                </Row>
-                <Row className="table-body">
-                    <Col>
-                        <OrderBalanceSummary
-                            foodBalance={foodBalance}
-                            applianceBalance={applianceBalance}
-                            totalPastDueBalance={totalPastDueBalance}
-                            finalFoodPmtExpected={
-                                finalFoodPmtDueExpected
-                            }
-                        />
+                                </Col>
+                            </Row>
+                        </div>
                     </Col>
-                    <Col>
-                        {customer.request_type === 'order' ? (
-                            <OrderRequestSummary order={customer} />
-                        ) : (
-                            <PreapprovalRequestSummary
-                                order={customer}
+                </Row>
+                <div className="order-history-table">
+                    <Row className="table-header">
+                        <Col className="text-center">Latest Order</Col>
+                        <Col className="text-center">In Process</Col>
+                    </Row>
+                    <Row className="table-body">
+                        <Col>
+                            <OrderBalanceSummary
+                                foodBalance={foodBalance}
+                                applianceBalance={applianceBalance}
+                                totalPastDueBalance={totalPastDueBalance}
+                                finalFoodPmtExpected={finalFoodPmtDueExpected}
                             />
-                        )}
-                    </Col>
-                </Row>
+                        </Col>
+                        <Col>
+                            {customer.request_type === 'order' ? (
+                                <OrderRequestSummary order={customer} />
+                            ) : (
+                                <PreapprovalRequestSummary order={customer} />
+                            )}
+                        </Col>
+                    </Row>
+                </div>
+                {customer.request_type === 'order' && (
+                    <Row>
+                        <Col>
+                            <button className="btn-action">
+                                Request Preapproval
+                            </button>
+                        </Col>
+                        <Col className="text-right">
+                            <button className="btn-action">
+                                Generate an Order
+                            </button>
+                        </Col>
+                    </Row>
+                )}
             </div>
-            {customer.request_type === 'order' && (
-                <Row>
-                    <Col>
-                        <button className="btn-action">
-                            Request Preapproval
-                        </button>
-                    </Col>
-                    <Col className="text-right">
-                        <button className="btn-action">
-                            Generate an Order
-                        </button>
-                    </Col>
-                </Row>
-            )}
         </div>
     );
 }

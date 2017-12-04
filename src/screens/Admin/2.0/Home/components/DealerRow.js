@@ -18,7 +18,7 @@ const BadgedExpand = ({ number }) => {
     }
 };
 
-export function DealerRow({ data, expanded, onClick }) {
+export function DealerRow({ dealer, expanded, onClick }) {
     const [activeCustomer, setActiveCustomer] = useState(null);
 
     const handleClickCustomer = (item) => {
@@ -47,30 +47,30 @@ export function DealerRow({ data, expanded, onClick }) {
     };
 
     return (
-        <React.Fragment key={data.id}>
+        <React.Fragment key={dealer.id}>
             <Row
                 className={`single-row ${expanded ? 'expanded' : ''}`}
-                onClick={() => onClick && onClick(data)}
+                onClick={() => onClick && onClick(dealer)}
             >
                 <div className="dealer-row">
                     <Col xs={6}>
                         <span className="dealer-name">
-                            {data.company_name}
+                            {dealer.company_name}
                         </span>
                     </Col>
                     <Col xs={6} className="dealer-action">
-                        <BadgedExpand number={data.num_customers} />
+                        <BadgedExpand number={dealer.num_customers} />
                     </Col>
                 </div>
                 <div className="dealer-row-border" />
             </Row>
-            {expanded && renderCustomerRows(data.customers)}
+            {expanded && renderCustomerRows(dealer.customers)}
         </React.Fragment>
     );
 }
 
 DealerRow.propTypes = {
-    data: PropTypes.object.isRequired,
+    dealer: PropTypes.object.isRequired,
     expanded: PropTypes.bool,
     onClick: PropTypes.func,
 };

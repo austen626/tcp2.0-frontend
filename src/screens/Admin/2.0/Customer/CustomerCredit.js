@@ -184,7 +184,7 @@ export default function CustomerCredit({ credit }) {
     } = credit;
 
     return (
-        <div className="customer-credit-wrapper">
+        <div className="customer-credit-wrapper list">
             <div className="mobile-sized-container">
                 <Row className="applicant-credit-list">
                     <Col className="col-left" xs={6}>

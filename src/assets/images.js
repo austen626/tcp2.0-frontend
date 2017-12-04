@@ -16,7 +16,7 @@ export const IconCustomerEdit = require('./images/icon-customer-edit.svg');
 export const IconCustomerReorder = require('./images/icon-customer-reorder.svg');
 export const IconCustomerPre = require('./images/icon-customer-prequalify.svg');
 export const IconCustomerHistory = require('./images/icon-customer-prequalify.svg');
-
+export const IconDoorClosed = require('./images/icon-awesome-door-closed.svg');
 export const IconDelete = require('./images/icon-delete.svg');
 export const IconEnvelops = require('./images/icon-envelopes.svg');
 

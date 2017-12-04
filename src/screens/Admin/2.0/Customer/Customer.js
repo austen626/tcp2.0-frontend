@@ -19,7 +19,7 @@ export function Customer() {
         last_name: 'Miller',
     };
 
-    const profile = {
+    const profileData = {
         customer: fixtureOrder,
         numComments: 2,
         dealer: {
@@ -33,55 +33,79 @@ export function Customer() {
             final_food_pmt_expected: new Date(),
         },
     };
+    const creditData = {
+        credit: {
+            applicant: {
+                first_name: 'Brant',
+                last_name: 'Miller',
+                date: new Date(),
+                income: 3000,
+                fico: 12,
+                van: 37,
+                credit_shop: true,
+            },
+            co_applicant: {
+                first_name: 'Brant',
+                last_name: 'Miller',
+                date: new Date(),
+                income: 2500,
+                fico: 40,
+                van: 35,
+                credit_shop: true,
+            },
+            combined_stats: {
+                past_due: 2500,
+                income: 35224,
+                payments: 20000,
+                dti: 30,
+            },
+            delinquency_30: 25,
+            delinquency_60: 35,
+            delinquency_90: 95,
+            inquiries: 395,
+            revolving_percentage: 90,
+            balance_stats: {
+                revolving: {
+                    total_balance: 2000.85,
+                    total_monthly_payments: 3524.56,
+                    past_due_amounts: 5255.62,
+                },
+                mortgage: {
+                    total_balance: 2552.52,
+                    total_monthly_payments: 1552.45,
+                    past_due_amounts: 1425.45,
+                },
+                installment: {
+                    total_balance: 150.25,
+                    total_monthly_payments: 256.34,
+                    past_due_amounts: 256.25,
+                },
+            },
+            comment: 'He is trustable',
+        },
+    };
 
-    const credit = {
-        applicant: {
-            first_name: 'Brant',
-            last_name: 'Miller',
-            date: new Date(),
-            income: 3000,
-            fico: 12,
-            van: 37,
-            credit_shop: true,
-        },
-        co_applicant: {
-            first_name: 'Brant',
-            last_name: 'Miller',
-            date: new Date(),
-            income: 2500,
-            fico: 40,
-            van: 35,
-            credit_shop: true,
-        },
-        combined_stats: {
-            past_due: 2500,
-            income: 35224,
-            payments: 20000,
-            dti: 30,
-        },
-        delinquency_30: 25,
-        delinquency_60: 35,
-        delinquency_90: 95,
-        inquiries: 395,
-        revolving_percentage: 90,
-        balance_stats: {
-            revolving: {
-                total_balance: 2000.85,
-                total_monthly_payments: 3524.56,
-                past_due_amounts: 5255.62,
+    const historyData = {
+        loans: [
+            {
+                id: 1,
+                name: 'Food',
+                date: new Date(),
+                no: '36648930',
             },
-            mortgage: {
-                total_balance: 2552.52,
-                total_monthly_payments: 1552.45,
-                past_due_amounts: 1425.45,
+            {
+                id: 2,
+                name: 'Food',
+                date: new Date(),
+                no: '36648931',
             },
-            installment: {
-                total_balance: 150.25,
-                total_monthly_payments: 256.34,
-                past_due_amounts: 256.25,
+            {
+                id: 3,
+                name: 'Food',
+                date: new Date(),
+                no: '36648932',
             },
-        },
-        comment: 'He is trustable',
+        ],
     };
 
     const handleArrowBack = () => {};
@@ -100,9 +124,9 @@ export function Customer() {
                 <HeaderRight />
             </Header>
             <div className="main">
-                {activeTab === 0 && <CustomerProfile {...profile} />}
-                {activeTab === 1 && <CustomerCredit credit={credit} />}
-                {activeTab === 2 && <CustomerHistory />}
+                {activeTab === 0 && <CustomerProfile {...profileData} />}
+                {activeTab === 1 && <CustomerCredit {...creditData} />}
+                {activeTab === 2 && <CustomerHistory {...historyData} />}
                 {activeTab === 3 && <CustomerPaperwork />}
             </div>
             <CustomerTabBar activeTab={activeTab} onClickTab={setActiveTab} />

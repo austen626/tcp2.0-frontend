@@ -1,14 +1,4 @@
 .admin {
-  .color-light-blue {
-    color: #b2d8f7;
-  }
-  .color-dim-blue {
-    color: #a9c3d8;
-  }
-
-  .color-grey-blue {
-    color: #6792b6;
-  }
 
   .main {
     color: white;
@@ -90,6 +80,50 @@
 
   .list {
     .single-row {
+      .loan-row {
+        display: flex;
+        justify-content: center;
+        color: #3a5c77;
+        width: 100%;
+        border-bottom: 2px solid #c8e0ed;
+        margin-left: 43px;
+        margin-right: 43px;
+        padding-bottom: 12px;
+        @media (max-width: 570px) {
+          margin-left: 28px;
+          margin-right: 28px;
+        }
+
+        .expand-icon {
+          fill: #3a5c77;
+
+          @media(max-width: 576px) {
+            margin-right: -20px;
+          }
+        }
+
+        .loan-row-heading {
+          display: flex;
+          align-items: center;
+        }
+
+        .loan-title-wrapper {
+          margin-left: 21px;
+          display: inline-block;
+          .loan-title {
+            font-size: 14px;
+          }
+        }
+
+        .loan-number {
+          font-size: 11px;
+        }
+
+        .loan-date {
+          font-size: 11px;
+        }
+      }
+
       .customer-row {
         width: 100%;
         display: flex;
@@ -295,6 +329,11 @@
         }
       }
     }
+  }
+
+  .customer-history-wrapper {
+    background-color: #fff;
+    padding-top: 5px;
   }
 
   .customer-profile-wrapper {

@@ -90,7 +90,7 @@ export function PureReview({
         return dealers.map((item) => (
             <DealerRow
                 key={item.id}
-                data={item}
+                dealer={item}
                 expanded={expandedDealers[toOpenIndex(item.id)]}
                 onClick={handleOpenDealerAction}
             />
@@ -136,7 +136,7 @@ export function PureReview({
                 </div>
             )}
             <div className="main">
-                <div className="list with-footer">
+                <div className="list">
                     {filterDealer && renderDealers(filterDealer)}
                 </div>
             </div>
