@@ -80,6 +80,38 @@
 
   .list {
     .single-row {
+      .paperwork-row {
+        font-size: 11px;
+        margin-left: 43px;
+        margin-right: 43px;
+        border-bottom: 2px solid #3a5c77;
+        padding-bottom: 12px;
+
+        @media (max-width: 576px) {
+          margin-left: 28px;
+          margin-right: 28px;
+        }
+
+        .paperwork-title {
+          color: #a9c3d8;
+
+          img {
+            width: 12px;
+          }
+        }
+
+        .paperwork-date {
+          color: #6792b6;
+        }
+
+        &.small-padding {
+          padding-bottom: 5px;
+          .paperwork-date {
+            padding-top: 7px;
+          }
+        }
+      }
+
       .loan-row {
         display: flex;
         justify-content: center;
@@ -89,7 +121,7 @@
         margin-left: 43px;
         margin-right: 43px;
         padding-bottom: 12px;
-        @media (max-width: 570px) {
+        @media (max-width: 576px) {
           margin-left: 28px;
           margin-right: 28px;
         }

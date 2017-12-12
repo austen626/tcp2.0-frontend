@@ -174,13 +174,13 @@ export function CustomerProfile({
                     </Col>
                     <Col className="profile-right-col">
                         <div>
-                        <span className="dealer-name color-dim-blue">
-                            {dealer.name}
-                        </span>
+                            <span className="dealer-name color-dim-blue">
+                                {dealer.name}
+                            </span>
                             <br />
                             <span className="dealer-number color-light-blue">
-                            {dealer.tcp_number}
-                        </span>
+                                {dealer.tcp_number}
+                            </span>
                         </div>
                         <div className="mt-4">
                             <button className="btn-chat">
@@ -189,31 +189,33 @@ export function CustomerProfile({
                             </button>
                         </div>
                         <div className="mt-4">
-                        <span className="color-light-blue">
-                            Credit App on File:
-                        </span>
+                            <span className="color-light-blue">
+                                Credit App on File:
+                            </span>
                             <br />
                             <span className="color-dim-blue">
-                            {creditAppOnFile ? 'Yes' : 'No'}
-                        </span>
+                                {creditAppOnFile ? 'Yes' : 'No'}
+                            </span>
                         </div>
                         <div className="mt-3">
                             <Row>
                                 <Col>
-                                    <span className="color-light-blue">Food:</span>
+                                    <span className="color-light-blue">
+                                        Food:
+                                    </span>
                                     <br />
                                     <span className="color-dim-blue">
-                                    Tier {customer.food_tier}
-                                </span>
+                                        Tier {customer.food_tier}
+                                    </span>
                                 </Col>
                                 <Col>
-                                <span className="color-light-blue">
-                                    Appliance:
-                                </span>
+                                    <span className="color-light-blue">
+                                        Appliance:
+                                    </span>
                                     <br />
                                     <span className="color-dim-blue">
-                                    Tier {customer.other_tier}
-                                </span>
+                                        Tier {customer.other_tier}
+                                    </span>
                                 </Col>
                             </Row>
                         </div>

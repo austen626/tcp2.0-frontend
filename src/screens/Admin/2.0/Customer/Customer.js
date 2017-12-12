@@ -108,6 +108,59 @@ export function Customer() {
         ],
     };
 
+    const paperworkData = {
+        paperworks: [
+            {
+                id: 1,
+                document_delivered: false,
+                document_signed: false,
+                funded: false,
+                type: 'sale',
+                balance: 2000.05,
+            },
+            {
+                id: 2,
+                document_delivered: true,
+                document_signed: false,
+                funded: false,
+                type: 'sale',
+                balance: 3242.05,
+            },
+            {
+                id: 3,
+                document_delivered: true,
+                document_signed: true,
+                funded: false,
+                type: 'sale',
+                balance: 123.05,
+            },
+            {
+                id: 4,
+                funded: true,
+                type: 'sale',
+                balance: 52522.05,
+            },
+            {
+                id: 5,
+                funded: true,
+                type: 'sale',
+                balance: 422.05,
+            },
+            {
+                id: 6,
+                type: 'sale',
+                funded: true,
+                balance: 53632.4,
+                date: new Date(),
+            },
+            {
+                id: 7,
+                type: 'pre-approval',
+                date: new Date(),
+            },
+        ],
+    };
+
     const handleArrowBack = () => {};
 
     return (
@@ -127,7 +180,7 @@ export function Customer() {
                 {activeTab === 0 && <CustomerProfile {...profileData} />}
                 {activeTab === 1 && <CustomerCredit {...creditData} />}
                 {activeTab === 2 && <CustomerHistory {...historyData} />}
-                {activeTab === 3 && <CustomerPaperwork />}
+                {activeTab === 3 && <CustomerPaperwork {...paperworkData} />}
             </div>
             <CustomerTabBar activeTab={activeTab} onClickTab={setActiveTab} />
         </div>
