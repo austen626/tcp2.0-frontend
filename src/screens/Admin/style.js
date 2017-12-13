@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const ApproveSubmitContainer = styled.div``;
 
@@ -196,10 +196,6 @@ export const TierSelect = styled.span`
     label {
         line-height: 12px;
     }
-    .input-holder {
-        margin-left: 8px;
-        display: inline-block;
-    }
     .dropdown select {
         background-size: 28px !important;
         height: 30px !important;
@@ -207,6 +203,14 @@ export const TierSelect = styled.span`
         padding: 2px 15px;
         width: 70px;
     }
+    ${(props) =>
+        props.inline &&
+        css`
+            .input-holder {
+                margin-left: 8px;
+                display: inline-block;
+            }
+        `}
 `;
 
 export const StatusText = styled.span`

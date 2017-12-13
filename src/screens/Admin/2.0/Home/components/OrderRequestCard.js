@@ -70,7 +70,7 @@ export function OrderRequestCard({ customer }) {
             <Col className="order-summary">
                 <ul className="order-documents">{renderSaleItems(items)}</ul>
                 <div className="order-tiers">
-                    <TierSelect className="tier-input">
+                    <TierSelect className="tier-input" inline={true}>
                         <label>Food Tier</label>
                         <Dropdown
                             value={foodTier}
@@ -78,7 +78,10 @@ export function OrderRequestCard({ customer }) {
                             options={tierOptions}
                         />
                     </TierSelect>
-                    <TierSelect className="tier-input ml-1 ml-sm-5">
+                    <TierSelect
+                        className="tier-input ml-1 ml-sm-5"
+                        inline={true}
+                    >
                         <label>Other Tier</label>
                         <Dropdown
                             value={otherTier}

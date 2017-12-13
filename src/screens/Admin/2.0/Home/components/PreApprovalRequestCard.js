@@ -43,108 +43,122 @@ export function PreApprovalRequestCard({ customer }) {
         <div className="preapproval-request-card">
             <div className="request-wrapper">
                 <div className="request-title">
-                    <label>PRODUCT/SERVICE:</label>
+                    <label>PRODUCT/SERVICE:&nbsp;</label>
                     <span className="product-name">Food</span>
                 </div>
-                <Row>
-                    <Col>
-                        <TierSelect className="tier-input">
-                            <label>Price Tier:</label>
-                            <Dropdown
-                                value={foodTier}
-                                defaultValue={foodTier}
-                                options={tierOptions}
-                            />
-                        </TierSelect>
-                    </Col>
-                    <Col>
-                        <label>Earliest delivery date: </label>
-                        <CalendarContainer>
-                            <DatePicker
-                                selected={foodDate}
-                                onChange={handleFoodDateChange}
-                                minDate={new Date()}
-                                className="calendar-approve"
-                                dateFormat="MM/dd/yyyy"
-                                placeholderText="MM/DD/YYYY"
-                            />
-                        </CalendarContainer>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                        <StatusChoice>
-                            <CircleStatusIcon
-                                symbol="P"
-                                fill={foodReviewMode === 'auto'}
-                                disabled={foodStatus !== 'approval'}
-                            />
-                            <StatusText>Approve</StatusText>
-                        </StatusChoice>
-                    </Col>
-                    <Col>
-                        <StatusChoice>
-                            <TriangleStatusIcon
-                                symbol="P"
-                                fill={foodReviewMode === 'auto'}
-                                disabled={foodStatus !== 'in_process'}
-                            />
-                            <StatusText>Req.Review</StatusText>
-                        </StatusChoice>
-                    </Col>
-                    <Col>
-                        <StatusChoice>
-                            <HexagonStatusIcon
-                                symbol="P"
-                                fill={foodReviewMode === 'auto'}
-                                disabled={foodStatus !== 'rejection'}
-                            />
-                            <StatusText>Decline</StatusText>
-                        </StatusChoice>
-                    </Col>
-                </Row>
+                <div className="request-detail">
+                    <Row>
+                        <Col>
+                            <TierSelect className="tier-input">
+                                <label>Price Tier:</label>
+                                <Dropdown
+                                    value={foodTier}
+                                    defaultValue={foodTier}
+                                    options={tierOptions}
+                                />
+                            </TierSelect>
+                        </Col>
+                        <Col>
+                            <label>Earliest delivery date: </label>
+                            <CalendarContainer>
+                                <DatePicker
+                                    selected={foodDate}
+                                    onChange={handleFoodDateChange}
+                                    minDate={new Date()}
+                                    className="calendar-approve"
+                                    dateFormat="MM/dd/yyyy"
+                                    placeholderText="MM/DD/YYYY"
+                                />
+                            </CalendarContainer>
+                        </Col>
+                    </Row>
+                    <Row className="mt-3">
+                        <Col>
+                            <StatusChoice>
+                                <CircleStatusIcon
+                                    symbol="P"
+                                    fill={foodReviewMode === 'auto'}
+                                    disabled={foodStatus !== 'approval'}
+                                />
+                                <StatusText className="status-text">
+                                    Approve
+                                </StatusText>
+                            </StatusChoice>
+                        </Col>
+                        <Col className="text-center">
+                            <StatusChoice>
+                                <TriangleStatusIcon
+                                    symbol="P"
+                                    fill={foodReviewMode === 'auto'}
+                                    disabled={foodStatus !== 'in_process'}
+                                />
+                                <StatusText className="status-text">
+                                    Req.Review
+                                </StatusText>
+                            </StatusChoice>
+                        </Col>
+                        <Col className="text-right">
+                            <StatusChoice>
+                                <HexagonStatusIcon
+                                    symbol="P"
+                                    fill={foodReviewMode === 'auto'}
+                                    disabled={foodStatus !== 'rejection'}
+                                />
+                                <StatusText className="status-text">
+                                    Decline
+                                </StatusText>
+                            </StatusChoice>
+                        </Col>
+                    </Row>
+                </div>
             </div>
             <div className="request-wrapper">
                 <div className="request-title">
-                    <label className="">PRODUCT/SERVICE:</label>
+                    <label className="">PRODUCT/SERVICE:&nbsp;</label>
                     <span className="product-name">Other</span>
                 </div>
-                <Row>
-                    <Col>
-                        <TierSelect className="tier-input">
-                            <label>Price Tier:</label>
-                            <Dropdown
-                                value={customer.other_tier}
-                                defaultValue={customer.other_tier}
-                                options={tierOptions}
-                            />
-                        </TierSelect>
-                    </Col>
-                    <Col>
-                        <StatusChoice>
-                            <CircleStatusIcon
-                                symbol="P"
-                                fill={foodReviewMode === 'auto'}
-                                disabled={foodStatus !== 'approval'}
-                            />
-                            <StatusText>Approve</StatusText>
-                        </StatusChoice>
-                    </Col>
-                    <Col>
-                        <StatusChoice>
-                            <TriangleStatusIcon
-                                symbol="P"
-                                fill={foodReviewMode === 'auto'}
-                                disabled={foodStatus !== 'in_process'}
-                            />
-                            <StatusText>Req.Review</StatusText>
-                        </StatusChoice>
-                    </Col>
-                </Row>
-            </div>
-
-            <div className="text-center">
-                Requires credit app? <ToggleButton />
+                <div className="request-detail">
+                    <Row className="align-items-end">
+                        <Col>
+                            <TierSelect className="tier-input">
+                                <label>Price Tier:</label>
+                                <Dropdown
+                                    value={customer.other_tier}
+                                    defaultValue={customer.other_tier}
+                                    options={tierOptions}
+                                />
+                            </TierSelect>
+                        </Col>
+                        <Col>
+                            <StatusChoice>
+                                <CircleStatusIcon
+                                    symbol="P"
+                                    fill={foodReviewMode === 'auto'}
+                                    disabled={foodStatus !== 'approval'}
+                                />
+                                <StatusText className="status-text">
+                                    Approve
+                                </StatusText>
+                            </StatusChoice>
+                        </Col>
+                        <Col className="text-right">
+                            <StatusChoice>
+                                <TriangleStatusIcon
+                                    symbol="P"
+                                    fill={foodReviewMode === 'auto'}
+                                    disabled={foodStatus !== 'in_process'}
+                                />
+                                <StatusText className="status-text">
+                                    Req.Review
+                                </StatusText>
+                            </StatusChoice>
+                        </Col>
+                    </Row>
+                    <div className="text-center mt-3 require-credit-app">
+                        <label>Requires credit app?</label>
+                        <ToggleButton className="ml-3" />
+                    </div>
+                </div>
             </div>
         </div>
     );

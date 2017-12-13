@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-export function ToggleButton({ defaultChecked, disabled, onChange}) {
+export function ToggleButton({ defaultChecked, disabled, onChange, className}) {
     const [toggle, setToggle] = useState(false);
 
     const triggerToggle = () => {
@@ -19,7 +19,7 @@ export function ToggleButton({ defaultChecked, disabled, onChange}) {
     return (
         <div
             onClick={triggerToggle}
-            className={`tcp-toggle ${
+            className={`${className} tcp-toggle ${
                 toggle ? 'tcp-toggle--checked' : 'tcp-toggle--unchecked'
             }`}
         >
