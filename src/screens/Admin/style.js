@@ -21,6 +21,8 @@ export const ApproveSubmitInnerContainer = styled.div`
 `;
 
 export const CalendarContainer = styled.div`
+    position: relative;
+
     .calendar-approve {
         width: 100%;
         height: 41px !important;
@@ -43,6 +45,21 @@ export const CalendarContainer = styled.div`
         :-ms-input-placeholder {
             /* Internet Explorer 10+ */
             padding-left: 10px;
+        }
+    }
+
+    .calendar-badge {
+        display: inline-block;
+        position: absolute;
+        right: 0;
+        border-radius: 20px;
+        width: 40px;
+        height: 40px;
+        background-color: #6793b7;
+        text-align: center;
+        padding: 5px;
+        img {
+            width: 20px;
         }
     }
 `;

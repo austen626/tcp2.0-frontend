@@ -4,6 +4,7 @@ import React, { Fragment, useState } from 'react';
 import { ExpandIcon } from './ExpandIcon';
 import { CustomerRow } from './CustomerRow';
 import { OrderRequestCard } from './OrderRequestCard';
+import { PreApprovalRequestCard } from './PreApprovalRequestCard';
 
 const BadgedExpand = ({ number }) => {
     if (number > 0) {
@@ -39,9 +40,12 @@ export function DealerRow({ dealer, expanded, onClick }) {
                         handleClickCustomer(item);
                     }}
                 />
-                {item.id === activeCustomer && (
-                    <OrderRequestCard customer={item} />
-                )}
+                {item.id === activeCustomer &&
+                    (item.request_type === 'order' ? (
+                        <OrderRequestCard customer={item} />
+                    ) : (
+                        <PreApprovalRequestCard customer={item} />
+                    ))}
             </Fragment>
         ));
     };

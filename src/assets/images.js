@@ -38,8 +38,9 @@ export const IconAwesomePenFancy = require('./images/Icon-awesome-pen-fancy.svg'
 export const IconAwesomePenFancyRight = require('./images/Icon-awesome-pen-fancy-right.svg');
 export const IconEnvelopeClosed = require('./images/Icon-envelope-closed.svg');
 export const IconEnvelopeOpen = require('./images/Icon-envelope-open.svg');
-export const IconCaledar = require('./images/Icon-metro-calendar.svg');
+export const IconMetroCalendar = require('./images/Icon-metro-calendar.svg');
 export const IconSearchAdmin = require('./images/icon-search-admin.svg');
+export const IconFeatherCalendar = require('./images/icon-feather-calendar.svg');
 
 export const IconFixIssueAwesomePaperPlane = require('./images/fix-issues/Icon-awesome-paper-plane.svg');
 export const IconFixIssueEnvelopeOpen = require('./images/fix-issues/Icon-open-envelope.svg');

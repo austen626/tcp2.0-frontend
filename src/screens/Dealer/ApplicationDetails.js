@@ -7,7 +7,7 @@ import DatePicker from 'react-datepicker';
 import { setApplianceFlag } from 'utils/helper';
 import Header, { HeaderLeft, HeaderCenter, HeaderRight } from '../../components/Dealer/Header';
 import Footer from '../../components/Dealer/Footer';
-import { IconArrowLeft, IconCaledar, IconStatusWaiting, IconStatusConfirmed } from '../../assets/images';
+import { IconArrowLeft, IconMetroCalendar, IconStatusWaiting, IconStatusConfirmed } from '../../assets/images';
 import { requestFunding, requestCancel } from '../../redux/actions/admin';
 import { getAppDetailById } from '../../redux/actions/sales';
 import { ApplicationDeliveryBox } from './style';

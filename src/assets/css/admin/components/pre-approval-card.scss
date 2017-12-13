@@ -3,7 +3,7 @@
   .request-wrapper {
     max-width: 500px;
     margin: auto;
-    padding: 20px 0;
+    padding: 20px;
 
     label {
       font-size: 12px;
@@ -14,11 +14,28 @@
     }
 
     .calendar-approve {
-      width: 146.2px;
-      height: 30px !important;
-      border-radius: 17.5px;
-      border: solid 1.5px #3a5c77;
-      background-color: #1e2c35;
+      input {
+        padding: 2px 30px 2px 20px;
+        width: 146.2px;
+        height: 30px !important;
+        border-radius: 17.5px;
+        border: solid 1.5px #3a5c77;
+        background-color: #1e2c35;
+        color: white;
+      }
+
+      .calendar-badge {
+        right: 8px;
+        top: 4px;
+        width: 22px;
+        height: 22px;
+        background-color: #6793b7;
+        text-align: center;
+        img {
+          width: 12px;
+          vertical-align: top;
+        }
+      }
     }
 
     .status-text {

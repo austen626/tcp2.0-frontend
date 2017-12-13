@@ -15,6 +15,30 @@ import {
 } from './StatusIcons';
 import DatePicker from 'react-datepicker';
 import { ToggleButton } from './ToggleButton/ToggleButton';
+import { IconFeatherCalendar } from '../../../../../assets/images';
+
+function DateInput({ value, onChange }) {
+    return (
+        <CalendarContainer className="calendar-approve">
+            <DatePicker
+                selected={value}
+                onChange={onChange}
+                minDate={new Date()}
+                className="calendar-approve"
+                dateFormat="MM/dd/yyyy"
+                placeholderText="MM/DD/YYYY"
+            />
+            <span className="calendar-badge">
+                <img src={IconFeatherCalendar} />
+            </span>
+        </CalendarContainer>
+    );
+}
+
+DateInput.propTypes = {
+    value: PropTypes.object.isRequired,
+    onChange: PropTypes.func,
+};
 
 export function PreApprovalRequestCard({ customer }) {
     const tierOptions = [
@@ -60,16 +84,10 @@ export function PreApprovalRequestCard({ customer }) {
                         </Col>
                         <Col>
                             <label>Earliest delivery date: </label>
-                            <CalendarContainer>
-                                <DatePicker
-                                    selected={foodDate}
-                                    onChange={handleFoodDateChange}
-                                    minDate={new Date()}
-                                    className="calendar-approve"
-                                    dateFormat="MM/dd/yyyy"
-                                    placeholderText="MM/DD/YYYY"
-                                />
-                            </CalendarContainer>
+                            <DateInput
+                                value={foodDate}
+                                onChange={handleFoodDateChange}
+                            />
                         </Col>
                     </Row>
                     <Row className="mt-3">

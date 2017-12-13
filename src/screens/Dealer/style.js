@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import { IconCaledar } from '../../assets/images';
+import { IconMetroCalendar } from '../../assets/images';
 export const ApplicationDeliveryBox = styled.div`
     .calendar-application {
-        background: url(${IconCaledar});
+        background: url(${IconMetroCalendar});
         background-repeat: no-repeat;
         background-position: right 10px center;
         background-size: 20px;
