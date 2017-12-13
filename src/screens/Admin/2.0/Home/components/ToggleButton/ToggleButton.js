@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-export function ToggleButton({ defaultChecked, disabled, onChange }) {
+export function ToggleButton({ defaultChecked, disabled, onChange}) {
     const [toggle, setToggle] = useState(false);
 
     const triggerToggle = () => {
@@ -41,6 +41,7 @@ ToggleButton.propTypes = {
     defaultChecked: PropTypes.bool,
     disabled: PropTypes.bool,
     onChange: PropTypes.func,
+    className: PropTypes.string,
 };
 
 ToggleButton.defaultProps = {

@@ -14,7 +14,7 @@ import {
     TriangleStatusIcon,
 } from './StatusIcons';
 import DatePicker from 'react-datepicker';
-import Checkbox, { Radio } from '../../../../../components/Checkbox';
+import { ToggleButton } from './ToggleButton/ToggleButton';
 
 export function PreApprovalRequestCard({ customer }) {
     const tierOptions = [
@@ -41,8 +41,8 @@ export function PreApprovalRequestCard({ customer }) {
 
     return (
         <div className="preapproval-request-card">
-            <div className="product-request">
-                <div className="product-title">
+            <div className="request-wrapper">
+                <div className="request-title">
                     <label>PRODUCT/SERVICE:</label>
                     <span className="product-name">Food</span>
                 </div>
@@ -71,35 +71,41 @@ export function PreApprovalRequestCard({ customer }) {
                         </CalendarContainer>
                     </Col>
                 </Row>
-                <div className="text-center">
-                    <StatusChoice>
-                        <CircleStatusIcon
-                            symbol="P"
-                            fill={foodReviewMode === 'auto'}
-                            disabled={foodStatus !== 'approval'}
-                        />
-                        <StatusText>Approve</StatusText>
-                    </StatusChoice>
-                    <StatusChoice className="ml-4 ml-sm-5">
-                        <TriangleStatusIcon
-                            symbol="P"
-                            fill={foodReviewMode === 'auto'}
-                            disabled={foodStatus !== 'in_process'}
-                        />
-                        <StatusText>Req.Review</StatusText>
-                    </StatusChoice>
-                    <StatusChoice className="ml-4 ml-sm-5">
-                        <HexagonStatusIcon
-                            symbol="P"
-                            fill={foodReviewMode === 'auto'}
-                            disabled={foodStatus !== 'rejection'}
-                        />
-                        <StatusText>Decline</StatusText>
-                    </StatusChoice>
-                </div>
+                <Row>
+                    <Col>
+                        <StatusChoice>
+                            <CircleStatusIcon
+                                symbol="P"
+                                fill={foodReviewMode === 'auto'}
+                                disabled={foodStatus !== 'approval'}
+                            />
+                            <StatusText>Approve</StatusText>
+                        </StatusChoice>
+                    </Col>
+                    <Col>
+                        <StatusChoice>
+                            <TriangleStatusIcon
+                                symbol="P"
+                                fill={foodReviewMode === 'auto'}
+                                disabled={foodStatus !== 'in_process'}
+                            />
+                            <StatusText>Req.Review</StatusText>
+                        </StatusChoice>
+                    </Col>
+                    <Col>
+                        <StatusChoice>
+                            <HexagonStatusIcon
+                                symbol="P"
+                                fill={foodReviewMode === 'auto'}
+                                disabled={foodStatus !== 'rejection'}
+                            />
+                            <StatusText>Decline</StatusText>
+                        </StatusChoice>
+                    </Col>
+                </Row>
             </div>
-            <div className="product-request">
-                <div className="product-title">
+            <div className="request-wrapper">
+                <div className="request-title">
                     <label className="">PRODUCT/SERVICE:</label>
                     <span className="product-name">Other</span>
                 </div>
@@ -114,12 +120,31 @@ export function PreApprovalRequestCard({ customer }) {
                             />
                         </TierSelect>
                     </Col>
+                    <Col>
+                        <StatusChoice>
+                            <CircleStatusIcon
+                                symbol="P"
+                                fill={foodReviewMode === 'auto'}
+                                disabled={foodStatus !== 'approval'}
+                            />
+                            <StatusText>Approve</StatusText>
+                        </StatusChoice>
+                    </Col>
+                    <Col>
+                        <StatusChoice>
+                            <TriangleStatusIcon
+                                symbol="P"
+                                fill={foodReviewMode === 'auto'}
+                                disabled={foodStatus !== 'in_process'}
+                            />
+                            <StatusText>Req.Review</StatusText>
+                        </StatusChoice>
+                    </Col>
                 </Row>
             </div>
 
             <div className="text-center">
-                <Radio label="afafa" checked={true} />
-
+                Requires credit app? <ToggleButton />
             </div>
         </div>
     );

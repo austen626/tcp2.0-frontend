@@ -1,0 +1,30 @@
+.preapproval-request-card {
+  background-color: #2a4051;
+  .request-wrapper {
+    max-width: 500px;
+    margin: auto;
+    padding: 20px 0;
+    .request-title {
+      display: flex;
+      font-size: 11px;
+      line-height: 1.27;
+      letter-spacing: 0.06px;
+      text-align: left;
+      color: #a9c3d8;
+      margin: 5px 0;
+
+      span {
+        color: #fff;
+      }
+
+      &:after {
+        content: ' ';
+        display: inline-block;
+        height: 2px;
+        width: 100%;
+        margin: 6px 15px;
+        background-color: #3a5c77;
+      }
+    }
+  }
+}
