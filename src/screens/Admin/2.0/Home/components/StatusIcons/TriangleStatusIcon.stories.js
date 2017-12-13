@@ -3,7 +3,7 @@ import React from 'react';
 
 export default {
     component: TriangleStatusIcon,
-    title: 'Admin/StatusIcons/TriangleIcon',
+    title: 'Admin/Components/StatusIcons/TriangleIcon',
 };
 
 const Template = (args) => <TriangleStatusIcon {...args} />;

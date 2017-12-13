@@ -1,4 +1,4 @@
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Form } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import React from 'react';
 import Dropdown from '../../../../../components/commons/dropdown';
@@ -14,6 +14,7 @@ import {
     TriangleStatusIcon,
 } from './StatusIcons';
 import DatePicker from 'react-datepicker';
+import Checkbox, { Radio } from '../../../../../components/Checkbox';
 
 export function PreApprovalRequestCard({ customer }) {
     const tierOptions = [
@@ -115,7 +116,11 @@ export function PreApprovalRequestCard({ customer }) {
                     </Col>
                 </Row>
             </div>
-            <div className="text-center">Requires credit app?</div>
+
+            <div className="text-center">
+                <Radio label="afafa" checked={true} />
+
+            </div>
         </div>
     );
 }

@@ -3,7 +3,7 @@ import React from 'react';
 
 export default {
     component: CircleStatusIcon,
-    title: 'Admin/StatusIcons/CircleIcon',
+    title: 'Admin/Components/StatusIcons/CircleIcon',
 };
 
 const Template = (args) => <CircleStatusIcon {...args} />;

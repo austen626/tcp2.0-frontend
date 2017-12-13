@@ -1,0 +1,69 @@
+.tcp-toggle {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: transparent;
+  width: 111.3px;
+  height: 30px;
+  border-radius: 17.5px;
+  border: solid 1.5px #3a5c77;
+  background-color: #1e2c35;
+  font-size: 14px;
+  line-height: 1.37;
+  letter-spacing: 0.7px;
+  color: #c8e0ed;
+}
+
+.tcp-toggle-input {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.tcp-toggle-switch {
+  position: absolute;
+  width: 60.2px;
+  height: 30px;
+  object-fit: contain;
+  border-radius: 17.5px;
+  background-color: var(--teal);
+}
+
+.tcp-toggle-check, .tcp-toggle-uncheck {
+  position: absolute;
+  margin-top: auto;
+  margin-bottom: auto;
+  top: 2px;
+}
+
+.tcp-toggle--checked {
+  .tcp-toggle-switch {
+    top: -1.5px;
+    left: -1.5px;
+  }
+}
+
+.tcp-toggle--unchecked {
+  .tcp-toggle-switch {
+    top: -1.5px;
+    right: -1.5px;
+  }
+}
+
+.tcp-toggle-check {
+  left: 16px;
+}
+
+.tcp-toggle-uncheck {
+  right: 16px;
+}

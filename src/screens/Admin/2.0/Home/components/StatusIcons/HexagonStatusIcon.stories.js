@@ -3,7 +3,7 @@ import React from 'react';
 
 export default {
     component: HexagonStatusIcon,
-    title: 'Admin/StatusIcons/HexagonIcon',
+    title: 'Admin/Components/StatusIcons/HexagonIcon',
 };
 
 const Template = (args) => <HexagonStatusIcon {...args} />;
