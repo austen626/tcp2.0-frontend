@@ -1,8 +1,14 @@
+import {
+    statusApproval,
+    statusInProcess,
+    statusRejection,
+} from '../screens/Admin/constant';
+
 export const fixtureOrder = {
     id: 123,
     request_type: 'order',
     review_mode: 'auto',
-    status: 'approval',
+    status: statusApproval,
     applicant: {
         first_name: 'Mark',
         last_name: 'Bialik',
@@ -56,9 +62,9 @@ export const fixturePreApproval = {
         phone: '(123) 456-7890',
     },
     food_date: new Date(),
-    food_status: 'approval',
+    food_status: statusApproval,
     food_review_mode: 'auto',
-    other_status: 'in-process',
+    other_status: statusInProcess,
     other_review_mode: 'manual',
 };
 
@@ -80,7 +86,7 @@ export const fixture1 = {
         phone: '(123) 456-7890',
     },
     review_mode: 'manual',
-    status: 'in-process',
+    status: statusInProcess,
     items: [
         {
             id: 125,
@@ -119,8 +125,10 @@ export const fixture2 = {
         phone: '(123) 456-7890',
     },
     food_date: new Date(),
-    food_status: 'approval',
+    food_status: statusApproval,
     food_review_mode: 'auto',
-    other_status: 'rejection',
+    other_status: statusRejection,
     other_review_mode: 'manual',
+    food_tier: 2,
+    other_tier: 2,
 };

@@ -16,6 +16,11 @@ import {
 import DatePicker from 'react-datepicker';
 import { ToggleButton } from './ToggleButton/ToggleButton';
 import { IconFeatherCalendar } from '../../../../../assets/images';
+import {
+    statusApproval,
+    statusInProcess,
+    statusRejection,
+} from '../../../constant';
 
 function DateInput({ value, onChange }) {
     return (
@@ -96,7 +101,7 @@ export function PreApprovalRequestCard({ customer }) {
                                 <CircleStatusIcon
                                     symbol="P"
                                     fill={foodReviewMode === 'auto'}
-                                    disabled={foodStatus !== 'approval'}
+                                    disabled={foodStatus !== statusApproval}
                                 />
                                 <StatusText className="status-text">
                                     Approve
@@ -108,7 +113,7 @@ export function PreApprovalRequestCard({ customer }) {
                                 <TriangleStatusIcon
                                     symbol="P"
                                     fill={foodReviewMode === 'auto'}
-                                    disabled={foodStatus !== 'in_process'}
+                                    disabled={foodStatus !== statusInProcess}
                                 />
                                 <StatusText className="status-text">
                                     Req.Review
@@ -120,7 +125,7 @@ export function PreApprovalRequestCard({ customer }) {
                                 <HexagonStatusIcon
                                     symbol="P"
                                     fill={foodReviewMode === 'auto'}
-                                    disabled={foodStatus !== 'rejection'}
+                                    disabled={foodStatus !== statusRejection}
                                 />
                                 <StatusText className="status-text">
                                     Decline
@@ -152,7 +157,7 @@ export function PreApprovalRequestCard({ customer }) {
                                 <CircleStatusIcon
                                     symbol="P"
                                     fill={foodReviewMode === 'auto'}
-                                    disabled={foodStatus !== 'approval'}
+                                    disabled={foodStatus !== statusApproval}
                                 />
                                 <StatusText className="status-text">
                                     Approve
@@ -164,7 +169,7 @@ export function PreApprovalRequestCard({ customer }) {
                                 <TriangleStatusIcon
                                     symbol="P"
                                     fill={foodReviewMode === 'auto'}
-                                    disabled={foodStatus !== 'in_process'}
+                                    disabled={foodStatus !== statusInProcess}
                                 />
                                 <StatusText className="status-text">
                                     Req.Review

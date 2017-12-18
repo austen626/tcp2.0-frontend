@@ -14,6 +14,11 @@ import {
 } from './StatusIcons';
 import PropTypes from 'prop-types';
 import React from 'react';
+import {
+    statusApproval,
+    statusInProcess,
+    statusRejection,
+} from '../../../constant';
 
 export function OrderRequestCard({ customer }) {
     const {
@@ -25,6 +30,9 @@ export function OrderRequestCard({ customer }) {
         other_tier: otherTier,
         status,
         review_mode: reviewMode,
+        onChangeStatus,
+        onChangeFoodTier,
+        onChangeOtherTier,
     } = customer;
 
     const tierOptions = [
@@ -73,6 +81,7 @@ export function OrderRequestCard({ customer }) {
                     <TierSelect className="tier-input" inline={true}>
                         <label>Food Tier</label>
                         <Dropdown
+                            handleChange={onChangeFoodTier}
                             value={foodTier}
                             defaultValue={foodTier}
                             options={tierOptions}
@@ -84,6 +93,7 @@ export function OrderRequestCard({ customer }) {
                     >
                         <label>Other Tier</label>
                         <Dropdown
+                            handleChange={onChangeOtherTier}
                             value={otherTier}
                             defaultValue={otherTier}
                             options={tierOptions}
@@ -91,27 +101,35 @@ export function OrderRequestCard({ customer }) {
                     </TierSelect>
                 </div>
                 <div className="order-status">
-                    <StatusChoice>
+                    <StatusChoice
+                        onClick={() => onChangeStatus(statusApproval)}
+                    >
                         <CircleStatusIcon
                             symbol="S"
                             fill={reviewMode === 'auto'}
-                            disabled={status !== 'approval'}
+                            disabled={status !== statusApproval}
                         />
                         <StatusText>Approve</StatusText>
                     </StatusChoice>
-                    <StatusChoice className="ml-4 ml-sm-5">
+                    <StatusChoice
+                        className="ml-4 ml-sm-5"
+                        onClick={() => onChangeStatus(statusInProcess)}
+                    >
                         <TriangleStatusIcon
                             symbol="S"
                             fill={reviewMode === 'auto'}
-                            disabled={status !== 'in_process'}
+                            disabled={status !== statusInProcess}
                         />
                         <StatusText>Req.Review</StatusText>
                     </StatusChoice>
-                    <StatusChoice className="ml-4 ml-sm-5">
+                    <StatusChoice
+                        className="ml-4 ml-sm-5"
+                        onClick={() => onChangeStatus(statusRejection)}
+                    >
                         <HexagonStatusIcon
                             symbol="S"
                             fill={reviewMode === 'auto'}
-                            disabled={status !== 'rejection'}
+                            disabled={status !== statusRejection}
                         />
                         <StatusText>Reject</StatusText>
                     </StatusChoice>
@@ -125,3 +143,9 @@ export function OrderRequestCard({ customer }) {
 OrderRequestCard.propTypes = {
     customer: PropTypes.object.isRequired,
 };
+
+OrderRequestCard.defaultProps = {
+    onChangeStatus: () => {},
+    onChangeFoodTier: () => {},
+    onChangeOtherTier: () => {},
+}
