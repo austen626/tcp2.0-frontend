@@ -25,12 +25,13 @@ export function Comments({ applicant, history }) {
                 {
                     text: e.target.value,
                     date: new Date(),
-                    dateString: '2021-10-11',
+                    dateString: '',
                     user: applicant,
                     position: 'right',
                 },
             ];
             setChatData(newChatData);
+            inputRef.current.value = null;
         }
     };
 
@@ -80,7 +81,7 @@ export function Comments({ applicant, history }) {
     }, []);
 
     return (
-        <div className="admin">
+        <div className="admin pb-5">
             <Header>
                 <HeaderLeft>
                     <img src={IconArrowLeft} onClick={handleArrowBack} alt="" />

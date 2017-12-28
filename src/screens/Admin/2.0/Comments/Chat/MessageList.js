@@ -5,6 +5,7 @@ import { DateSeparator } from './DateSeparator';
 
 export function MessageList({ dataSource, className, user }) {
     let today = new Date();
+    const GROUPING_SPAN = 300000;
 
     const isSameDay = (dateA, dateB) => {
         return !(
@@ -55,7 +56,10 @@ export function MessageList({ dataSource, className, user }) {
                     notch = true;
                 }
 
-                if(previousMessage !== null && (message.date - previousMessage.date) > 300000) {
+                if (
+                    previousMessage !== null &&
+                    message.date - previousMessage.date > GROUPING_SPAN
+                ) {
                     notch = true;
                 }
 
