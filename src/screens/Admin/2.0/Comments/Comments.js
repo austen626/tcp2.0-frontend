@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Header, {
     HeaderCenter,
@@ -12,19 +12,26 @@ import { message } from '../../../../shared/constant';
 
 export function Comments({ applicant, history }) {
     const [chatData, setChatData] = useState([]);
+    const inputRef = useRef(null);
 
     const handleArrowBack = () => {
         history.goBack();
     };
 
-    const appendMessageFormat = (messages) => {
-        messages.map((message) => {
-            if (message.user.id === applicant.id) {
-                message.position = 'right';
-            } else {
-                message.position = 'left';
-            }
-        });
+    const handleInputKeyDown = (e) => {
+        if (e.keyCode === 13) {
+            const newChatData = [
+                ...chatData,
+                {
+                    text: e.target.value,
+                    date: new Date(),
+                    dateString: '2021-10-11',
+                    user: applicant,
+                    position: 'right',
+                },
+            ];
+            setChatData(newChatData);
+        }
     };
 
     useEffect(() => {
@@ -69,7 +76,6 @@ export function Comments({ applicant, history }) {
                 user: applicant,
             },
         ];
-        appendMessageFormat(newChatData);
         setChatData(newChatData);
     }, []);
 
@@ -86,9 +92,13 @@ export function Comments({ applicant, history }) {
                 </HeaderCenter>
                 <HeaderRight />
             </Header>
-            <MessageList dataSource={chatData} />
+            <MessageList dataSource={chatData} user={applicant} />
             <div className="footer-container p-3">
-                <Input />
+                <Input
+                    ref={inputRef}
+                    placeholder="Type a message"
+                    onKeyDown={handleInputKeyDown}
+                />
             </div>
         </div>
     );

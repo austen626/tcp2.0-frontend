@@ -3,9 +3,8 @@ import React from 'react';
 import { MessageBox } from './MessageBox';
 import { DateSeparator } from './DateSeparator';
 
-export function MessageList({ dataSource, className }) {
-    let currentDate = new Date();
-    let currentUser = null;
+export function MessageList({ dataSource, className, user }) {
+    let today = new Date();
 
     const isSameDay = (dateA, dateB) => {
         return !(
@@ -15,31 +14,49 @@ export function MessageList({ dataSource, className }) {
         );
     };
 
+    const isMe = (targetUser) => {
+        return targetUser.id === user.id;
+    };
+
     return (
         <div className="{className} message-list">
             {dataSource.map((message, index) => {
+                const previousMessage =
+                    index > 0 ? dataSource[index - 1] : null;
                 let userName = <></>;
                 let dateSeparator = <></>;
+                let notch = false;
 
-                if (currentUser == null || currentUser.id !== message.user.id) {
-                    currentUser = message.user;
-                    if (message.position === 'left') {
-                        userName = (
-                            <span className="message-list--username">
-                                {currentUser.name}
-                            </span>
-                        );
-                    }
-                }
-
-                if (!isSameDay(message.date, currentDate)) {
-                    currentDate = message.date;
+                if (
+                    (previousMessage === null &&
+                        !isSameDay(message.date, today)) ||
+                    (previousMessage !== null &&
+                        !isSameDay(message.date, previousMessage.date))
+                ) {
                     dateSeparator = (
                         <DateSeparator
                             date={message.date}
                             dateString={message.dateString}
                         />
                     );
+                    notch = true;
+                }
+
+                if (
+                    (previousMessage === null ||
+                        previousMessage.user.id !== message.user.id) &&
+                    !isMe(message.user)
+                ) {
+                    userName = (
+                        <div className="message-list--username">
+                            {message.user.name}
+                        </div>
+                    );
+                    notch = true;
+                }
+
+                if(previousMessage !== null && (message.date - previousMessage.date) > 300000) {
+                    notch = true;
                 }
 
                 return (
@@ -47,7 +64,16 @@ export function MessageList({ dataSource, className }) {
                         {dateSeparator}
                         <div className="message-list--item">
                             {userName}
-                            <MessageBox key={message} {...message} />
+                            <MessageBox
+                                key={message}
+                                {...message}
+                                position={
+                                    message.user.id === user.id
+                                        ? 'right'
+                                        : 'left'
+                                }
+                                notch={notch}
+                            />
                         </div>
                     </>
                 );
@@ -59,9 +85,9 @@ export function MessageList({ dataSource, className }) {
 MessageList.propTypes = {
     className: PropTypes.string,
     dataSource: PropTypes.array.isRequired,
+    user: PropTypes.object.isRequired,
 };
 
 MessageList.defaultProps = {
     className: '',
 };
-

@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 
 export function DateSeparator({ date, className, dateString }) {
+    const formatedDate = moment(date).format('dddd MMMM DD, YYYY');
     return (
-        <div className={`${className} message-list--date`}>{dateString}</div>
+        <div className={`${className} message-list--date`}>{formatedDate}</div>
     );
 }
 
