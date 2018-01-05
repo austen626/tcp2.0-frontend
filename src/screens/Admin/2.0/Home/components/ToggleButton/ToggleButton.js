@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-export function ToggleButton({ defaultChecked, disabled, onChange, className}) {
+export function ToggleButton({
+    defaultChecked,
+    disabled,
+    onChange,
+    className,
+    yesText,
+    noText,
+}) {
     const [toggle, setToggle] = useState(false);
 
     const triggerToggle = () => {
@@ -25,8 +32,8 @@ export function ToggleButton({ defaultChecked, disabled, onChange, className}) {
         >
             <div className="tcp-toggle-container">
                 <div className="tcp-toggle-switch" />
-                <div className="tcp-toggle-check"> Yes </div>
-                <div className="tcp-toggle-uncheck"> No </div>
+                <div className="tcp-toggle-check"> {yesText} </div>
+                <div className="tcp-toggle-uncheck"> {noText} </div>
             </div>
             <input
                 className="tcp-toggle-input"
@@ -42,10 +49,15 @@ ToggleButton.propTypes = {
     disabled: PropTypes.bool,
     onChange: PropTypes.func,
     className: PropTypes.string,
+    yesText: PropTypes.string,
+    noText: PropTypes.string,
 };
 
 ToggleButton.defaultProps = {
+    className: '',
     defaultChecked: false,
     disabled: false,
     onChange: () => {},
+    yesText: 'Yes',
+    noText: 'No',
 };

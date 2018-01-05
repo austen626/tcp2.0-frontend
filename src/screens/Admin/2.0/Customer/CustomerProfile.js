@@ -247,12 +247,12 @@ export function CustomerProfile({
                 {customer.request_type === 'order' && (
                     <Row>
                         <Col>
-                            <button className="btn-action">
+                            <button className="btn-normal">
                                 Request Preapproval
                             </button>
                         </Col>
                         <Col className="text-right">
-                            <button className="btn-action">
+                            <button className="btn-normal">
                                 Generate an Order
                             </button>
                         </Col>

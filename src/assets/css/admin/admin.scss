@@ -1,5 +1,16 @@
 .admin {
+  .btn-normal {
+    border: none;
+    border-radius: 17.5px;
+    background-color: #6793b7;
+    color: #fff;
+    font-size: 14px;
+    padding: 7px 15px;
 
+    @media(max-width: 350px) {
+      font-size: 12px;
+    }
+  }
   .main {
     color: white;
   }
@@ -435,20 +446,6 @@
         margin-top: 22px;
       }
     }
-
-    .btn-action {
-      border: none;
-      border-radius: 17.5px;
-      background-color: #6793b7;
-      color: #fff;
-      font-size: 14px;
-      padding: 7px 15px;
-
-      @media(max-width: 350px) {
-        font-size: 12px;
-      }
-    }
-
     .btn-chat {
       background-color: #2f4455;
       color: #c8e0ed;
@@ -474,6 +471,36 @@
         margin-right: 0;
       }
     }
+  }
+
+  .dealer-detail-row {
+    width: 100%;
+    background-color: #20313e;
+    text-align: center;
+    padding: 23px;
+
+    button {
+      margin-left: 60px;
+    }
+
+    .tcp-toggle {
+      width: 180px;
+      height: 35px;
+      .tcp-toggle-switch {
+        width: 90px;
+        height: 35px;
+      }
+      .tcp-toggle-check, .tcp-toggle-uncheck {
+        top: 5px;
+      }
+    }
+
+    @media (max-width: 350px) {
+      button {
+        margin-left: 20px;
+      }
+    }
+
   }
 }
 
@@ -624,5 +651,4 @@
       padding: 9.4px 30.6px 10.4px 14.3px;
     }
   }
-
 }

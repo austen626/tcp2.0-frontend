@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import Swal from 'sweetalert2';
 import { connect } from 'react-redux';
 import Header, {
@@ -21,6 +21,7 @@ import {
     deleteDealer,
 } from '../../../../redux/actions/admin';
 import PropTypes from 'prop-types';
+import { ToggleButton } from '../Home/components/ToggleButton/ToggleButton';
 
 const IconSmallArrowRight = ({ active }) => {
     return (
@@ -61,7 +62,7 @@ export function PureDealerManagement(props) {
     }, []);
 
     useEffect(() => {
-        if (search != null && search != '') {
+        if (search != null && search !== '') {
             let temp = dealers.data.filter((d) =>
                 d.company_name.toLowerCase().includes(search.toLowerCase())
             );
@@ -105,12 +106,12 @@ export function PureDealerManagement(props) {
         else setOpenDealerIndex('map' + dealer.id);
     };
 
-    const toOpenIndex = (id) => {
-        return 'map' + id;
+    const isOpenItem = (item) => {
+        return openDealerIndex === 'map' + item.id;
     };
 
     return (
-        <div className="dealer">
+        <div className="admin">
             {dealers.loading && <Loader />}
 
             {actionLoading && <Loader />}
@@ -153,10 +154,11 @@ export function PureDealerManagement(props) {
                 <div className="list">
                     {filterDealer &&
                         filterDealer.map((item) => (
-                            <>
+                            <Fragment key={item.id}>
                                 <Row
-                                    key={item.id}
-                                    className="single-row"
+                                    className={`single-row ${
+                                        isOpenItem(item) ? 'expanded' : ''
+                                    }`}
                                     onClick={() => handleOpenDealerAction(item)}
                                 >
                                     <div className="dealer-row">
@@ -168,41 +170,27 @@ export function PureDealerManagement(props) {
                                         <Col xs={6} className="dealer-action">
                                             <span>
                                                 <IconSmallArrowRight
-                                                    active={toOpenIndex(item.id) === openDealerIndex}
+                                                    active={isOpenItem(item)}
                                                 />
                                             </span>
                                         </Col>
                                     </div>
-                                    {openDealerIndex === 'map' + item.id && (
-                                        <Col
-                                            key={item.id}
-                                            xs={12}
-                                            className="single-row-details"
-                                        >
-                                            <button
-                                                className="delete"
-                                                onClick={() =>
-                                                    handleDeleteDealer(item)
-                                                }
-                                            >
-                                                <img
-                                                    src={IconDeleteNew}
-                                                    alt=""
-                                                />{' '}
-                                                Delete
-                                            </button>
-                                            <button
-                                                className="edit"
-                                                onClick={() =>
-                                                    handleAddEditDealer(item)
-                                                }
-                                            >
-                                                Edit
-                                            </button>
-                                        </Col>
-                                    )}
+                                    <div className="dealer-row-border" />
                                 </Row>
-                            </>
+                                {isOpenItem(item) && (
+                                    <div className="dealer-detail-row">
+                                        <div className="dealer-detail-actions">
+                                            <ToggleButton
+                                                yesText="Active"
+                                                noText="Deactive"
+                                            />
+                                            <button className="btn-normal">
+                                                Settings
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
+                            </Fragment>
                         ))}
                 </div>
             </div>
@@ -212,7 +200,9 @@ export function PureDealerManagement(props) {
 
 PureDealerManagement.propTypes = {
     history: PropTypes.object,
-    dealers: PropTypes.array,
+    dealers: PropTypes.shape({
+        data: PropTypes.array,
+    }),
     actionLoading: PropTypes.bool.isRequired,
     getDealers: PropTypes.func.isRequired,
     setDealer: PropTypes.func.isRequired,
