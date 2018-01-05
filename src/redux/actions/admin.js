@@ -43,6 +43,11 @@ export const ADD_DEALER_REQUEST_FAILED = 'ADD_DEALER_REQUEST_FAILED';
 export const UPDATE_DEALER_REQUEST = 'UPDATE_DEALER_REQUEST';
 export const UPDATE_DEALER_REQUEST_SUCCESS = 'UPDATE_DEALER_REQUEST_SUCCESS';
 export const UPDATE_DEALER_REQUEST_FAILED = 'UPDATE_DEALER_REQUEST_FAILED';
+export const UPDATE_DEALER_DATA_REQUEST = 'UPDATE_DEALER_DATA_REQUEST';
+export const UPDATE_DEALER_DATA_REQUEST_SUCCESS =
+    'UPDATE_DEALER_DATA_REQUEST_SUCCESS';
+export const UPDATE_DEALER_DATA_REQUEST_FAILED =
+    'UPDATE_DEALER_DATA_REQUEST_FAILED';
 export const DELETE_DEALER_REQUEST = 'DELETE_DEALER_REQUEST';
 export const DELETE_DEALER_REQUEST_SUCCESS = 'DELETE_DEALER_REQUEST_SUCCESS';
 export const DELETE_DEALER_REQUEST_FAILED = 'DELETE_DEALER_REQUEST_FAILED';
@@ -271,6 +276,25 @@ export function setDealer(item) {
             type: SET_DEALER_REQUEST,
             payload: item,
         });
+    };
+}
+
+export function updateOneDealer(data) {
+    return async function (dispatch) {
+        dispatch({
+            type: UPDATE_DEALER_DATA_REQUEST,
+        });
+        try {
+            await API.post(`/accounts/update-dealer`, data);
+            dispatch({
+                type: UPDATE_DEALER_DATA_REQUEST_SUCCESS,
+                payload: data,
+            });
+        } catch (error) {
+            dispatch({
+                type: UPDATE_DEALER_DATA_REQUEST_FAILED,
+            });
+        }
     };
 }
 

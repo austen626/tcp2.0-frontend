@@ -26,7 +26,7 @@ Primary.args = {
                 contact_email: 'test+gRxIgCti+uwQim13i@test.com',
                 phone: '(539) 543-1910',
                 is_sales: true,
-                is_active: true,
+                is_active: false,
                 street: 'VGsUHw2psHGwKvS',
                 city: '947uEuPmKnnXus2',
                 state: 'Florida',

@@ -19,6 +19,7 @@ import {
     setDealer,
     getDealers,
     deleteDealer,
+    updateOneDealer,
 } from '../../../../redux/actions/admin';
 import PropTypes from 'prop-types';
 import { ToggleButton } from '../Home/components/ToggleButton/ToggleButton';
@@ -110,6 +111,15 @@ export function PureDealerManagement(props) {
         return openDealerIndex === 'map' + item.id;
     };
 
+    const changeItemActive = (item, isActive) => {
+        updateOneDealer({ ...item, is_active: isActive });
+    };
+
+    const handleClickItemSettings = (item) => {
+        setDealer(item);
+        history.push(`/admin/dealer/settings`);
+    };
+
     return (
         <div className="admin">
             {dealers.loading && <Loader />}
@@ -137,18 +147,6 @@ export function PureDealerManagement(props) {
                     />
                 </HeaderRight>
             </Header>
-
-            <div className="search-header">
-                <form action="javascript:void(0)">
-                    <Form.Group>
-                        <Form.Control
-                            value={search}
-                            placeholder="Search"
-                            onChange={(e) => setSearch(e.target.value)}
-                        ></Form.Control>
-                    </Form.Group>
-                </form>
-            </div>
 
             <div className="main">
                 <div className="list">
@@ -183,8 +181,22 @@ export function PureDealerManagement(props) {
                                             <ToggleButton
                                                 yesText="Active"
                                                 noText="Deactive"
+                                                defaultChecked={item.is_active}
+                                                onChange={(isActive) => {
+                                                    changeItemActive(
+                                                        item,
+                                                        isActive
+                                                    );
+                                                }}
                                             />
-                                            <button className="btn-normal">
+                                            <button
+                                                className="btn-normal"
+                                                onClick={() => {
+                                                    handleClickItemSettings(
+                                                        item
+                                                    );
+                                                }}
+                                            >
                                                 Settings
                                             </button>
                                         </div>
@@ -207,6 +219,7 @@ PureDealerManagement.propTypes = {
     getDealers: PropTypes.func.isRequired,
     setDealer: PropTypes.func.isRequired,
     deleteDealer: PropTypes.func.isRequired,
+    updateDealer: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -218,6 +231,7 @@ const mapDispatchToProps = (dispatch) => ({
     getDealers: () => dispatch(getDealers()),
     setDealer: (data) => dispatch(setDealer(data)),
     deleteDealer: (id) => dispatch(deleteDealer(id)),
+    updateOneDealer: (data) => dispatch(updateOneDealer(data)),
 });
 
 export default connect(

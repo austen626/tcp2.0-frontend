@@ -232,7 +232,7 @@ function App() {
 
           <PrivateRoute exact role="admin" path="/admin/dealers" component={AdminDealerManagement} />
           <PrivateRoute exact role="admin" path="/admin/addDealer" component={AdminAddDealer} />
-
+          <PrivateRoute exact role="admin" path="/admin/dealer/settings" component={AdminDealerSettings} />
 
           <PrivateRoute exact role="dealer" path="/dealer/staff" component={DealerStaffManagement} />
           <PrivateRoute exact role="dealer" path="/dealer/addStaff" component={DealerAddStaff} />

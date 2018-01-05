@@ -9,7 +9,7 @@ export function ToggleButton({
     yesText,
     noText,
 }) {
-    const [toggle, setToggle] = useState(false);
+    const [toggle, setToggle] = useState(defaultChecked);
 
     const triggerToggle = () => {
         if (disabled) {
