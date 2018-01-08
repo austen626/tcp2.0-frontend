@@ -10,6 +10,7 @@ import Header, {
 import { IconArrowLeft, IconChatBubble } from '../../../../assets/images';
 import { OrderRequestSummary } from './components/OrderRequestSummary';
 import { PreapprovalRequestSummary } from './components/PreapprovalRequestSummary';
+import { toAbbrName } from '../../../../utils/helper';
 
 function ApplicantList({ applicant, coApplicant }) {
     return (
@@ -17,7 +18,11 @@ function ApplicantList({ applicant, coApplicant }) {
             <div className="applicant">
                 <div>
                     <span className="applicant-name">
-                        {applicant.first_name[0]}.{applicant.last_name}
+                        {toAbbrName(
+                            applicant.first_name,
+                            null,
+                            applicant.last_name
+                        )}
                     </span>
                     <br />
                     <span className="applicant-date">
@@ -61,7 +66,11 @@ function ApplicantList({ applicant, coApplicant }) {
                 <div className="applicant">
                     <div>
                         <span className="color-light-blue">
-                            {applicant.first_name[0]}.{applicant.last_name}
+                            {toAbbrName(
+                                applicant.first_name,
+                                null,
+                                applicant.last_name
+                            )}
                         </span>
                     </div>
                     <div className="applicant-field-list">

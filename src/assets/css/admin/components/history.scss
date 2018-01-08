@@ -1,0 +1,41 @@
+.history-row {
+  .customer-name-wrapper {
+    display: inline-block;
+    width: 120px;
+    max-width: 100%;
+  }
+
+  .history-status-wrapper {
+    display: inline-block;
+    width: 200px;
+    max-width: 100%;
+  }
+
+  .customer-name {
+    border-radius: 11px;
+    background-color: #2d4a5f;
+    color: #b2d8f7;
+    font-size: 14px;
+    line-height: 1.37;
+    padding: 2.2px 12.5px 3px 12.2px;
+  }
+  .sales-name {
+    font-size: 11px;
+    line-height: 1.27;
+    color: #6792b6;
+    padding-left: 12.5px;
+  }
+  .history-date {
+    color: #6792b6;
+    font-size: 11px;
+    line-height: 1.45;
+  }
+  .history-status {
+    padding: 3.7px 9.3px 5.5px 10.2px;
+    border-radius: 11px;
+    font-size: 11px;
+    line-height: 1.45;
+    color: #c8e0ed;
+    background-color: #2d4a5f;
+  }
+}

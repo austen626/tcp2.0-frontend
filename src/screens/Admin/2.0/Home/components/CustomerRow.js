@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { ExpandIcon } from './ExpandIcon';
 import StatusIcon from './StatusIcons/StatusIcon';
+import { toAbbrName } from '../../../../../utils/helper';
 
 export function CustomerRow({ customer, expanded, onClick }) {
     const {
@@ -57,8 +58,11 @@ export function CustomerRow({ customer, expanded, onClick }) {
                             className="customer-name"
                             onClick={handleClickCustomer}
                         >
-                            {applicant.first_name[0].toUpperCase()}.
-                            {applicant.last_name}
+                            {toAbbrName(
+                                applicant.first_name,
+                                null,
+                                applicant.last_name
+                            )}
                         </span>
                     </div>
                     <div>

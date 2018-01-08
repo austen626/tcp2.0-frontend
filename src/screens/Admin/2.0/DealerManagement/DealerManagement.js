@@ -213,6 +213,7 @@ export function PureDealerManagement(props) {
 PureDealerManagement.propTypes = {
     history: PropTypes.object,
     dealers: PropTypes.shape({
+        loading: PropTypes.bool,
         data: PropTypes.array,
     }),
     actionLoading: PropTypes.bool.isRequired,

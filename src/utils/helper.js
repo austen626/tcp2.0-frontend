@@ -59,3 +59,20 @@ export const setLoanProductName = (value) => {
     }
     return productName;
 }
+
+export const toAbbrName = (firstName, middleName, lastName) => {
+    const names = [];
+    if (firstName) {
+        names.push(firstName[0].toUpperCase());
+    }
+
+    if (middleName) {
+        names.push(middleName[0].toUpperCase());
+    }
+
+    if (lastName) {
+        names.push(lastName[0].toUpperCase() + lastName.slice(1));
+    }
+
+    return names.join('.');
+}
